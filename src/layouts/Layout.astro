@@ -1,15 +1,54 @@
+---
+interface Props {
+	title?: string;
+	description?: string;
+	keywords?: string;
+	image?: string;
+	canonical?: string;
+	type?: string;
+}
+
+const { 
+	title = "Инженер по AI автоматизации | Внедрение ИИ в бизнес", 
+	description = "Разработка AI-агентов, автоматизация CRM и создание MVP. Сокращаю расходы бизнеса до 70% за счет внедрения нейросетей.", 
+	keywords = "AI инженер, автоматизация бизнеса, внедрение нейросетей, разработка AI агентов, интеграция ИИ, CRM автоматизация",
+	image = "/images/og-image.jpg",
+	canonical = Astro.url.href,
+	type = "website"
+} = Astro.props;
+---
+
 <!doctype html>
 <html lang="ru">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
+    <meta name="description" content={description}>
+    <meta name="keywords" content={keywords}>
     <meta name="author" content="Awaiken">
     <meta name="generator" content={Astro.generator}/>
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonical}>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={type}>
+    <meta property="og:url" content={Astro.url.href}>
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:title" content={title}>
+    <meta property="og:description" content={description}>
+    <meta property="og:image" content={new URL(image, Astro.url)}>
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content={Astro.url.href}>
+    <meta property="twitter:title" content={title}>
+    <meta property="twitter:description" content={description}>
+    <meta property="twitter:image" content={new URL(image, Astro.url)}>
+
     <!-- Page Title -->
-    <title>Fexora - Digital Marketing Agency HTML Template</title>
+    <title>{title}</title>
     <!-- Favicon Icon -->
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png">
     <!-- Custom Fonts Css-->

@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /*?
+Disallow: /admin
+Disallow: /api/
+Disallow: /_astro/
+Disallow: /node_modules/
+Disallow: /Dockerfile
+Disallow: /package.json
+Disallow: /package-lock.json
+
+Sitemap: https://ai-agency.ru/sitemap-index.xml
