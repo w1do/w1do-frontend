@@ -9,4 +9,4 @@ Disallow: /Dockerfile
 Disallow: /package.json
 Disallow: /package-lock.json
 
-Sitemap: https://ai-agency.ru/sitemap-index.xml
+Sitemap: https://покодим.рф/sitemap-index.xml
