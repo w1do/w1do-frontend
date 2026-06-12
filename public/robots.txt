@@ -9,4 +9,4 @@ Disallow: /Dockerfile
 Disallow: /package.json
 Disallow: /package-lock.json
 
-Sitemap: https://покодим.рф/sitemap-index.xml
+Sitemap: https://xn--d1aiekgbe.xn--p1ai/sitemap-index.xml
