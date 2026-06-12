@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://xn--d1aiekgbe.xn--p1ai',
+  site: 'https://w1do.ru',
   adapter: node({
     mode: 'standalone'
   }),
