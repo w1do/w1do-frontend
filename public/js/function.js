@@ -4,9 +4,25 @@
 	var $window = $(window); 
 	var $body = $('body'); 
 
-	/* Preloader Effect */
-	$window.on('load', function(){
+	var hidePreloader = function(){
 		$(".preloader").fadeOut(600);
+	};
+
+	/* Preloader Effect */
+	$window.on('load', hidePreloader);
+
+	// Fallback for preloader if load event already fired or we are in a module environment
+	if (document.readyState === 'complete') {
+		hidePreloader();
+	} else {
+		// Just in case, also hide after a timeout if it's still there
+		setTimeout(hidePreloader, 3000);
+	}
+
+	$(document).ready(function() {
+		if (document.readyState === 'complete') {
+			hidePreloader();
+		}
 	});
 
 	/* Sticky Header */	
@@ -16,15 +32,20 @@
 		});
 
 		function setHeaderHeight(){
-	 		$("header.active-sticky-header").css("height", $('header.active-sticky-header .header-sticky').outerHeight());
+			var $header = $("header.active-sticky-header");
+			var $sticky = $header.find('.header-sticky');
+			if ($sticky.length) {
+				$header.css("height", $sticky.outerHeight());
+			}
 		}	
 	
 		$window.on("scroll", function() {
-			var fromTop = $(window).scrollTop();
+			var fromTop = $window.scrollTop();
 			setHeaderHeight();
-			var headerHeight = $('header.active-sticky-header .header-sticky').outerHeight()
-			$("header.active-sticky-header .header-sticky").toggleClass("hide", (fromTop > headerHeight + 100));
-			$("header.active-sticky-header .header-sticky").toggleClass("active", (fromTop > 600));
+			var $sticky = $("header.active-sticky-header .header-sticky");
+			var headerHeight = $sticky.outerHeight();
+			$sticky.toggleClass("hide", (fromTop > headerHeight + 100));
+			$sticky.toggleClass("active", (fromTop > 600));
 		});
 	}	
 	
