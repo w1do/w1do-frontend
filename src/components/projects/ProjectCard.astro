@@ -1,0 +1,39 @@
+---
+interface Props {
+    project: {
+        id: number;
+        title: string;
+        category: string;
+        categorySlug: string;
+        image: string;
+        link: string;
+    };
+    delay?: string;
+    className?: string;
+}
+
+const { project, delay = "0s", className = "" } = Astro.props;
+---
+
+<div class={`col-xl-4 col-md-6 project-item-box ${project.categorySlug} ${className}`}>
+    <div class="project-item wow fadeInUp" data-wow-delay={delay}>
+        <div class="project-item-image">
+            <a href={project.link} data-cursor-text="View">
+                <figure>
+                    <img src={project.image} alt={project.title}>
+                </figure>
+            </a>
+        </div>
+        <div class="project-item-body">
+            <div class="project-item-content">
+                <ul>
+                    <li><a href={project.link}>{project.category}</a></li>
+                </ul>
+                <h2><a href={project.link}>{project.title}</a></h2>
+            </div>
+            <div class="project-item-btn">
+                <a href={project.link} class="readmore-btn">Смотреть проект</a>
+            </div>
+        </div>
+    </div>
+</div>

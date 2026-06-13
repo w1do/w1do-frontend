@@ -1,0 +1,28 @@
+---
+import Header from "../components/shared/Header.astro";
+import IntroVideo from "../components/IntroVideo.astro";
+import Feature from "../components/Feature.astro";
+import Faqs from "../components/Faqs.astro";
+import Testimonials from "../components/Testimonials.astro";
+import Layout from "../layouts/Layout.astro";
+import Footer from "../components/shared/Footer.astro";
+import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
+import ServicesList from "../components/services/ServicesList.astro";
+import { services } from "../mocks/services";
+---
+
+<Layout 
+    title="Услуги AI автоматизации и разработки | Claude, Cursor"
+    description="Заказать автоматизацию бизнес-процессов и разработку ИИ-решений. Используем Claude и Cursor для создания эффективных AI-агентов и MVP."
+    keywords="Услуги AI, заказать автоматизацию, разработка ИИ, Claude, Cursor, AI ассистенты, автоматизация бизнеса"
+    image="/images/og-services.jpg"
+>
+    <Header/>
+    <Breadcrumbs />
+    <ServicesList services={services} isListPage={true} />
+    <IntroVideo/>
+    <Feature/>
+    <Faqs/>
+    <Testimonials/>
+    <Footer/>
+</Layout>

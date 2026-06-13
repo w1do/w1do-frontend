@@ -1,0 +1,29 @@
+---
+import ServiceCard from "./ServiceCard.astro";
+import type { Service } from "../../mocks/services";
+
+interface Props {
+    services: Service[];
+    isListPage?: boolean;
+}
+
+const { services, isListPage = false } = Astro.props;
+---
+
+<div class={isListPage ? "page-services" : "service-item-list"}>
+    {isListPage ? (
+        <div class="container">
+            <div class="row">
+                {services.map((service) => (
+                    <div class="col-xl-4 col-md-6">
+                        <ServiceCard {...service} isListPage={true} />
+                    </div>
+                ))}
+            </div>
+        </div>
+    ) : (
+        services.map((service) => (
+            <ServiceCard {...service} />
+        ))
+    )}
+</div>

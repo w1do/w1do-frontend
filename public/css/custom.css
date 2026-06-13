@@ -226,7 +226,7 @@ a:focus{
 	font-size: 18px;
 	font-weight: 600;
 	line-height: 1em;
-	text-transform: capitalize;
+	text-transform: inherit;
 	color: var(--black-color);
 	background: var(--accent-color);
 	border-radius: 14px;
@@ -281,7 +281,7 @@ a:focus{
 	position: relative;
 	display: inline-block;
 	line-height: normal;
-	text-transform: capitalize;
+	text-transform: inherit;
 	font-weight: 500;
 	color: var(--white-color);
 	padding: 3px 42px 3px 0;
@@ -459,7 +459,7 @@ a:focus{
 	backdrop-filter: blur(15px);
 	-webkit-backdrop-filter: blur(15px);
 	color: var(--primary-color);
-	text-transform: capitalize;
+	text-transform: inherit;
 	line-height: 1.25em;
 	padding: 10px 20px 10px 42px;
 	border-radius: 100px;
@@ -596,7 +596,7 @@ header.main-header .header-sticky.active{
 	color: var(--white-color);
 	background: transparent;
 	border-radius: 0px;
-	text-transform: capitalize;
+	text-transform: inherit;
 	transition: all 0.3s ease-in-out;
 }
 
@@ -752,7 +752,7 @@ header.main-header .header-sticky.active{
 	position: relative;
 	font-size: 18px;
 	font-weight: 500;
-	text-transform: capitalize;
+	text-transform: inherit;
 	padding: 6px 20px;
 	color: var(--black-color);
 	line-height: normal;
@@ -1507,7 +1507,7 @@ header.main-header .header-sticky.active{
 .section-footer-text p a{
 	display: inline-block;
 	font-weight: 600;
-	text-transform: capitalize;
+	text-transform: inherit;
 	text-decoration: underline;
 	text-underline-offset: 3px;
 	color: var(--accent-color);
@@ -1752,7 +1752,7 @@ header.main-header .header-sticky.active{
 	color: transparent;
 	-webkit-text-stroke-width: 1px;
 	-webkit-text-stroke-color: var(--white-color);
-	text-transform: capitalize;
+	text-transform: inherit;
 	transition: all 0.4s ease-in-out;
 }
 
@@ -2829,7 +2829,7 @@ header.main-header .header-sticky.active{
 }
 
 .footer-links ul li{
-    text-transform: capitalize;
+    text-transform: inherit;
     color: var(--white-color);
     line-height: 1.4em;
     margin-bottom: 15px;
@@ -2983,7 +2983,7 @@ header.main-header .header-sticky.active{
 .footer-highligted-text h2{
 	font-size: 15.104vw;
 	line-height: 0.8em;
-	text-transform: uppercase;
+	text-transform: inherit;
 	background: linear-gradient(180deg, var(--accent-color) 0%, var(--white-color) 50% , var(--accent-color) 100%);
 	background-size: auto 200%;
 	background-clip: text;
@@ -3041,7 +3041,7 @@ header.main-header .header-sticky.active{
 .page-header-box ol li.breadcrumb-item{
 	font-size: 18px;
 	line-height: 1.4em;
-    text-transform: capitalize;
+    text-transform: inherit;
 	color: var(--white-color);
 }
 
@@ -3536,7 +3536,7 @@ header.main-header .header-sticky.active{
 .page-category-list ul li a{
     position: relative;
     display: block;
-    text-transform: capitalize;
+    text-transform: inherit;
 	color: inherit;
     padding-right: 25px;
     transition: all 0.4s ease-in-out;
@@ -4039,7 +4039,7 @@ header.main-header .header-sticky.active{
 .tag-links{
     font-size: 20px;
 	font-weight: 500;
-    text-transform: capitalize;
+    text-transform: inherit;
 	color: var(--primary-color);
 	display: inline-flex;
 	align-items: center;
@@ -4051,7 +4051,7 @@ header.main-header .header-sticky.active{
     display: inline-block;
     font-size: 16px;
     font-weight: 600;
-    text-transform: capitalize;
+    text-transform: inherit;
     line-height: 1em;
 	background: var(--accent-color);
     color: var(--black-color);

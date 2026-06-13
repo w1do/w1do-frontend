@@ -1,0 +1,25 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/shared/Header.astro";
+import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
+import ProjectsList from "../components/projects/ProjectsList.astro";
+import Faqs from "../components/Faqs.astro";
+import Footer from "../components/shared/Footer.astro";
+import Testimonials from "../components/Testimonials.astro";
+---
+<Layout 
+    title="Кейсы и проекты по AI автоматизации | RAG, OpenAI, Claude"
+    description="Примеры успешных проектов по внедрению ИИ: RAG системы, OpenAI интеграции, автоматизация на базе Claude и Antigravity. Реальные кейсы повышения эффективности бизнеса."
+    keywords="RAG, OpenAI, Claude, Antigravity, LLM, Skills, SEO, кейсы AI, примеры автоматизации"
+    image="/images/og-projects.jpg"
+>
+    <Header/>
+    <Breadcrumbs title="Проекты" breadcrumbItems={[
+        {label: "Главная", href: "/"},
+        {label: "Проекты", active: true}
+    ]}/>
+    <ProjectsList/>
+    <Faqs/>
+    <Testimonials/>
+    <Footer/>
+</Layout>

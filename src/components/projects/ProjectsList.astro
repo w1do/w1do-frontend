@@ -1,0 +1,19 @@
+---
+import { projects } from "../../mocks/projects";
+import ProjectCard from "./ProjectCard.astro";
+---
+
+<!-- Page Projects Start -->
+<div class="page-projects">
+    <div class="container">
+        <div class="row">
+            {projects.map((project, index) => (
+                <ProjectCard 
+                    project={project} 
+                    delay={`${(index % 3) * 0.2}s`}
+                />
+            ))}
+        </div>
+    </div>
+</div>
+<!-- Page Projects End -->

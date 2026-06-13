@@ -1,0 +1,54 @@
+---
+interface Props {
+    no: string;
+    title: string;
+    description: string;
+    icon: string;
+    tags: string[];
+    link: string;
+    delay?: string;
+    isListPage?: boolean;
+}
+
+const { no, title, description, icon, tags, link, delay = "0s", isListPage = false } = Astro.props;
+---
+
+{isListPage ? (
+    <div class="service-item box-border-gradiant wow fadeInUp" data-wow-delay={delay}>
+        <div class="service-item-header-box">
+            <div class="service-item-header">
+                <div class="icon-box">
+                    <img src={icon} alt={title}>
+                </div>
+                <span class="service-item-content-no">[ {no} ]</span>
+            </div>
+            <div class="service-item-content">
+                <h2><a href={link}>{title}</a></h2>
+                <p>{description}</p>
+            </div>
+        </div>
+        <div class="service-item-tag">
+            <ul>
+                {tags.map(tag => <li>{tag}</li>)}
+            </ul>
+        </div>
+    </div>
+) : (
+    <div class="service-item box-border-gradiant wow fadeInUp" data-wow-delay={delay}>
+        <div class="service-item-header">
+            <div class="service-item-content">
+                <span class="service-item-content-no">[ {no} ]</span>
+                <h2><a href={link}>{title}</a></h2>
+                <p>{description}</p>
+            </div>
+            <div class="icon-box">
+                <img src={icon} alt={title}>
+            </div>
+        </div>
+        <div class="service-item-tag">
+            <ul>
+                {tags.map(tag => <li>{tag}</li>)}
+            </ul>
+        </div>
+    </div>
+)}

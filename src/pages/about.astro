@@ -1,0 +1,28 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/shared/Header.astro";
+import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
+import AboutMe from "../components/About.astro";
+import Footer from "../components/shared/Footer.astro";
+import Faqs from "../components/Faqs.astro";
+import Testimonials from "../components/Testimonials.astro";
+---
+<Layout 
+    title="Обо мне | AI инженер и разработчик ИИ-решений"
+    description="Узнайте больше о моем опыте в разработке ИИ-агентов и автоматизации бизнес-процессов. Помогаю компаниям внедрять современные технологии."
+    keywords="AI инженер, разработчик ИИ, автоматизация, опыт работы, внедрение ИИ"
+    image="/images/og-about.jpg"
+>
+    <Header/>
+    <Breadcrumbs 
+        title="Обо мне" 
+        breadcrumbItems={[
+            { label: "Главная", href: "/" },
+            { label: "Обо мне", active: true }
+        ]} 
+    />
+    <AboutMe/>
+    <Faqs/>
+    <Testimonials/>
+    <Footer/>
+</Layout>

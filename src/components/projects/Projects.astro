@@ -1,3 +1,10 @@
+---
+import { projects } from "../../mocks/projects";
+import ProjectCard from "./ProjectCard.astro";
+
+const featuredProjects = projects.slice(0, 3);
+---
+
 <!-- Our Project Section Start -->
 <div class="our-projects bg-section">
     <div class="container">
@@ -16,8 +23,9 @@
                     <div class="our-project-filter-nav wow fadeInUp" data-wow-delay="0.2s">
                         <ul>
                             <li><a href="#" class="active-btn" data-filter="*"><img src="/images/icon-our-feature-tab-1.svg" alt="Все проекты"> Все проекты</a></li>
+                            <li><a href="#" data-filter=".seo"><img src="/images/icon-our-feature-tab-1.svg" alt="SEO & Content"> SEO & Content</a></li>
                             <li><a href="#" data-filter=".uiux"><img src="/images/icon-our-feature-tab-1.svg" alt="AI Решения"> AI Решения</a></li>
-                            <li><a href="#" data-filter=".web"><img src="/images/icon-our-feature-tab-1.svg" alt="Веб-разработка"> Веб-разработка</a></li>
+                            <li><a href="#" data-filter=".web"><img src="/images/icon-our-feature-tab-1.svg" alt="AI Автоматизация"> AI Автоматизация</a></li>
                         </ul>
                     </div>
                     <!-- Our Project Nav End -->
@@ -29,110 +37,12 @@
         <!-- Our Project Tab Box End -->
 
         <div class="row project-item-list">
-            <div class="col-xl-4 col-md-6 project-item-box web">
-                <!-- Project Item Start -->
-                <div class="project-item wow fadeInUp">
-                    <!-- Project Item Image Start -->
-                    <div class="project-item-image">
-                        <a href="project-single.html" data-cursor-text="View">
-                            <figure>
-                                <img src="/images/project-1.jpg" alt="Кейс: AI автоматизация">
-                            </figure>
-                        </a>
-                    </div>
-                    <!-- Project Item Image End -->
-
-                    <!-- Project Item Body Start -->
-                    <div class="project-item-body">
-                        <!-- Project Item Content Start -->
-                        <div class="project-item-content">
-                            <ul>
-                                <li><a href="/projects">Веб-разработка</a></li>
-                            </ul>
-                            <h2><a href="/projects">Платформа для E-commerce</a></h2>
-                        </div>
-                        <!-- Project Item Content End -->
-
-                        <!-- Project Item Button Start  -->
-                        <div class="project-item-btn">
-                            <a href="/projects" class="readmore-btn">Смотреть проект</a>
-                        </div>
-                        <!-- Project Item Button End  -->
-                    </div>
-                    <!-- Project Item Body End -->
-                </div>
-                <!-- Project Item End -->
-            </div>
-
-            <div class="col-xl-4 col-md-6 project-item-box uiux">
-                <!-- Project Item Start -->
-                <div class="project-item wow fadeInUp" data-wow-delay="0.2s">
-                    <!-- Project Item Image Start -->
-                    <div class="project-item-image">
-                        <a href="project-single.html" data-cursor-text="View">
-                            <figure>
-                                <img src="/images/project-2.jpg" alt="Кейс: Разработка MVP">
-                            </figure>
-                        </a>
-                    </div>
-                    <!-- Project Item Image End -->
-
-                    <!-- Project Item Body Start -->
-                    <div class="project-item-body">
-                        <!-- Project Item Content Start -->
-                        <div class="project-item-content">
-                            <ul>
-                                <li><a href="/projects">UI/UX Дизайн</a></li>
-                            </ul>
-                            <h2><a href="/projects">Редизайн корпоративного сайта</a></h2>
-                        </div>
-                        <!-- Project Item Content End -->
-
-                        <!-- Project Footer Button Start  -->
-                        <div class="project-item-btn">
-                            <a href="/projects" class="readmore-btn">Смотреть проект</a>
-                        </div>
-                        <!-- Project Footer Button End  -->
-                    </div>
-                    <!-- Project Item Body End -->
-                </div>
-                <!-- Project Item End -->
-            </div>
-
-            <div class="col-xl-4 col-md-6 project-item-box web uiux">
-                <!-- Project Item Start -->
-                <div class="project-item wow fadeInUp" data-wow-delay="0.2s">
-                    <!-- Project Item Image Start -->
-                    <div class="project-item-image">
-                        <a href="project-single.html" data-cursor-text="View">
-                            <figure>
-                                <img src="/images/project-3.jpg" alt="Кейс: Интеграция CRM">
-                            </figure>
-                        </a>
-                    </div>
-                    <!-- Project Item Image End -->
-
-                    <!-- Project Item Body Start -->
-                    <div class="project-item-body">
-                        <!-- Project Item Content Start -->
-                        <div class="project-item-content">
-                            <ul>
-                                <li><a href="/projects">Брендинг</a></li>
-                            </ul>
-                            <h2><a href="/projects">Айдентика для IT компании</a></h2>
-                        </div>
-                        <!-- Project Item Content End -->
-
-                        <!-- Project Footer Button Start  -->
-                        <div class="project-item-btn">
-                            <a href="/projects" class="readmore-btn">Смотреть проект</a>
-                        </div>
-                        <!-- Project Footer Button End  -->
-                    </div>
-                    <!-- Project Item Body End -->
-                </div>
-                <!-- Project Item End -->
-            </div>
+            {featuredProjects.map((project, index) => (
+                <ProjectCard 
+                    project={project} 
+                    delay={`${index * 0.2}s`}
+                />
+            ))}
         </div>
 
         <div class="row">
