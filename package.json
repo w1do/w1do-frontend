@@ -14,7 +14,9 @@
   "dependencies": {
     "@astrojs/node": "^10.1.4",
     "@astrojs/sitemap": "^3.7.3",
-    "astro": "^6.4.6",
-    "terser": "^5.31.1"
+    "astro": "^6.4.6"
+  },
+  "devDependencies": {
+    "terser": "^5.48.0"
   }
 }

@@ -1,0 +1,36 @@
+---
+interface Props {
+    title: string;
+    pubDate: string | Date;
+    author?: string;
+}
+
+const { title, pubDate, author = "Admin" } = Astro.props;
+
+const formattedDate = new Date(pubDate).toLocaleDateString('ru-RU', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+});
+---
+<!-- Page Header Section Start -->
+<div class="page-header dark-section parallaxie">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Page Header Box Start -->
+                <div class="page-header-box">
+                    <h1 class="text-anime-style-3" data-cursor="-opaque">{title}</h1>
+                    <div class="post-single-meta wow fadeInUp">
+                        <ol class="breadcrumb">
+                            <li><i class="fa-regular fa-user"></i> {author}</li>
+                            <li><i class="fa-regular fa-clock"></i> {formattedDate}</li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- Page Header Box End -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page Header Section End -->

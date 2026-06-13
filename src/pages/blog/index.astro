@@ -1,0 +1,24 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/shared/Header.astro";
+import Breadcrumbs from "../../components/shared/Breadcrumbs.astro";
+import BlogList from "../../components/blog/BlogList.astro";
+import Cta from "../../components/Cta.astro";
+import Footer from "../../components/shared/Footer.astro";
+
+const posts = Object.values(import.meta.glob('./*.md', { eager: true }));
+const sortedPosts = posts.sort((a, b) => new Date(b.frontmatter.pubDate).valueOf() - new Date(a.frontmatter.pubDate).valueOf());
+
+const breadcrumbItems = [
+    { label: "Главная", href: "/" },
+    { label: "Блог", active: true }
+];
+---
+
+<Layout title="Блог | ИИ в бизнесе и автоматизация" description="Статьи об искусственном интеллекте, автоматизации бизнес-процессов и цифровом маркетинге.">
+    <Header/>
+    <Breadcrumbs title="Наш Блог" breadcrumbItems={breadcrumbItems} />
+    <BlogList posts={sortedPosts} />
+    <Cta/>
+    <Footer/>
+</Layout>

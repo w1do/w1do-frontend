@@ -1,0 +1,71 @@
+---
+const { posts = [] } = Astro.props;
+---
+<!-- Page Blog Start -->
+<div class="page-blog">
+    <div class="container">
+        <div class="row">
+            {posts.map((post: any) => (
+                <div class="col-xl-4 col-md-6">
+                    <!-- Post Item Start -->
+                    <div class="post-item box-border-gradiant wow fadeInUp">
+                        <!-- Post Item image Start -->
+                        <div class="post-item-image">
+                            <figure>
+                                <img src={post.frontmatter.image || "/images/post-1.jpg"} alt={post.frontmatter.title}>
+                            </figure>
+                        </div>
+                        <!-- Post Item image End -->
+
+                        <!-- Post Item Button Start -->
+                        <div class="post-item-btn">
+                            <a href={post.url}><img src="/images/arrow-primary.svg" alt=""></a>
+                        </div>
+                        <!-- Post Item Button End -->
+
+                        <!-- Post Item Body Start -->
+                        <div class="post-item-body">
+                            <!-- Post Item Content Start -->
+                            <div class="post-item-content">
+                                <h2><a href={post.url}>{post.frontmatter.title}</a></h2>
+                            </div>
+                            <!-- Post Item Content End -->
+
+                            <!-- Post Item Meta Start -->
+                            <div class="post-item-meta">
+                                <ul>
+                                    <li>
+                                        <img src="/images/icon-calendar-date.svg" alt="">
+                                        {new Date(post.frontmatter.pubDate).toLocaleDateString('ru-RU', {
+                                            year: 'numeric',
+                                            month: 'long',
+                                            day: 'numeric'
+                                        })}
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- Post Item Meta End -->
+                        </div>
+                        <!-- Post Item Body End -->
+                    </div>
+                    <!-- Post Item End -->
+                </div>
+            ))}
+
+            <div class="col-lg-12">
+                <!-- Page Pagination Start -->
+                <div class="page-pagination wow fadeInUp" data-wow-delay="0.4s">
+                    <ul class="pagination">
+                        <li><a href="#"><i class="fa-solid fa-angle-left"></i></a></li>
+                        <li class="active"><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#"><i class="fa-solid fa-angle-right"></i></a></li>
+                    </ul>
+                </div>
+                <!-- Page Pagination End -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page Blog Start -->

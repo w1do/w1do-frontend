@@ -13,13 +13,14 @@ const {
 } = Astro.props;
 ---
 <!-- Page Header Start -->
-<div class="page-header parallaxie">
+<div class="page-header dark-section parallaxie">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <!-- Page Header Box Start -->
                 <div class="page-header-box">
                     <h1 class="text-anime-style-3" data-cursor="-opaque">{title}</h1>
+                    <slot name="after-title" />
                     <nav class="wow fadeInUp">
                         <ol class="breadcrumb">
                             {breadcrumbItems.map((item) => (

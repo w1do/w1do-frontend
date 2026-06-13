@@ -1,0 +1,132 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/shared/Header.astro";
+import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
+import Cta from "../components/Cta.astro";
+import Footer from "../components/shared/Footer.astro";
+import BlogBreadcrumbs from "../components/blog/BlogBreadcrumbs.astro";
+
+const { frontmatter } = Astro.props;
+
+const breadcrumbItems = [
+    { label: "Главная", href: "/" },
+    { label: "Блог", href: "/blog" },
+    { label: frontmatter.title, active: true }
+];
+---
+
+<Layout title={frontmatter.title} description={frontmatter.description}>
+    <Header/>
+    <BlogBreadcrumbs title={frontmatter.title} pubDate={frontmatter.pubDate} />
+
+    <!-- Page Single Post Start -->
+    <div class="page-single-post">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- Post Featured Image Start -->
+                    {frontmatter.image && (
+                        <div class="post-image">
+                            <figure class="image-anime reveal">
+                                <img src={frontmatter.image} alt={frontmatter.title}>
+                            </figure>
+                        </div>
+                    )}
+                    <!-- Post Featured Image Start -->
+
+                    <!-- Post Single Content Start -->
+                    <div class="post-content">
+                        <!-- Post Entry Start -->
+                        <div class="post-entry entry-content">
+                            <slot />
+                        </div>
+                        <!-- Post Entry End -->
+
+                        <!-- Post Tag Links Start -->
+                        <div class="post-tag-links">
+                            <div class="row align-items-center">
+                                <div class="col-lg-8">
+                                    <!-- Post Tags Start -->
+                                    <div class="post-tags wow fadeInUp" data-wow-delay="0.8s">
+                                        <span class="tag-links">
+                                            Теги:
+                                            {frontmatter.tags ? frontmatter.tags.map((tag, index) => (
+                                                <a href="#">{tag}</a>
+                                            )) : (
+                                                <>
+                                                    <a href="#">Искусственный интеллект</a>
+                                                    <a href="#">Автоматизация</a>
+                                                    <a href="#">Бизнес</a>
+                                                </>
+                                            )}
+                                        </span>
+                                    </div>
+                                    <!-- Post Tags End -->
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <!-- Post Social Links Start -->
+                                    <div class="post-social-sharing wow fadeInUp" data-wow-delay="0.8s">
+                                        <ul>
+                                            <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
+                                            <li><a href="#"><i class="fa-brands fa-linkedin-in"></i></a></li>
+                                            <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+                                            <li><a href="#"><i class="fa-brands fa-x-twitter"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <!-- Post Social Links End -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Post Tag Links End -->
+                    </div>
+                    <!-- Post Single Content End -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Page Single Post End -->
+
+    <Cta/>
+    <Footer/>
+</Layout>
+
+<style>
+    .post-content {
+        max-width: 100%;
+    }
+    .btn-white {
+        background: var(--white-color) !important;
+        color: var(--black-color) !important;
+    }
+    .btn-white::before {
+        background-color: var(--accent-color) !important;
+    }
+    .btn-white:hover::after {
+        background: var(--accent-color) !important;
+    }
+    .btn-white:hover {
+        color: var(--white-color) !important;
+    }
+    .cta-contact-card {
+        margin-top: 30px;
+    }
+    .btn-default.w-100 {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--black-color) !important;
+        border-color: var(--black-color) !important;
+        color: var(--white-color) !important;
+        padding-right: 24px;
+    }
+    .btn-default.w-100::before {
+        display: none;
+    }
+    .btn-default.w-100:hover {
+        background: var(--accent-color) !important;
+        border-color: var(--accent-color) !important;
+        color: var(--black-color) !important;
+    }
+</style>
