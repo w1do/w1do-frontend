@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+
 interface Props {
     project: {
         id: number;
@@ -20,7 +22,7 @@ const { project, delay = "0s", className = "" } = Astro.props;
         <div class="project-item-image">
             <a href={project.link} data-cursor-text="View">
                 <figure>
-                    <img src={project.image} alt={project.title}>
+                    <Image src={project.image} alt={project.title} width={600} height={400} loading="lazy" />
                 </figure>
             </a>
         </div>

@@ -1,3 +1,6 @@
+---
+import { Image } from 'astro:assets';
+---
 <!-- Our Blog Section Start -->
 <div class="our-blog">
     <div class="container">
@@ -37,7 +40,7 @@
                     <!-- Post Item image Start -->
                     <div class="post-item-image">
                         <figure>
-                            <img src="/images/post-1.jpg" alt="Технология RAG в ИИ">
+                            <Image src="/images/post-1.jpg" alt="Технология RAG в ИИ" width={600} height={400} loading="lazy" />
                         </figure>
                     </div>
                     <!-- Post Item image End -->
@@ -75,7 +78,7 @@
                     <!-- Post Item image Start -->
                     <div class="post-item-image">
                         <figure>
-                            <img src="/images/post-2.jpg" alt="Локальные LLM модели">
+                            <Image src="/images/post-2.jpg" alt="Локальные LLM модели" width={600} height={400} loading="lazy" />
                         </figure>
                     </div>
                     <!-- Post Item image End -->
@@ -113,7 +116,7 @@
                     <!-- Post Item image Start -->
                     <div class="post-item-image">
                         <figure>
-                            <img src="/images/post-3.jpg" alt="Автономные AI агенты">
+                            <Image src="/images/post-3.jpg" alt="Автономные AI агенты" width={600} height={400} loading="lazy" />
                         </figure>
                     </div>
                     <!-- Post Item image End -->

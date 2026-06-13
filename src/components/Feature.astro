@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+
 interface Props {
     subTitle?: string;
     title?: string;
@@ -51,7 +53,7 @@ const {
                     <div class="core-feature-box box-1 box-border-gradiant wow fadeInUp">
                         <div class="core-feature-image">
                             <figure>
-                                <img src="/images/core-feature-image-1.png" alt="Технологический стек AI инженера">
+                                <Image src="/images/core-feature-image-1.png" alt="Технологический стек AI инженера" width={500} height={400} loading="lazy" />
                             </figure>
                         </div>
                         <div class="core-feature-body-content">
@@ -66,7 +68,7 @@ const {
                         <!-- Core Feature Image Start -->
                         <div class="core-feature-image">
                             <figure>
-                                <img src="/images/core-feature-image.jpg" alt="Инженер за работой над AI проектом">
+                                <Image src="/images/core-feature-image.jpg" alt="Инженер за работой над AI проектом" width={800} height={600} loading="lazy" />
                             </figure>
                         </div>
                         <!-- Core Feature Image End -->
