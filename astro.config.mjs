@@ -9,5 +9,16 @@ export default defineConfig({
   adapter: node({
     mode: 'standalone'
   }),
-  integrations: [sitemap()]
+  integrations: [sitemap()],
+  vite: {
+    build: {
+      cssCodeSplit: true,
+      minify: 'terser',
+      terserOptions: {
+        compress: {
+          drop_console: true,
+        },
+      },
+    },
+  },
 });
