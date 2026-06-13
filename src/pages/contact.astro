@@ -74,14 +74,14 @@ import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
                             <div class="contact-methods wow fadeInUp" data-wow-delay="0.4s">
                                 <!-- Telegram Button -->
                                 <div class="contact-method-item mb-4">
-                                    <a href={import.meta.env.PUBLIC_TELEGRAM_URL} class="btn-default w-100 d-flex align-items-center justify-content-center">
+                                    <a href={import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1DO_DIGITAL"} class="btn-default w-100 d-flex align-items-center justify-content-center" data-cursor="-opaque">
                                         <i class="fa-brands fa-telegram me-2"></i> Написать в Telegram
                                     </a>
                                 </div>
                                 
                                 <!-- Max Button -->
                                 <div class="contact-method-item">
-                                    <a href={import.meta.env.PUBLIC_MAX_URL} class="btn-default w-100 d-flex align-items-center justify-content-center" style="background: var(--primary-color); border-color: var(--primary-color);">
+                                    <a href={import.meta.env.PUBLIC_MAX_URL || "https://max.ru/u/f9LHodD0cOL4jUDWBhcDiOlaTduZWhHQva5q0JyDmb-jDjK9nEdlhTwyIQQ"} class="btn-default w-100 d-flex align-items-center justify-content-center" style="background: var(--primary-color); border-color: var(--primary-color);" data-cursor="-opaque">
                                         <i class="fa-solid fa-link me-2"></i> Профиль на Max
                                     </a>
                                 </div>

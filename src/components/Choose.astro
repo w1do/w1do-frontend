@@ -40,7 +40,7 @@ const {
 
                         <!-- Contact Us Circle Start -->
                         <div class="contact-us-circle">
-                            <a href={import.meta.env.PUBLIC_TELEGRAM_URL}>
+                            <a href={import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1DO_DIGITAL"} data-cursor="-opaque">
                                 <img src="/images/contact-us-circle.svg" alt="Связаться со мной">
                             </a>
                         </div>
@@ -118,7 +118,7 @@ const {
                     <div class="why-choose-footer wow fadeInUp" data-wow-delay="0.6s">
                         <!-- Why Choose Button Start -->
                         <div class="why-choose-btn">
-                            <a href={import.meta.env.PUBLIC_TELEGRAM_URL} class="btn-default">Telegram</a>
+                            <a href={import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1DO_DIGITAL"} class="btn-default" data-cursor="-opaque">Telegram</a>
                         </div>
                         <!-- Why Choose Button End -->
 
@@ -136,7 +136,7 @@ const {
                                 </div>
                             </div>
                             <!-- Satisfy Client Images End -->
-                            <p>Обсудить детали проекта <a href={import.meta.env.PUBLIC_TELEGRAM_URL}> написать</a></p>
+                            <p>Обсудить детали проекта <a href={import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1DO_DIGITAL"} data-cursor="-opaque"> написать</a></p>
                         </div>
                         <!-- Section Footer Text End -->
                     </div>
