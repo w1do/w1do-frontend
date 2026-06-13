@@ -10,6 +10,7 @@ export default defineConfig({
   adapter: node({
     mode: 'standalone'
   }),
+  trailingSlash: 'never',
   integrations: [sitemap()],
   prefetch: true,
   build: {

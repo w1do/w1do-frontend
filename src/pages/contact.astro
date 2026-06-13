@@ -143,9 +143,11 @@ import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
                 }
 
                 try {
+                    console.log('Sending request to /api/send-telegram...');
                     const response = await fetch('/api/send-telegram', {
                         method: 'POST',
                         headers: {
+                            'Accept': 'application/json',
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({
@@ -153,6 +155,7 @@ import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
                             source: 'Contact Page'
                         }),
                     });
+                    console.log('Response status:', response.status);
 
                     if (response.ok) {
                         if (msgSubmit) {

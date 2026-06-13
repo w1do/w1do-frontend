@@ -113,9 +113,11 @@ const {
             }
 
             try {
+                console.log('Sending request to /api/send-telegram...');
                 const response = await fetch('/api/send-telegram', {
                     method: 'POST',
                     headers: {
+                        'Accept': 'application/json',
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
@@ -123,6 +125,7 @@ const {
                         source: 'CTA Form'
                     }),
                 });
+                console.log('Response status:', response.status);
 
                 if (response.ok) {
                     if (msgSubmit) {
