@@ -38,137 +38,43 @@ const {
             </div>
 
             <div class="col-xl-6">
-                <!-- Cta Form Box Start -->
+                <!-- Cta Contact Box Start -->
                 <div class="cta-form-box box-border-gradiant">
                     <!-- Section Title Start -->
                     <div class="section-title section-title-center">
-                        <h2 class="text-anime-style-3" data-cursor="-opaque">{formTitle}</h2>
+                        <h2 class="text-anime-style-3" data-cursor="-opaque">Связаться напрямую</h2>
+                        <p class="wow fadeInUp" data-wow-delay="0.2s">Выберите удобный способ связи для быстрого обсуждения вашего проекта.</p>
                     </div>
                     <!-- Section Title End -->
 
-                    <!-- Cta Form Start -->
-                    <div class="contact-form">
-                        <form id="contactForm" action="#" method="POST" data-toggle="validator" class="contact-form wow fadeInUp" data-wow-delay="0.2s">
-                            <div class="row">
-                                <div class="form-group col-md-6 mb-4">
-                                    <label>Имя *</label>
-                                    <input type="text" name="fname" class="form-control" id="fname" placeholder="Введите имя *" required="">
-                                    <div class="help-block with-errors"></div>
-                                </div>
-
-                                <div class="form-group col-md-6 mb-4">
-                                    <label>Телефон / Telegram *</label>
-                                    <input type="text" name="phone" class="form-control" id="phone" placeholder="Введите номер или ник *" required="">
-                                    <div class="help-block with-errors"></div>
-                                </div>
-
-                                <div class="form-group col-md-12 mb-4">
-                                    <label>Email Address *</label>
-                                    <input type="email" name="email" class="form-control" id="email" placeholder="Введите email *" required="">
-                                    <div class="help-block with-errors"></div>
-                                </div>
-
-                                <div class="form-group col-md-12 mb-5">
-                                    <label>Описание задачи *</label>
-                                    <textarea name="message" class="form-control" id="message" rows="5" placeholder="Расскажите кратко о вашей задаче..."></textarea>
-                                    <div class="help-block with-errors"></div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <button type="submit" id="submitBtn" class="btn-default">Отправить заявку</button>
-                                    <div id="msgSubmit" class="h3 hidden"></div>
-                                </div>
-                            </div>
-                        </form>
+                    <div class="cta-contact-cards wow fadeInUp" data-wow-delay="0.4s">
+                        <!-- Telegram Card -->
+                        <div class="cta-contact-card mb-4">
+                            <a href={import.meta.env.PUBLIC_TELEGRAM_URL} class="btn-default w-100 d-flex align-items-center justify-content-center">
+                                <i class="fa-brands fa-telegram me-2"></i> Написать в Telegram
+                            </a>
+                        </div>
+                        
+                        <!-- Max Card -->
+                        <div class="cta-contact-card">
+                            <a href={import.meta.env.PUBLIC_MAX_URL} class="btn-default w-100 d-flex align-items-center justify-content-center" style="background: var(--primary-color); border-color: var(--primary-color);">
+                                <i class="fa-solid fa-link me-2"></i> Связаться через Max
+                            </a>
+                        </div>
                     </div>
-                    <!-- Cta Form End -->
                 </div>
-                <!-- Cta Form Box End -->
+                <!-- Cta Contact Box End -->
             </div>
         </div>
     </div>
 </div>
 
-<script>
-    const contactForm = document.getElementById('contactForm') as HTMLFormElement;
-    const submitBtn = document.getElementById('submitBtn') as HTMLButtonElement;
-    const msgSubmit = document.getElementById('msgSubmit');
-
-    if (contactForm) {
-        contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const formData = new FormData(contactForm);
-            const data = {
-                fname: formData.get('fname'),
-                phone: formData.get('phone'),
-                email: formData.get('email'),
-                message: formData.get('message'),
-            };
-
-            // Disable button
-            if (submitBtn) {
-                submitBtn.disabled = true;
-                submitBtn.innerText = 'Отправка...';
-            }
-
-            try {
-                console.log('Sending request to /api/send-telegram...');
-                const response = await fetch('/api/send-telegram', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        ...data,
-                        source: 'CTA Form'
-                    }),
-                });
-                console.log('Response status:', response.status);
-
-                if (response.ok) {
-                    if (msgSubmit) {
-                        msgSubmit.innerText = 'Заявка успешно отправлена!';
-                        msgSubmit.classList.remove('hidden', 'text-danger');
-                        msgSubmit.classList.add('text-success');
-                    }
-                    contactForm.reset();
-                } else {
-                    const errorData = await response.json();
-                    console.error('API Error:', errorData);
-                    throw new Error(errorData.message || 'Ошибка при отправке.');
-                }
-            } catch (error: any) {
-                console.error('Error:', error);
-                if (msgSubmit) {
-                    msgSubmit.innerText = error.message || 'Ошибка при отправке. Попробуйте позже.';
-                    msgSubmit.classList.remove('hidden', 'text-success');
-                    msgSubmit.classList.add('text-danger');
-                }
-            } finally {
-                if (submitBtn) {
-                    submitBtn.disabled = false;
-                    submitBtn.innerText = 'Отправить заявку';
-                }
-            }
-        });
-    }
-</script>
-
 <style>
-    .hidden {
-        display: none;
+    .cta-contact-cards {
+        margin-top: 30px;
     }
-    .text-success {
-        color: #28a745;
-        margin-top: 15px;
-        font-size: 18px;
-    }
-    .text-danger {
-        color: #dc3545;
-        margin-top: 15px;
-        font-size: 18px;
+    .w-100 {
+        width: 100%;
     }
 </style>
 <!-- Cta Box Section End -->

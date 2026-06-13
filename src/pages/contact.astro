@@ -62,56 +62,32 @@ import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
                         </div>
                         <!-- Contact Us Content Box End -->
 
-                        <!-- Cta Form Box Start -->
+                        <!-- Cta Contact Box Start -->
                         <div class="cta-form-box">
                             <!-- Section Title Start -->
                             <div class="section-title section-title-center">
-                                <h2 class="text-anime-style-3" data-cursor="-opaque">Напишите мне</h2>
+                                <h2 class="text-anime-style-3" data-cursor="-opaque">Прямая связь</h2>
+                                <p class="wow fadeInUp" data-wow-delay="0.2s">Выберите любой удобный канал связи. Я обычно отвечаю в течение часа.</p>
                             </div>
                             <!-- Section Title End -->
-                            <!-- Cta Form Start -->
-                            <div class="contact-form">
-                                <form id="contactForm" action="#" method="POST" data-toggle="validator"
-                                      class="contact-form wow fadeInUp" data-wow-delay="0.2s">
-                                    <div class="row">
-                                        <div class="form-group col-md-6 mb-4">
-                                            <label>Имя *</label>
-                                            <input type="text" name="fname" class="form-control" id="fname"
-                                                   placeholder="Введите имя *" required="">
-                                            <div class="help-block with-errors"></div>
-                                        </div>
-
-                                        <div class="form-group col-md-6 mb-4">
-                                            <label>Телефон / Telegram *</label>
-                                            <input type="text" name="phone" class="form-control" id="phone"
-                                                   placeholder="Введите номер или ник *" required="">
-                                            <div class="help-block with-errors"></div>
-                                        </div>
-
-                                        <div class="form-group col-md-12 mb-4">
-                                            <label>Email *</label>
-                                            <input type="email" name="email" class="form-control" id="email"
-                                                   placeholder="Введите Email *" required="">
-                                            <div class="help-block with-errors"></div>
-                                        </div>
-
-                                        <div class="form-group col-md-12 mb-5">
-                                            <label>Сообщение *</label>
-                                            <textarea name="message" class="form-control" id="message" rows="5"
-                                                      placeholder="Ваше сообщение..."></textarea>
-                                            <div class="help-block with-errors"></div>
-                                        </div>
-
-                                        <div class="col-md-12">
-                                            <button type="submit" id="submitBtn" class="btn-default">Отправить сообщение</button>
-                                            <div id="msgSubmit" class="h3 hidden"></div>
-                                        </div>
-                                    </div>
-                                </form>
+                            
+                            <div class="contact-methods wow fadeInUp" data-wow-delay="0.4s">
+                                <!-- Telegram Button -->
+                                <div class="contact-method-item mb-4">
+                                    <a href={import.meta.env.PUBLIC_TELEGRAM_URL} class="btn-default w-100 d-flex align-items-center justify-content-center">
+                                        <i class="fa-brands fa-telegram me-2"></i> Написать в Telegram
+                                    </a>
+                                </div>
+                                
+                                <!-- Max Button -->
+                                <div class="contact-method-item">
+                                    <a href={import.meta.env.PUBLIC_MAX_URL} class="btn-default w-100 d-flex align-items-center justify-content-center" style="background: var(--primary-color); border-color: var(--primary-color);">
+                                        <i class="fa-solid fa-link me-2"></i> Профиль на Max
+                                    </a>
+                                </div>
                             </div>
-                            <!-- Cta Form End -->
                         </div>
-                        <!-- Cta Form Box End -->
+                        <!-- Cta Contact Box End -->
                     </div>
                     <!-- Contact Image Form Box End -->
                 </div>
@@ -120,84 +96,12 @@ import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
     </div>
     <!-- Page Contact Us Start -->
 
-    <script>
-        const contactForm = document.getElementById('contactForm') as HTMLFormElement;
-        const submitBtn = document.getElementById('submitBtn') as HTMLButtonElement;
-        const msgSubmit = document.getElementById('msgSubmit');
-
-        if (contactForm) {
-            contactForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-
-                const formData = new FormData(contactForm);
-                const data = {
-                    fname: formData.get('fname'),
-                    phone: formData.get('phone'),
-                    email: formData.get('email'),
-                    message: formData.get('message'),
-                };
-
-                if (submitBtn) {
-                    submitBtn.disabled = true;
-                    submitBtn.innerText = 'Отправка...';
-                }
-
-                try {
-                    console.log('Sending request to /api/send-telegram...');
-                    const response = await fetch('/api/send-telegram', {
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            ...data,
-                            source: 'Contact Page'
-                        }),
-                    });
-                    console.log('Response status:', response.status);
-
-                    if (response.ok) {
-                        if (msgSubmit) {
-                            msgSubmit.innerText = 'Сообщение успешно отправлено!';
-                            msgSubmit.classList.remove('hidden', 'text-danger');
-                            msgSubmit.classList.add('text-success');
-                        }
-                        contactForm.reset();
-                    } else {
-                        const errorData = await response.json();
-                        throw new Error(errorData.message || 'Ошибка при отправке.');
-                    }
-                } catch (error: any) {
-                    console.error('Error:', error);
-                    if (msgSubmit) {
-                        msgSubmit.innerText = error.message || 'Ошибка при отправке.';
-                        msgSubmit.classList.remove('hidden', 'text-success');
-                        msgSubmit.classList.add('text-danger');
-                    }
-                } finally {
-                    if (submitBtn) {
-                        submitBtn.disabled = false;
-                        submitBtn.innerText = 'Отправить сообщение';
-                    }
-                }
-            });
-        }
-    </script>
-
     <style>
-        .hidden {
-            display: none;
+        .contact-methods {
+            margin-top: 30px;
         }
-        .text-success {
-            color: #28a745;
-            margin-top: 15px;
-            font-size: 18px;
-        }
-        .text-danger {
-            color: #dc3545;
-            margin-top: 15px;
-            font-size: 18px;
+        .w-100 {
+            width: 100%;
         }
     </style>
 
