@@ -143,29 +143,14 @@ import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
                 }
 
                 try {
-                    const token = import.meta.env.PUBLIC_TELEGRAM_BOT_TOKEN;
-                    const chatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID;
-
-                    if (!token || !chatId) {
-                        console.error('Telegram Config Missing:', { token: !!token, chatId: !!chatId });
-                        throw new Error('Конфигурация Telegram не найдена.');
-                    }
-
-                    const text = `🚀 Новое сообщение с контактов!\n\n` +
-                                 `👤 Имя: ${data.fname}\n` +
-                                 `📞 Связь: ${data.phone}\n` +
-                                 `📧 Email: ${data.email}\n` +
-                                 `📝 Сообщение: ${data.message}`;
-
-                    const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+                    const response = await fetch('/api/send-telegram', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({
-                            chat_id: chatId,
-                            text: text,
-                            parse_mode: 'HTML'
+                            ...data,
+                            source: 'Contact Page'
                         }),
                     });
 
@@ -178,7 +163,7 @@ import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
                         contactForm.reset();
                     } else {
                         const errorData = await response.json();
-                        throw new Error(`Ошибка Telegram: ${errorData.description || 'Неизвестная ошибка'}`);
+                        throw new Error(errorData.message || 'Ошибка при отправке.');
                     }
                 } catch (error: any) {
                     console.error('Error:', error);
