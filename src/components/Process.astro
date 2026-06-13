@@ -1,3 +1,32 @@
+---
+interface Props {
+    subTitle?: string;
+    title?: string;
+    description?: string;
+    step1Title?: string;
+    step1Desc?: string;
+    step2Title?: string;
+    step2Desc?: string;
+    step3Title?: string;
+    step3Desc?: string;
+    step4Title?: string;
+    step4Desc?: string;
+}
+
+const {
+    subTitle = "Процесс работы",
+    title = "AI Roadmap: как я внедряю нейросети в ваш бизнес",
+    description = "Этот процесс позволяет мне создавать высококачественные цифровые решения, которые помогают бизнесу расти и достигать реальных результатов.",
+    step1Title = "Анализ",
+    step1Desc = "Изучаю ваши бизнес-процессы и нахожу точки роста",
+    step2Title = "Прототип",
+    step2Desc = "Создаю минимально рабочий ИИ-инструмент для теста",
+    step3Title = "Масштабирование",
+    step3Desc = "Полноценная интеграция в ваши системы",
+    step4Title = "Поддержка",
+    step4Desc = "Постоянная оптимизация алгоритмов под задачи"
+} = Astro.props;
+---
 <!-- Our Process Section Start -->
 <div class="our-process">
     <div class="container">
@@ -5,8 +34,8 @@
             <div class="col-xl-6">
                 <!-- Section Title Start -->
                 <div class="section-title">
-                    <span class="section-sub-title wow fadeInUp">Процесс работы</span>
-                    <h2 class="text-anime-style-3" data-cursor="-opaque">AI Roadmap: как я внедряю нейросети в ваш бизнес</h2>
+                    <span class="section-sub-title wow fadeInUp">{subTitle}</span>
+                    <h2 class="text-anime-style-3" data-cursor="-opaque">{title}</h2>
                 </div>
                 <!-- Section Title End -->
             </div>
@@ -16,7 +45,7 @@
                 <div class="section-content-btn">
                     <!-- Section Title Content Start -->
                     <div class="section-title-content wow fadeInUp" data-wow-delay="0.2s">
-                        <p>Этот процесс позволяет мне создавать высококачественные цифровые решения, которые помогают бизнесу расти и достигать реальных результатов.</p>
+                        <p>{description}</p>
                     </div>
                     <!-- Section Title Content End -->
 
@@ -37,11 +66,11 @@
                     <!-- Process Item Start -->
                     <div class="process-item box-border-gradiant wow fadeInUp">
                         <div class="icon-box">
-                            <img src="/images/icon-process-item-1.svg" alt="Этап 1: Аналитика и аудит">
+                            <img src="/images/icon-process-item-1.svg" alt={step1Title}>
                         </div>
                         <div class="process-item-content">
-                            <p>Анализ</p>
-                            <h3>Изучаю ваши бизнес-процессы и нахожу точки роста</h3>
+                            <p>{step1Title}</p>
+                            <h3>{step1Desc}</h3>
                         </div>
                         <div class="process-item-no">
                             <h3>.01</h3>
@@ -52,11 +81,11 @@
                     <!-- Process Item Start -->
                     <div class="process-item box-border-gradiant wow fadeInUp" data-wow-delay="0.2s">
                         <div class="icon-box">
-                            <img src="/images/icon-process-item-2.svg" alt="Этап 2: Прототипирование AI решений">
+                            <img src="/images/icon-process-item-2.svg" alt={step2Title}>
                         </div>
                         <div class="process-item-content">
-                            <p>Прототип</p>
-                            <h3>Создаю минимально рабочий ИИ-инструмент для теста</h3>
+                            <p>{step2Title}</p>
+                            <h3>{step2Desc}</h3>
                         </div>
                         <div class="process-item-no">
                             <h3>.02</h3>
@@ -67,11 +96,11 @@
                     <!-- Process Item Start -->
                     <div class="process-item box-border-gradiant wow fadeInUp" data-wow-delay="0.4s">
                         <div class="icon-box">
-                            <img src="/images/icon-process-item-3.svg" alt="Этап 3: Масштабирование и интеграция">
+                            <img src="/images/icon-process-item-3.svg" alt={step3Title}>
                         </div>
                         <div class="process-item-content">
-                            <p>Масштабирование</p>
-                            <h3>Полноценная интеграция в ваши системы</h3>
+                            <p>{step3Title}</p>
+                            <h3>{step3Desc}</h3>
                         </div>
                         <div class="process-item-no">
                             <h3>.03</h3>
@@ -82,11 +111,11 @@
                     <!-- Process Item Start -->
                     <div class="process-item box-border-gradiant wow fadeInUp" data-wow-delay="0.6s">
                         <div class="icon-box">
-                            <img src="/images/icon-process-item-4.svg" alt="Этап 4: Поддержка и оптимизация">
+                            <img src="/images/icon-process-item-4.svg" alt={step4Title}>
                         </div>
                         <div class="process-item-content">
-                            <p>Поддержка</p>
-                            <h3>Постоянная оптимизация алгоритмов под задачи</h3>
+                            <p>{step4Title}</p>
+                            <h3>{step4Desc}</h3>
                         </div>
                         <div class="process-item-no">
                             <h3>.04</h3>

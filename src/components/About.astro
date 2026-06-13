@@ -1,3 +1,22 @@
+---
+interface Props {
+    subTitle?: string;
+    title?: string;
+    description?: string;
+    counterValue?: string;
+    counterTag?: string;
+    counterDescription?: string;
+}
+
+const {
+    subTitle = "Обо мне",
+    title = "Экспертный подход к AI-трансформации",
+    description = "Я не просто пишу код, я создаю <strong>AI Roadmap</strong> для вашего бизнеса. Использую стек передовых инструментов: <strong>Claude</strong>, <strong>Cursor</strong>, <strong>Codex</strong> и <strong>Antigravity</strong> для ускорения разработки в 5-10 раз. Мой опыт позволяет выстраивать системы, которые работают на ваш доход.",
+    counterValue = "50",
+    counterTag = "Внедренных AI агентов",
+    counterDescription = "автоматизация рутины и бизнес-процессов"
+} = Astro.props;
+---
 <!-- About Us Section Start -->
 <div class="about-us">
     <div class="container">
@@ -7,7 +26,7 @@
                 <div class="about-sub-heading">
                     <!-- Section Sub Heading Start -->
                     <div class="section-sub-heading">
-                        <span class="section-sub-title wow fadeInUp">Обо мне</span>
+                        <span class="section-sub-title wow fadeInUp">{subTitle}</span>
                     </div>
                     <!-- Section Sub Heading End -->
                 </div>
@@ -19,7 +38,7 @@
                 <div class="about-us-content">
                     <!-- Section Title Start -->
                     <div class="section-title">
-                        <h2 class="text-effect">Экспертный подход к AI-трансформации</h2>
+                        <h2 class="text-effect">{title}</h2>
                     </div>
                     <!-- Section Title End -->
 
@@ -28,11 +47,11 @@
                         <!-- About Counter Box start -->
                         <div class="about-counter-box wow fadeInUp">
                             <div class="about-counter-box-header">
-                                <h2><span class="counter">50</span>+</h2>
-                                <span class="about-counter-tag">Внедренных AI агентов</span>
+                                <h2><span class="counter">{counterValue}</span>+</h2>
+                                <span class="about-counter-tag">{counterTag}</span>
                             </div>
                             <div class="about-counter-box-body">
-                                <p>автоматизация рутины и бизнес-процессов</p>
+                                <p>{counterDescription}</p>
                             </div>
                         </div>
                         <!-- About Counter Box End -->
@@ -41,7 +60,7 @@
                         <div class="about-body-content-box wow fadeInUp" data-wow-delay="0.2s">
                             <!-- About Body Content Start -->
                             <div class="about-body-content">
-                                <p>Я не просто пишу код, я создаю <strong>AI Roadmap</strong> для вашего бизнеса. Использую стек передовых инструментов: <strong>Claude</strong>, <strong>Cursor</strong>, <strong>Codex</strong> и <strong>Antigravity</strong> для ускорения разработки в 5-10 раз. Мой опыт позволяет выстраивать системы, которые работают на ваш доход.</p>
+                                <p set:html={description}></p>
                             </div>
                             <!-- About Body Content End -->
 

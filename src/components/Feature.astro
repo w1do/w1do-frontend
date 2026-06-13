@@ -1,3 +1,16 @@
+---
+interface Props {
+    subTitle?: string;
+    title?: string;
+    description?: string;
+}
+
+const {
+    subTitle = "Технологии",
+    title = "Стек, который дает результат",
+    description = "Я использую связку <strong>Cursor + Claude</strong>, что позволяет мне писать код в 4 руки, минимизируя ошибки и ускоряя деплой ваших проектов в разы."
+} = Astro.props;
+---
 <!-- Core Feature Section Start -->
 <div class="core-feature">
     <div class="container">
@@ -5,8 +18,8 @@
             <div class="col-xl-6">
                 <!-- Section Title Start -->
                 <div class="section-title">
-                    <span class="section-sub-title wow fadeInUp">Технологии</span>
-                    <h2 class="text-anime-style-3" data-cursor="-opaque">Стек, который дает результат</h2>
+                    <span class="section-sub-title wow fadeInUp">{subTitle}</span>
+                    <h2 class="text-anime-style-3" data-cursor="-opaque">{title}</h2>
                 </div>
                 <!-- Section Title End -->
             </div>
@@ -16,7 +29,7 @@
                 <div class="section-content-btn">
                     <!-- Section Title Content Start -->
                     <div class="section-title-content wow fadeInUp" data-wow-delay="0.2s">
-                        <p>Я использую связку <strong>Cursor + Claude</strong>, что позволяет мне писать код в 4 руки, минимизируя ошибки и ускоряя деплой ваших проектов в разы.</p>
+                        <p set:html={description}></p>
                     </div>
                     <!-- Section Title Content End -->
 

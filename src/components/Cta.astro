@@ -1,3 +1,18 @@
+---
+interface Props {
+    subTitle?: string;
+    title?: string;
+    description?: string;
+    formTitle?: string;
+}
+
+const {
+    subTitle = "Свяжитесь со мной сегодня",
+    title = "Готовы автоматизировать свой бизнес?",
+    description = "Оставьте заявку, и я проведу бесплатный аудит ваших задач, чтобы предложить лучшие AI-решения, которые сэкономят ваше время и деньги.",
+    formTitle = "Оставить заявку"
+} = Astro.props;
+---
 <!-- Cta Box Section Start -->
 <div class="cta-box bg-section">
     <div class="container">
@@ -7,9 +22,9 @@
                 <div class="cta-box-content">
                     <!-- Section Title Start -->
                     <div class="section-title section-title-center">
-                        <span class="section-sub-title wow fadeInUp">Свяжитесь со мной сегодня</span>
-                        <h2 class="text-anime-style-3" data-cursor="-opaque">Готовы автоматизировать свой бизнес?</h2>
-                        <p class="wow fadeInUp" data-wow-delay="0.2s">Оставьте заявку, и я проведу бесплатный аудит ваших задач, чтобы предложить лучшие AI-решения, которые сэкономят ваше время и деньги.</p>
+                        <span class="section-sub-title wow fadeInUp">{subTitle}</span>
+                        <h2 class="text-anime-style-3" data-cursor="-opaque">{title}</h2>
+                        <p class="wow fadeInUp" data-wow-delay="0.2s">{description}</p>
                     </div>
                     <!-- Section Title End -->
 
@@ -27,7 +42,7 @@
                 <div class="cta-form-box box-border-gradiant">
                     <!-- Section Title Start -->
                     <div class="section-title section-title-center">
-                        <h2 class="text-anime-style-3" data-cursor="-opaque">Оставить заявку</h2>
+                        <h2 class="text-anime-style-3" data-cursor="-opaque">{formTitle}</h2>
                     </div>
                     <!-- Section Title End -->
 

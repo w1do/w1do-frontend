@@ -1,0 +1,108 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/shared/Header.astro";
+import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
+import Preloader from "../components/Preloader.astro";
+import About from "../components/About.astro";
+import Feature from "../components/Feature.astro";
+import Process from "../components/Process.astro";
+import Choose from "../components/Choose.astro";
+import ConsultationPricing from "../components/consultation/ConsultationPricing.astro";
+import ConsultationFaqs from "../components/consultation/ConsultationFaqs.astro";
+import Cta from "../components/Cta.astro";
+import Footer from "../components/shared/Footer.astro";
+import IntroVideo from "../components/IntroVideo.astro";
+import Services from "../components/Services.astro";
+---
+
+<Layout 
+    title="Заказать консультацию по внедрению AI, Claude и Cursor | Разработка и автоматизация"
+    description="Профессиональная консультация по внедрению ИИ в бизнес. Разбор задач, настройка Claude и Cursor, создание AI-агентов и автоматизация разработки."
+    keywords="консультация AI, внедрение Claude, настройка Cursor, автоматизация разработки, AI для бизнеса, заказать разбор задачи ИИ"
+    image="/images/og-consultation.jpg"
+>
+    <Preloader/>
+    <Header/>
+    
+    <Breadcrumbs 
+        title="Консультация по AI" 
+        breadcrumbItems={[
+            { label: "Главная", href: "/" },
+            { label: "Консультация", active: true }
+        ]}
+    />
+
+    <!-- Описание консультации через компонент About (переиспользуем структуру) -->
+    <About 
+        subTitle="О консультации"
+        title="Персональный разбор ваших задач по внедрению ИИ"
+        description="Консультация — это самый быстрый способ получить экспертные ответы на вопросы по <strong>внедрению Claude</strong>, <strong>настройке Cursor</strong> и автоматизации процессов. Мы разберем вашу кодовую базу или бизнес-задачу, составим <strong>AI Roadmap</strong> и внедрим первые улучшения прямо в ходе сессии."
+        counterValue="100"
+        counterTag="Часов консультаций"
+        counterDescription="экспертиза в решении сложных технических задач"
+    />
+
+    <!-- Стек и технологии (Feature) -->
+    <Feature 
+        subTitle="Инструменты"
+        title="Стек для максимальной продуктивности"
+        description="Я обучаю работе с инструментами, которые сам использую ежедневно: <strong>Claude 3.5 Sonnet</strong> для глубокого анализа, <strong>Cursor</strong> для сверхбыстрой разработки и <strong>n8n</strong> для автоматизации рутины."
+    />
+
+    <!-- Принцип работы / Видео -->
+    <IntroVideo 
+        subTitle="Как это работает"
+        title="От глубокого аудита до внедрения AI-агентов"
+        tickerItems={["Claude 3.5 Sonnet", "Cursor IDE", "AI Автоматизация", "Prompt Engineering"]}
+    />
+
+    <!-- Услуги (кратко, что можно обсудить) -->
+    <Services 
+        subTitle="Темы обсуждения"
+        title="Что мы успеем разобрать на консультации"
+        description="Ниже приведены основные направления, в которых я обладаю глубокой экспертизой и могу помочь вашему проекту или команде уже сегодня."
+        limit={3}
+    />
+
+    <!-- Процесс консультации -->
+    <Process 
+        subTitle="Этапы встречи"
+        title="Четкий план для достижения результата"
+        description="Каждая консультация проходит по выверенному алгоритму, что гарантирует максимальную пользу за отведенное время."
+        step1Title="Подготовка"
+        step1Desc="Предварительный аудит вашей задачи и кодовой базы"
+        step2Title="Разбор"
+        step2Desc="Прямой эфир: ответы на вопросы и совместный кодинг"
+        step3Title="Артефакты"
+        step3Desc="Передача записи, кода, промптов и чек-листа"
+        step4Title="Сопровождение"
+        step4Desc="Короткая поддержка в чате после встречи"
+    />
+
+    <!-- Почему выбрать меня -->
+    <Choose 
+        subTitle="Преимущества"
+        title="Почему стоит доверить AI-консалтинг мне?"
+        description="Я объединяю 12-летний опыт в разработке с глубоким пониманием современных LLM. Это позволяет давать не просто теоретические советы, а рабочие решения."
+        benefit1Title="Практический опыт"
+        benefit1Desc="Все советы проверены на реальных проектах: от стартапов до крупных корпоративных систем."
+        benefit2Title="Экономия времени"
+        benefit2Desc="Вместо недель изучения документации вы получаете готовые рецепты за один час."
+    />
+
+    <!-- Тарифы на консультации (специализированный компонент) -->
+    <ConsultationPricing />
+
+    <!-- Ответы на вопросы -->
+    <ConsultationFaqs />
+
+    <!-- Призыв к действию -->
+    <Cta 
+        subTitle="Остались вопросы?"
+        title="Нужна индивидуальная программа обучения?"
+        description="Если у вас большая команда или специфический запрос — напишите мне. Мы составим персональный план внедрения ИИ в вашу компанию."
+        formTitle="Записаться на консультацию"
+    />
+
+    <Footer/>
+</Layout>

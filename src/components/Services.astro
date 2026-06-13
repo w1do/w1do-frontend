@@ -2,7 +2,21 @@
 import ServicesList from "./services/ServicesList.astro";
 import { services } from "../mocks/services";
 
-const featuredServices = services.slice(0, 6);
+interface Props {
+    subTitle?: string;
+    title?: string;
+    description?: string;
+    limit?: number;
+}
+
+const {
+    subTitle = "Мои услуги",
+    title = "Услуги по разработке и автоматизации с помощью ИИ",
+    description = "От разработки стратегии до ее реализации я сосредоточен на достижении значимых результатов, которые способствуют расширению вашего бизнеса и его долгосрочному успеху.",
+    limit = 6
+} = Astro.props;
+
+const featuredServices = services.slice(0, limit);
 ---
 
 <!-- Our Service Section Start -->
@@ -14,9 +28,9 @@ const featuredServices = services.slice(0, 6);
                 <div class="our-service-content">
                     <!-- Section Title Start -->
                     <div class="section-title">
-                        <span class="section-sub-title wow fadeInUp">Мои услуги</span>
-                        <h2 class="text-anime-style-3" data-cursor="-opaque">Услуги по разработке и автоматизации с помощью ИИ</h2>
-                        <p class="wow fadeInUp" data-wow-delay="0.2s">От разработки стратегии до ее реализации я сосредоточен на достижении значимых результатов, которые способствуют расширению вашего бизнеса и его долгосрочному успеху.</p>
+                        <span class="section-sub-title wow fadeInUp">{subTitle}</span>
+                        <h2 class="text-anime-style-3" data-cursor="-opaque">{title}</h2>
+                        <p class="wow fadeInUp" data-wow-delay="0.2s">{description}</p>
                     </div>
                     <!-- Section Title Start -->
 

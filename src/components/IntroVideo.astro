@@ -1,3 +1,16 @@
+---
+interface Props {
+    subTitle?: string;
+    title?: string;
+    tickerItems?: string[];
+}
+
+const {
+    subTitle = "Принцип работы",
+    title = "Какие процессы я закрываю в работе с AI",
+    tickerItems = ["Web-разработка", "Внедрение AI", "Low-code", "No-code"]
+} = Astro.props;
+---
 <!-- Intro Video Section Start -->
 <div class="intro-video dark-section bg-section parallaxie">
     <!-- Intro Video Box Start -->
@@ -9,8 +22,8 @@
                     <div class="intro-video-content-box">
                         <!-- Section Title Start -->
                         <div class="section-title">
-                            <span class="section-sub-title wow fadeInUp">Принцип работы</span>
-                            <h2 class="text-anime-style-3" data-cursor="-opaque">Какие процессы я закрываю в работе с AI</h2>
+                            <span class="section-sub-title wow fadeInUp">{subTitle}</span>
+                            <h2 class="text-anime-style-3" data-cursor="-opaque">{title}</h2>
                         </div>
                         <!-- Section Title End -->
 
@@ -34,10 +47,9 @@
         <!-- Scrolling Ticker Start -->
         <div class="scrolling-ticker-box">
             <div class="scrolling-content">
-                <span><img src="/images/icon-asterisk-white.svg" alt="*">Web-разработка</span>
-                <span><img src="/images/icon-asterisk-white.svg" alt="*">Внедрение AI</span>
-                <span><img src="/images/icon-asterisk-white.svg" alt="*">Low-code</span>
-                <span><img src="/images/icon-asterisk-white.svg" alt="*">No-code</span>
+                {tickerItems.map((item) => (
+                    <span><img src="/images/icon-asterisk-white.svg" alt="*">{item}</span>
+                ))}
             </div>
 
         </div>
