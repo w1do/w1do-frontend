@@ -123,7 +123,8 @@ const {
                 const chatId = import.meta.env.PUBLIC_TELEGRAM_CHAT_ID;
 
                 if (!token || !chatId) {
-                    throw new Error('Telegram configuration missing');
+                    console.error('Telegram Config Missing:', { token: !!token, chatId: !!chatId });
+                    throw new Error('Конфигурация Telegram не найдена. Пожалуйста, свяжитесь напрямую через кнопку "Написать в Telegram".');
                 }
 
                 const text = `🚀 Новая заявка с сайта!\n\n` +
