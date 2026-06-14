@@ -7,7 +7,7 @@ seo:
 layout: "../../layouts/ProjectLayout.astro"
 category: "AI Маркетинг"
 categorySlug: "marketing"
-image: "/images/projects/med-ai.jpeg"
+image: "/images/case/med-ai.jpeg"
 clientName: "MedCenter Plus"
 location: "Москва"
 timeline: "5 месяцев"

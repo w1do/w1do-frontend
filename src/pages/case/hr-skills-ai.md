@@ -7,7 +7,7 @@ seo:
 layout: "../../layouts/ProjectLayout.astro"
 category: "AI Аналитика"
 categorySlug: "data"
-image: "/images/projects/member.jpeg"
+image: "/images/case/member.jpeg"
 clientName: "GlobalCorp"
 location: "Нью-Йорк"
 timeline: "3 месяца"

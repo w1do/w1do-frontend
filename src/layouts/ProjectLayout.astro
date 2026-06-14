@@ -14,11 +14,11 @@ const seoDescription = frontmatter.seo?.description || frontmatter.description;
 
 const breadcrumbItems = [
     { label: "Главная", href: "/" },
-    { label: "Проекты", href: "/projects" },
+    { label: "Проекты", href: "/case" },
     { label: frontmatter.title, active: true }
 ];
 
-const projects = Object.values(import.meta.glob('../pages/projects/*.md', { eager: true }));
+const projects = Object.values(import.meta.glob('../pages/case/*.md', { eager: true }));
 ---
 
 <Layout title={seoTitle} description={seoDescription}>

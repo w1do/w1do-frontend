@@ -1,6 +1,6 @@
 ---
 import ProjectCard from "./ProjectCard.astro";
-const projects = Object.values(import.meta.glob('../../pages/projects/*.md', { eager: true }));
+const projects = Object.values(import.meta.glob('../../pages/case/*.md', { eager: true }));
 
 const featuredProjects = projects.slice(0, 3);
 ---
@@ -61,7 +61,7 @@ const featuredProjects = projects.slice(0, 3);
                         </div>
                     </div>
                     <!-- Satisfy Client Images End -->
-                    <p>Давайте создадим что-то великое вместе. <a href="/projects">Посмотреть все проекты.</a></p>
+                    <p>Давайте создадим что-то великое вместе. <a href="/src/pages/case">Посмотреть все проекты.</a></p>
                 </div>
                 <!-- Section Footer Text End -->
             </div>

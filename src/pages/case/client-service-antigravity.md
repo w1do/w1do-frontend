@@ -7,7 +7,7 @@ seo:
 layout: "../../layouts/ProjectLayout.astro"
 category: "AI Автоматизация"
 categorySlug: "web"
-image: "/images/projects/client-service.png"
+image: "/images/case/client-service.png"
 clientName: "ServiceFirst"
 location: "Лондон"
 timeline: "4 месяца"

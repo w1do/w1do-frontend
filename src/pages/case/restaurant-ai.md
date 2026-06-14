@@ -7,7 +7,7 @@ seo:
 layout: "../../layouts/ProjectLayout.astro"
 category: "AI Аналитика"
 categorySlug: "data"
-image: "/images/projects/resto.jpg"
+image: "/images/case/resto.jpg"
 clientName: "RestoGroup"
 location: "Москва"
 timeline: "4 месяца"

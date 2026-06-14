@@ -7,7 +7,7 @@ seo:
 layout: "../../layouts/ProjectLayout.astro"
 category: "AI Аналитика"
 categorySlug: "data"
-image: "/images/projects/mp-analytics.webp"
+image: "/images/case/mp-analytics.webp"
 clientName: "MarketPlus"
 location: "Санкт-Петербург"
 timeline: "6 месяцев"

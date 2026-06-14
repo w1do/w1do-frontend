@@ -7,7 +7,7 @@ seo:
 layout: "../../layouts/ProjectLayout.astro"
 category: "AI Маркетинг"
 categorySlug: "marketing"
-image: "/images/projects/seo.webp"
+image: "/images/case/seo.webp"
 clientName: "SEO Flow"
 location: "Дубай"
 timeline: "5 месяцев"

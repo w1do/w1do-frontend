@@ -7,7 +7,7 @@ seo:
 layout: "../../layouts/ProjectLayout.astro"
 category: "AI Автоматизация"
 categorySlug: "automation"
-image: "/images/projects/car-repair.jpg"
+image: "/images/case/car-repair.jpg"
 clientName: "AutoExpert"
 location: "Краснодар"
 timeline: "2 месяца"

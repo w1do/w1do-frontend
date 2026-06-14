@@ -7,7 +7,7 @@ seo:
 layout: "../../layouts/ProjectLayout.astro"
 category: "AI Автоматизация"
 categorySlug: "automation"
-image: "/images/projects/rag.png"
+image: "/images/case/rag.png"
 clientName: "TechCorp"
 location: "Сан-Франциско"
 timeline: "3 месяца"

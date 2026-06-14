@@ -7,7 +7,7 @@ seo:
 layout: "../../layouts/ProjectLayout.astro"
 category: "AI Автоматизация"
 categorySlug: "automation"
-image: "/images/projects/llms.webp"
+image: "/images/case/llms.webp"
 clientName: "FabriTech"
 location: "Шанхай"
 timeline: "7 месяцев"

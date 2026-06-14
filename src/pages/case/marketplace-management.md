@@ -7,7 +7,7 @@ seo:
 layout: "../../layouts/ProjectLayout.astro"
 category: "AI Автоматизация"
 categorySlug: "automation"
-image: "/images/projects/ostatki.png"
+image: "/images/case/ostatki.png"
 clientName: "GlobalTrade"
 location: "Екатеринбург"
 timeline: "3 месяца"
