@@ -1,0 +1,272 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../shared/Header.astro";
+import Breadcrumbs from "../shared/Breadcrumbs.astro";
+import Footer from "../shared/Footer.astro";
+import Faqs from "../Faqs.astro";
+import Cta from "../Cta.astro";
+---
+<Layout>
+    <Header/>
+    <Breadcrumbs/>
+    <!-- Page Service Single Start -->
+    <div class="page-service-single">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <!-- Page Single Sidebar Start -->
+                    <div class="page-single-sidebar">
+                        <!-- Page Category List Start -->
+                        <div class="page-category-list wow fadeInUp">
+                            <h2 class="page-category-list-title">Explore Our Services</h2>
+                            <ul>
+                                <li><a href="#">Website Design & Development</a></li>
+                                <li><a href="#">Search Engine Optimization  </a></li>
+                                <li><a href="#">Social Media Marketing</a></li>
+                                <li><a href="#">Branding & Identity Design</a></li>
+                                <li><a href="#">Mobile App Design</a></li>
+                            </ul>
+                        </div>
+                        <!-- Page Category List End -->
+
+                        <!-- Sidebar CTA Box Start -->
+                        <div class="sidebar-cta-box box-border-gradiant wow fadeInUp" data-wow-delay="0.2s">
+                            <!-- Icon Box Start -->
+                            <div class="icon-box">
+                                <img src="images/icon-headphone-black.svg" alt="">
+                            </div>
+                            <!-- Icon Box Start -->
+
+                            <!-- Sidebar Cta Content Start -->
+                            <div class="sidebar-cta-content">
+                                <h2>Contact Us</h2>
+                                <p>Have a project in mind or need expert guidance? Contact us today.</p>
+                                <a href={import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1DO_DIGITAL"} class="btn-default">Написать в Telegram</a>
+                            </div>
+                            <!-- Sidebar Cta Content End -->
+                        </div>
+                        <!-- Sidebar CTA Box End -->
+                    </div>
+                    <!-- Page Single Sidebar End -->
+                </div>
+
+                <div class="col-lg-8">
+                    <!-- Service Single Content Start -->
+                    <div class="service-single-content">
+                        <!-- Page Single Image Start -->
+                        <div class="page-single-image">
+                            <figure class="image-anime reveal">
+                                <img src="images/service-single-image.jpg" alt="">
+                            </figure>
+                        </div>
+                        <!-- Page Single Image End -->
+
+                        <!-- Service Entry Start -->
+                        <div class="service-entry">
+                            <p class="wow fadeInUp">We design and develop high-quality websites that combine creativity, functionality, and performance. Our goal is to create digital experiences that not only look visually appealing but also deliver seamless usability and measurable results.</p>
+                            <p class="wow fadeInUp" data-wow-delay="0.2s">From small business websites to complex platforms, we build solutions that align perfectly with your brand and business objectives.</p>
+
+                            <!-- Service Offer Box Start -->
+                            <div class="service-offer-box">
+                                <!-- Section Title Start -->
+                                <div class="section-title">
+                                    <span class="section-sub-title wow fadeInUp">What We Offer</span>
+                                    <h2 class="text-anime-style-3" data-cursor="-opaque">End to end digital services</h2>
+                                    <p class="wow fadeInUp" data-wow-delay="0.2s">We deliver complete digital solutions that cover every stage of your journey from research & strategy to design, development, and marketing. Our integrated approach ensures all elements work seamlessly together to create a strong, consistent online presence that drives measurable results and long-term growth.</p>
+                                </div>
+                                <!-- Section Title End -->
+
+                                <!-- Service Offer Item List Start -->
+                                <div class="service-offer-item-list">
+                                    <!-- Service Offer List Item Start -->
+                                    <div class="service-offer-item box-border-gradiant wow fadeInUp" data-wow-delay="0.4s">
+                                        <!-- Icon Box Start -->
+                                        <div class="icon-box">
+                                            <img src="images/icon-service-offer-list-1.svg" alt="">
+                                        </div>
+                                        <!-- Icon Box End -->
+
+                                        <!-- Service Offer List Item Content Start -->
+                                        <div class="service-offer-item-content">
+                                            <h3>Custom Website Design</h3>
+                                            <p>We create fully customized website designs tailored to your brand identity, ensuring a unique look</p>
+                                        </div>
+                                        <!-- Service Offer List Item Content End -->
+                                    </div>
+                                    <!-- Service Offer List Item End -->
+
+                                    <!-- Service Offer List Item Start -->
+                                    <div class="service-offer-item box-border-gradiant wow fadeInUp" data-wow-delay="0.6s">
+                                        <!-- Icon Box Start -->
+                                        <div class="icon-box">
+                                            <img src="images/icon-service-offer-list-2.svg" alt="">
+                                        </div>
+                                        <!-- Icon Box End -->
+
+                                        <!-- Service Offer List Item Content Start -->
+                                        <div class="service-offer-item-content">
+                                            <h3>E-Commerce Development</h3>
+                                            <p>We build secure, scalable, and user-friendly e-commerce platforms design to deliver seamless shopping</p>
+                                        </div>
+                                        <!-- Service Offer List Item Content End -->
+                                    </div>
+                                    <!-- Service Offer List Item End -->
+                                </div>
+                                <!-- Service Offer Item List End -->
+                            </div>
+                            <!-- Service Offer Box End -->
+
+                            <!-- Service Feature Box Start -->
+                            <div class="service-feature-box">
+                                <!-- Section Title Start -->
+                                <div class="section-title">
+                                    <span class="section-sub-title wow fadeInUp">Key Features</span>
+                                    <h2 class="text-anime-style-3" data-cursor="-opaque">Smart features that enhance</h2>
+                                    <p class="wow fadeInUp" data-wow-delay="0.2s">From advanced functionality to intuitive design elements, our features are developed to elevate the overall digital experience. We focus on creating solutions that not only look modern but also perform reliably and efficiently.</p>
+                                </div>
+                                <!-- Section Title End -->
+
+                                <!-- Service Feature Body Box Start -->
+                                <div class="service-feature-body-box box-border-gradiant">
+                                    <!-- Service Feature List Start -->
+                                    <div class="service-feature-list">
+                                        <ul class="wow fadeInUp" data-wow-delay="0.4s">
+                                            <li>We create interfaces that are easy to navigate, ensuring a smooth experience.</li>
+                                            <li>Optimized for speed & efficiency, delivering quick load times & seamless performance.</li>
+                                        </ul>
+                                        <ul class="wow fadeInUp" data-wow-delay="0.6s">
+                                            <li>Designed to adapt perfectly to all screen sizes, providing a consistent experience.</li>
+                                            <li>Built with clean code and SEO best practices, allowing your website to grow.</li>
+                                        </ul>
+                                    </div>
+                                    <!-- Service Feature List End -->
+
+                                    <!-- Service Feture Counter List Start -->
+                                    <div class="service-feature-counter-list">
+                                        <!-- Service Feature Counter Item Start -->
+                                        <div class="service-feature-counter-item">
+                                            <h2><span class="counter">98</span>%</h2>
+                                            <ul>
+                                                <li>Client Satisfaction Rate with Proven Result</li>
+                                            </ul>
+                                        </div>
+                                        <!-- Service Feature Counter Item End -->
+
+                                        <!-- Service Feature Counter Item Start -->
+                                        <div class="service-feature-counter-item">
+                                            <h2><span class="counter">40</span>+</h2>
+                                            <ul>
+                                                <li>Happy Client Trusting Our Digital Expertise</li>
+                                            </ul>
+                                        </div>
+                                        <!-- Service Feature Counter Item End -->
+                                    </div>
+                                    <!-- Service Feture Counter List End -->
+                                </div>
+                                <!-- Service Feature Body Box End -->
+                            </div>
+                            <!-- Service Feature Box End -->
+                        </div>
+                        <!-- Service Entry End -->
+
+                        <!-- Page Single FAQs Start -->
+                        <div class="page-single-faq">
+                            <!-- Section Title Start -->
+                            <div class="section-title">
+                                <span class="section-sub-title wow fadeInUp">FAQ's</span>
+                                <h2 class="text-anime-style-3" data-cursor="-opaque">Frequently asked questions</h2>
+                                <p class="wow fadeInUp" data-wow-delay="0.2s">Find answers to the most commonly asked questions about our services, process, pricing, and timelines. This section is designed to give you a clear understanding of how we work and what you can expect when partnering with us.</p>
+                            </div>
+                            <!-- Section Title End -->
+
+                            <!-- FAQ Accordion Start -->
+                            <div class="faqs-accordion" id="accordion">
+                                <!-- FAQ Item Start -->
+                                <div class="accordion-item wow fadeInUp">
+                                    <h2 class="accordion-header" id="heading1">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
+                                            1. What services does your digital agency offer?
+                                        </button>
+                                    </h2>
+                                    <div id="collapse1" class="accordion-collapse collapse" role="region" aria-labelledby="heading1" data-bs-parent="#accordion">
+                                        <div class="accordion-body">
+                                            <p>Our agency offers a range of services including website design and development, search engine optimization (SEO), etc.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FAQ Item End -->
+
+                                <!-- FAQ Item Start -->
+                                <div class="accordion-item wow fadeInUp" data-wow-delay="0.2s">
+                                    <h2 class="accordion-header" id="heading2">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="true" aria-controls="collapse2">
+                                            2. How long does it take to complete a website project?
+                                        </button>
+                                    </h2>
+                                    <div id="collapse2" class="accordion-collapse collapse show" role="region" aria-labelledby="heading2" data-bs-parent="#accordion">
+                                        <div class="accordion-body">
+                                            <p>Our agency offers a range of services including website design and development, search engine optimization (SEO), etc.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FAQ Item End -->
+
+                                <!-- FAQ Item Start -->
+                                <div class="accordion-item wow fadeInUp" data-wow-delay="0.4s">
+                                    <h2 class="accordion-header" id="heading3">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                                            3. Do you work with startups and small businesses?
+                                        </button>
+                                    </h2>
+                                    <div id="collapse3" class="accordion-collapse collapse" role="region" aria-labelledby="heading3" data-bs-parent="#accordion">
+                                        <div class="accordion-body">
+                                            <p>Our agency offers a range of services including website design and development, search engine optimization (SEO), etc.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FAQ Item End -->
+
+                                <!-- FAQ Item Start -->
+                                <div class="accordion-item wow fadeInUp" data-wow-delay="0.6s">
+                                    <h2 class="accordion-header" id="heading4">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
+                                            4. How can I start a project with your agency?
+                                        </button>
+                                    </h2>
+                                    <div id="collapse4" class="accordion-collapse collapse" role="region" aria-labelledby="heading4" data-bs-parent="#accordion">
+                                        <div class="accordion-body">
+                                            <p>Our agency offers a range of services including website design and development, search engine optimization (SEO), etc.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FAQ Item End -->
+
+                                <!-- FAQ Item Start -->
+                                <div class="accordion-item wow fadeInUp" data-wow-delay="0.8s">
+                                    <h2 class="accordion-header" id="heading5">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
+                                            5. Can you redesign an existing website?
+                                        </button>
+                                    </h2>
+                                    <div id="collapse5" class="accordion-collapse collapse" role="region" aria-labelledby="heading5" data-bs-parent="#accordion">
+                                        <div class="accordion-body">
+                                            <p>Our agency offers a range of services including website design and development, search engine optimization (SEO), etc.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FAQ Item End -->
+                            </div>
+                            <!-- FAQ Accordion End -->
+                        </div>
+                        <!-- Page Single FAQs End -->
+                    </div>
+                    <!-- Service Single Content End -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Page Service Single Start -->
+    <Faqs/>
+    <Cta/>
+    <Footer/>
+</Layout>

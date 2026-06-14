@@ -1,3 +1,60 @@
+---
+interface FaqItem {
+    question: string;
+    answer: string;
+}
+
+interface Props {
+    customFaqs?: FaqItem[];
+}
+
+const { customFaqs } = Astro.props;
+
+const defaultFaqs = [
+    {
+        question: "Как происходит процесс заказа и старта разработки ИИ-решения?",
+        answer: "Процесс начинается с бесплатной консультации и заполнения брифа. Затем мы проводим аудит ваших процессов, формируем техническое задание (ТЗ) с четкими KPI и подписываем договор. После этого команда приступает к разработке MVP."
+    },
+    {
+        question: "Какие этапы включает в себя разработка кастомного ИИ-агента?",
+        answer: "Разработка включает 4 этапа: 1) Проектирование архитектуры и выбор LLM. 2) Подготовка и индексация данных (RAG). 3) Настройка логики агента и промпт-инжиниринг. 4) Тестирование на реальных кейсах и финальная отладка."
+    },
+    {
+        question: "Можно ли внедрить ИИ в уже существующую CRM или ERP систему?",
+        answer: "Да, большинство наших решений интегрируются через API. Мы имеем опыт внедрения ИИ-инструментов в Битрикс24, amoCRM, 1С и кастомные системы управления бизнесом, автоматизируя передачу данных между ними."
+    },
+    {
+        question: "Сколько времени занимает автоматизация одного бизнес-процесса?",
+        answer: "Первичная автоматизация несложного процесса (например, классификация входящих писем) занимает от 7 до 14 дней. Более сложные цепочки с многошаговой логикой требуют 3-5 недель разработки и тестирования."
+    },
+    {
+        question: "Предоставляете ли вы услуги по доработке и оптимизации сторонних ИИ-решений?",
+        answer: "Да, мы проводим аудит текущих решений, исправляем ошибки в промптах, оптимизируем затраты на токены и повышаем точность ответов существующих систем, которые работают некорректно."
+    },
+    {
+        question: "Какие данные необходимы для начала разработки и обучения системы?",
+        answer: "Для RAG-систем нужны ваши внутренние документы (PDF, DOCX, базы знаний). Для автоматизации задач — примеры выполненных работ и описание логики, по которой человек принимает решения в данном процессе."
+    },
+    {
+        question: "Как осуществляется техническая поддержка после внедрения?",
+        answer: "Мы предлагаем пакеты сопровождения, которые включают мониторинг работы системы, обновление версий LLM-моделей, доработку логики под меняющиеся задачи и оперативное устранение сбоев."
+    },
+    {
+        question: "Можно ли автоматизировать задачи, требующие сложного анализа и принятия решений?",
+        answer: "Да, современные агенты способны выполнять многошаговые задачи: от анализа юридических рисков в контрактах до оценки кредитоспособности. Мы выстраиваем цепочки проверок (chain-of-thought) для гарантии качества."
+    },
+    {
+        question: "Как оценивается стоимость разработки проекта?",
+        answer: "Стоимость зависит от сложности логики, количества интеграций и объема данных. Мы работаем по двум моделям: фиксированная цена за проект (Fixed Price) или оплата за часы разработки (Time & Materials)."
+    },
+    {
+        question: "Возможна ли масштабируемость и доработка системы в будущем?",
+        answer: "Наши решения строятся по модульному принципу. Вы можете начать с автоматизации одного отдела и постепенно добавлять новые функции, подключать дополнительные модели и расширять базу знаний без переписывания ядра системы."
+    }
+];
+
+const faqs = customFaqs || defaultFaqs;
+---
 <!-- Our Faq Section Start -->
 <div class="our-faqs bg-section">
     <div class="container">
@@ -27,155 +84,20 @@
             <div class="col-xl-6">
                 <!-- FAQ Accordion Start -->
                 <div class="faqs-accordion" id="accordion">
-                    <!-- FAQ Item Start -->
-                    <div class="accordion-item wow fadeInUp">
-                        <h2 class="accordion-header" id="heading1">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
-                                1. Как происходит процесс заказа и старта разработки ИИ-решения?
-                            </button>
-                        </h2>
-                        <div id="collapse1" class="accordion-collapse collapse" role="region" aria-labelledby="heading1" data-bs-parent="#accordion">
-                            <div class="accordion-body">
-                                <p>Процесс начинается с бесплатной консультации и заполнения брифа. Затем мы проводим аудит ваших процессов, формируем техническое задание (ТЗ) с четкими KPI и подписываем договор. После этого команда приступает к разработке MVP.</p>
+                    {faqs.map((faq, index) => (
+                        <div class="accordion-item wow fadeInUp" data-wow-delay={`${index * 0.1}s`}>
+                            <h2 class="accordion-header" id={`heading${index + 1}`}>
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse${index + 1}`} aria-expanded={index === 0 ? "true" : "false"} aria-controls={`collapse${index + 1}`}>
+                                    {index + 1}. {faq.question}
+                                </button>
+                            </h2>
+                            <div id={`collapse${index + 1}`} class={`accordion-collapse collapse ${index === 0 ? "show" : ""}`} role="region" aria-labelledby={`heading${index + 1}`} data-bs-parent="#accordion">
+                                <div class="accordion-body">
+                                    <p>{faq.answer}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- FAQ Item End -->
-
-                    <!-- FAQ Item Start -->
-                    <div class="accordion-item wow fadeInUp" data-wow-delay="0.2s">
-                        <h2 class="accordion-header" id="heading2">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="true" aria-controls="collapse2">
-                                2. Какие этапы включает в себя разработка кастомного ИИ-агента?
-                            </button>
-                        </h2>
-                        <div id="collapse2" class="accordion-collapse collapse show" role="region" aria-labelledby="heading2" data-bs-parent="#accordion">
-                            <div class="accordion-body">
-                                <p>Разработка включает 4 этапа: 1) Проектирование архитектуры и выбор LLM. 2) Подготовка и индексация данных (RAG). 3) Настройка логики агента и промпт-инжиниринг. 4) Тестирование на реальных кейсах и финальная отладка.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- FAQ Item End -->
-
-                    <!-- FAQ Item Start -->
-                    <div class="accordion-item wow fadeInUp" data-wow-delay="0.3s">
-                        <h2 class="accordion-header" id="heading3">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
-                                3. Можно ли внедрить ИИ в уже существующую CRM или ERP систему?
-                            </button>
-                        </h2>
-                        <div id="collapse3" class="accordion-collapse collapse" role="region" aria-labelledby="heading3" data-bs-parent="#accordion">
-                            <div class="accordion-body">
-                                <p>Да, большинство наших решений интегрируются через API. Мы имеем опыт внедрения ИИ-инструментов в Битрикс24, amoCRM, 1С и кастомные системы управления бизнесом, автоматизируя передачу данных между ними.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- FAQ Item End -->
-
-                    <!-- FAQ Item Start -->
-                    <div class="accordion-item wow fadeInUp" data-wow-delay="0.4s">
-                        <h2 class="accordion-header" id="heading4">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
-                                4. Сколько времени занимает автоматизация одного бизнес-процесса?
-                            </button>
-                        </h2>
-                        <div id="collapse4" class="accordion-collapse collapse" role="region" aria-labelledby="heading4" data-bs-parent="#accordion">
-                            <div class="accordion-body">
-                                <p>Первичная автоматизация несложного процесса (например, классификация входящих писем) занимает от 7 до 14 дней. Более сложные цепочки с многошаговой логикой требуют 3-5 недель разработки и тестирования.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- FAQ Item End -->
-
-                    <!-- FAQ Item Start -->
-                    <div class="accordion-item wow fadeInUp" data-wow-delay="0.5s">
-                        <h2 class="accordion-header" id="heading5">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
-                                5. Предоставляете ли вы услуги по доработке и оптимизации сторонних ИИ-решений?
-                            </button>
-                        </h2>
-                        <div id="collapse5" class="accordion-collapse collapse" role="region" aria-labelledby="heading5" data-bs-parent="#accordion">
-                            <div class="accordion-body">
-                                <p>Да, мы проводим аудит текущих решений, исправляем ошибки в промптах, оптимизируем затраты на токены и повышаем точность ответов существующих систем, которые работают некорректно.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- FAQ Item End -->
-
-                    <!-- FAQ Item Start -->
-                    <div class="accordion-item wow fadeInUp" data-wow-delay="0.6s">
-                        <h2 class="accordion-header" id="heading6">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6" aria-expanded="false" aria-controls="collapse6">
-                                6. Какие данные необходимы для начала разработки и обучения системы?
-                            </button>
-                        </h2>
-                        <div id="collapse6" class="accordion-collapse collapse" role="region" aria-labelledby="heading6" data-bs-parent="#accordion">
-                            <div class="accordion-body">
-                                <p>Для RAG-систем нужны ваши внутренние документы (PDF, DOCX, базы знаний). Для автоматизации задач — примеры выполненных работ и описание логики, по которой человек принимает решения в данном процессе.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- FAQ Item End -->
-
-                    <!-- FAQ Item Start -->
-                    <div class="accordion-item wow fadeInUp" data-wow-delay="0.7s">
-                        <h2 class="accordion-header" id="heading7">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse7" aria-expanded="false" aria-controls="collapse7">
-                                7. Как осуществляется техническая поддержка после внедрения?
-                            </button>
-                        </h2>
-                        <div id="collapse7" class="accordion-collapse collapse" role="region" aria-labelledby="heading7" data-bs-parent="#accordion">
-                            <div class="accordion-body">
-                                <p>Мы предлагаем пакеты сопровождения, которые включают мониторинг работы системы, обновление версий LLM-моделей, доработку логики под меняющиеся задачи и оперативное устранение сбоев.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- FAQ Item End -->
-
-                    <!-- FAQ Item Start -->
-                    <div class="accordion-item wow fadeInUp" data-wow-delay="0.8s">
-                        <h2 class="accordion-header" id="heading8">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse8" aria-expanded="false" aria-controls="collapse8">
-                                8. Можно ли автоматизировать задачи, требующие сложного анализа и принятия решений?
-                            </button>
-                        </h2>
-                        <div id="collapse8" class="accordion-collapse collapse" role="region" aria-labelledby="heading8" data-bs-parent="#accordion">
-                            <div class="accordion-body">
-                                <p>Да, современные агенты способны выполнять многошаговые задачи: от анализа юридических рисков в контрактах до оценки кредитоспособности. Мы выстраиваем цепочки проверок (chain-of-thought) для гарантии качества.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- FAQ Item End -->
-
-                    <!-- FAQ Item Start -->
-                    <div class="accordion-item wow fadeInUp" data-wow-delay="0.9s">
-                        <h2 class="accordion-header" id="heading9">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse9" aria-expanded="false" aria-controls="collapse9">
-                                9. Как оценивается стоимость разработки проекта?
-                            </button>
-                        </h2>
-                        <div id="collapse9" class="accordion-collapse collapse" role="region" aria-labelledby="heading9" data-bs-parent="#accordion">
-                            <div class="accordion-body">
-                                <p>Стоимость зависит от сложности логики, количества интеграций и объема данных. Мы работаем по двум моделям: фиксированная цена за проект (Fixed Price) или оплата за часы разработки (Time & Materials).</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- FAQ Item End -->
-
-                    <!-- FAQ Item Start -->
-                    <div class="accordion-item wow fadeInUp" data-wow-delay="1.0s">
-                        <h2 class="accordion-header" id="heading10">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse10" aria-expanded="false" aria-controls="collapse10">
-                                10. Возможна ли масштабируемость и доработка системы в будущем?
-                            </button>
-                        </h2>
-                        <div id="collapse10" class="accordion-collapse collapse" role="region" aria-labelledby="heading10" data-bs-parent="#accordion">
-                            <div class="accordion-body">
-                                <p>Наши решения строятся по модульному принципу. Вы можете начать с автоматизации одного отдела и постепенно добавлять новые функции, подключать дополнительные модели и расширять базу знаний без переписывания ядра системы.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- FAQ Item End -->
+                    ))}
                 </div>
                 <!-- FAQ Accordion End -->
             </div>

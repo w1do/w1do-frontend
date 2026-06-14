@@ -8,6 +8,9 @@ import BlogBreadcrumbs from "../components/blog/BlogBreadcrumbs.astro";
 
 const { frontmatter } = Astro.props;
 
+const seoTitle = frontmatter.seo?.title || frontmatter.title;
+const seoDescription = frontmatter.seo?.description || frontmatter.description;
+
 const breadcrumbItems = [
     { label: "Главная", href: "/" },
     { label: "Блог", href: "/blog" },
@@ -15,7 +18,7 @@ const breadcrumbItems = [
 ];
 ---
 
-<Layout title={frontmatter.title} description={frontmatter.description}>
+<Layout title={seoTitle} description={seoDescription}>
     <Header/>
     <BlogBreadcrumbs title={frontmatter.title} pubDate={frontmatter.pubDate} />
 

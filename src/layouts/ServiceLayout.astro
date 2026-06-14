@@ -1,0 +1,167 @@
+---
+import Layout from "./Layout.astro";
+import Header from "../components/shared/Header.astro";
+import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
+import Footer from "../components/shared/Footer.astro";
+import Faqs from "../components/Faqs.astro";
+import Cta from "../components/Cta.astro";
+import Testimonials from "../components/Testimonials.astro";
+
+const { frontmatter } = Astro.props;
+
+const seoTitle = frontmatter.seo?.title || frontmatter.title;
+const seoDescription = frontmatter.seo?.description || frontmatter.description;
+
+const breadcrumbItems = [
+    { label: "Главная", href: "/" },
+    { label: "Услуги", href: "/services" },
+    { label: frontmatter.title, active: true }
+];
+
+// Получаем список всех услуг для сайдбара
+const services = Object.values(import.meta.glob('../pages/services/*.md', { eager: true }));
+---
+
+<Layout title={seoTitle} description={seoDescription}>
+    <Header/>
+    <Breadcrumbs title={frontmatter.title} breadcrumbItems={breadcrumbItems}/>
+    
+    <!-- Page Service Single Start -->
+    <div class="page-service-single">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <!-- Page Single Sidebar Start -->
+                    <div class="page-single-sidebar">
+                        <!-- Page Category List Start -->
+                        <div class="page-category-list wow fadeInUp">
+                            <h2 class="page-category-list-title">Другие услуги</h2>
+                            <ul>
+                                {services.map((service: any) => (
+                                    <li><a href={service.url}>{service.frontmatter.title}</a></li>
+                                ))}
+                            </ul>
+                        </div>
+                        <!-- Page Category List End -->
+
+                        <!-- Sidebar CTA Box Start -->
+                        <div class="sidebar-cta-box box-border-gradiant wow fadeInUp" data-wow-delay="0.2s">
+                            <div class="icon-box">
+                                <img src="/images/icon-headphone-black.svg" alt="">
+                            </div>
+                            <div class="sidebar-cta-content">
+                                <h2>Связаться с нами</h2>
+                                <p>Есть проект или нужна консультация эксперта? Свяжитесь с нами сегодня.</p>
+                                <a href={import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1DO_DIGITAL"} class="btn-default">Написать в Telegram</a>
+                            </div>
+                        </div>
+                        <!-- Sidebar CTA Box End -->
+                    </div>
+                    <!-- Page Single Sidebar End -->
+                </div>
+
+                <div class="col-lg-8">
+                    <!-- Service Single Content Start -->
+                    <div class="service-single-content">
+                        <!-- Page Single Image Start -->
+                        {frontmatter.image && (
+                            <div class="page-single-image">
+                                <figure class="image-anime reveal">
+                                    <img src={frontmatter.image} alt={frontmatter.title}>
+                                </figure>
+                            </div>
+                        )}
+                        <!-- Page Single Image End -->
+
+                        <!-- Service Entry Start -->
+                        <div class="service-entry entry-content">
+                            <slot />
+
+                            {frontmatter.offers && (
+                                <div class="service-offer-box">
+                                    <div class="section-title">
+                                        <span class="section-sub-title wow fadeInUp">Что мы предлагаем</span>
+                                        <h2 class="text-anime-style-3" data-cursor="-opaque">{frontmatter.offersTitle || "Комплексные ИИ-решения"}</h2>
+                                        <p class="wow fadeInUp" data-wow-delay="0.2s">{frontmatter.offersDescription}</p>
+                                    </div>
+
+                                    <div class="service-offer-item-list">
+                                        {frontmatter.offers.map((offer: any, index: number) => (
+                                            <div class="service-offer-item box-border-gradiant wow fadeInUp" data-wow-delay={`${0.4 + index * 0.2}s`}>
+                                                <div class="icon-box">
+                                                    <img src={offer.icon || "/images/icon-service-offer-list-1.svg"} alt="">
+                                                </div>
+                                                <div class="service-offer-item-content">
+                                                    <h3>{offer.title}</h3>
+                                                    <p>{offer.description}</p>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            {frontmatter.features && (
+                                <div class="service-feature-box">
+                                    <div class="section-title">
+                                        <span class="section-sub-title wow fadeInUp">Преимущества</span>
+                                        <h2 class="text-anime-style-3" data-cursor="-opaque">{frontmatter.featuresTitle || "Почему выбирают нас"}</h2>
+                                        <p class="wow fadeInUp" data-wow-delay="0.2s">{frontmatter.featuresDescription}</p>
+                                    </div>
+
+                                    <div class="service-feature-body-box box-border-gradiant">
+                                        <div class="service-feature-list">
+                                            <ul class="wow fadeInUp" data-wow-delay="0.4s">
+                                                {frontmatter.features.slice(0, 2).map((feature: string) => (
+                                                    <li>{feature}</li>
+                                                ))}
+                                            </ul>
+                                            <ul class="wow fadeInUp" data-wow-delay="0.6s">
+                                                {frontmatter.features.slice(2, 4).map((feature: string) => (
+                                                    <li>{feature}</li>
+                                                ))}
+                                            </ul>
+                                        </div>
+
+                                        {frontmatter.stats && (
+                                            <div class="service-feature-counter-list">
+                                                {frontmatter.stats.map((stat: any) => (
+                                                    <div class="service-feature-counter-item">
+                                                        <h2><span class="counter">{stat.value}</span>{stat.suffix}</h2>
+                                                        <ul>
+                                                            <li>{stat.label}</li>
+                                                        </ul>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                        <!-- Service Entry End -->
+                    </div>
+                    <!-- Service Single Content End -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Page Service Single Start -->
+    
+    <Faqs customFaqs={frontmatter.faqs} />
+    <Testimonials/>
+    <Cta/>
+    <Footer/>
+</Layout>
+
+<style>
+    .entry-content :global(p) {
+        margin-bottom: 20px;
+    }
+    .sidebar-cta-content .btn-default {
+        margin-top: 20px;
+    }
+    .page-single-image .reveal {
+        visibility: visible;
+    }
+</style>

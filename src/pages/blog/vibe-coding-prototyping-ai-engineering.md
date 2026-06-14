@@ -1,6 +1,6 @@
 ---
 layout: "../../layouts/BlogLayout.astro"
-title: "Vibe Coding: Будущее разработки высоконагруженных систем и прототипирования"
+title: "Vibe Coding — Будущее разработки высоконагруженных систем и прототипирования"
 description: "Как Vibe Coding, AI-инженерия и промптинг позволяют быстро строить масштабируемые системы на Laravel и Directus. От идеи до прототипа за часы."
 pubDate: 2026-06-13
 image: "/images/post-2.jpg"
