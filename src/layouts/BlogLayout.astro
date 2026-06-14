@@ -129,4 +129,54 @@ const breadcrumbItems = [
         border-color: var(--accent-color) !important;
         color: var(--black-color) !important;
     }
+
+    /* Table Styles */
+    .entry-content :global(table) {
+        width: 100%;
+        margin-bottom: 2rem;
+        border-collapse: separate;
+        border-spacing: 0;
+        border: 1px solid var(--dark-divider-color);
+        border-radius: 12px;
+        overflow: hidden;
+        background-color: var(--accent-secondary-color);
+    }
+
+    .entry-content :global(table th) {
+        background-color: var(--accent-color);
+        color: var(--black-color);
+        padding: 15px 20px;
+        font-weight: 600;
+        text-align: left;
+        text-transform: uppercase;
+        font-size: 14px;
+        letter-spacing: 1px;
+    }
+
+    .entry-content :global(table td) {
+        padding: 15px 20px;
+        border-top: 1px solid var(--dark-divider-color);
+        color: var(--text-color);
+        line-height: 1.6;
+    }
+
+    .entry-content :global(table tr:last-child td) {
+        border-bottom: none;
+    }
+
+    .entry-content :global(table td:first-child) {
+        font-weight: 500;
+        color: var(--white-color);
+        width: 30%;
+    }
+
+    @media (max-width: 767px) {
+        .entry-content :global(table) {
+            display: block;
+            overflow-x: auto;
+        }
+        .entry-content :global(table td:first-child) {
+            width: auto;
+        }
+    }
 </style>
