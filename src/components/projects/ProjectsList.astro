@@ -1,13 +1,13 @@
 ---
-import { projects } from "../../mocks/projects";
 import ProjectCard from "./ProjectCard.astro";
+const projects = Object.values(import.meta.glob('../../pages/projects/*.md', { eager: true }));
 ---
 
 <!-- Page Projects Start -->
 <div class="page-projects">
     <div class="container">
         <div class="row">
-            {projects.map((project, index) => (
+            {projects.map((project: any, index: number) => (
                 <ProjectCard 
                     project={project} 
                     delay={`${(index % 3) * 0.2}s`}

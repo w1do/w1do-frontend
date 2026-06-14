@@ -2,39 +2,35 @@
 import { Image } from 'astro:assets';
 
 interface Props {
-    project: {
-        id: number;
-        title: string;
-        category: string;
-        categorySlug: string;
-        image: string;
-        link: string;
-    };
+    project: any;
     delay?: string;
     className?: string;
 }
 
 const { project, delay = "0s", className = "" } = Astro.props;
+const { title = "Без названия", description = "", category = "Прочее", categorySlug = "", image = "/images/project-1.jpg" } = project?.frontmatter || {};
+const url = project?.url || "#";
 ---
 
-<div class={`col-xl-4 col-md-6 project-item-box ${project.categorySlug} ${className}`}>
+<div class={`col-xl-4 col-md-6 project-item-box ${categorySlug} ${className}`}>
     <div class="project-item wow fadeInUp" data-wow-delay={delay}>
         <div class="project-item-image">
-            <a href={project.link} data-cursor-text="View">
+            <a href={url} data-cursor-text="View">
                 <figure>
-                    <Image src={project.image} alt={project.title} width={600} height={400} loading="lazy" />
+                    <Image src={image} alt={title} width={600} height={400} loading="lazy" />
                 </figure>
             </a>
         </div>
         <div class="project-item-body">
             <div class="project-item-content">
                 <ul>
-                    <li><a href={project.link}>{project.category}</a></li>
+                    <li><a href={url}>{category}</a></li>
                 </ul>
-                <h2><a href={project.link}>{project.title}</a></h2>
+                <h2><a href={url}>{title}</a></h2>
+                {description && <p style="margin-top: 10px; font-size: 0.9em; line-height: 1.4; color: #ffffff;">{description}</p>}
             </div>
             <div class="project-item-btn">
-                <a href={project.link} class="readmore-btn">Смотреть проект</a>
+                <a href={url} class="readmore-btn">Смотреть проект</a>
             </div>
         </div>
     </div>

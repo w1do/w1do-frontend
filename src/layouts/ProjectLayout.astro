@@ -1,0 +1,264 @@
+---
+import Layout from "./Layout.astro";
+import Header from "../components/shared/Header.astro";
+import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
+import Footer from "../components/shared/Footer.astro";
+import Faqs from "../components/Faqs.astro";
+import Cta from "../components/Cta.astro";
+import Testimonials from "../components/Testimonials.astro";
+
+const { frontmatter } = Astro.props;
+
+const seoTitle = frontmatter.seo?.title || frontmatter.title;
+const seoDescription = frontmatter.seo?.description || frontmatter.description;
+
+const breadcrumbItems = [
+    { label: "Главная", href: "/" },
+    { label: "Проекты", href: "/projects" },
+    { label: frontmatter.title, active: true }
+];
+
+const projects = Object.values(import.meta.glob('../pages/projects/*.md', { eager: true }));
+---
+
+<Layout title={seoTitle} description={seoDescription}>
+    <Header/>
+    <Breadcrumbs title={frontmatter.title} breadcrumbItems={breadcrumbItems}/>
+
+    <!-- Page Project Single Start -->
+    <div class="page-project-single">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <!-- Page Single Sidebar Start -->
+                    <div class="page-single-sidebar">
+                        <!-- Page Category List Start -->
+                        <div class="page-category-list project-category-list wow fadeInUp">
+                            <h2 class="page-category-list-title">Информация о проекте</h2>
+                            <ul>
+                                <li>Название: <span>{frontmatter.title}</span></li>
+                                <li>Категория: <span>{frontmatter.category}</span></li>
+                                <li>Клиент: <span>{frontmatter.clientName}</span></li>
+                                <li>Локация: <span>{frontmatter.location}</span></li>
+                                <li>Сроки: <span>{frontmatter.timeline}</span></li>
+                            </ul>
+                        </div>
+                        <!-- Page Category List End -->
+
+                        <!-- Sidebar CTA Box Start -->
+                        <div class="sidebar-cta-box box-border-gradiant wow fadeInUp" data-wow-delay="0.2s">
+                            <!-- Icon Box Start -->
+                            <div class="icon-box">
+                                <img src="/images/icon-headphone-black.svg" alt="">
+                            </div>
+                            <!-- Icon Box Start -->
+
+                            <!-- Sidebar Cta Content Start -->
+                            <div class="sidebar-cta-content">
+                                <h2>Свяжитесь с нами</h2>
+                                <p>Есть проект или нужны советы экспертов? Свяжитесь с нами сегодня.</p>
+                                <ul>
+                                    <li>Почта: <a href="mailto:info@ai-agency.pro">uniqdeveloper@yandex.ru</a></li>
+                                </ul>
+                            </div>
+                            <!-- Sidebar Cta Content End -->
+                        </div>
+                        <!-- Sidebar CTA Box End -->
+                    </div>
+                    <!-- Page Single Sidebar End -->
+                </div>
+
+                <div class="col-lg-8">
+                    <!-- Project Single Content Start -->
+                    <div class="project-single-content">
+                        <!-- Page Single image Start -->
+                        <div class="page-single-image">
+                            <figure class="image-anime reveal">
+                                <img src={frontmatter.image} alt={frontmatter.title}>
+                            </figure>
+                        </div>
+                        <!-- Page Single image End -->
+
+                        <!-- Project Entry Start -->
+                        <div class="project-entry">
+                            <div class="wow fadeInUp">
+                                <slot />
+                            </div>
+
+                            <!-- Project Entry Challenge Box Start -->
+                            {frontmatter.challenges && frontmatter.challenges.length > 0 && (
+                            <div class="project-entry-challenge-box">
+                                <!-- Section Title Start -->
+                                <div class="section-title">
+                                    <span class="section-sub-title wow fadeInUp">{frontmatter.challengesSubTitle || "Задачи и решения"}</span>
+                                    <h2 class="text-anime-style-3" data-cursor="-opaque">{frontmatter.challengesTitle || "Задачи и решения проекта"}</h2>
+                                    {frontmatter.challengesDescription && <p class="wow fadeInUp" data-wow-delay="0.2s">{frontmatter.challengesDescription}</p>}
+                                </div>
+                                <!-- Section Title End -->
+
+                                <!-- Project Challenge Solution Box Start -->
+                                <div class="project-challenge-solution-box">
+                                    {frontmatter.challenges.map((challenge: any, index: number) => (
+                                    <!-- Project Challenge Item Start -->
+                                    <div class="project-challenge-item">
+                                        <!-- Project Challenge Image Start -->
+                                        <div class="project-challenge-image">
+                                            <figure class="image-anime reveal">
+                                                <img src={challenge.image} alt={challenge.title}>
+                                            </figure>
+                                        </div>
+                                        <!-- Project Challenge Image End -->
+
+                                        <!-- Project Challenge Content Box Start -->
+                                        <div class="project-challenge-content-box box-border-gradiant wow fadeInUp" data-wow-delay={`${0.4 + index * 0.2}s`}>
+                                            <div class="project-challenge-item-header">
+                                                <div class="icon-box">
+                                                    <img src={challenge.icon || `/images/icon-project-challenge-item-${index + 1}.svg`} alt="">
+                                                </div>
+                                                <div class="project-challenge-item-content">
+                                                    <h3>{challenge.title}</h3>
+                                                    <p>{challenge.description}</p>
+                                                </div>
+                                            </div>
+                                            <div class="project-challenge-item-body">
+                                                {challenge.points && (
+                                                <ul>
+                                                    {challenge.points.map((point: string) => (
+                                                        <li>{point}</li>
+                                                    ))}
+                                                </ul>
+                                                )}
+                                            </div>
+                                        </div>
+                                        <!-- Project Challenge Content Box Start -->
+                                    </div>
+                                    <!-- Project Challenge Item End -->
+                                    ))}
+                                </div>
+                                <!-- Project Challenge Solution Box End -->
+                            </div>
+                            )}
+                            <!-- Project Entry Challenge Box End -->
+
+                            <!-- Project Work Box Start -->
+                            {frontmatter.approach && frontmatter.approach.length > 0 && (
+                            <div class="project-work-box">
+                                <!-- Section Title Start -->
+                                <div class="section-title">
+                                    <span class="section-sub-title wow fadeInUp">{frontmatter.approachSubTitle || "Наш подход"}</span>
+                                    <h2 class="text-anime-style-3" data-cursor="-opaque">{frontmatter.approachTitle || "Как это работает"}</h2>
+                                    {frontmatter.approachDescription && <p class="wow fadeInUp" data-wow-delay="0.2s">{frontmatter.approachDescription}</p>}
+                                </div>
+                                <!-- Section Title End -->
+
+                                <!-- Project Work Item List Start -->
+                                <div class="project-work-item-list">
+                                    {frontmatter.approach.map((step: any, index: number) => (
+                                    <!-- Project Work Item Start -->
+                                    <div class="project-work-item box-border-gradiant wow fadeInUp" data-wow-delay={`${index * 0.2}s`}>
+                                        <div class="project-work-item-header">
+                                            <div class="icon-box">
+                                                <img src={step.icon || `/images/icon-project-work-item-header-${index + 1}.svg`} alt="">
+                                            </div>
+                                            <div class="project-work-item-no">
+                                                <h3>{(index + 1).toString().padStart(2, '0')}.</h3>
+                                            </div>
+                                        </div>
+                                        <div class="project-work-item-body">
+                                            <h3>{step.title}</h3>
+                                            <p>{step.description}</p>
+                                        </div>
+                                    </div>
+                                    <!-- Project Work Item End -->
+                                    ))}
+                                </div>
+                                <!-- Project Work Item List End -->
+
+                                <!-- Project Work Box Content Start -->
+                                {frontmatter.approachConclusion && (
+                                <div class="project-work-box-content">
+                                    <p>{frontmatter.approachConclusion}</p>
+                                </div>
+                                )}
+                                <!-- Project Work Box Content End -->
+
+                                <!-- Section Footer Text Start -->
+                                <div class="section-footer-text section-satisfy-img wow fadeInUp" data-wow-delay="0.4s">
+                                    <!-- Satisfy Client Images Start -->
+                                    <div class="satisfy-client-images">
+                                        <div class="satisfy-client-image">
+                                            <figure class="image-anime">
+                                                <img src="/images/author-1.jpg" alt="">
+                                            </figure>
+                                        </div>
+                                        <div class="satisfy-client-image add-more">
+                                            <img src="/images/icon-phone-black.svg" alt="">
+                                        </div>
+                                    </div>
+                                    <!-- Satisfy Client Images End -->
+                                    <p>Давайте сделаем что-то великое вместе. <a href="/contact"> Получить предложение</a></p>
+                                </div>
+                                <!-- Section Footer Text End -->
+
+                            </div>
+                            )}
+                            <!-- Project Work Box End -->
+                        </div>
+                        <!-- Project Entry End -->
+
+                        <!-- Page Single FAQs Start -->
+                        {(frontmatter.faqs || frontmatter.projectFaqs) && (
+                        <div class="page-single-faq">
+                            <!-- Section Title Start -->
+                            <div class="section-title">
+                                <span class="section-sub-title wow fadeInUp">FAQ's</span>
+                                <h2 class="text-anime-style-3" data-cursor="-opaque">Часто задаваемые вопросы</h2>
+                                <p class="wow fadeInUp" data-wow-delay="0.2s">Найдите ответы на наиболее часто задаваемые вопросы о проекте, процессе и результатах.</p>
+                            </div>
+                            <!-- Section Title End -->
+
+                            <!-- FAQ Accordion Start -->
+                            <div class="faqs-accordion" id="accordion">
+                                {(frontmatter.faqs || frontmatter.projectFaqs).map((faq: any, index: number) => (
+                                <!-- FAQ Item Start -->
+                                <div class="accordion-item wow fadeInUp" data-wow-delay={`${index * 0.2}s`}>
+                                    <h2 class="accordion-header" id={`heading${index}`}>
+                                        <button class={`accordion-button ${index === 0 ? '' : 'collapsed'}`} type="button" data-bs-toggle="collapse" data-bs-target={`#collapse${index}`} aria-expanded={index === 0 ? "true" : "false"} aria-controls={`collapse${index}`}>
+                                            {index + 1}. {faq.question}
+                                        </button>
+                                    </h2>
+                                    <div id={`collapse${index}`} class={`accordion-collapse collapse ${index === 0 ? 'show' : ''}`} role="region" aria-labelledby={`heading${index}`} data-bs-parent="#accordion">
+                                        <div class="accordion-body">
+                                            <p>{faq.answer}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FAQ Item End -->
+                                ))}
+                            </div>
+                            <!-- FAQ Accordion End -->
+                        </div>
+                        )}
+                        <!-- Page Single FAQs End -->
+                    </div>
+                    <!-- Project Single Content End -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Page Project Single End -->
+    
+    <Faqs customFaqs={frontmatter.faqs || frontmatter.projectFaqs} />
+    <Testimonials/>
+    <Cta/>
+    <Footer/>
+</Layout>
+
+<style>
+    .sidebar-cta-content .btn-default {
+        margin-top: 20px;
+    }
+    .page-single-image .reveal {
+        visibility: visible;
+    }
+</style>
