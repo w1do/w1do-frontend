@@ -3,7 +3,7 @@ layout: "../../layouts/BlogLayout.astro"
 title: "Как эффективно разрабатывать проекты с помощью ИИ, Claude, Astro и Directus за 1-2 дня"
 description: "Разберём, как искусственный интеллект и low-code платформы ускоряют создание MVP, почему Astro и Directus – ключевые инструменты для быстрого запуска стартапов, и как строить проекты с помощью Claude."
 pubDate: 2026-06-15
-image: "/images/ai-lowcode-development.jpg"
+image: "/images/post-2.jpg"
 tags: ["ИИ", "Claude", "Astro", "Directus", "MVP", "LowCode", "Разработка"]
 ---
 

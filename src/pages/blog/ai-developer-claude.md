@@ -3,7 +3,7 @@ layout: "../../layouts/BlogLayout.astro"
 title: "Разработчик ИИ: востребованные вакансии и навыки для успешной карьеры с Claude AI"
 description: "Разбираем, какие профессии инженера ИИ востребованы, что нужно знать для старта, и как строить продукты на базе Claude AI для бизнеса."
 pubDate: 2026-06-15
-image: "/images/ai-developer-vacancies.jpg"
+image: "/images/post-2.jpg"
 tags: ["ИИ", "Разработчик ИИ", "Claude AI", "Вакансии", "Навыки", "Карьерный рост"]
 ---
 
