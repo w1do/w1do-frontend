@@ -8,6 +8,9 @@ import Layout from "../layouts/Layout.astro";
 import Footer from "../components/shared/Footer.astro";
 import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
 import ServicesList from "../components/services/ServicesList.astro";
+import Projects from "../components/projects/Projects.astro";
+import Spacer from "../components/shared/Spacer.astro";
+import Pricing from "../components/Pricing.astro";
 
 const serviceFiles = Object.values(import.meta.glob('./services/*.md', { eager: true }));
 const services = serviceFiles.map((file: any) => ({
@@ -24,11 +27,17 @@ const services = serviceFiles.map((file: any) => ({
     image="/images/og-services.jpg"
 >
     <Header/>
-    <Breadcrumbs />
+    <Breadcrumbs title="Услуги по внедрению AI В бизнес, Claude, Junie, N8n" breadcrumbItems={[
+        {label: "Главная", href: "/"},
+        {label: "Заказать услуги по внедрению ИИ", active: true}
+    ]}/>
+    <Pricing/>
     <ServicesList services={services} isListPage={true} />
     <IntroVideo/>
     <Feature/>
     <Faqs/>
     <Testimonials/>
+    <Projects/>
+    <Spacer/>
     <Footer/>
 </Layout>

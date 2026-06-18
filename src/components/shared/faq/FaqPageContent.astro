@@ -1,0 +1,31 @@
+---
+import FaqSidebar from "./FaqSidebar.astro";
+
+interface FaqCategory {
+    label: string;
+    href: string;
+}
+
+interface Props {
+    categories: FaqCategory[];
+    email?: string;
+}
+
+const { categories, email } = Astro.props;
+---
+
+<div class="page-faqs">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <FaqSidebar categories={categories} email={email} />
+            </div>
+
+            <div class="col-lg-8">
+                <div class="page-faqs-category">
+                    <slot />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

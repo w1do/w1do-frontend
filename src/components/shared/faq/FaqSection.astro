@@ -1,0 +1,18 @@
+---
+interface Props {
+	id: string;
+	title: string;
+}
+
+const { id, title } = Astro.props;
+---
+
+<div class="page-single-faqs" id={id}>
+	<div class="section-title">
+		<h2 class="text-anime-style-2" data-cursor="-opaque">{title}</h2>
+	</div>
+
+	<div class="faqs-accordion our-faq-accordion" id={`accordion_${id}`}>
+		<slot />
+	</div>
+</div>

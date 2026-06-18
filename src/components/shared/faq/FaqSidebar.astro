@@ -1,0 +1,37 @@
+---
+interface FaqCategory {
+	label: string;
+	href: string;
+}
+
+interface Props {
+	categories: FaqCategory[];
+	email?: string;
+}
+
+const { categories, email = "uniqdeveloper@yandex.ru" } = Astro.props;
+---
+
+<div class="page-single-sidebar">
+	<div class="page-category-list wow fadeInUp">
+		<ul>
+			{categories.map((cat) => (
+				<li><a href={cat.href}>{cat.label}</a></li>
+			))}
+		</ul>
+	</div>
+
+	<div class="sidebar-cta-box box-border-gradiant wow fadeInUp" data-wow-delay="0.2s">
+		<div class="icon-box">
+			<img src="/images/icon-headphone-black.svg" alt="Поддержка" />
+		</div>
+
+		<div class="sidebar-cta-content">
+			<h2>Связаться с нами</h2>
+			<p>У вас есть проект или нужны экспертные советы по ИИ? Свяжитесь с нами сегодня.</p>
+			<ul>
+				<li>Email: <a href={`mailto:${email}`}>{email}</a></li>
+			</ul>
+		</div>
+	</div>
+</div>

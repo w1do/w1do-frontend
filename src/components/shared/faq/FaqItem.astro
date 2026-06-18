@@ -1,0 +1,38 @@
+---
+interface Props {
+	id: string;
+	question: string;
+	answer: string;
+	parentId?: string;
+	active?: boolean;
+	delay?: string;
+}
+
+const { id, question, answer, parentId = "accordion", active = false, delay } = Astro.props;
+---
+
+<div class="accordion-item wow fadeInUp" data-wow-delay={delay}>
+	<h2 class="accordion-header" id={`heading${id}`}>
+		<button
+			class={`accordion-button ${active ? "" : "collapsed"}`}
+			type="button"
+			data-bs-toggle="collapse"
+			data-bs-target={`#collapse${id}`}
+			aria-expanded={active ? "true" : "false"}
+			aria-controls={`collapse${id}`}
+		>
+			{question}
+		</button>
+	</h2>
+	<div
+		id={`collapse${id}`}
+		class={`accordion-collapse collapse ${active ? "show" : ""}`}
+		role="region"
+		aria-labelledby={`heading${id}`}
+		data-bs-parent={`#${parentId}`}
+	>
+		<div class="accordion-body">
+			<div set:html={answer} />
+		</div>
+	</div>
+</div>
