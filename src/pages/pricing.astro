@@ -1,0 +1,96 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/shared/Header.astro";
+import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
+import About from "../components/About.astro";
+import Feature from "../components/Feature.astro";
+import Process from "../components/Process.astro";
+import Choose from "../components/Choose.astro";
+import Cta from "../components/Cta.astro";
+import Footer from "../components/shared/Footer.astro";
+import IntroVideo from "../components/IntroVideo.astro";
+import Spacer from "../components/shared/Spacer.astro";
+import HireFaqs from "../components/hire/HireFaqs.astro";
+import DevPricing from "../components/pricing/DevPricing.astro";
+
+---
+
+<Layout 
+    title="Цены на разработку и внедрение ИИ — Claude, Gemini, RAG | W1DO"
+    description="Узнайте стоимость разработки и внедрения искусственного интеллекта в ваш бизнес. Прозрачные цены на создание AI-агентов, RAG-систем и автоматизацию на базе Claude и Gemini."
+    keywords="цены на разработку ии, стоимость внедрения нейросетей, разработка claude, внедрение gemini, ai агент цена, rag система стоимость"
+>
+    <Header/>
+    
+    <Breadcrumbs 
+        title="Цены на разработку ИИ" 
+        breadcrumbItems={[
+            { label: "Главная", href: "/" },
+            { label: "Цены", active: true }
+        ]}
+    />
+
+    <About 
+        subTitle="Прозрачное ценообразование"
+        title="Инвестиции в ИИ, которые окупаются"
+        description="Разработка и внедрение ИИ — это не просто затраты, а создание актива, который экономит сотни часов ручного труда. Мы предлагаем гибкие форматы работы: от фиксированных цен на MVP до выделенных R&D команд для глубокой интеграции ИИ в ваш бизнес."
+        counterValue="50"
+        counterTag="Проектов"
+        counterDescription="успешно внедренных AI-решений различной сложности"
+    />
+
+    <DevPricing />
+
+    <Feature 
+        subTitle="Что мы делаем"
+        title="Полный цикл разработки AI-решений"
+        description="Мы берем на себя все этапы: от анализа ваших данных до настройки сложных мульти-агентных систем, которые умеют думать и действовать."
+    />
+
+    <IntroVideo 
+        subTitle="Наш технологический стек"
+        title="Инструменты, которые мы используем"
+        tickerItems={["Claude 4.8 Sonnet", "Gemini 1.5 Pro", "Llama 3.1", "Pinecone/Weaviate", "n8n / LangChain", "MCP (Model Context Protocol)"]}
+    />
+
+    <div class="bg-section">
+        <Process 
+            subTitle="Как мы внедряем"
+            title="Процесс запуска вашего AI-проекта"
+            description="Четкая методология позволяет запускать работающие решения быстро и без лишних затрат."
+            step1Title="Анализ и Стратегия"
+            step1Desc="Изучаем ваши процессы, данные и подбираем оптимальный стек моделей (Claude, Gemini или локальные LLM)"
+            step2Title="Прототипирование"
+            step2Desc="Разработка архитектуры RAG и создание первого рабочего прототипа (MVP) для тестирования гипотез"
+            step3Title="Интеграция"
+            step3Desc="Настройка связи ИИ с вашими API, базами данных и инструментами через MCP и Workflow-оркестраторы"
+            step4Title="Масштабирование"
+            step4Desc="Финальная отладка, обучение системы на ваших данных и запуск в полноценную эксплуатацию"
+        />
+    </div>
+
+    <Choose 
+        subTitle="Почему выбирают нас?"
+        title="Экспертиза в LLMOps и AI-инженерии"
+        description="Мы не просто подключаем API, мы строим надежные системы, которые действительно работают в реальных условиях."
+        benefit1Title="Глубокая экспертиза"
+        benefit1Desc="Специализируемся на передовых технологиях: Claude 4.8, Gemini 1.5 и протоколе MCP для доступа к данным."
+        benefit2Title="Фокус на бизнес-результат"
+        benefit2Desc="Каждое внедрение направлено на решение конкретных задач: снижение издержек или рост прибыли."
+    />
+
+    <HireFaqs />
+    
+    <Spacer height="120px" />
+
+    <Cta 
+        subTitle="Нужен расчет проекта?"
+        title="Давайте обсудим вашу задачу и подберем решение"
+        description="Оставьте заявку, и мы подготовим для вас индивидуальное коммерческое предложение с учетом специфики вашего бизнеса."
+        formTitle="Получить расчет"
+    />
+
+    <Spacer/>
+
+    <Footer/>
+</Layout>
