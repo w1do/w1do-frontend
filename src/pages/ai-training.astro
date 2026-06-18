@@ -1,0 +1,103 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/shared/Header.astro";
+import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
+import About from "../components/About.astro";
+import Feature from "../components/Feature.astro";
+import Process from "../components/Process.astro";
+import Choose from "../components/Choose.astro";
+import Services from "../components/Services.astro";
+import Cta from "../components/Cta.astro";
+import Footer from "../components/shared/Footer.astro";
+import IntroVideo from "../components/IntroVideo.astro";
+import Spacer from "../components/shared/Spacer.astro";
+import HireFaqs from "../components/hire/HireFaqs.astro";
+
+---
+
+<Layout 
+    title="Обучение Claude, RAG, MCP и оркестрация LLM — AI разработка | W1DO"
+    description="Практическое обучение работе с Claude, разработке AI-агентов, настройке MCP и построению сложных RAG-систем. Масштабируйте ваш бизнес с помощью AI-автоматизации."
+    keywords="обучение Claude, разработка RAG агентов, настройка MCP, оркестрация LLM, разработка нейросетей, AI workflow, обучение ИИ разработке"
+>
+    <Header/>
+    
+    <Breadcrumbs 
+        title="Обучение и AI-разработка" 
+        breadcrumbItems={[
+            { label: "Главная", href: "/" },
+            { label: "Обучение AI", active: true }
+        ]}
+    />
+
+    <About 
+        subTitle="Мастерство в AI-разработке"
+        title="Освойте стек будущего: Claude, RAG и MCP"
+        description="Я обучаю не просто писать промпты, а проектировать <strong>промышленные AI-системы</strong>. От базовой настройки <strong>Model Context Protocol (MCP)</strong> до создания автономных <strong>RAG-агентов</strong> и сложных систем <strong>оркестрации LLM</strong>. Передаю опыт разработки реальных продуктов."
+        counterValue="100"
+        counterTag="Часов практики"
+        counterDescription="интенсивного погружения в архитектуру агентных систем"
+    />
+
+    <Feature 
+        subTitle="Чему вы научитесь"
+        title="От идеи до работающего AI-продукта"
+        description="Мы разберем полный цикл создания AI-сервисов: работу с <strong>Context Window</strong>, внедрение <strong>Knowledge Graph</strong>, настройку <strong>MCP-серверов</strong> и построение отказоустойчивых <strong>Workflow</strong>."
+    />
+
+    <IntroVideo 
+        subTitle="Программа обучения"
+        title="Технологии, которые мы внедрим"
+        tickerItems={["Claude 3.5 Sonnet", "RAG Architecture", "MCP Setup", "LLM Orchestration", "Agentic Workflows"]}
+    />
+
+    <div class="bg-section">
+        <Services 
+            subTitle="Ключевые модули"
+            title="Направления обучения и разработки"
+            description="Каждый модуль включает в себя теоретическую базу и глубокую практическую проработку на реальных кейсах."
+            limit={6}
+        />
+    </div>
+
+    <div class="bg-section">
+        <Process 
+            subTitle="Этапы обучения"
+            title="Путь от новичка до AI-архитектора"
+            description="Пошаговая методика освоения инструментов разработки ИИ-решений."
+            step1Title="Основы и Claude"
+            step1Desc="Глубокое погружение в возможности Claude, системные промпты и управление контекстом"
+            step2Title="RAG и Память"
+            step2Desc="Построение систем векторного поиска и работа с долгосрочной памятью агентов"
+            step3Title="MCP и Инструменты"
+            step3Desc="Настройка Model Context Protocol для связи LLM с вашими данными и API"
+            step4Title="Оркестрация"
+            step4Desc="Создание сложных агентных циклов и продакшн-реди пайплайнов"
+        />
+    </div>
+
+    <Choose 
+        subTitle="Почему обучаться у меня?"
+        title="Практический опыт вместо сухой теории"
+        description="Я делюсь наработками, полученными при создании реальных коммерческих систем для бизнеса."
+        benefit1Title="Актуальный стек"
+        benefit1Desc="Используем самые свежие инструменты: Claude 3.5, новейшие MCP-коннекторы и библиотеки оркестрации."
+        benefit2Title="Проектный подход"
+        benefit2Desc="В конце обучения у вас будет работающий прототип системы, готовый к внедрению или запуску."
+    />
+
+    <HireFaqs />
+    
+    <Spacer height="120px" />
+
+    <Cta 
+        subTitle="Готовы начать?"
+        title="Давайте построим ваш следующий AI-проект вместе"
+        description="Оставьте заявку на консультацию или обучение. Разберем ваши задачи и составим индивидуальный план внедрения ИИ."
+        formTitle="Начать обучение"
+    />
+
+    <Spacer height="120px" />
+
+    <Footer/>
+</Layout>
