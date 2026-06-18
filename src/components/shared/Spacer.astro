@@ -1,0 +1,18 @@
+---
+interface Props {
+  height?: string;
+  className?: string;
+}
+
+const { height = "120px", className = "" } = Astro.props;
+---
+
+<div class={`custom-spacer ${className}`} style={`height: ${height};`}></div>
+
+<style>
+  @media (max-width: 767px) {
+    .custom-spacer {
+      height: 60px !important;
+    }
+  }
+</style>

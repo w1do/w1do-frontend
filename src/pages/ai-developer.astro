@@ -1,0 +1,109 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/shared/Header.astro";
+import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
+import About from "../components/About.astro";
+import Feature from "../components/Feature.astro";
+import Process from "../components/Process.astro";
+import Choose from "../components/Choose.astro";
+import HirePricing from "../components/hire/HirePricing.astro";
+import HireFaqs from "../components/hire/HireFaqs.astro";
+import Services from "../components/Services.astro";
+import Cta from "../components/Cta.astro";
+import Footer from "../components/shared/Footer.astro";
+import IntroVideo from "../components/IntroVideo.astro";
+import Projects from "../components/projects/Projects.astro";
+import Spacer from "../components/shared/Spacer.astro";
+
+---
+
+<Layout 
+    title="Найм ИИ-разработчика — AI-разработка, LLMOps, RAG и автоматизация | W1DO"
+    description="Ищете эксперта в AI? Профессиональная разработка ПО с применением ИИ, оркестраций, n8n workflow и LLMOps. Агентные подходы и RAG-системы для вашего бизнеса."
+    keywords="найм AI разработчика, LLMOps, разработка AI агентов, RAG системы, автоматизация n8n, разработка workflow, AI ассистенты"
+>
+    <Header/>
+    
+    <Breadcrumbs 
+        title="Разработчик ИИ, MLops" 
+        breadcrumbItems={[
+            { label: "Главная", href: "/" },
+            { label: "Разработчик ИИ, MLops", active: true }
+        ]}
+    />
+
+    <About 
+        subTitle="ИИ-разработчик в вашу команду"
+        title="Архитектор AI-решений и автоматизации"
+        description="Я помогаю компаниям внедрять ИИ не как игрушку, а как ядро системы. Моя специализация — <strong>разработка ПО с применением AI</strong>, проектирование сложных <strong>оркестраций</strong>, работа с <strong>API, GraphQL</strong> и создание масштабируемых <strong>workflow в n8n</strong>. Я создаю системы, которые реально работают на бизнес."
+        counterValue="15"
+        counterTag="Спроектированных систем"
+        counterDescription="от сложных RAG-решений до автономных агентных циклов"
+    />
+
+    <Feature 
+        subTitle="Технологический стек"
+        title="Инструменты и архитектура"
+        description="Я строю решения, используя современные подходы: <strong>агентные циклы (agent loop)</strong>, <strong>tool calling</strong> и эффективные <strong>RAG-системы</strong>. Работаю с <strong>очередями сообщений</strong> и <strong>событиями</strong> для обеспечения отказоустойчивости и масштабируемости."
+    />
+
+    <IntroVideo 
+        subTitle="Экспертиза в AI"
+        title="От прототипа до промышленного LLMOps"
+        tickerItems={["RAG Systems", "Agent Loops", "n8n Automation", "LLMOps", "GraphQL API"]}
+    />
+
+    <div class="bg-section">
+        <Services 
+            subTitle="Сценарии применения"
+            title="Какие задачи я решаю для бизнеса"
+            description="Я фокусируюсь на создании интеллектуальных ассистентов, систем классификации данных и автоматической генерации отчетов."
+            limit={3}
+        />
+    </div>
+
+    <div class="bg-section">
+        <Process 
+            subTitle="Как я работаю"
+            title="От идентификации сценариев до LLMOps"
+            description="Процесс разработки строится на итеративном подходе и глубоком анализе ваших потребностей."
+            step1Title="Анализ и Сценарии"
+            step1Desc="Идентифицирую пользовательские сценарии, требующие автоматизации ИИ"
+            step2Title="Проектирование"
+            step2Desc="Разработка архитектуры: API, GraphQL, очереди и потоки данных"
+            step3Title="Реализация"
+            step3Desc="Сборка workflow в n8n, настройка агентов и RAG-систем"
+            step4Title="LLMOps и Качество"
+            step4Desc="Внедрение метрик качества и систем мониторинга AI-решений"
+        />
+    </div>
+
+    <Choose 
+        subTitle="Компетенции"
+        title="Почему стоит выбрать меня?"
+        description="Я сочетаю техническую глубину в AI с пониманием бизнес-процессов и методологий разработки."
+        benefit1Title="Работа с неопределенностью"
+        benefit1Desc="Умею быстро проверять экспериментальные гипотезы и находить решения в условиях меняющихся требований."
+        benefit2Title="Agile & Коммуникация"
+        benefit2Desc="Свободно общаюсь с бизнесом и техническими командами в рамках Scrum/Kanban фреймворков."
+    />
+
+    <HirePricing />
+
+    <HireFaqs />
+    
+    <Spacer height="120px" />
+
+    <Projects />
+
+    <Spacer height="120px" />
+
+    <Cta 
+        subTitle="Готовы усилить команду?"
+        title="Давайте обсудим ваши задачи по внедрению ИИ"
+        description="Если вы ищете разработчика, который понимает разницу между 'просто промптом' и промышленным ИИ-решением — напишите мне."
+        formTitle="Обсудить сотрудничество"
+    />
+
+    <Footer/>
+</Layout>
