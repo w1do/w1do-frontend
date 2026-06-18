@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/shared/Header.astro";
 import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
+import Footer from "../components/shared/Footer.astro";
 ---
 <Layout 
     title="Контакты | Инженер по AI автоматизации"
@@ -34,7 +35,7 @@ import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
                                 <!-- Contact Ticker Content Start -->
                                 <div class="contact-ticker-content wow fadeInUp">
                                     <hr>
-                                    <p>Мои надежные партнеры</p>
+                                    <p>Технологии которые я использую</p>
                                     <hr>
                                 </div>
                                 <!-- Contact Ticker Content End -->
@@ -42,18 +43,24 @@ import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
                                 <!-- Scrolling Ticker Start -->
                                 <div class="scrolling-ticker-box">
                                     <div class="scrolling-content">
-                                        <span><img src="images/company-logo-1.svg" alt=""></span>
-                                        <span><img src="images/company-logo-2.svg" alt=""></span>
-                                        <span><img src="images/company-logo-3.svg" alt=""></span>
-                                        <span><img src="images/company-logo-4.svg" alt=""></span>
-                                        <span><img src="images/company-logo-5.svg" alt=""></span>
+                                        <span><img src="images/llm/anthropic.svg" alt="Anthropic"></span>
+                                        <span><img src="images/llm/openai.svg" alt="OpenAI"></span>
+                                        <span><img src="images/llm/claude-color.svg" alt="Claude"></span>
+                                        <span><img src="images/llm/gemini-color.svg" alt="Gemini"></span>
+                                        <span><img src="images/llm/deepseek-color.svg" alt="DeepSeek"></span>
+                                        <span><img src="images/llm/mistral-color.svg" alt="Mistral"></span>
+                                        <span><img src="images/llm/n8n-color.svg" alt="n8n"></span>
+                                        <span><img src="images/llm/cursor.svg" alt="Cursor"></span>
                                     </div>
                                     <div class="scrolling-content">
-                                        <span><img src="images/company-logo-1.svg" alt=""></span>
-                                        <span><img src="images/company-logo-2.svg" alt=""></span>
-                                        <span><img src="images/company-logo-3.svg" alt=""></span>
-                                        <span><img src="images/company-logo-4.svg" alt=""></span>
-                                        <span><img src="images/company-logo-5.svg" alt=""></span>
+                                        <span><img src="images/llm/anthropic.svg" alt="Anthropic"></span>
+                                        <span><img src="images/llm/openai.svg" alt="OpenAI"></span>
+                                        <span><img src="images/llm/claude-color.svg" alt="Claude"></span>
+                                        <span><img src="images/llm/gemini-color.svg" alt="Gemini"></span>
+                                        <span><img src="images/llm/deepseek-color.svg" alt="DeepSeek"></span>
+                                        <span><img src="images/llm/mistral-color.svg" alt="Mistral"></span>
+                                        <span><img src="images/llm/n8n-color.svg" alt="n8n"></span>
+                                        <span><img src="images/llm/cursor.svg" alt="Cursor"></span>
                                     </div>
                                 </div>
                                 <!-- Scrolling Ticker End -->
@@ -103,6 +110,12 @@ import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
         .w-100 {
             width: 100%;
         }
+        .scrolling-content img {
+            filter: brightness(0) invert(1);
+            max-height: 40px;
+            width: auto;
+            margin: 0 20px;
+        }
     </style>
 
     <!-- Google Map Start -->
@@ -133,4 +146,6 @@ import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
         </div>
     </div>
     <!-- Google Map End -->
+
+    <Footer/>
 </Layout>
