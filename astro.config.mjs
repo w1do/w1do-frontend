@@ -6,6 +6,9 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://w1do.ru',
+  server: {
+    host: true
+  },
   output: 'static',
   adapter: node({
     mode: 'standalone'
