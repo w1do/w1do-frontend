@@ -6,6 +6,8 @@ import Footer from "../components/shared/Footer.astro";
 import Faqs from "../components/Faqs.astro";
 import Cta from "../components/Cta.astro";
 import Testimonials from "../components/Testimonials.astro";
+import Pricing from "../components/Pricing.astro";
+import Process from "../components/Process.astro";
 
 const { frontmatter } = Astro.props;
 
@@ -148,6 +150,33 @@ const services = Object.values(import.meta.glob('../pages/services/*.md', { eage
     </div>
     <!-- Page Service Single Start -->
     
+    {frontmatter.process ? (
+        <Process 
+            title={frontmatter.process.title}
+            description={frontmatter.process.description}
+            step1Title={frontmatter.process.step1Title}
+            step1Desc={frontmatter.process.step1Desc}
+            step2Title={frontmatter.process.step2Title}
+            step2Desc={frontmatter.process.step2Desc}
+            step3Title={frontmatter.process.step3Title}
+            step3Desc={frontmatter.process.step3Desc}
+            step4Title={frontmatter.process.step4Title}
+            step4Desc={frontmatter.process.step4Desc}
+        />
+    ) : frontmatter.showGlobalProcess && (
+        <Process />
+    )}
+
+    {frontmatter.pricing ? (
+        <Pricing 
+            title={frontmatter.pricing.title}
+            description={frontmatter.pricing.description}
+            pricingItems={frontmatter.pricing.items}
+        />
+    ) : frontmatter.showGlobalPricing && (
+        <Pricing />
+    )}
+
     <Faqs customFaqs={frontmatter.faqs} />
     <Testimonials/>
     <Cta/>
