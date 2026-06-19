@@ -8,6 +8,8 @@ import Cta from "../components/Cta.astro";
 import Testimonials from "../components/Testimonials.astro";
 import Pricing from "../components/Pricing.astro";
 import Process from "../components/Process.astro";
+import Works from "../components/Works.astro";
+import Spacer from "../components/shared/Spacer.astro";
 
 const { frontmatter } = Astro.props;
 
@@ -49,7 +51,7 @@ const services = Object.values(import.meta.glob('../pages/services/*.md', { eage
                         <!-- Sidebar CTA Box Start -->
                         <div class="sidebar-cta-box box-border-gradiant wow fadeInUp" data-wow-delay="0.2s">
                             <div class="icon-box">
-                                <img src="/images/icon-headphone-black.svg" alt="">
+                                <img src="/images/icon-headphone-black.svg" alt="" style="filter: brightness(0) invert(1);">
                             </div>
                             <div class="sidebar-cta-content">
                                 <h2>Связаться с нами</h2>
@@ -91,7 +93,7 @@ const services = Object.values(import.meta.glob('../pages/services/*.md', { eage
                                         {frontmatter.offers.map((offer: any, index: number) => (
                                             <div class="service-offer-item box-border-gradiant wow fadeInUp" data-wow-delay={`${0.4 + index * 0.2}s`}>
                                                 <div class="icon-box">
-                                                    <img src={offer.icon || "/images/icon-service-offer-list-1.svg"} alt="">
+                                                    <img src={offer.icon || "/images/icon-service-offer-list-1.svg"} alt="" style="filter: brightness(0) invert(1);">
                                                 </div>
                                                 <div class="service-offer-item-content">
                                                     <h3>{offer.title}</h3>
@@ -180,6 +182,9 @@ const services = Object.values(import.meta.glob('../pages/services/*.md', { eage
     <Faqs customFaqs={frontmatter.faqs} />
     <Testimonials/>
     <Cta/>
+
+    <Spacer/>
+    <Works />
     <Footer/>
 </Layout>
 

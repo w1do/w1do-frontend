@@ -1,0 +1,117 @@
+---
+const works = [
+    {
+        name: "ChatGPT (GPT-4o / 5.5)",
+        description: "Универсальная модель для текста и кода.",
+        icon: "/images/llm/openai.svg",
+        year: "OpenAI"
+    },
+    {
+        name: "Claude 4.8 Sonnet",
+        description: "Лучшая модель для кодинга и сложных текстов.",
+        icon: "/images/llm/claude-color.svg",
+        year: "Anthropic"
+    },
+    {
+        name: "Gemini 3.1",
+        description: "Мультимодальная модель с огромным контекстом.",
+        icon: "/images/llm/gemini-color.svg",
+        year: "Google"
+    },
+    {
+        name: "DeepSeek V3",
+        description: "Быстрая открытая модель для математики и кода.",
+        icon: "/images/llm/deepseek-color.svg",
+        year: "DeepSeek"
+    },
+    {
+        name: "Olama",
+        description: "Запуск мощных AI моделей на локальных серверах.",
+        icon: "/images/llm/ollama.svg",
+        year: "Meta"
+    },
+    {
+        name: "OpenRouter",
+        description: "Единый API доступ ко всем топовым нейросетям мира.",
+        icon: "/images/llm/openrouter.svg",
+        year: "Unified API"
+    },
+    {
+        name: "Polza AI",
+        description: "Единый API доступ ко всем топовым нейросетям мира из РФ",
+        icon: "/images/llm/polza.svg",
+        year: "Polza AI"
+    },
+    {
+        name: "Mistral Codestral",
+        description: "Специализированная модель для разработки ПО.",
+        icon: "/images/llm/mistral-color.svg",
+        year: "Mistral AI"
+    }
+];
+---
+
+<!-- Our Works Section Start -->
+<div class='our-awards-prime bg-section'>
+    <div class='container'>
+        <div class='row'>
+            <div class='col-xl-6'>
+                <!-- Works Item Content Start -->
+                <div class='awards-content-prime'>
+                    <!-- Section Title Start -->
+                    <div class='section-title'>
+                        <span class='section-sub-title wow fadeInUp'>Технологический стек</span>
+                        <h2 class='text-anime-style-3' data-cursor='-opaque'>наши автоматизации используют самые топовые LLM</h2>
+                        <p class='wow fadeInUp' data-wow-delay='0.2s'>Мы интегрируем передовые языковые модели для создания интеллектуальных агентов, автоматизации рутины и построения эффективных бизнес-процессов на базе AI.</p>
+                    </div>
+                    <!-- Section Title End -->
+
+                    <!-- Works Item Counter Box Start -->
+                    <div class='awards-counter-box-prime wow fadeInUp'>
+                        <h2><span class='counter'>10</span>+</h2>
+                        <p>Ведущих AI-лабораторий в нашем арсенале.</p>
+                    </div>
+                    <!-- Works Item Counter Box End -->
+                </div>
+                <!-- Works Item Content End -->
+            </div>
+
+            <div class='col-xl-6'>
+                <!-- Works Item List Start -->
+                <div class='awards-item-list-prime box-border-gradiant'>
+                    {works.map((item, index) => (
+                        <!-- Works Item Start -->
+                        <div class={`awards-item-prime wow fadeInUp`} data-wow-delay={`${index * 0.1}s`}>
+                            <!-- Works Items Start -->
+                            <div class='awards-item-body-prime'>
+                                <div class='icon-box'>
+                                    <img src={item.icon} alt={item.name} style='width: 80px; height: 80px; filter: brightness(0) invert(1);'>
+                                </div>
+                                <div class='awards-item-content-prime'>
+                                    <h3>{item.name}</h3>
+                                    <p>{item.description}</p>
+                                </div>
+                            </div>
+                            <!-- Works Items End -->
+
+                            <!-- Works Item Year Start -->
+                            <div class='awards-item-year-prime'>
+                                <h3>{item.year}</h3>
+                            </div>
+                            <!-- Works Item Year End -->
+                        </div>
+                        <!-- Works Item End -->
+                    ))}
+                </div>
+                <!-- Works Item List End -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Our Works Section End -->
+
+<style>
+    .awards-item-year-prime h3 {
+        font-size: 32px !important;
+    }
+</style>

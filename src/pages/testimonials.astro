@@ -1,0 +1,124 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/shared/Header.astro";
+import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
+import IntroVideo from "../components/IntroVideo.astro";
+import Feature from "../components/Feature.astro";
+import Faqs from "../components/Faqs.astro";
+import Process from "../components/Process.astro";
+import Footer from "../components/shared/Footer.astro";
+
+const testimonials = [
+    {
+        name: "Александр Волков",
+        position: "Технический директор, LogiTrans",
+        image: "/images/author-1.jpg",
+        text: "Внедрение RAG-системы для нашей службы поддержки превзошло все ожидания. Раньше операторы тратили минуты на поиск по регламентам, теперь ИИ выдает точный ответ за секунды. Время обработки заявки сократилось на 60%, а клиенты получают помощь мгновенно.",
+        rating: 5
+    },
+    {
+        name: "Мария Соколова",
+        position: "Операционный директор, PrimeLaw",
+        image: "/images/author-2.jpg",
+        text: "Мы искали способ автоматизировать классификацию входящих документов. Разработанное ИИ-решение теперь автоматически распознает типы договоров и извлекает ключевые данные с точностью 98%. Это освободило наш юридический отдел от рутины и ускорило согласование сделок в 3 раза.",
+        rating: 5
+    },
+    {
+        name: "Дмитрий Иванов",
+        position: "Основатель, TrendShop",
+        image: "/images/author-3.jpg",
+        text: "Команда внедрила в наш интернет-магазин систему персональных рекомендаций на базе ИИ. Результат увидели уже в первый месяц: средний чек вырос на 25%, а конверсия из просмотра в покупку увеличилась вдвое. Поразительно, насколько точно модели предсказывают интересы покупателей.",
+        rating: 5
+    },
+    {
+        name: "Елена Белова",
+        position: "HR-директор, RetailGroup",
+        image: "/images/author-4.jpg",
+        text: "ИИ-ассистент для первичного скрининга кандидатов сэкономил нам сотни часов работы. Теперь бот сам проводит первичные интервью в Telegram, оценивает hard-skills и назначает встречи только с лучшими кандидатами. Качество найма заметно выросло.",
+        rating: 5
+    },
+    {
+        name: "Виктор Поляков",
+        position: "Владелец, AutoParts24",
+        image: "/images/author-5.jpg",
+        text: "Интеграция ИИ с нашей CRM позволила автоматически обрабатывать запросы на подбор запчастей. Система сама находит аналоги по VIN-коду и отправляет предложение клиенту. Это позволило нам обрабатывать в 5 раз больше заказов тем же штатом.",
+        rating: 5
+    },
+    {
+        name: "Анна Кузнецова",
+        position: "Маркетолог, EdTech Platform",
+        image: "/images/author-6.jpg",
+        text: "Мы внедрили автоматическую генерацию контента для наших курсов и соцсетей. Теперь создание учебных материалов занимает часы, а не недели. При этом ИИ сохраняет наш tone of voice и учитывает специфику аудитории. Очень довольны результатом!",
+        rating: 5
+    }
+];
+
+const title = "Отзывы клиентов | Внедрение ИИ в бизнес — W1DO DIGITAL";
+const description = "Отзывы реальных клиентов о внедрении ИИ-агентов, RAG-систем и автоматизации бизнес-процессов. Узнайте, как наши решения помогают компаниям расти.";
+const keywords = "отзывы ИИ, внедрение нейросетей отзывы, кейсы ИИ автоматизация, AI агент отзывы, W1DO DIGITAL отзывы";
+---
+
+<Layout title={title} description={description} keywords={keywords}>
+    <Header/>
+    <Breadcrumbs 
+        title="Отзывы клиентов" 
+        breadcrumbItems={[
+            { label: "Главная", href: "/" },
+            { label: "Отзывы", active: true }
+        ]} 
+    />
+
+    <!-- Page Testimonials Start -->
+    <div class="page-testimonials">
+        <div class="container">
+            <div class="row">
+                {testimonials.map((item, index) => (
+                    <div class="col-xl-4 col-md-6">
+                        <!-- Testimonial Item Start -->
+                        <div class="testimonial-item box-border-gradiant wow fadeInUp" data-wow-delay={`${index * 0.2}s`}>
+                            <!-- Testimonial Item Header Start -->
+                            <div class="testimonial-item-header">
+                                <!-- Testimonial Item Rating Start -->
+                                <div class="testimonial-item-rating">
+                                    {[...Array(item.rating)].map(() => (
+                                        <i class="fa fa-solid fa-star"></i>
+                                    ))}
+                                </div>
+                                <!-- Testimonial Item Rating End -->
+
+                                <!-- Testimonial Item Content Start -->
+                                <div class="testimonial-item-content">
+                                    <p>“{item.text}”</p>
+                                </div>
+                                <!-- Testimonial Item Content End -->
+                            </div>
+                            <!-- Testimonial Item Header End -->
+
+                            <!-- Testimonial Item Author Start -->
+                            <div class="testimonial-item-author">
+                                <div class="testimonial-author-image">
+                                    <figure class="image-anime">
+                                        <img src={item.image} alt={item.name}>
+                                    </figure>
+                                </div>
+                                <div class="testimonial-author-content">
+                                    <h2>{item.name}</h2>
+                                    <p>{item.position}</p>
+                                </div>
+                            </div>
+                            <!-- Testimonial Item Author End -->
+                        </div>
+                        <!-- Testimonial Item End -->
+                    </div>
+                ))}
+            </div>
+        </div>
+    </div>
+    <!-- Page Testimonials Start -->
+
+    <IntroVideo/>
+    <Feature/>
+    <Faqs/>
+    <Process/>
+    <Footer/>
+</Layout>
