@@ -1,3 +1,23 @@
+---
+const serviceFiles = Object.values(import.meta.glob('../../pages/services/*.md', { eager: true }));
+const services = serviceFiles.map((file: any) => ({
+    title: file.frontmatter.title,
+    link: file.url,
+    no: file.frontmatter.no || "99"
+})).sort((a, b) => a.no.localeCompare(b.no));
+
+const navigationLinks = [
+    { label: "Главная", href: "/" },
+    { label: "Обо мне", href: "/about" },
+    { label: "Услуги", href: "/services" },
+    { label: "База знаний", href: "/knowledge" },
+    { label: "Консультация", href: "/consultation" },
+    { label: "ИИ-разработчик", href: "/ai-developer" },
+    { label: "Обучение разработке с ИИ", href: "/ai-dev-training" },
+    { label: "Цены", href: "/pricing" },
+    { label: "Проекты", href: "/case" },
+];
+---
 <!-- Main Footer Start -->
 <div class="main-footer-prime bg-section">
     <div class="container">
@@ -33,8 +53,8 @@
                     <!-- Footer Contact List Start -->
                     <div class="footer-contact-list-prime">
                         <ul>
-                            <li><img src="/images/icon-mail-accent.svg" alt="Email"><a href={import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1DO_DIGITAL"} data-cursor="-opaque">Написать в Telegram</a></li>
-                            <li><img src="/images/icon-location-accent.svg" alt="Location">Удаленная работа по всем регионам</li>
+                            <li><img src="/images/icon-mail-accent.svg" alt="Telegram"><a href={import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1DO_DIGITAL"} data-cursor="-opaque">Написать в Telegram</a></li>
+                            <li><img src="/images/icon-mail-accent.svg" alt="Email"><a href="mailto:uniqdeveloper@yandex.ru" data-cursor="-opaque">Написать на почту</a></li>
                         </ul>
                     </div>
                     <!-- Footer Contact List End -->
@@ -48,55 +68,38 @@
                     <!-- Footer Links Start -->
                     <div class="footer-links-prime">
                         <h2>Навигация</h2>
-                        <ul>
-                            <li><a href="/">Главная</a></li>
-                            <li><a href="/about">Обо мне</a></li>
-                            <li><a href="/services">Услуги</a></li>
-                            <li><a href="/knowledge">База знаний</a></li>
-                            <li><a href="/consultation">Консультация</a></li>
-                            <li><a href="/ai-developer">ИИ-разработчик</a></li>
-                            <li><a href="/ai-dev-training">Обучение разработке с ИИ</a></li>
-                            <li><a href="/pricing">Цены</a></li>
-                            <li><a href="/case">Проекты</a></li>
+                        <ul class="expandable-list" data-limit="5">
+                            {navigationLinks.map((link, index) => (
+                                <li class={index >= 5 ? "hidden-link" : ""}><a href={link.href}>{link.label}</a></li>
+                            ))}
                         </ul>
+                        {navigationLinks.length > 5 && (
+                            <button class="show-more-btn" data-cursor="-opaque">Показать еще</button>
+                        )}
                     </div>
                     <!-- Footer Links End -->
 
                     <!-- Footer Links Start -->
                     <div class="footer-links-prime">
                         <h2>Услуги</h2>
-                        <ul>
-                            <li><a href="#services">ИИ-агенты (Claude)</a></li>
-                            <li><a href="#services">RAG-системы</a></li>
-                            <li><a href="#services">Автоматизация API</a></li>
-                            <li><a href="#services">MVP под ключ</a></li>
-                            <li><a href="#services">Промпт-инжиниринг</a></li>
+                        <ul class="expandable-list" data-limit="5">
+                            {services.map((service, index) => (
+                                <li class={index >= 5 ? "hidden-link" : ""}><a href={service.link}>{service.title}</a></li>
+                            ))}
                         </ul>
+                        {services.length > 5 && (
+                            <button class="show-more-btn" data-cursor="-opaque">Показать еще</button>
+                        )}
                     </div>
                     <!-- Footer Links End -->
 
                     <!-- Footer Links Start -->
                     <div class="footer-links-prime footer-newsletter-form-prime">
-                        <h2>Подпишитесь</h2>
-                        <div class="footer-newsletter-form-box-prime">
-                            <div class="icon-box">
-                                <i class="fa-solid fa-bell"></i>
-                            </div>
-                            <div class="footer-newsletter-form-content">
-                                <p>Подпишитесь на новости ИИ и кейсы автоматизации.</p>
-                            </div>
-                        </div>
-
-                        <form id="newslettersForm" action="#" method="POST">
-                            <div class="form-group">
-                                <input type="email" name="mail" class="form-control" id="mail" placeholder="Ваш Email *" required="">
-                                <button type="submit" class="newsletter-btn"><i class="fa-solid fa-paper-plane"></i></button>
-                            </div>
-                        </form>
+                        <h2>IT-ИИшница в Telegram</h2>
 
                         <div class="footer-social-links">
                             <ul>
-                                <li><a href={import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1DO_DIGITAL"} data-cursor="-opaque"><i class="fa-brands fa-telegram"></i></a></li>
+                                <li><a href="https://t.me/+sJeHrjLGkbNjN2Yy" data-cursor="-opaque"><i class="fa-brands fa-telegram"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -109,8 +112,58 @@
 
     <!-- Footer Copyright Start -->
     <div class="footer-copyright-prime">
-        <p>Copyright © 2024 AI Agency. Все права защищены.</p>
+        <p>Copyright © 2022-2024 AI Agency. Все права защищены.</p>
     </div>
     <!-- Footer Copyright End -->
 </div>
 <!-- Main Footer End -->
+
+<style>
+    .hidden-link {
+        display: none;
+    }
+    .show-more-btn {
+        background: none;
+        border: none;
+        color: var(--primary-color);
+        cursor: pointer;
+        padding: 5px 0;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        margin-top: 10px;
+    }
+    .show-more-btn:hover {
+        opacity: 0.8;
+    }
+    .expandable-list {
+        margin-bottom: 0 !important;
+    }
+</style>
+
+<script>
+    function setupShowMore() {
+        const buttons = document.querySelectorAll('.show-more-btn');
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const list = button.previousElementSibling;
+                if (list) {
+                    const hiddenLinks = list.querySelectorAll('.hidden-link');
+                    const isExpanding = button.textContent === 'Показать еще';
+                    
+                    hiddenLinks.forEach(link => {
+                        (link as HTMLElement).style.display = isExpanding ? 'block' : 'none';
+                    });
+                    
+                    button.textContent = isExpanding ? 'Скрыть' : 'Показать еще';
+                }
+            });
+        });
+    }
+
+    // Setup on initial load
+    setupShowMore();
+
+    // Setup on Astro page transitions if using ViewTransitions
+    document.addEventListener('astro:after-swap', setupShowMore);
+</script>
