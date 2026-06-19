@@ -5,7 +5,7 @@ seo:
   title: "Интеграция ИИ с 1С и CRM — автоматизация бизнес-процессов и учета под ключ | W1DO"
   description: "Глубокая интеграция языковых моделей с 1С, CRM и ERP системами для автоматизации отчетности, обработки первички и интеллектуального анализа данных."
 description: "Интеграция LLM с вашими системами учета (1С, Битрикс24, amoCRM) для автоматизации рутины."
-image: /images/service-single-image.jpg
+image: /images/services/1c.webp
 no: "05"
 icon: /images/icon-service-5.svg
 tags: ["1C", "CRM", "ERP", "Automation"]

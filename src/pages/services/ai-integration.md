@@ -5,7 +5,7 @@ seo:
   title: "Интеграция ИИ в бизнес-процессы — комплексная автоматизация и внедрение LLM | W1DO"
   description: "Профессиональное внедрение ИИ-решений, кастомных агентов и LLM в ваш бизнес. Автоматизируем рутину, снижаем расходы и повышаем эффективность процессов под ключ."
 description: "Комплексное внедрение ИИ-решений и LLM для автоматизации бизнес-процессов и снижения издержек."
-image: /images/service-single-image.jpg
+image: /images/services/ai-integration.webp
 no: "01"
 icon: /images/icon-service-1.svg
 tags: ["LLM", "Automation", "Efficiency"]

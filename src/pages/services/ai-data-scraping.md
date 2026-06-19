@@ -5,7 +5,7 @@ seo:
   title: "Парсинг и сбор данных с помощью ИИ — автоматизация извлечения информации | W1DO"
   description: "Профессиональный сбор данных из маркетплейсов, соцсетей и сайтов. Интеллектуальный парсинг и структурирование информации для вашего бизнеса с помощью ИИ."
 description: "Автоматизированный сбор и структурирование данных из любых источников с использованием нейросетей."
-image: /images/service-single-image.jpg
+image: /images/services/parsing.webp
 no: "07"
 icon: /images/icon-service-4.svg
 tags: ["Web Scraping", "Data Analysis", "AI"]

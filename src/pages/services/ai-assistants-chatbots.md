@@ -5,7 +5,7 @@ seo:
   title: "AI ассистенты и умные чат-боты для бизнеса под ключ — разработка и внедрение | W1DO"
   description: "Профессиональная разработка умных AI ассистентов и чат-ботов на базе LLM для автоматизации поддержки клиентов и роста продаж вашего бизнеса 24/7."
 description: "Разработка умных AI ассистентов и чат-ботов на базе LLM для автоматизации поддержки и роста продаж."
-image: /images/service-single-image.jpg
+image: /images/services/ai-chat-bot.webp
 no: "02"
 icon: /images/icon-service-2.svg
 tags: ["LLM", "Chatbots", "AI Assistants"]

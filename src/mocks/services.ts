@@ -99,5 +99,15 @@ export const services: Service[] = [
         tags: ['Payments', 'Checkout'],
         link: '/services',
         delay: '1.6s'
+    },
+    {
+        id: 'ai-avito',
+        no: '10',
+        title: 'ИИ агенты для Авито',
+        description: 'Автоматизация общения и продаж на Авито. Умные боты-автоответчики через официальный API.',
+        icon: '/images/icon-service-3.svg',
+        tags: ['Авито', 'ИИ Агенты'],
+        link: '/services/ai-bot-avito',
+        delay: '1.8s'
     }
 ];
