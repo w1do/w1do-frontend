@@ -1,46 +1,55 @@
-# Astro Starter Kit: Basics
+# W1DO DIGITAL — Сайт AI-инженера
 
-```sh
-npm create astro@latest -- --template basics
-```
+**W1DO DIGITAL** — это сайт разработчика AI и инженера, который разрабатывает продукты разной сложности используя искусственный интеллект (Claude, Gemini, Junie).
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+---
 
-## 🚀 Project Structure
+## 🚀 Стек технологий
 
-Inside of your Astro project, you'll see the following folders and files:
+- **Framework**: Astro (SSG/SSR)
+- **Styling**: Tailwind CSS
+- **UI**: Shadcn UI + Lucide Icons
+- **Content**: Markdown (Content Collections)
+- **API**: Directus Integration
+- **Automation**: n8n (генерация SEO-контента)
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+---
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## 📂 Функционал проекта
 
-## 🧞 Commands
+Подробная документация по проекту:
 
-All commands are run from the root of the project, from a terminal:
+- **[SUMMARY.md](./SUMMARY.md)** — Краткая информация о проекте, целях и текущем статусе (Vibe coding).
+- **[UI Components](./docs/ui-components.md)** — Документация по используемым компонентам и их структуре.
+- **[Idea](./idea.md)** — Основная концепция и план разработки контента.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+---
 
-## 👀 Want to learn more?
+## 🧞 Команды
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Все команды запускаются из корня проекта:
+
+| Команда | Действие |
+| :--- | :--- |
+| `npm install` | Установка зависимостей |
+| `npm run dev` | Запуск сервера разработки на `localhost:4321` |
+| `npm run build` | Сборка проекта в `./dist/` |
+| `npm run preview` | Предварительный просмотр сборки локально |
+
+---
+
+## Контакты
+
+> Разработал Денис Митрофанов
+
+**Сайт: [AI-инженер](https://w1do.ru)**
+
+**TG: [W1DO_DIGITAL](https://t.me/W1DO_DIGITAL)**
+
+**MAX: [Простите за MAX](https://max.ru/u/f9LHodD0cOKlpm9dqNIVXbxyaDeOEKzC4jizdf-1qeqNIOnm7yL9qs68d58)**
+
+**Мой канал: [YouTube](https://www.youtube.com/@w1do_digital)**
+
+## Для работодателей и нанимателей
+- Только удаленка
+- Внедрение AI / Разработка (Claude, Junie, Codex)
