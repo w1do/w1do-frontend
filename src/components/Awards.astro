@@ -1,3 +1,50 @@
+---
+interface AwardItem {
+    icon: string;
+    title: string;
+    description: string;
+    year: string;
+}
+
+interface Props {
+    subTitle?: string;
+    title?: string;
+    description?: string;
+    counterValue?: string;
+    counterDesc?: string;
+    awards?: AwardItem[];
+    sliderText?: string;
+}
+
+const {
+    subTitle = "Опыт и практика",
+    title = "Как я использовал LLM в своих задачах",
+    description = "Каждая модель была подобрана под конкретную бизнес-задачу для достижения максимальной эффективности.",
+    counterValue = "500",
+    counterDesc = "Часов проектирования промптов и интеграций.",
+    awards = [
+        {
+            icon: '/images/llm/gemini-color.svg',
+            title: 'Gemini Nano',
+            description: 'Создал сервис для автоподбора дизайна ногтей на базе генерации изображений.',
+            year: '2025'
+        },
+        {
+            icon: '/images/llm/claude-color.svg',
+            title: 'Claude 4.7/4.8 Sonnet',
+            description: 'Автономный агент для e-commerce: обработка возвратов и поддержка клиентов.',
+            year: '2025'
+        },
+        {
+            icon: '/images/llm/deepseek-color.svg',
+            title: 'DeepSeek V3',
+            description: 'AI-анализ юр. документов: поиск коллизий и автоматическое составление протоколов.',
+            year: '2026'
+        }
+    ],
+    sliderText = "Использую лучшие технологии индустрии"
+} = Astro.props;
+---
 <!-- Our Awards Section Start -->
 <div class='our-awards-prime bg-section'>
     <div class='container'>
@@ -7,16 +54,16 @@
                 <div class='awards-content-prime'>
                     <!-- Section Title Start -->
                     <div class='section-title'>
-                        <span class='section-sub-title wow fadeInUp'>Опыт и практика</span>
-                        <h2 class='text-anime-style-3' data-cursor='-opaque'>Как я использовал LLM, в своих задачах</h2>
-                        <p class='wow fadeInUp' data-wow-delay='0.2s'>Каждая модель была подобрана под конкретную бизнес-задачу для достижения максимальной эффективности.</p>
+                        <span class='section-sub-title wow fadeInUp'>{subTitle}</span>
+                        <h2 class='text-anime-style-3' data-cursor='-opaque'>{title}</h2>
+                        <p class='wow fadeInUp' data-wow-delay='0.2s'>{description}</p>
                     </div>
                     <!-- Section Title End -->
 
                     <!-- Awards Item Counter Box Start -->
                     <div class='awards-counter-box-prime wow fadeInUp'>
-                        <h2><span class='counter'>500</span>+</h2>
-                        <p>Часов проектирования промптов и интеграций.</p>
+                        <h2><span class='counter'>{counterValue}</span>+</h2>
+                        <p>{counterDesc}</p>
                     </div>
                     <!-- Awards Item Counter Box End -->
                 </div>
@@ -26,71 +73,22 @@
             <div class='col-xl-6'>
                 <!-- Awards Item List Start -->
                 <div class='awards-item-list-prime box-border-gradiant'>
-                    <!-- Awards Item Start -->
-                    <div class='awards-item-prime wow fadeInUp'>
-                        <!-- Awards Items Start -->
-                        <div class='awards-item-body-prime'>
-                            <div class='icon-box'>
-                                <img src='/images/llm/gemini-color.svg' alt='Gemini Nano' style='width: 80px; height: 80px; filter: brightness(0) invert(1);'>
+                    {awards.map((award, index) => (
+                        <div class='awards-item-prime wow fadeInUp' data-wow-delay={index > 0 ? `${index * 0.2}s` : undefined}>
+                            <div class='awards-item-body-prime'>
+                                <div class='icon-box'>
+                                    <img src={award.icon} alt={award.title} style='width: 80px; height: 80px; filter: brightness(0) invert(1);'>
+                                </div>
+                                <div class='awards-item-content-prime'>
+                                    <h3>{award.title}</h3>
+                                    <p>{award.description}</p>
+                                </div>
                             </div>
-                            <div class='awards-item-content-prime'>
-                                <h3>Gemini Nano</h3>
-                                <p>Создал сервис для автоподбора дизайна ногтей на базе генерации изображений.</p>
-                            </div>
-                        </div>
-                        <!-- Awards Items End -->
-
-                        <!-- Awards Item Year Start -->
-                        <div class='awards-item-year-prime'>
-                            <h3>2025</h3>
-                        </div>
-                        <!-- Awards Item Year End -->
-                    </div>
-                    <!-- Awards Item End -->
-
-                    <!-- Awards Item Start -->
-                    <div class='awards-item-prime wow fadeInUp' data-wow-delay='0.2s'>
-                        <!-- Awards Items Start -->
-                        <div class='awards-item-body-prime'>
-                            <div class='icon-box'>
-                                <img src='/images/llm/claude-color.svg' alt='Claude 3.5 Sonnet' style='width: 80px; height: 80px; filter: brightness(0) invert(1);'>
-                            </div>
-                            <div class='awards-item-content-prime'>
-                                <h3>Claude 4.7/4.8 Sonnet</h3>
-                                <p>Автономный агент для e-commerce: обработка возвратов и поддержка клиентов.</p>
+                            <div class='awards-item-year-prime'>
+                                <h3>{award.year}</h3>
                             </div>
                         </div>
-                        <!-- Awards Items End -->
-
-                        <!-- Awards Item Year Start -->
-                        <div class='awards-item-year-prime'>
-                            <h3>2025</h3>
-                        </div>
-                        <!-- Awards Item Year End -->
-                    </div>
-                    <!-- Awards Item End -->
-
-                    <!-- Awards Item Start -->
-                    <div class='awards-item-prime wow fadeInUp' data-wow-delay='0.4s'>
-                        <!-- Awards Items Start -->
-                        <div class='awards-item-body-prime'>
-                            <div class='icon-box'>
-                                <img src='/images/llm/deepseek-color.svg' alt='DeepSeek V3' style='width: 80px; height: 80px; filter: brightness(0) invert(1);'>
-                            </div>
-                            <div class='awards-item-content-prime'>
-                                <h3>DeepSeek V3</h3>
-                                <p>AI-анализ юр. документов: поиск коллизий и автоматическое составление протоколов.</p>
-                            </div>
-                        </div>
-                        <!-- Awards Items End -->
-
-                        <!-- Awards Item Year Start -->
-                        <div class='awards-item-year-prime'>
-                            <h3>2026</h3>
-                        </div>
-                        <!-- Awards Item Year End -->
-                    </div>
-                    <!-- Awards Item End -->
+                    ))}
                 </div>
                 <!-- Awards Item List End -->
             </div>
@@ -101,7 +99,7 @@
                     <!-- Comapany Support Content Start -->
                     <div class='company-supports-content-prime'>
                         <hr>
-                        <p>Использую лучшие технологии индустрии</p>
+                        <p>{sliderText}</p>
                         <hr>
                     </div>
                     <!-- Comapany Support Content End -->

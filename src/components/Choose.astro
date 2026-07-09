@@ -9,6 +9,9 @@ interface Props {
     benefit1Desc?: string;
     benefit2Title?: string;
     benefit2Desc?: string;
+    priceTitle?: string;
+    priceDesc?: string;
+    priceValue?: string;
 }
 
 const {
@@ -18,7 +21,10 @@ const {
     benefit1Title = "Фокус на окупаемости",
     benefit1Desc = "Внедряю только те решения, которые реально оптимизируют расходы или увеличивают прибыль. Никаких хайповых технологий ради технологий.",
     benefit2Title = "Прозрачность и гибкость",
-    benefit2Desc = "Вы видите процесс в реальном времени. Работаю как с маленькими стартапами, так и с крупными CRM-системами."
+    benefit2Desc = "Вы видите процесс в реальном времени. Работаю как с маленькими стартапами, так и с крупными CRM-системами.",
+    priceTitle = "Цены",
+    priceDesc = "Стоимость моих работ всегда ниже рынка, я понимаю рынок спрос, и то что нужно клиенту, я работаю один и не беру сверх доступного бюджета, понимаю бюджет клиента.",
+    priceValue = "2 900"
 } = Astro.props;
 ---
 <!-- Why Choose Us Section Start -->
@@ -62,9 +68,9 @@ const {
 
                             <!-- Why Digital Growth Body Start -->
                             <div class="why-digital-growth-body">
-                                <h3>Цены</h3>
-                                <p>Стоимость моих работ всегда ниже рынка, я понимаю рынок спрос, и то что нужно клиенту, я работаю один и не беру сверх доступного бюджета, понимаю бюджет клиента.</p>
-                                <h2>от 2 900<sub> р </sub></h2>
+                                <h3>{priceTitle}</h3>
+                                <p>{priceDesc}</p>
+                                <h2>от {priceValue}<sub> р </sub></h2>
                             </div>
                             <!-- Why Digital Growth Body End -->
                         </div>

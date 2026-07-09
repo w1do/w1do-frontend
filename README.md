@@ -22,6 +22,8 @@
 - **[SUMMARY.md](./SUMMARY.md)** — Краткая информация о проекте, целях и текущем статусе (Vibe coding).
 - **[UI Components](./docs/ui-components.md)** — Документация по используемым компонентам и их структуре.
 - **[Idea](./idea.md)** — Основная концепция и план разработки контента.
+- **[SEO Rebuild (AI Developer)](./docs/seo-rebuild-ai-developer.md)** — Документация по пересборке главной страницы под запрос "Разработчик ИИ".
+- **[Rebuild Training & Dev (Vibe Coding/MLOps)](./docs/rebuild-ai-training-and-dev.md)** — Лог пересборки страниц обучения ИИ и MLOps разработчика.
 
 ---
 

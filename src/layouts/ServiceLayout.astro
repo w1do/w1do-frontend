@@ -1,4 +1,5 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from "./Layout.astro";
 import Header from "../components/shared/Header.astro";
 import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
@@ -23,7 +24,7 @@ const breadcrumbItems = [
 ];
 
 // Получаем список всех услуг для сайдбара
-const services = Object.values(import.meta.glob('../pages/services/*.md', { eager: true }));
+const services = await getCollection('services');
 ---
 
 <Layout title={seoTitle} description={seoDescription}>
@@ -42,7 +43,7 @@ const services = Object.values(import.meta.glob('../pages/services/*.md', { eage
                             <h2 class="page-category-list-title">Другие услуги</h2>
                             <ul>
                                 {services.map((service: any) => (
-                                    <li><a href={service.url}>{service.frontmatter.title}</a></li>
+                                    <li><a href={`/services/${service.id}`}>{service.data.title}</a></li>
                                 ))}
                             </ul>
                         </div>

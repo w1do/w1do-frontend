@@ -1,10 +1,12 @@
 ---
-const serviceFiles = Object.values(import.meta.glob('../../pages/services/*.md', { eager: true }));
-const services = serviceFiles.map((file: any) => ({
-    title: file.frontmatter.title,
-    link: file.url,
-    no: file.frontmatter.no || "99"
-})).sort((a, b) => a.no.localeCompare(b.no));
+import { getCollection } from 'astro:content';
+
+const entries = await getCollection('services');
+const services = entries.map((entry) => ({
+    title: entry.data.title,
+    link: `/services/${entry.id}`,
+    no: entry.data.no || "99"
+})).sort((a, b) => (a.no || "").localeCompare(b.no || ""));
 
 const navigationLinks = [
     { label: "Главная", href: "/" },

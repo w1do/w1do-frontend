@@ -8,8 +8,8 @@ interface Props {
 }
 
 const { project, delay = "0s", className = "" } = Astro.props;
-const { title = "Без названия", description = "", category = "Прочее", categorySlug = "", image = "/images/project-1.jpg" } = project?.frontmatter || {};
-const url = project?.url || "#";
+const { title = "Без названия", description = "", category = "Прочее", categorySlug = "", image = "/images/project-1.jpg" } = project?.data || {};
+const url = `/case/${project?.id}` || "#";
 ---
 
 <div class={`col-xl-4 col-md-6 project-item-box ${categorySlug} ${className}`}>

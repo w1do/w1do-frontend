@@ -1,6 +1,7 @@
 ---
+import { getCollection } from 'astro:content';
 import ProjectCard from "./ProjectCard.astro";
-const projects = Object.values(import.meta.glob('../../pages/case/*.md', { eager: true }));
+const projects = await getCollection('case');
 ---
 
 <!-- Page Projects Start -->

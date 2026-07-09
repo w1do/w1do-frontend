@@ -5,11 +5,37 @@ interface FaqItemData {
 }
 
 interface Props {
+    subTitle?: string;
+    title?: string;
+    description?: string;
     customFaqs?: FaqItemData[];
+    counter1Value?: string;
+    counter1Title?: string;
+    counter1Desc?: string;
+    counter2Value?: string;
+    counter2Title?: string;
+    counter2Desc?: string;
+    counter3Value?: string;
+    counter3Title?: string;
+    counter3Desc?: string;
 }
 
 import FaqItem from "./shared/faq/FaqItem.astro";
-const { customFaqs } = Astro.props;
+const { 
+    subTitle = "Часто задаваемые вопросы",
+    title = "Ответы на ключевые вопросы по внедрению ИИ",
+    description = "Узнайте больше о том, как искусственный интеллект может трансформировать ваш бизнес, оптимизировать процессы и создать новые возможности для роста.",
+    customFaqs,
+    counter1Value = "120",
+    counter1Title = "Успешных проектов",
+    counter1Desc = "Мы внедрили десятки ИИ-решений для бизнеса разного масштаба.",
+    counter2Value = "98",
+    counter2Title = "Довольных клиентов",
+    counter2Desc = "Наши клиенты отмечают значительный рост эффективности процессов.",
+    counter3Value = "15",
+    counter3Title = "ИИ-экспертов в команде",
+    counter3Desc = "Команда инженеров, специализирующихся на LLM и анализе данных."
+} = Astro.props;
 
 const defaultFaqs = [
     {
@@ -18,7 +44,7 @@ const defaultFaqs = [
     },
     {
         question: "Какие этапы включает в себя разработка кастомного ИИ-агента?",
-        answer: "Разработка включает 4 этапа: 1) Проектирование архитектуры и выбор LLM. 2) Подготовка и индексация данных (RAG). 3) Настройка логики агента и промпт-инжиниринг. 4) Тестирование на реальных кейсах и финальная отладка."
+        answer: "Разработка включает 4 этапа: 1) Проектирование архитектуры и выбор разработчик_ии. 2) Подготовка и индексация данных (RAG). 3) Настройка логики агента и промпт-инжиниринг. 4) Тестирование на реальных кейсах и финальная отладка."
     },
     {
         question: "Можно ли внедрить ИИ в уже существующую CRM или ERP систему?",
@@ -38,7 +64,7 @@ const defaultFaqs = [
     },
     {
         question: "Как осуществляется техническая поддержка после внедрения?",
-        answer: "Мы предлагаем пакеты сопровождения, которые включают мониторинг работы системы, обновление версий LLM-моделей, доработку логики под меняющиеся задачи и оперативное устранение сбоев."
+        answer: "Мы предлагаем пакеты сопровождения, которые включают мониторинг работы системы, обновление версий разработчик_ии-моделей, доработку логики под меняющиеся задачи и оперативное устранение сбоев."
     },
     {
         question: "Можно ли автоматизировать задачи, требующие сложного анализа и принятия решений?",
@@ -65,9 +91,9 @@ const faqs = customFaqs || defaultFaqs;
                 <div class="faq-content">
                     <!-- Section Title Start -->
                     <div class="section-title">
-                        <span class="section-sub-title wow fadeInUp">Часто задаваемые вопросы</span>
-                        <h2 class="text-anime-style-3" data-cursor="-opaque">Ответы на ключевые вопросы по внедрению ИИ</h2>
-                        <p class="wow fadeInUp" data-wow-delay="0.2s">Узнайте больше о том, как искусственный интеллект может трансформировать ваш бизнес, оптимизировать процессы и создать новые возможности для роста.</p>
+                        <span class="section-sub-title wow fadeInUp">{subTitle}</span>
+                        <h2 class="text-anime-style-3" data-cursor="-opaque">{title}</h2>
+                        <p class="wow fadeInUp" data-wow-delay="0.2s">{description}</p>
                     </div>
                     <!-- Section Title End -->
 
@@ -104,11 +130,11 @@ const faqs = customFaqs || defaultFaqs;
                     <!-- Faq Counter Item Start -->
                     <div class="faq-counter-item">
                         <div class="faq-counter-item-header">
-                            <h2><span class="counter">120</span>+</h2>
-                            <h3>Успешных проектов</h3>
+                            <h2><span class="counter">{counter1Value}</span>+</h2>
+                            <h3>{counter1Title}</h3>
                         </div>
                         <div class="faq-counter-item-body">
-                            <p>Мы внедрили десятки ИИ-решений для бизнеса разного масштаба.</p>
+                            <p>{counter1Desc}</p>
                         </div>
                     </div>
                     <!-- Faq Counter Item End -->
@@ -116,11 +142,11 @@ const faqs = customFaqs || defaultFaqs;
                     <!-- Faq Counter Item Start -->
                     <div class="faq-counter-item">
                         <div class="faq-counter-item-header">
-                            <h2><span class="counter">98</span>%</h2>
-                            <h3>Довольных клиентов</h3>
+                            <h2><span class="counter">{counter2Value}</span>%</h2>
+                            <h3>{counter2Title}</h3>
                         </div>
                         <div class="faq-counter-item-body">
-                            <p>Наши клиенты отмечают значительный рост эффективности процессов.</p>
+                            <p>{counter2Desc}</p>
                         </div>
                     </div>
                     <!-- Faq Counter Item End -->
@@ -128,11 +154,11 @@ const faqs = customFaqs || defaultFaqs;
                     <!-- Faq Counter Item Start -->
                     <div class="faq-counter-item">
                         <div class="faq-counter-item-header">
-                            <h2><span class="counter">15</span>+</h2>
-                            <h3>ИИ-экспертов в команде</h3>
+                            <h2><span class="counter">{counter3Value}</span>+</h2>
+                            <h3>{counter3Title}</h3>
                         </div>
                         <div class="faq-counter-item-body">
-                            <p>Команда инженеров, специализирующихся на LLM и анализе данных.</p>
+                            <p>{counter3Desc}</p>
                         </div>
                     </div>
                     <!-- Faq Counter Item End -->

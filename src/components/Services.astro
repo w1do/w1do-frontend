@@ -1,4 +1,5 @@
 ---
+import { getCollection } from 'astro:content';
 import ServicesList from "./services/ServicesList.astro";
 
 interface Props {
@@ -15,12 +16,12 @@ const {
     limit = 6
 } = Astro.props;
 
-const serviceFiles = Object.values(import.meta.glob('../pages/services/*.md', { eager: true }));
-const services = serviceFiles.map((file: any) => ({
-    ...file.frontmatter,
-    link: file.url,
-    delay: `${(parseInt(file.frontmatter.no) - 1) * 0.2}s`
-})).sort((a, b) => a.no.localeCompare(b.no));
+const entries = await getCollection('services');
+const services = entries.map((entry) => ({
+    ...entry.data,
+    link: `/services/${entry.id}`,
+    delay: `${(parseInt(entry.data.no || "1") - 1) * 0.2}s`
+})).sort((a, b) => (a.no || "").localeCompare(b.no || ""));
 
 const featuredServices = services.slice(0, limit);
 ---

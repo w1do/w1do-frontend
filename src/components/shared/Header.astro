@@ -1,9 +1,11 @@
 ---
-const serviceFiles = Object.values(import.meta.glob('../../pages/services/*.md', { eager: true }));
-const services = serviceFiles.map((file: any) => ({
-    title: file.frontmatter.title,
-    link: file.url,
-    no: file.frontmatter.no || "99"
+import { getCollection } from 'astro:content';
+
+const entries = await getCollection('services');
+const services = entries.map((entry) => ({
+    title: entry.data.title,
+    link: `/services/${entry.id}`,
+    no: entry.data.no || "99"
 })).sort((a, b) => a.no.localeCompare(b.no));
 ---
 <!-- Header Start -->
@@ -33,9 +35,9 @@ const services = serviceFiles.map((file: any) => ({
                             <li class="nav-item"><a class="nav-link" href="/pricing">Цены</a></li>
                             <li class="nav-item submenu"><a class="nav-link" href="#">Страницы</a>
                                 <ul>
-                                    <li class="nav-item"><a class="nav-link" href="/consultation">Консультация</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="/ai-developer">ИИ-разработчик</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="/ai-dev-training">Обучение разработке с ИИ</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="/consultation">Консультация по ИИ</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="/ai-developer">Вайб кодер, MLOps</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="/ai-dev-training">Обучение ИИ</a></li>
                                     <li class="nav-item"><a class="nav-link" href="/case">Проекты</a></li>
                                     <li class="nav-item"><a class="nav-link" href="/knowledge">База знаний</a></li>
                                 </ul>

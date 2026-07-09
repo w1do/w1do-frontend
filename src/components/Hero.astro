@@ -1,5 +1,15 @@
 ---
 import { Image } from 'astro:assets';
+
+interface Props {
+    title?: string;
+    description?: string;
+}
+
+const {
+    title = "Разработчик ИИ",
+    description = "Разработка ИИ-агентов, автоматизация бизнеса и внедрение нейросетей."
+} = Astro.props;
 ---
 <!-- Hero Section Start -->
 <div class="hero-prime">
@@ -27,22 +37,22 @@ import { Image } from 'astro:assets';
                         <div class="satisfy-client-images">
                             <div class="satisfy-client-image">
                                 <figure class="image-anime">
-                                    <img src="/images/author-1.jpg" alt="Клиент AI агентства">
+                                    <img src="/images/author-1.jpg" alt="Разработчик ИИ Денис анализирует код">
                                 </figure>
                             </div>
                             <div class="satisfy-client-image">
                                 <figure class="image-anime">
-                                    <img src="/images/author-2.jpg" alt="Клиент AI агентства">
+                                    <img src="/images/author-2.jpg" alt="Интеграция ИИ в CRM систему">
                                 </figure>
                             </div>
                             <div class="satisfy-client-image">
                                 <figure class="image-anime">
-                                    <img src="/images/author-3.jpg" alt="Клиент AI агентства">
+                                    <img src="/images/author-3.jpg" alt="Нейросеть обрабатывает данные бизнеса">
                                 </figure>
                             </div>
                             <div class="satisfy-client-image">
                                 <figure class="image-anime">
-                                    <img src="/images/author-4.jpg" alt="Клиент AI агентства">
+                                    <img src="/images/author-4.jpg" alt="Автоматизация процессов через ИИ-агентов">
                                 </figure>
                             </div>
                         </div>
@@ -58,8 +68,8 @@ import { Image } from 'astro:assets';
 
                     <!-- Section Title Start -->
                     <div class="section-title">
-                        <h1 class="wow fadeInUp" data-wow-delay="0.2s" data-cursor="-opaque">AI инженер автоматизация бизнеса</h1>
-                        <p class="wow fadeInUp" data-wow-delay="0.4s">Разработка AI-агентов, автоматизация CRM и создание MVP. Сокращаю расходы бизнеса до 70% за счет внедрения нейросетей.</p>
+                        <h1 class="wow fadeInUp" data-wow-delay="0.2s" data-cursor="-opaque">{title}</h1>
+                        <p class="wow fadeInUp" data-wow-delay="0.4s">{description}</p>
                     </div>
                     <!-- Section Title End -->
 

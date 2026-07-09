@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import node from '@astrojs/node';
 import sitemap from '@astrojs/sitemap';
+import react from '@astrojs/react';
 import { serializeSitemapItem } from './src/utils/sitemap.js';
 
 // https://astro.build/config
@@ -15,7 +16,7 @@ export default defineConfig({
     mode: 'standalone'
   }),
   trailingSlash: 'never',
-  integrations: [sitemap({
+  integrations: [react(), sitemap({
     serialize: serializeSitemapItem,
   })],
   prefetch: true,

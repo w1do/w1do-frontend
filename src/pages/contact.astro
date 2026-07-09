@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import Header from "../components/shared/Header.astro";
 import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
 import Footer from "../components/shared/Footer.astro";
+import ContactForm from "../components/contact/ContactForm.tsx";
 ---
 <Layout 
     title="Контакты | Инженер по AI автоматизации"
@@ -69,32 +70,14 @@ import Footer from "../components/shared/Footer.astro";
                         </div>
                         <!-- Contact Us Content Box End -->
 
-                        <!-- Cta Contact Box Start -->
+                        <!-- Cta Form Box Start -->
                         <div class="cta-form-box">
-                            <!-- Section Title Start -->
                             <div class="section-title section-title-center">
-                                <h2 class="text-anime-style-3" data-cursor="-opaque">Прямая связь</h2>
-                                <p class="wow fadeInUp" data-wow-delay="0.2s">Выберите любой удобный канал связи. Я обычно отвечаю в течение часа.</p>
+                                <h2 class="text-anime-style-3" data-cursor="-opaque">Оставить заявку</h2>
                             </div>
-                            <!-- Section Title End -->
-                            
-                            <div class="contact-methods wow fadeInUp" data-wow-delay="0.4s">
-                                <!-- Telegram Button -->
-                                <div class="contact-method-item mb-4">
-                                    <a href={import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1DO_DIGITAL"} class="btn-default w-100 d-flex align-items-center justify-content-center" data-cursor="-opaque">
-                                        <i class="fa-brands fa-telegram me-2"></i> Написать в Telegram
-                                    </a>
-                                </div>
-                                
-                                <!-- Max Button -->
-                                <div class="contact-method-item">
-                                    <a href={import.meta.env.PUBLIC_MAX_URL || "https://max.ru/u/f9LHodD0cOL4jUDWBhcDiOlaTduZWhHQva5q0JyDmb-jDjK9nEdlhTwyIQQ"} class="btn-default w-100 d-flex align-items-center justify-content-center" style="background: var(--primary-color); border-color: var(--primary-color);" data-cursor="-opaque">
-                                        <i class="fa-solid fa-link me-2"></i> Профиль на Max
-                                    </a>
-                                </div>
-                            </div>
+                            <ContactForm client:load />
                         </div>
-                        <!-- Cta Contact Box End -->
+                        <!-- Cta Form Box End -->
                     </div>
                     <!-- Contact Image Form Box End -->
                 </div>
@@ -103,20 +86,6 @@ import Footer from "../components/shared/Footer.astro";
     </div>
     <!-- Page Contact Us Start -->
 
-    <style>
-        .contact-methods {
-            margin-top: 30px;
-        }
-        .w-100 {
-            width: 100%;
-        }
-        .scrolling-content img {
-            filter: brightness(0) invert(1);
-            max-height: 40px;
-            width: auto;
-            margin: 0 20px;
-        }
-    </style>
 
     <!-- Google Map Start -->
     <div class="google-map">
@@ -149,3 +118,11 @@ import Footer from "../components/shared/Footer.astro";
 
     <Footer/>
 </Layout>
+    <style>
+        .scrolling-content img {
+            filter: brightness(0) invert(1);
+            max-height: 40px;
+            width: auto;
+            margin: 0 20px;
+        }
+    </style>

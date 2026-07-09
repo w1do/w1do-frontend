@@ -515,9 +515,10 @@ a:focus{
 }
 
 .help-block.with-errors ul li{
-	color: var(--error-color);
+	color: rgb(237 186 186);
 	font-weight: 500;
-	font-size: 14px;
+	font-size: 13px;
+	padding-top: 20px;
 }
 
 /************************************/

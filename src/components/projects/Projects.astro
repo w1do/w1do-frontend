@@ -1,6 +1,30 @@
 ---
+import { getCollection } from 'astro:content';
 import ProjectCard from "./ProjectCard.astro";
-const projects = Object.values(import.meta.glob('../../pages/case/*.md', { eager: true }));
+
+interface Props {
+    subTitle?: string;
+    title?: string;
+    filterAll?: string;
+    filterSeo?: string;
+    filterAi?: string;
+    filterAutomation?: string;
+    footerText?: string;
+    footerLinkText?: string;
+}
+
+const {
+    subTitle = "Мои проекты",
+    title = "Воплощаю идеи в мощные цифровые решения",
+    filterAll = "Все проекты",
+    filterSeo = "SEO & Content",
+    filterAi = "AI Решения",
+    filterAutomation = "AI Автоматизация",
+    footerText = "Давайте создадим что-то великое вместе.",
+    footerLinkText = "Посмотреть все проекты."
+} = Astro.props;
+
+const projects = await getCollection('case');
 
 const featuredProjects = projects.slice(0, 3);
 ---
@@ -14,18 +38,18 @@ const featuredProjects = projects.slice(0, 3);
                 <div class="project-filter-box-header">
                     <!-- Section Title Start -->
                     <div class="section-title">
-                        <span class="section-sub-title wow fadeInUp">Мои проекты</span>
-                        <h2 class="text-anime-style-3" data-cursor="-opaque">Воплощаю идеи в мощные цифровые решения</h2>
+                        <span class="section-sub-title wow fadeInUp">{subTitle}</span>
+                        <h2 class="text-anime-style-3" data-cursor="-opaque">{title}</h2>
                     </div>
                     <!-- Section Title End -->
 
                     <!-- Our Project Nav start -->
                     <div class="our-project-filter-nav wow fadeInUp" data-wow-delay="0.2s">
                         <ul>
-                            <li><a href="#" class="active-btn" data-filter="*"><img src="/images/icon-our-feature-tab-1.svg" alt="Все проекты"> Все проекты</a></li>
-                            <li><a href="#" data-filter=".seo"><img src="/images/icon-our-feature-tab-1.svg" alt="SEO & Content"> SEO & Content</a></li>
-                            <li><a href="#" data-filter=".uiux"><img src="/images/icon-our-feature-tab-1.svg" alt="AI Решения"> AI Решения</a></li>
-                            <li><a href="#" data-filter=".web"><img src="/images/icon-our-feature-tab-1.svg" alt="AI Автоматизация"> AI Автоматизация</a></li>
+                            <li><a href="#" class="active-btn" data-filter="*"><img src="/images/icon-our-feature-tab-1.svg" alt={filterAll}> {filterAll}</a></li>
+                            <li><a href="#" data-filter=".seo"><img src="/images/icon-our-feature-tab-1.svg" alt={filterSeo}> {filterSeo}</a></li>
+                            <li><a href="#" data-filter=".uiux"><img src="/images/icon-our-feature-tab-1.svg" alt={filterAi}> {filterAi}</a></li>
+                            <li><a href="#" data-filter=".web"><img src="/images/icon-our-feature-tab-1.svg" alt={filterAutomation}> {filterAutomation}</a></li>
                         </ul>
                     </div>
                     <!-- Our Project Nav End -->
@@ -61,7 +85,7 @@ const featuredProjects = projects.slice(0, 3);
                         </div>
                     </div>
                     <!-- Satisfy Client Images End -->
-                    <p>Давайте создадим что-то великое вместе. <a href="/case">Посмотреть все проекты.</a></p>
+                    <p>{footerText} <a href="/case">{footerLinkText}</a></p>
                 </div>
                 <!-- Section Footer Text End -->
             </div>
