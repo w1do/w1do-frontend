@@ -14,6 +14,7 @@ interface Props {
     counterDesc?: string;
     awards?: AwardItem[];
     sliderText?: string;
+    showSocialLinks?: boolean;
 }
 
 const {
@@ -42,7 +43,8 @@ const {
             year: '2026'
         }
     ],
-    sliderText = "Использую лучшие технологии индустрии"
+    sliderText = "Использую лучшие технологии индустрии",
+    showSocialLinks = false
 } = Astro.props;
 ---
 <!-- Our Awards Section Start -->
@@ -66,6 +68,13 @@ const {
                         <p>{counterDesc}</p>
                     </div>
                     <!-- Awards Item Counter Box End -->
+
+                    {showSocialLinks && (
+                        <div class="section-btn wow fadeInUp" data-wow-delay="0.4s" style="margin-top: 30px; text-align: left;">
+                            <a href="https://www.youtube.com/@w1do_digital" class="btn-default" target="_blank" rel="noopener noreferrer" style="margin-right: 15px; margin-left: 0;">YouTube Канал</a>
+                            <a href="https://t.me/w1do_tech" class="btn-default" target="_blank" rel="noopener noreferrer" style="margin-left: 0;">Telegram Канал</a>
+                        </div>
+                    )}
                 </div>
                 <!-- Awards Item Content End -->
             </div>

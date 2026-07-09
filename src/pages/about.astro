@@ -3,26 +3,86 @@ import Layout from "../layouts/Layout.astro";
 import Header from "../components/shared/Header.astro";
 import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
 import AboutMe from "../components/About.astro";
+import Awards from "../components/Awards.astro";
+import Process from "../components/Process.astro";
 import Footer from "../components/shared/Footer.astro";
 import Faqs from "../components/Faqs.astro";
 import Testimonials from "../components/Testimonials.astro";
+import Cta from "../components/Cta.astro";
 ---
 <Layout 
-    title="Обо мне | AI инженер и разработчик ИИ-решений"
-    description="Узнайте больше о моем опыте в разработке ИИ-агентов и автоматизации бизнес-процессов. Помогаю компаниям внедрять современные технологии."
-    keywords="AI инженер, разработчик ИИ, автоматизация, опыт работы, внедрение ИИ"
+    title="Денис Митрофанов | Разработчик LLM и эксперт по автоматизации ИИ"
+    description="Я Денис Митрофанов, разработчик с 10-летним опытом (Senior, TechLead). Помогаю компаниям внедрять LLM, строить ИИ-архитектуру и автоматизировать рутину."
+    keywords="разработчик LLM, Денис Митрофанов, внедрение ИИ, автоматизация бизнеса, Senior Developer, TechLead ИИ, разработка на Laravel"
     image="/images/og-about.jpg"
 >
     <Header/>
     <Breadcrumbs 
-        title="Обо мне" 
+        title="Разработчик LLM" 
         breadcrumbItems={[
             { label: "Главная", href: "/" },
             { label: "Обо мне", active: true }
         ]} 
     />
-    <AboutMe/>
+    
+    <AboutMe 
+        subTitle="Обо мне"
+        title="Я — Денис Митрофанов, разработчик LLM с 10-летним бэкграундом"
+        description="Я практикующий разработчик, который прошел путь от создания сложных систем ручками до делегирования разработки искусственному интеллекту. Мой опыт включает работу с <strong>Docker</strong>, <strong>Git</strong>, <strong>RabbitMQ</strong>, <strong>Grafana</strong>, <strong>Clickhouse</strong>, <strong>Kafka</strong>, а также экспертизу в ML и DevOps.<br/><br/>Я строил проекты на <strong>PHP и Laravel</strong>, писал парсеры на JS (A-parser). Сегодня я помогаю компаниям внедрять ИИ, продумываю архитектуру и обучаю системы строить проекты так, как это делает Senior Developer."
+        counterValue="10"
+        counterTag="Лет практики"
+        counterDescription="от Senior Developer до TechLead и архитектора LLM"
+    />
+
+    <Process 
+        subTitle="Мой путь"
+        title="От классического кода до архитектуры ИИ"
+        description="За 10 лет я прошел все этапы разработки в крупных компаниях, что позволяет мне сегодня внедрять ИИ с пониманием фундаментальных основ."
+        step1Title="Senior / TechLead"
+        step1Desc="Работал в AnData, ПризываНет, ГемСпорт, строил высоконагруженные системы"
+        step2Title="Fullstack & DevOps"
+        step2Desc="Глубокое знание PHP, Laravel, Docker и инфраструктуры обмена данными (Kafka, RabbitMQ)"
+        step3Title="LLM Архитектор"
+        step3Desc="Делегировал написание кода ИИ, фокусируюсь на промпт-инжиниринге и скиллах"
+        step4Title="Консалтинг и YouTube"
+        step4Desc="Веду каналы по автоматизации и помогаю компаниям внедрять интеллект"
+    />
+
+    <Awards 
+        subTitle="Инструментарий"
+        title="Технологии, которые я использую сегодня"
+        description="Я комбинирую классический стек с передовыми AI-инструментами для достижения максимальной скорости и качества."
+        counterValue="20"
+        counterDesc="Инструментов автоматизации в ежедневном использовании"
+        awards={[
+            {
+                icon: '/images/llm/claude-color.svg',
+                title: 'Claude & Cursor',
+                description: 'Моя основная среда для проектирования и генерации качественного кода.',
+                year: 'Main'
+            },
+            {
+                icon: '/images/llm/gemini-color.svg',
+                title: 'Junie & Gemini',
+                description: 'Использую для анализа больших контекстов и автономных агентов.',
+                year: 'Agent'
+            },
+            {
+                icon: '/images/llm/openai.svg',
+                title: 'Codex & GPT-4o',
+                description: 'Вспомогательные модели для специфических задач и интеграций.',
+                year: 'Tool'
+            }
+        ]}
+        sliderText="Подпишись на мои каналы по автоматизации"
+        showSocialLinks={true}
+    />
+
     <Faqs/>
     <Testimonials/>
+    <Cta 
+        title="Нужна помощь с внедрением ИИ?"
+        description="Напиши мне, и мы обсудим, как автоматизировать твои процессы и внедрить LLM в твой проект."
+    />
     <Footer/>
 </Layout>
