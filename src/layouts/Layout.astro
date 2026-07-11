@@ -6,8 +6,10 @@ interface Props {
 	image?: string;
 	canonical?: string;
 	type?: string;
+	schema?: Record<string, any> | Array<Record<string, any>>;
 }
 
+import JsonLd from "../components/shared/JsonLd.astro";
 import "../styles/fonts.css";
 import "../styles/bootstrap.min.css";
 import "../styles/slicknav.min.css";
@@ -24,8 +26,42 @@ const {
 	keywords = "AI инженер, автоматизация бизнеса, внедрение нейросетей, разработка AI агентов, интеграция ИИ, CRM автоматизация",
 	image = "/images/og-image.jpg",
 	canonical = Astro.url.href,
-	type = "website"
+	type = "website",
+	schema
 } = Astro.props;
+
+const siteUrl = Astro.site?.href?.replace(/\/$/, "") || "https://w1do.ru";
+const logoUrl = new URL("/images/favicon.png", Astro.site || Astro.url).href;
+
+// Базовые структурированные данные (Schema.org) для всех страниц
+const organizationSchema = {
+	"@context": "https://schema.org",
+	"@type": "Organization",
+	"@id": `${siteUrl}/#organization`,
+	"name": "W1DO DIGITAL",
+	"url": siteUrl,
+	"logo": {
+		"@type": "ImageObject",
+		"url": logoUrl
+	},
+	"description": "Разработка AI-агентов, автоматизация CRM и создание MVP. Внедряю нейросети в бизнес и сокращаю расходы до 70%.",
+	"sameAs": [
+		"https://t.me/W1DO_DIGITAL"
+	]
+};
+
+const websiteSchema = {
+	"@context": "https://schema.org",
+	"@type": "WebSite",
+	"@id": `${siteUrl}/#website`,
+	"url": siteUrl,
+	"name": "W1DO DIGITAL",
+	"inLanguage": "ru-RU",
+	"publisher": { "@id": `${siteUrl}/#organization` }
+};
+
+const extraSchemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
+const schemas = [organizationSchema, websiteSchema, ...extraSchemas];
 ---
 
 <!doctype html>
@@ -56,6 +92,9 @@ const {
     <meta property="twitter:title" content={title}>
     <meta property="twitter:description" content={description}>
     <meta property="twitter:image" content={new URL(image, Astro.url)}>
+
+    <!-- Structured Data / JSON-LD -->
+    <JsonLd schema={schemas} />
 
     <!-- Page Title -->
     <title>{title}</title>

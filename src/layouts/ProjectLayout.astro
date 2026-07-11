@@ -20,9 +20,49 @@ const breadcrumbItems = [
 ];
 
 const projects = await getCollection('case');
+
+const siteUrl = Astro.site?.href?.replace(/\/$/, "") || "https://w1do.ru";
+const pageUrl = Astro.url.href;
+const projectImage = frontmatter.image ? new URL(frontmatter.image, Astro.site || Astro.url).href : undefined;
+
+const projectSchema = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": frontmatter.title,
+    "headline": frontmatter.title,
+    "description": seoDescription,
+    "url": pageUrl,
+    "inLanguage": "ru-RU",
+    ...(projectImage ? { "image": projectImage } : {}),
+    ...(frontmatter.category ? { "about": frontmatter.category } : {}),
+    "creator": { "@id": `${siteUrl}/#organization` }
+};
+
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": breadcrumbItems.map((item, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "name": item.label,
+        ...(item.href ? { "item": new URL(item.href, Astro.site || Astro.url).href } : {})
+    }))
+};
+
+const faqSchema = frontmatter.projectFaqs && frontmatter.projectFaqs.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": frontmatter.projectFaqs.map((faq: any) => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": { "@type": "Answer", "text": faq.answer }
+    }))
+} : null;
+
+const schema = [projectSchema, breadcrumbSchema, faqSchema].filter(Boolean);
 ---
 
-<Layout title={seoTitle} description={seoDescription}>
+<Layout title={seoTitle} description={seoDescription} schema={schema} image={frontmatter.image}>
     <Header/>
     <Breadcrumbs title={frontmatter.title} breadcrumbItems={breadcrumbItems}/>
 

@@ -1,0 +1,15 @@
+---
+// Переиспользуемый компонент для вывода структурированных данных Schema.org (JSON-LD).
+// Принимает один объект схемы или массив объектов.
+interface Props {
+    schema: Record<string, any> | Array<Record<string, any>>;
+}
+
+const { schema } = Astro.props;
+const items = Array.isArray(schema) ? schema : [schema];
+const cleaned = items.filter(Boolean);
+---
+
+{cleaned.map((item) => (
+    <script type="application/ld+json" set:html={JSON.stringify(item)} is:inline />
+))}

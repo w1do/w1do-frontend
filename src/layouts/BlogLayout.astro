@@ -16,9 +16,41 @@ const breadcrumbItems = [
     { label: "Блог", href: "/blog" },
     { label: frontmatter.title, active: true }
 ];
+
+const siteUrl = Astro.site?.href?.replace(/\/$/, "") || "https://w1do.ru";
+const pageUrl = Astro.url.href;
+const articleImage = frontmatter.image ? new URL(frontmatter.image, Astro.site || Astro.url).href : undefined;
+
+const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": frontmatter.title,
+    "description": seoDescription,
+    "url": pageUrl,
+    "mainEntityOfPage": { "@type": "WebPage", "@id": pageUrl },
+    "inLanguage": "ru-RU",
+    ...(articleImage ? { "image": articleImage } : {}),
+    ...(frontmatter.pubDate ? { "datePublished": new Date(frontmatter.pubDate).toISOString() } : {}),
+    ...(frontmatter.tags ? { "keywords": frontmatter.tags.join(", ") } : {}),
+    "author": { "@type": "Organization", "name": "W1DO DIGITAL", "url": siteUrl },
+    "publisher": { "@id": `${siteUrl}/#organization` }
+};
+
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": breadcrumbItems.map((item, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "name": item.label,
+        ...(item.href ? { "item": new URL(item.href, Astro.site || Astro.url).href } : {})
+    }))
+};
+
+const schema = [articleSchema, breadcrumbSchema];
 ---
 
-<Layout title={seoTitle} description={seoDescription}>
+<Layout title={seoTitle} description={seoDescription} schema={schema} type="article" image={frontmatter.image}>
     <Header/>
     <BlogBreadcrumbs title={frontmatter.title} pubDate={frontmatter.pubDate} />
 

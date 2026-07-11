@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import node from '@astrojs/node';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
+import llms from 'astro-llms-md';
 import { serializeSitemapItem } from './src/utils/sitemap.js';
 
 // https://astro.build/config
@@ -18,6 +19,11 @@ export default defineConfig({
   trailingSlash: 'never',
   integrations: [react(), sitemap({
     serialize: serializeSitemapItem,
+  }), llms({
+    name: 'Разработчик ИИ, внедрение и автоматизация',
+    description: 'Разработка AI-агентов, автоматизация CRM и создание MVP. Внедряю нейросети в бизнес и сокращаю расходы до 70%.',
+    contentSelector: 'body',
+    excludeSelectors: ['header', 'footer', 'nav', 'form', 'noscript'],
   })],
   prefetch: true,
   build: {
