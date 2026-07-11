@@ -1,5 +1,10 @@
 ---
-import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog');
+const latestPosts = posts
+    .sort((a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf())
+    .slice(0, 3);
 ---
 <!-- Our Blog Section Start -->
 <div class="our-blog">
@@ -25,7 +30,7 @@ import { Image } from 'astro:assets';
 
                     <!-- Section Button Start -->
                     <div class="section-btn wow fadeInUp" data-wow-delay="0.4s">
-                        <a href="blog.html" class="btn-default">Все статьи</a>
+                        <a href="/blog" class="btn-default">Все статьи</a>
                     </div>
                     <!-- Section Button End -->
                 </div>
@@ -34,119 +39,52 @@ import { Image } from 'astro:assets';
         </div>
 
         <div class="row post-item-list">
-            <div class="col-xl-4 col-md-6">
-                <!-- Post Item Start -->
-                <div class="post-item box-border-gradiant active wow fadeInUp">
-                    <!-- Post Item image Start -->
-                    <div class="post-item-image">
-                        <figure>
-                            <Image src="/images/post-1.jpg" alt="Технология RAG в ИИ" width={600} height={400} loading="lazy" />
-                        </figure>
-                    </div>
-                    <!-- Post Item image End -->
-
-                    <!-- Post Item Button Start -->
-                    <div class="post-item-btn">
-                        <a href="blog-single.html"><img src="/images/arrow-primary.svg" alt="Перейти к статье"></a>
-                    </div>
-                    <!-- Post Item Button End -->
-
-                    <!-- Post Item Body Start -->
-                    <div class="post-item-body">
-                        <!-- Post Item Content Start -->
-                        <div class="post-item-content">
-                            <h2><a href="blog-single.html">Как технология RAG меняет корпоративный поиск и базу знаний</a></h2>
+            {latestPosts.map((post, index) => (
+                <div class="col-xl-4 col-md-6">
+                    <!-- Post Item Start -->
+                    <div class:list={["post-item", "box-border-gradiant", "wow", "fadeInUp", index === 0 && "active"]} data-wow-delay={`${index * 0.2}s`}>
+                        <!-- Post Item image Start -->
+                        <div class="post-item-image">
+                            <figure>
+                                <img src={post.data.image || "/images/post-1.jpg"} alt={post.data.title} width="600" height="400" loading="lazy" />
+                            </figure>
                         </div>
-                        <!-- Post Item Content End -->
+                        <!-- Post Item image End -->
 
-                        <!-- Post Item Meta Start -->
-                        <div class="post-item-meta">
-                            <ul>
-                                <li><img src="/images/icon-calendar-date.svg" alt="Дата">10 июня, 2026</li>
-                            </ul>
+                        <!-- Post Item Button Start -->
+                        <div class="post-item-btn">
+                            <a href={`/blog/${post.id}`}><img src="/images/arrow-primary.svg" alt="Перейти к статье"></a>
                         </div>
-                        <!-- Post Item Meta End -->
+                        <!-- Post Item Button End -->
+
+                        <!-- Post Item Body Start -->
+                        <div class="post-item-body">
+                            <!-- Post Item Content Start -->
+                            <div class="post-item-content">
+                                <h2><a href={`/blog/${post.id}`}>{post.data.title}</a></h2>
+                            </div>
+                            <!-- Post Item Content End -->
+
+                            <!-- Post Item Meta Start -->
+                            <div class="post-item-meta">
+                                <ul>
+                                    <li>
+                                        <img src="/images/icon-calendar-date.svg" alt="Дата">
+                                        {new Date(post.data.pubDate).toLocaleDateString('ru-RU', {
+                                            year: 'numeric',
+                                            month: 'long',
+                                            day: 'numeric'
+                                        })}
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- Post Item Meta End -->
+                        </div>
+                        <!-- Post Item Body End -->
                     </div>
-                    <!-- Post Item Body End -->
+                    <!-- Post Item End -->
                 </div>
-                <!-- Post Item End -->
-            </div>
-
-            <div class="col-xl-4 col-md-6">
-                <!-- Post Item Start -->
-                <div class="post-item box-border-gradiant wow fadeInUp" data-wow-delay="0.2s">
-                    <!-- Post Item image Start -->
-                    <div class="post-item-image">
-                        <figure>
-                            <Image src="/images/post-2.jpg" alt="Локальные LLM модели" width={600} height={400} loading="lazy" />
-                        </figure>
-                    </div>
-                    <!-- Post Item image End -->
-
-                    <!-- Post Item Button Start -->
-                    <div class="post-item-btn">
-                        <a href="blog-single.html"><img src="/images/arrow-primary.svg" alt="Перейти к статье"></a>
-                    </div>
-                    <!-- Post Item Button End -->
-
-                    <!-- Post Item Body Start -->
-                    <div class="post-item-body">
-                        <!-- Post Item Content Start -->
-                        <div class="post-item-content">
-                            <h2><a href="blog-single.html">Почему локальные LLM — лучшее решение для безопасности данных</a></h2>
-                        </div>
-                        <!-- Post Item Content End -->
-
-                        <!-- Post Item Meta Start -->
-                        <div class="post-item-meta">
-                            <ul>
-                                <li><img src="/images/icon-calendar-date.svg" alt="Дата">8 июня, 2026</li>
-                            </ul>
-                        </div>
-                        <!-- Post Item Meta End -->
-                    </div>
-                    <!-- Post Item Body End -->
-                </div>
-                <!-- Post Item End -->
-            </div>
-
-            <div class="col-xl-4 col-md-6">
-                <!-- Post Item Start -->
-                <div class="post-item box-border-gradiant wow fadeInUp" data-wow-delay="0.4s">
-                    <!-- Post Item image Start -->
-                    <div class="post-item-image">
-                        <figure>
-                            <Image src="/images/post-3.jpg" alt="Автономные AI агенты" width={600} height={400} loading="lazy" />
-                        </figure>
-                    </div>
-                    <!-- Post Item image End -->
-
-                    <!-- Post Item Button Start -->
-                    <div class="post-item-btn">
-                        <a href="blog-single.html"><img src="/images/arrow-primary.svg" alt="Перейти к статье"></a>
-                    </div>
-                    <!-- Post Item Button End -->
-
-                    <!-- Post Item Body Start -->
-                    <div class="post-item-body">
-                        <!-- Post Item Content Start -->
-                        <div class="post-item-content">
-                            <h2><a href="blog-single.html">Будущее AI-агентов: от простых чат-ботов к автономным сотрудникам</a></h2>
-                        </div>
-                        <!-- Post Item Content End -->
-
-                        <!-- Post Item Meta Start -->
-                        <div class="post-item-meta">
-                            <ul>
-                                <li><img src="/images/icon-calendar-date.svg" alt="Дата">5 июня, 2026</li>
-                            </ul>
-                        </div>
-                        <!-- Post Item Meta End -->
-                    </div>
-                    <!-- Post Item Body End -->
-                </div>
-                <!-- Post Item End -->
-            </div>
+            ))}
         </div>
     </div>
 </div>
