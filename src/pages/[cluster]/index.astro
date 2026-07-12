@@ -1,0 +1,16 @@
+---
+import { getCollection } from 'astro:content';
+import LandingClusterLayout from '../../layouts/LandingClusterLayout.astro';
+
+export async function getStaticPaths() {
+  const hubs = await getCollection('landingCluster', ({ data }) => data.hub === true);
+  return hubs.map((pillar) => ({
+    params: { cluster: pillar.id },
+    props: { pillar },
+  }));
+}
+
+const { pillar } = Astro.props;
+---
+
+<LandingClusterLayout frontmatter={pillar.data} />

@@ -1,0 +1,164 @@
+---
+import Layout from "./Layout.astro";
+import Header from "../components/shared/Header.astro";
+import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
+import About from "../components/About.astro";
+import Feature from "../components/Feature.astro";
+import IntroVideo from "../components/IntroVideo.astro";
+import Services from "../components/Services.astro";
+import Process from "../components/Process.astro";
+import Choose from "../components/Choose.astro";
+import Cta from "../components/Cta.astro";
+import Footer from "../components/shared/Footer.astro";
+import Spacer from "../components/shared/Spacer.astro";
+import Projects from "../components/projects/Projects.astro";
+import ConsultationPricing from "../components/consultation/ConsultationPricing.astro";
+import ConsultationFaqs from "../components/consultation/ConsultationFaqs.astro";
+import HirePricing from "../components/hire/HirePricing.astro";
+import HireFaqs from "../components/hire/HireFaqs.astro";
+import TrainingPricing from "../components/training/TrainingPricing.astro";
+
+const { frontmatter } = Astro.props;
+const {
+  seo,
+  title,
+  description,
+  keywords,
+  image,
+  breadcrumbTitle,
+  breadcrumbLabel,
+  about = {},
+  feature = {},
+  introVideo = {},
+  services = {},
+  process: processData = {},
+  choose = {},
+  pricingVariant,
+  faqsVariant,
+  showProjects = false,
+  bgSections = false,
+  cta = {},
+} = frontmatter;
+
+const metaTitle = seo?.title ?? title;
+const metaDescription = seo?.description ?? description;
+---
+
+<Layout title={metaTitle} description={metaDescription} keywords={keywords} image={image}>
+  <Header />
+
+  <Breadcrumbs
+    title={breadcrumbTitle ?? title}
+    breadcrumbItems={[
+      { label: "Главная", href: "/" },
+      { label: breadcrumbLabel ?? title, active: true },
+    ]}
+  />
+
+  <About
+    subTitle={about.subTitle}
+    title={about.title}
+    description={about.description}
+    counterValue={about.counterValue}
+    counterTag={about.counterTag}
+    counterDescription={about.counterDescription}
+  />
+
+  <Feature
+    subTitle={feature.subTitle}
+    title={feature.title}
+    description={feature.description}
+  />
+
+  <IntroVideo
+    subTitle={introVideo.subTitle}
+    title={introVideo.title}
+    tickerItems={introVideo.tickerItems}
+  />
+
+  {bgSections ? (
+    <div class="bg-section">
+      <Services
+        subTitle={services.subTitle}
+        title={services.title}
+        description={services.description}
+        limit={services.limit}
+      />
+    </div>
+  ) : (
+    <Services
+      subTitle={services.subTitle}
+      title={services.title}
+      description={services.description}
+      limit={services.limit}
+    />
+  )}
+
+  {bgSections ? (
+    <div class="bg-section">
+      <Process
+        subTitle={processData.subTitle}
+        title={processData.title}
+        description={processData.description}
+        step1Title={processData.step1Title}
+        step1Desc={processData.step1Desc}
+        step2Title={processData.step2Title}
+        step2Desc={processData.step2Desc}
+        step3Title={processData.step3Title}
+        step3Desc={processData.step3Desc}
+        step4Title={processData.step4Title}
+        step4Desc={processData.step4Desc}
+      />
+    </div>
+  ) : (
+    <Process
+      subTitle={processData.subTitle}
+      title={processData.title}
+      description={processData.description}
+      step1Title={processData.step1Title}
+      step1Desc={processData.step1Desc}
+      step2Title={processData.step2Title}
+      step2Desc={processData.step2Desc}
+      step3Title={processData.step3Title}
+      step3Desc={processData.step3Desc}
+      step4Title={processData.step4Title}
+      step4Desc={processData.step4Desc}
+    />
+  )}
+
+  <Choose
+    subTitle={choose.subTitle}
+    title={choose.title}
+    description={choose.description}
+    benefit1Title={choose.benefit1Title}
+    benefit1Desc={choose.benefit1Desc}
+    benefit2Title={choose.benefit2Title}
+    benefit2Desc={choose.benefit2Desc}
+  />
+
+  {pricingVariant === "consultation" && <ConsultationPricing />}
+  {pricingVariant === "hire" && <HirePricing />}
+  {pricingVariant === "training" && <TrainingPricing />}
+
+  {faqsVariant === "consultation" && <ConsultationFaqs />}
+  {faqsVariant === "hire" && <HireFaqs />}
+
+  {showProjects && (
+    <>
+      <Spacer height="120px" />
+      <Projects />
+      <Spacer height="120px" />
+    </>
+  )}
+
+  <Cta
+    subTitle={cta.subTitle}
+    title={cta.title}
+    description={cta.description}
+    formTitle={cta.formTitle}
+  />
+
+  <Spacer/>
+
+  <Footer />
+</Layout>

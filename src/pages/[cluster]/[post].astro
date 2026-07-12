@@ -1,0 +1,16 @@
+---
+import { getCollection } from 'astro:content';
+import LandingClusterLayout from '../../layouts/LandingClusterLayout.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('landingSpoke');
+  return entries.map((entry) => ({
+    params: { cluster: entry.data.cluster, post: entry.id.split('/').pop() },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+---
+
+<LandingClusterLayout frontmatter={entry.data} />

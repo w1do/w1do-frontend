@@ -172,9 +172,104 @@ const serviceLandingCollection = defineCollection({
   }),
 });
 
+const landingBlocksSchema = {
+  keywords: z.string().optional(),
+  image: z.string().optional(),
+  breadcrumbTitle: z.string().optional(),
+  breadcrumbLabel: z.string().optional(),
+  about: z.object({
+    subTitle: z.string().optional(),
+    title: z.string().optional(),
+    description: z.string().optional(),
+    counterValue: z.string().optional(),
+    counterTag: z.string().optional(),
+    counterDescription: z.string().optional(),
+  }).optional(),
+  feature: z.object({
+    subTitle: z.string().optional(),
+    title: z.string().optional(),
+    description: z.string().optional(),
+  }).optional(),
+  introVideo: z.object({
+    subTitle: z.string().optional(),
+    title: z.string().optional(),
+    tickerItems: z.array(z.string()).optional(),
+  }).optional(),
+  services: z.object({
+    subTitle: z.string().optional(),
+    title: z.string().optional(),
+    description: z.string().optional(),
+    limit: z.number().optional(),
+  }).optional(),
+  process: z.object({
+    subTitle: z.string().optional(),
+    title: z.string().optional(),
+    description: z.string().optional(),
+    step1Title: z.string().optional(),
+    step1Desc: z.string().optional(),
+    step2Title: z.string().optional(),
+    step2Desc: z.string().optional(),
+    step3Title: z.string().optional(),
+    step3Desc: z.string().optional(),
+    step4Title: z.string().optional(),
+    step4Desc: z.string().optional(),
+  }).optional(),
+  choose: z.object({
+    subTitle: z.string().optional(),
+    title: z.string().optional(),
+    description: z.string().optional(),
+    benefit1Title: z.string().optional(),
+    benefit1Desc: z.string().optional(),
+    benefit2Title: z.string().optional(),
+    benefit2Desc: z.string().optional(),
+  }).optional(),
+  pricingVariant: z.enum(['consultation', 'hire', 'training']).optional(),
+  faqsVariant: z.enum(['consultation', 'hire']).optional(),
+  showProjects: z.boolean().optional(),
+  bgSections: z.boolean().optional(),
+  cta: z.object({
+    subTitle: z.string().optional(),
+    title: z.string().optional(),
+    description: z.string().optional(),
+    formTitle: z.string().optional(),
+  }).optional(),
+};
+
+const landingClusterCollection = defineCollection({
+  loader: glob({
+    pattern: '*/index.md',
+    base: "./src/content/landings",
+    generateId: ({ entry }) => entry.replace(/\/index\.md$/, ''),
+  }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    hub: z.boolean().optional(),
+    layout: z.string().optional(),
+    seo: z.object({ title: z.string(), description: z.string() }).optional(),
+    ...landingBlocksSchema,
+  }),
+});
+
+const landingSpokeCollection = defineCollection({
+  loader: glob({ pattern: ['*/*.md', '!*/index.md'], base: "./src/content/landings" }),
+  schema: z.object({
+    layout: z.string().optional(),
+    cluster: z.string(),
+    title: z.string(),
+    description: z.string(),
+    seo: z.object({ title: z.string(), description: z.string() }).optional(),
+    excerpt: z.string().optional(),
+    order: z.number().default(0),
+    ...landingBlocksSchema,
+  }),
+});
+
 export const collections = {
   'blog': blogCollection,
   'case': caseCollection,
   'services': servicesCollection,
   'serviceLanding': serviceLandingCollection,
+  'landingCluster': landingClusterCollection,
+  'landingSpoke': landingSpokeCollection,
 };
