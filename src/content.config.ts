@@ -48,7 +48,11 @@ const caseCollection = defineCollection({
 });
 
 const servicesCollection = defineCollection({
-  loader: glob({ pattern: '*.md', base: "./src/content/services" }),
+  loader: glob({
+    pattern: '*/index.md',
+    base: "./src/content/services",
+    generateId: ({ entry }) => entry.replace(/\/index\.md$/, ''),
+  }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -107,7 +111,7 @@ const servicesCollection = defineCollection({
 });
 
 const serviceLandingCollection = defineCollection({
-  loader: glob({ pattern: '*/*.md', base: "./src/content/services" }),
+  loader: glob({ pattern: ['*/*.md', '!*/index.md'], base: "./src/content/services" }),
   schema: z.object({
     layout: z.string().optional(),
     cluster: z.string(),

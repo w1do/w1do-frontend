@@ -94,7 +94,7 @@ const schema = [serviceSchema, breadcrumbSchema, faqSchema].filter(Boolean);
                         <div class="page-category-list wow fadeInUp">
                             <h2 class="page-category-list-title">{hubTitle}</h2>
                             <ul>
-                                <li><a href={hubUrl}>Все решения кластера</a></li>
+                                <li><a href={hubUrl}>Все услуги направления</a></li>
                                 {siblings.map((spoke: any) => (
                                     <li><a href={spoke.url}>{spoke.title}</a></li>
                                 ))}
