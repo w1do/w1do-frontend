@@ -1,0 +1,252 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import Layout from "./Layout.astro";
+import Header from "../components/shared/Header.astro";
+import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
+import Footer from "../components/shared/Footer.astro";
+import Faqs from "../components/Faqs.astro";
+import Cta from "../components/Cta.astro";
+import Testimonials from "../components/Testimonials.astro";
+import Pricing from "../components/Pricing.astro";
+import Process from "../components/Process.astro";
+import Works from "../components/Works.astro";
+import Spacer from "../components/shared/Spacer.astro";
+
+const { frontmatter } = Astro.props;
+
+const cluster = frontmatter.cluster;
+const seoTitle = frontmatter.seo?.title || frontmatter.title;
+const seoDescription = frontmatter.seo?.description || frontmatter.description;
+
+// Родительский хаб кластера
+const pillar = await getEntry('services', cluster);
+const hubUrl = `/services/${cluster}`;
+const hubTitle = pillar?.data.title || cluster;
+
+// Соседние посадочные страницы кластера (для сайдбара)
+const siblings = (await getCollection('serviceLanding', ({ data }) => data.cluster === cluster))
+    .sort((a: any, b: any) => a.data.order - b.data.order)
+    .map((entry: any) => ({
+        title: entry.data.title,
+        url: `/services/${cluster}/${entry.id.split('/').pop()}`,
+    }));
+
+const breadcrumbItems = [
+    { label: "Главная", href: "/" },
+    { label: "Услуги", href: "/services" },
+    { label: hubTitle, href: hubUrl },
+    { label: frontmatter.title, active: true }
+];
+
+const siteUrl = Astro.site?.href?.replace(/\/$/, "") || "https://w1do.ru";
+const pageUrl = Astro.url.href;
+const serviceImage = frontmatter.image ? new URL(frontmatter.image, Astro.site || Astro.url).href : undefined;
+
+const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": frontmatter.title,
+    "description": seoDescription,
+    "url": pageUrl,
+    "serviceType": frontmatter.title,
+    "inLanguage": "ru-RU",
+    ...(serviceImage ? { "image": serviceImage } : {}),
+    "provider": { "@id": `${siteUrl}/#organization` },
+    "areaServed": { "@type": "Country", "name": "Россия" }
+};
+
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": breadcrumbItems.map((item, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "name": item.label,
+        ...(item.href ? { "item": new URL(item.href, Astro.site || Astro.url).href } : {})
+    }))
+};
+
+const faqSchema = frontmatter.faqs && frontmatter.faqs.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": frontmatter.faqs.map((faq: any) => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": { "@type": "Answer", "text": faq.answer }
+    }))
+} : null;
+
+const schema = [serviceSchema, breadcrumbSchema, faqSchema].filter(Boolean);
+---
+
+<Layout title={seoTitle} description={seoDescription} schema={schema} image={frontmatter.image}>
+    <Header/>
+    <Breadcrumbs title={frontmatter.title} breadcrumbItems={breadcrumbItems}/>
+
+    <!-- Page Service Single Start -->
+    <div class="page-service-single">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <!-- Page Single Sidebar Start -->
+                    <div class="page-single-sidebar">
+                        <!-- Page Category List Start -->
+                        <div class="page-category-list wow fadeInUp">
+                            <h2 class="page-category-list-title">{hubTitle}</h2>
+                            <ul>
+                                <li><a href={hubUrl}>Все решения кластера</a></li>
+                                {siblings.map((spoke: any) => (
+                                    <li><a href={spoke.url}>{spoke.title}</a></li>
+                                ))}
+                            </ul>
+                        </div>
+                        <!-- Page Category List End -->
+
+                        <!-- Sidebar CTA Box Start -->
+                        <div class="sidebar-cta-box box-border-gradiant wow fadeInUp" data-wow-delay="0.2s">
+                            <div class="icon-box">
+                                <img src="/images/icon-headphone-black.svg" alt="" style="filter: brightness(0) invert(1);">
+                            </div>
+                            <div class="sidebar-cta-content">
+                                <h2>Связаться с нами</h2>
+                                <p>Есть проект или нужна консультация эксперта? Свяжитесь с нами сегодня.</p>
+                                <a href={import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1DO_DIGITAL"} class="btn-default">Написать в Telegram</a>
+                            </div>
+                        </div>
+                        <!-- Sidebar CTA Box End -->
+                    </div>
+                    <!-- Page Single Sidebar End -->
+                </div>
+
+                <div class="col-lg-8">
+                    <!-- Service Single Content Start -->
+                    <div class="service-single-content">
+                        <!-- Page Single Image Start -->
+                        {frontmatter.image && (
+                            <div class="page-single-image">
+                                <figure class="image-anime reveal">
+                                    <img src={frontmatter.image} alt={frontmatter.title}>
+                                </figure>
+                            </div>
+                        )}
+                        <!-- Page Single Image End -->
+
+                        <!-- Service Entry Start -->
+                        <div class="service-entry entry-content">
+                            <slot />
+
+                            {frontmatter.offers && (
+                                <div class="service-offer-box">
+                                    <div class="section-title">
+                                        <span class="section-sub-title wow fadeInUp">Что я предлагаю</span>
+                                        <h2 class="text-anime-style-3" data-cursor="-opaque">{frontmatter.offersTitle || "Что входит в решение"}</h2>
+                                        <p class="wow fadeInUp" data-wow-delay="0.2s">{frontmatter.offersDescription}</p>
+                                    </div>
+
+                                    <div class="service-offer-item-list">
+                                        {frontmatter.offers.map((offer: any, index: number) => (
+                                            <div class="service-offer-item box-border-gradiant wow fadeInUp" data-wow-delay={`${0.4 + index * 0.2}s`}>
+                                                <div class="icon-box">
+                                                    <img src={offer.icon || "/images/icon-service-offer-list-1.svg"} alt="" style="filter: brightness(0) invert(1);">
+                                                </div>
+                                                <div class="service-offer-item-content">
+                                                    <h3>{offer.title}</h3>
+                                                    <p>{offer.description}</p>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            {frontmatter.features && (
+                                <div class="service-feature-box">
+                                    <div class="section-title">
+                                        <span class="section-sub-title wow fadeInUp">Преимущества</span>
+                                        <h2 class="text-anime-style-3" data-cursor="-opaque">{frontmatter.featuresTitle || "Почему это работает"}</h2>
+                                        <p class="wow fadeInUp" data-wow-delay="0.2s">{frontmatter.featuresDescription}</p>
+                                    </div>
+
+                                    <div class="service-feature-body-box box-border-gradiant">
+                                        <div class="service-feature-list">
+                                            <ul class="wow fadeInUp" data-wow-delay="0.4s">
+                                                {frontmatter.features.slice(0, 2).map((feature: string) => (
+                                                    <li>{feature}</li>
+                                                ))}
+                                            </ul>
+                                            <ul class="wow fadeInUp" data-wow-delay="0.6s">
+                                                {frontmatter.features.slice(2, 4).map((feature: string) => (
+                                                    <li>{feature}</li>
+                                                ))}
+                                            </ul>
+                                        </div>
+
+                                        {frontmatter.stats && (
+                                            <div class="service-feature-counter-list">
+                                                {frontmatter.stats.map((stat: any) => (
+                                                    <div class="service-feature-counter-item">
+                                                        <h2><span class="counter">{stat.value}</span>{stat.suffix}</h2>
+                                                        <ul>
+                                                            <li>{stat.label}</li>
+                                                        </ul>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                        <!-- Service Entry End -->
+                    </div>
+                    <!-- Service Single Content End -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Page Service Single End -->
+
+    {frontmatter.process && (
+        <Process
+            title={frontmatter.process.title}
+            description={frontmatter.process.description}
+            step1Title={frontmatter.process.step1Title}
+            step1Desc={frontmatter.process.step1Desc}
+            step2Title={frontmatter.process.step2Title}
+            step2Desc={frontmatter.process.step2Desc}
+            step3Title={frontmatter.process.step3Title}
+            step3Desc={frontmatter.process.step3Desc}
+            step4Title={frontmatter.process.step4Title}
+            step4Desc={frontmatter.process.step4Desc}
+        />
+    )}
+
+    {frontmatter.pricing && (
+        <Pricing
+            title={frontmatter.pricing.title}
+            description={frontmatter.pricing.description}
+            pricingItems={frontmatter.pricing.items}
+        />
+    )}
+
+    <Faqs customFaqs={frontmatter.faqs} />
+    <Testimonials/>
+    <Cta/>
+
+    <Spacer/>
+    <Works />
+    <Spacer/>
+    <Footer/>
+</Layout>
+
+<style>
+    .entry-content :global(p) {
+        margin-bottom: 20px;
+    }
+    .sidebar-cta-content .btn-default {
+        margin-top: 20px;
+    }
+    .page-single-image .reveal {
+        visibility: visible;
+    }
+</style>

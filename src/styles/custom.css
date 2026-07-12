@@ -79,7 +79,7 @@ body{
 	font-weight: 400;
 	line-height: 1em;
 	color: var(--text-color);
-	background: url('../images/site-bg-image.png') var(--bg-color);
+	background: url('/images/site-bg-image.png') var(--bg-color);
 	background-repeat: repeat-y;
 	background-position: top center;
 	background-size: 100% auto;
@@ -246,7 +246,7 @@ a:focus{
 	height: 40px;
 	transform: translateY(-50%);
 	background-color: var(--white-color);
-	background-image: url('../images/arrow-primary.svg');
+	background-image: url('/images/arrow-primary.svg');
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: 20px auto;
@@ -297,7 +297,7 @@ a:focus{
     width: 30px;
     height: 30px;
 	background-color: var(--accent-color);
-    background-image: url('../images/arrow-primary.svg');
+    background-image: url('/images/arrow-primary.svg');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 18px auto;
@@ -473,7 +473,7 @@ a:focus{
     left: 14px;
     top: 50%;
     transform: translateY(-50%);
-    background: url('../images/icon-sub-heading.svg') no-repeat;
+    background: url('/images/icon-sub-heading.svg') no-repeat;
 	background-position: center center;
 	background-size: cover;
     width: 18px;
@@ -1030,7 +1030,7 @@ header.main-header .header-sticky.active{
 	left: -90px;
 	top: 50%;
 	transform: translateY(-50%) rotate(var(--rotate));
-	background: url('../images/section-bg-image-1.png') no-repeat;
+	background: url('/images/section-bg-image-1.png') no-repeat;
 	background-position: center center;
 	background-size: cover;
 	width: 420px;
@@ -1250,7 +1250,7 @@ header.main-header .header-sticky.active{
 	left: -90px;
 	bottom: 80px;
 	transform: rotate(var(--rotate));
-	background: url('../images/section-bg-image-2.png') no-repeat;
+	background: url('/images/section-bg-image-2.png') no-repeat;
 	background-position: center center;
 	background-size: cover;
 	width: 400px;
@@ -1713,7 +1713,7 @@ header.main-header .header-sticky.active{
 
 .intro-video{
 	position: relative;
-	background-image: url('../images/intro-video-image.jpg');
+	background-image: url('/images/intro-video-image.jpg');
 	background-position: center center;
 	padding: 120px 0 30px;
 }
@@ -2162,7 +2162,7 @@ header.main-header .header-sticky.active{
     left: 0;
     top: 50%;
     transform: translateY(-50%);
-    background: url('../images/icon-sub-heading.svg') no-repeat;
+    background: url('/images/icon-sub-heading.svg') no-repeat;
     background-position: center center;
     background-size: cover;
     width: 18px;
@@ -2291,7 +2291,7 @@ header.main-header .header-sticky.active{
 	left: -90px;
 	bottom: 80px;
 	transform: rotate(var(--rotate));
-	background: url('../images/section-bg-image-3.png') no-repeat;
+	background: url('/images/section-bg-image-3.png') no-repeat;
 	background-position: center center;
 	background-size: cover;
 	width: 420px;
@@ -2501,7 +2501,7 @@ header.main-header .header-sticky.active{
     bottom: 0;
     left: 50%;
     right: 0;
-	background: url('../images/arrow-white.svg');
+	background: url('/images/arrow-white.svg');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 24px auto;
@@ -3048,7 +3048,7 @@ header.main-header .header-sticky.active{
 
 .page-header{
 	position: relative;
-	background-image: url('../images/page-header-bg.jpg');
+	background-image: url('/images/page-header-bg.jpg');
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: cover;
@@ -3221,7 +3221,7 @@ header.main-header .header-sticky.active{
     top: 50%;
     left: 15px;
     transform: translateY(-50%);
-    background: url(../images/icon-sub-heading.svg) no-repeat;
+    background: url(/images/icon-sub-heading.svg) no-repeat;
     background-position: left center;
     background-size: cover;
     width: 18px;
@@ -3592,7 +3592,7 @@ header.main-header .header-sticky.active{
     position: absolute;
     top: 50%;
     right: 0;
-	background: url('../images/arrow-accent.svg') no-repeat;
+	background: url('/images/arrow-accent.svg') no-repeat;
 	background-position: center center;
 	background-size: cover;
     width: 20px;
@@ -3827,7 +3827,7 @@ header.main-header .header-sticky.active{
     position: absolute;
     top: 6px;
     left: 0px;
-    background: url(../images/icon-sub-heading.svg) no-repeat;
+    background: url(/images/icon-sub-heading.svg) no-repeat;
     background-position: left center;
     background-size: cover;
     width: 18px;
@@ -4057,7 +4057,7 @@ header.main-header .header-sticky.active{
 }
 
 .post-entry blockquote{
-	background: var(--secondary-color) url('../images/icon-blockquote.svg');
+	background: var(--secondary-color) url('/images/icon-blockquote.svg');
 	background-repeat: no-repeat;
 	background-position: 30px 30px;
     background-size: 45px;
@@ -4290,7 +4290,7 @@ header.main-header .header-sticky.active{
     position: absolute;
     top: 6px;
     left: 0px;
-    background: url(../images/icon-sub-heading.svg) no-repeat;
+    background: url(/images/icon-sub-heading.svg) no-repeat;
     background-position: left center;
     background-size: cover;
     width: 18px;
@@ -7319,7 +7319,7 @@ header.main-header .header-sticky.active{
 	left: -90px;
 	top: 50%;
 	transform: translateY(-50%) rotate(var(--rotate));
-	background: url('../images/section-bg-image-1.png') no-repeat;
+	background: url('/images/section-bg-image-1.png') no-repeat;
 	background-position: center center;
 	background-size: cover;
 	width: 420px;
@@ -7616,7 +7616,7 @@ header.main-header .header-sticky.active{
     top: 50%;
     left: 15px;
     transform: translateY(-50%);
-    background: url(../images/icon-sub-heading.svg) no-repeat;
+    background: url(/images/icon-sub-heading.svg) no-repeat;
     background-position: left center;
     background-size: cover;
     width: 18px;
@@ -7634,7 +7634,7 @@ header.main-header .header-sticky.active{
 	right: -90px;
 	top: 80px;
 	transform: rotate(var(--rotate));
-	background: url('../images/section-bg-image-3.png') no-repeat;
+	background: url('/images/section-bg-image-3.png') no-repeat;
 	background-position: center center;
 	background-size: cover;
 	width: 420px;
@@ -7675,7 +7675,7 @@ header.main-header .header-sticky.active{
     top: 50%;
     left: 0;
     transform: translateY(-50%);
-    background: url('../images/icon-sub-heading.svg') no-repeat;
+    background: url('/images/icon-sub-heading.svg') no-repeat;
     background-position: left center;
     background-size: cover;
     width: 18px;
@@ -8022,7 +8022,7 @@ header.main-header .header-sticky.active{
     left: -90px;
     bottom: 80px;
     transform: rotate(var(--rotate));
-    background: url('../images/section-bg-image-2.png') no-repeat;
+    background: url('/images/section-bg-image-2.png') no-repeat;
     background-position: center center;
     background-size: cover;
     width: 400px;
@@ -8149,7 +8149,7 @@ header.main-header .header-sticky.active{
 }
 
 .our-testimonials-prime{
-	background-image: url('../images/testimonials-bg-image-prime.png');
+	background-image: url('/images/testimonials-bg-image-prime.png');
 	background-position: center center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -9419,7 +9419,7 @@ header.main-header .header-sticky.active{
 	left: -90px;
 	top: 50%;
 	transform: translateY(-50%) rotate(var(--rotate));
-	background: url('../images/section-bg-image-1.png') no-repeat;
+	background: url('/images/section-bg-image-1.png') no-repeat;
 	background-position: center center;
 	background-size: cover;
 	width: 420px;
@@ -9885,7 +9885,7 @@ header.main-header .header-sticky.active{
     right: -90px;
     top: 120px;
     transform: rotate(var(--rotate));
-    background: url(../images/section-bg-image-3.png) no-repeat;
+    background: url(/images/section-bg-image-3.png) no-repeat;
     background-position: center center;
     background-size: cover;
     width: 420px;
@@ -10253,7 +10253,7 @@ header.main-header .header-sticky.active{
 	flex-wrap: wrap;
 	gap: 20px;
 	align-items: end;
-	background: url('../images/benefit-image-box-bg-shape-gold.png') no-repeat;
+	background: url('/images/benefit-image-box-bg-shape-gold.png') no-repeat;
 	background-position: top right 30px;
 	background-size: auto;
 	margin-right: 15px;
@@ -10539,7 +10539,7 @@ header.main-header .header-sticky.active{
     left: -90px;
     bottom: 80px;
     transform: rotate(var(--rotate));
-    background: url(../images/section-bg-image-2.png) no-repeat;
+    background: url(/images/section-bg-image-2.png) no-repeat;
     background-position: center center;
     background-size: cover;
     width: 400px;

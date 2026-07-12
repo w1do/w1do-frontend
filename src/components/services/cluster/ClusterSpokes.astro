@@ -1,0 +1,46 @@
+---
+import SpokeCard from "./SpokeCard.astro";
+
+interface Spoke {
+    title: string;
+    description: string;
+    excerpt?: string;
+    icon?: string;
+    tags?: string[];
+    url: string;
+}
+
+interface Props {
+    spokes: Spoke[];
+    title?: string;
+    description?: string;
+}
+
+const { spokes, title = "Решения кластера", description } = Astro.props;
+---
+
+{spokes.length > 0 && (
+    <div class="service-offer-box">
+        <div class="section-title">
+            <span class="section-sub-title wow fadeInUp">Посадочные страницы</span>
+            <h2 class="text-anime-style-3" data-cursor="-opaque">{title}</h2>
+            {description && <p class="wow fadeInUp" data-wow-delay="0.2s">{description}</p>}
+        </div>
+
+        <div class="row">
+            {spokes.map((spoke, index) => (
+                <div class="col-md-6">
+                    <SpokeCard
+                        no={String(index + 1).padStart(2, "0")}
+                        title={spoke.title}
+                        description={spoke.excerpt || spoke.description}
+                        icon={spoke.icon || "/images/icon-service-offer-list-1.svg"}
+                        tags={spoke.tags}
+                        link={spoke.url}
+                        delay={`${0.2 + index * 0.2}s`}
+                    />
+                </div>
+            ))}
+        </div>
+    </div>
+)}

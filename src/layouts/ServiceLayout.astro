@@ -11,8 +11,9 @@ import Pricing from "../components/Pricing.astro";
 import Process from "../components/Process.astro";
 import Works from "../components/Works.astro";
 import Spacer from "../components/shared/Spacer.astro";
+import ClusterSpokes from "../components/services/cluster/ClusterSpokes.astro";
 
-const { frontmatter } = Astro.props;
+const { frontmatter, spokes } = Astro.props;
 
 const seoTitle = frontmatter.seo?.title || frontmatter.title;
 const seoDescription = frontmatter.seo?.description || frontmatter.description;
@@ -121,6 +122,10 @@ const schema = [serviceSchema, breadcrumbSchema, faqSchema].filter(Boolean);
                         <!-- Service Entry Start -->
                         <div class="service-entry entry-content">
                             <slot />
+
+                            {spokes && spokes.length > 0 && (
+                                <ClusterSpokes spokes={spokes} title={frontmatter.spokesTitle} description={frontmatter.spokesDescription} />
+                            )}
 
                             {frontmatter.offers && (
                                 <div class="service-offer-box">

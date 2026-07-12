@@ -1,0 +1,35 @@
+---
+interface Props {
+    no: string;
+    title: string;
+    description: string;
+    icon: string;
+    tags?: string[];
+    link: string;
+    delay?: string;
+}
+
+const { no, title, description, icon, tags = [], link, delay = "0s" } = Astro.props;
+---
+
+<div class="service-item box-border-gradiant wow fadeInUp" data-wow-delay={delay}>
+    <div class="service-item-header-box">
+        <div class="service-item-header">
+            <div class="icon-box">
+                <img src={icon} alt={title}>
+            </div>
+            <span class="service-item-content-no">[ {no} ]</span>
+        </div>
+        <div class="service-item-content">
+            <h2><a href={link}>{title}</a></h2>
+            <p>{description}</p>
+        </div>
+    </div>
+    {tags.length > 0 && (
+        <div class="service-item-tag">
+            <ul>
+                {tags.map(tag => <li>{tag}</li>)}
+            </ul>
+        </div>
+    )}
+</div>

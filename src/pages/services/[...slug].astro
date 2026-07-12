@@ -3,7 +3,7 @@ import { getCollection, render } from 'astro:content';
 import Layout from "../../layouts/ServiceLayout.astro";
 
 export async function getStaticPaths() {
-  const entries = await getCollection('services');
+  const entries = await getCollection('services', ({ data }) => data.hub !== true);
   return entries.map(entry => ({
     params: { slug: entry.id }, props: { entry },
   }));
