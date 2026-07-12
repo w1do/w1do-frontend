@@ -53,6 +53,8 @@ pricingVariant: "consultation"
 faqsVariant: "consultation"
 bgSections: false
 showProjects: false
+spokesTitle: "Направления консультаций"
+spokesDescription: "Выбери тему, которая ближе к твоей задаче — я разберу её на отдельной консультации."
 cta:
   subTitle: "Остались вопросы?"
   title: "Нужна индивидуальная программа?"

@@ -52,6 +52,8 @@ pricingVariant: "hire"
 faqsVariant: "hire"
 bgSections: true
 showProjects: true
+spokesTitle: "Мои направления работы"
+spokesDescription: "Выбери направление, которое закрывает твою задачу — от вайб-кодинга до промышленного MLOps."
 cta:
   subTitle: "Готовы усилить команду?"
   title: "Давайте обсудим ваши задачи по внедрению ИИ"

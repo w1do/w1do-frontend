@@ -4,13 +4,25 @@ import LandingClusterLayout from '../../layouts/LandingClusterLayout.astro';
 
 export async function getStaticPaths() {
   const hubs = await getCollection('landingCluster', ({ data }) => data.hub === true);
+  const spokes = await getCollection('landingSpoke');
   return hubs.map((pillar) => ({
     params: { cluster: pillar.id },
-    props: { pillar },
+    props: {
+      pillar,
+      spokes: spokes
+        .filter(({ data }) => data.cluster === pillar.id)
+        .sort((a, b) => a.data.order - b.data.order)
+        .map((entry) => ({
+          title: entry.data.title,
+          description: entry.data.description,
+          excerpt: entry.data.excerpt,
+          url: `/${pillar.id}/${entry.id.split('/').pop()}`,
+        })),
+    },
   }));
 }
 
-const { pillar } = Astro.props;
+const { pillar, spokes } = Astro.props;
 ---
 
-<LandingClusterLayout frontmatter={pillar.data} />
+<LandingClusterLayout frontmatter={pillar.data} spokes={spokes} />

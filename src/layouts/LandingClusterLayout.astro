@@ -17,8 +17,9 @@ import ConsultationFaqs from "../components/consultation/ConsultationFaqs.astro"
 import HirePricing from "../components/hire/HirePricing.astro";
 import HireFaqs from "../components/hire/HireFaqs.astro";
 import TrainingPricing from "../components/training/TrainingPricing.astro";
+import ClusterSpokes from "../components/services/cluster/ClusterSpokes.astro";
 
-const { frontmatter } = Astro.props;
+const { frontmatter, spokes = [] } = Astro.props;
 const {
   seo,
   title,
@@ -37,6 +38,8 @@ const {
   faqsVariant,
   showProjects = false,
   bgSections = false,
+  spokesTitle,
+  spokesDescription,
   cta = {},
 } = frontmatter;
 
@@ -135,6 +138,20 @@ const metaDescription = seo?.description ?? description;
     benefit2Title={choose.benefit2Title}
     benefit2Desc={choose.benefit2Desc}
   />
+
+  {spokes && spokes.length > 0 && (
+    <>
+      <Spacer height="120px" />
+      <div class="container">
+        <ClusterSpokes
+          spokes={spokes}
+          title={spokesTitle ?? "Направления"}
+          description={spokesDescription}
+        />
+      </div>
+      <Spacer height="120px" />
+    </>
+  )}
 
   {pricingVariant === "consultation" && <ConsultationPricing />}
   {pricingVariant === "hire" && <HirePricing />}

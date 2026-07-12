@@ -227,6 +227,8 @@ const landingBlocksSchema = {
   faqsVariant: z.enum(['consultation', 'hire']).optional(),
   showProjects: z.boolean().optional(),
   bgSections: z.boolean().optional(),
+  spokesTitle: z.string().optional(),
+  spokesDescription: z.string().optional(),
   cta: z.object({
     subTitle: z.string().optional(),
     title: z.string().optional(),

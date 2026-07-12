@@ -53,6 +53,8 @@ pricingVariant: "training"
 faqsVariant: "hire"
 bgSections: true
 showProjects: false
+spokesTitle: "Программы обучения"
+spokesDescription: "Выбери формат обучения под свою цель — от курса инженера ИИ до практики с RAG и MCP."
 cta:
   subTitle: "Готовы начать?"
   title: "Давайте построим ваш следующий AI-проект вместе"
