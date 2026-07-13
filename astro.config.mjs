@@ -10,8 +10,7 @@ import { serializeSitemapItem } from './src/utils/sitemap.js';
 export default defineConfig({
   site: 'https://w1do.ru',
   server: {
-    allowedHosts: ['localhost'],
-    host: true
+    host: "0.0.0.0"
   },
   output: 'static',
   adapter: node({
