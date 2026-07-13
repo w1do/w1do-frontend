@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from "../../../layouts/Layout.astro";
+import Header from "../../../components/shared/Header.astro";
+import Breadcrumbs from "../../../components/shared/Breadcrumbs.astro";
+import BlogList from "../../../components/blog/BlogList.astro";
+import Cta from "../../../components/Cta.astro";
+import Footer from "../../../components/shared/Footer.astro";
+
+const POSTS_PER_PAGE = 10;
+
+export async function getStaticPaths() {
+    const perPage = 10;
+    const posts = await getCollection('blog');
+    const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+    const totalPages = Math.max(1, Math.ceil(sortedPosts.length / perPage));
+
+    const paths = [];
+    for (let page = 2; page <= totalPages; page++) {
+        paths.push({
+            params: { page: String(page) },
+            props: { page, totalPages },
+        });
+    }
+    return paths;
+}
+
+const { page, totalPages } = Astro.props;
+
+const posts = await getCollection('blog');
+const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const pagePosts = sortedPosts.slice((page - 1) * POSTS_PER_PAGE, page * POSTS_PER_PAGE);
+
+const breadcrumbItems = [
+    { label: "Главная", href: "/" },
+    { label: "Блог", href: "/blog" },
+    { label: `Страница ${page}`, active: true }
+];
+---
+
+<Layout title={`Блог | Внедрение и разработка ИИ — страница ${page}`} description="Статьи об искусственном интеллекте, автоматизации бизнес-процессов и цифровом маркетинге.">
+    <Header/>
+    <Breadcrumbs title="Наш Блог" breadcrumbItems={breadcrumbItems} />
+    <BlogList posts={pagePosts} currentPage={page} totalPages={totalPages} />
+    <Cta/>
+    <Footer/>
+</Layout>
