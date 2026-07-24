@@ -1,0 +1,51 @@
+---
+interface Props {
+  class?: string;
+  redirectTo: string;
+}
+
+const { class: className, redirectTo } = Astro.props;
+---
+
+<a
+  class={className}
+  href={redirectTo}
+  data-directus-logout
+  data-logout-redirect={redirectTo}
+>
+  <slot />
+</a>
+
+<script>
+  import { logoutDirectusSession } from '../../lib/directus';
+
+  const logoutButtons = document.querySelectorAll<HTMLElement>(
+    '[data-directus-logout]'
+  );
+
+  logoutButtons.forEach((logoutButton) => {
+    if (logoutButton.dataset.logoutBound === 'true') {
+      return;
+    }
+
+    logoutButton.dataset.logoutBound = 'true';
+
+    logoutButton.addEventListener('click', async (event) => {
+      event.preventDefault();
+
+      if (logoutButton.getAttribute('aria-disabled') === 'true') {
+        return;
+      }
+
+      logoutButton.setAttribute('aria-disabled', 'true');
+      const redirectTo =
+        logoutButton.dataset.logoutRedirect || '/';
+
+      try {
+        await logoutDirectusSession();
+      } finally {
+        window.location.replace(redirectTo);
+      }
+    });
+  });
+</script>

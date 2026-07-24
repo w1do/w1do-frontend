@@ -37,6 +37,20 @@ const {
     counter3Desc = "Команда инженеров, специализирующихся на LLM и анализе данных."
 } = Astro.props;
 
+// Обработка числовых значений для счетчиков
+const getCounterData = (val: string) => {
+    const match = val.toString().match(/^(\d+(?:\.\d+)?)(.*)$/);
+    return {
+        numericValue: match ? match[1] : val,
+        suffix: match ? match[2] : "",
+        isNumeric: match !== null
+    };
+};
+
+const c1 = getCounterData(counter1Value);
+const c2 = getCounterData(counter2Value);
+const c3 = getCounterData(counter3Value);
+
 const defaultFaqs = [
     {
         question: "Как происходит процесс заказа и старта разработки ИИ-решения?",
@@ -130,7 +144,14 @@ const faqs = customFaqs || defaultFaqs;
                     <!-- Faq Counter Item Start -->
                     <div class="faq-counter-item">
                         <div class="faq-counter-item-header">
-                            <h2><span class="counter">{counter1Value}</span>+</h2>
+                            <h2>
+                                {c1.isNumeric ? (
+                                    <span class="counter">{c1.numericValue}</span>
+                                ) : (
+                                    <span>{c1.numericValue}</span>
+                                )}
+                                {c1.suffix || "+"}
+                            </h2>
                             <h3>{counter1Title}</h3>
                         </div>
                         <div class="faq-counter-item-body">
@@ -142,7 +163,14 @@ const faqs = customFaqs || defaultFaqs;
                     <!-- Faq Counter Item Start -->
                     <div class="faq-counter-item">
                         <div class="faq-counter-item-header">
-                            <h2><span class="counter">{counter2Value}</span>%</h2>
+                            <h2>
+                                {c2.isNumeric ? (
+                                    <span class="counter">{c2.numericValue}</span>
+                                ) : (
+                                    <span>{c2.numericValue}</span>
+                                )}
+                                {c2.suffix || "%"}
+                            </h2>
                             <h3>{counter2Title}</h3>
                         </div>
                         <div class="faq-counter-item-body">
@@ -154,7 +182,14 @@ const faqs = customFaqs || defaultFaqs;
                     <!-- Faq Counter Item Start -->
                     <div class="faq-counter-item">
                         <div class="faq-counter-item-header">
-                            <h2><span class="counter">{counter3Value}</span>+</h2>
+                            <h2>
+                                {c3.isNumeric ? (
+                                    <span class="counter">{c3.numericValue}</span>
+                                ) : (
+                                    <span>{c3.numericValue}</span>
+                                )}
+                                {c3.suffix || "+"}
+                            </h2>
                             <h3>{counter3Title}</h3>
                         </div>
                         <div class="faq-counter-item-body">

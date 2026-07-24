@@ -12,6 +12,8 @@ import Cta from "../components/Cta.astro";
 import Footer from "../components/shared/Footer.astro";
 import Spacer from "../components/shared/Spacer.astro";
 import Projects from "../components/projects/Projects.astro";
+import Pricing from "../components/Pricing.astro";
+import Faqs from "../components/Faqs.astro";
 import ConsultationPricing from "../components/consultation/ConsultationPricing.astro";
 import ConsultationFaqs from "../components/consultation/ConsultationFaqs.astro";
 import HirePricing from "../components/hire/HirePricing.astro";
@@ -41,6 +43,8 @@ const {
   spokesTitle,
   spokesDescription,
   cta = {},
+  pricing: customPricing,
+  faqs: customFaqs,
 } = frontmatter;
 
 const metaTitle = seo?.title ?? title;
@@ -157,8 +161,21 @@ const metaDescription = seo?.description ?? description;
   {pricingVariant === "hire" && <HirePricing />}
   {pricingVariant === "training" && <TrainingPricing />}
 
+  {customPricing && (
+    <Pricing
+      subTitle={customPricing.subTitle}
+      title={customPricing.title}
+      description={customPricing.description}
+      pricingItems={customPricing.items}
+    />
+  )}
+
   {faqsVariant === "consultation" && <ConsultationFaqs />}
   {faqsVariant === "hire" && <HireFaqs />}
+
+  {customFaqs && (
+    <Faqs customFaqs={customFaqs} />
+  )}
 
   {showProjects && (
     <>

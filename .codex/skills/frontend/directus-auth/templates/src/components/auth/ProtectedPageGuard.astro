@@ -1,0 +1,59 @@
+---
+interface Props {
+  loginPath: string;
+  timeoutMs?: number;
+}
+
+const { loginPath, timeoutMs = 5000 } = Astro.props;
+---
+
+<meta
+  name="directus-protected-page-guard"
+  data-login-path={loginPath}
+  data-timeout-ms={String(timeoutMs)}
+/>
+
+<script is:inline>
+  document.documentElement.classList.add('auth-session-pending');
+</script>
+
+<style is:inline>
+  .auth-session-pending body {
+    visibility: hidden;
+  }
+</style>
+
+<script>
+  import { hasAuthenticatedDirectusSession } from '../../lib/directus';
+
+  const guard = document.querySelector<HTMLMetaElement>(
+    'meta[name="directus-protected-page-guard"]'
+  );
+  const loginPath = guard?.dataset.loginPath || '/';
+  const configuredTimeout = Number(guard?.dataset.timeoutMs);
+  const timeoutMs = Number.isFinite(configuredTimeout)
+    ? configuredTimeout
+    : 5000;
+
+  const authCheckTimeout = new Promise<boolean>((resolve) => {
+    window.setTimeout(() => resolve(false), timeoutMs);
+  });
+
+  Promise.race([
+    hasAuthenticatedDirectusSession(),
+    authCheckTimeout,
+  ])
+    .then((isAuthenticated) => {
+      if (!isAuthenticated) {
+        window.location.replace(loginPath);
+        return;
+      }
+
+      document.documentElement.classList.remove(
+        'auth-session-pending'
+      );
+    })
+    .catch(() => {
+      window.location.replace(loginPath);
+    });
+</script>

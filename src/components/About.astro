@@ -16,6 +16,12 @@ const {
     counterTag = "ИИ-проектов",
     counterDescription = "автоматизация процессов и внедрение LLM"
 } = Astro.props;
+
+// Обработка числового значения для счетчика
+const match = counterValue.toString().match(/^(\d+(?:\.\d+)?)(.*)$/);
+const numericValue = match ? match[1] : counterValue;
+const suffix = match ? match[2] : "";
+const isNumeric = match !== null;
 ---
 <!-- About Us Section Start -->
 <div class="about-us">
@@ -47,7 +53,14 @@ const {
                         <!-- About Counter Box start -->
                         <div class="about-counter-box wow fadeInUp">
                             <div class="about-counter-box-header">
-                                <h2><span class="counter">{counterValue}</span>+</h2>
+                                <h2>
+                                    {isNumeric ? (
+                                        <span class="counter">{numericValue}</span>
+                                    ) : (
+                                        <span>{numericValue}</span>
+                                    )}
+                                    {suffix || "+"}
+                                </h2>
                                 <span class="about-counter-tag">{counterTag}</span>
                             </div>
                             <div class="about-counter-box-body">

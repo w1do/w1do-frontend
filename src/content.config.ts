@@ -224,7 +224,23 @@ const landingBlocksSchema = {
     benefit2Desc: z.string().optional(),
   }).optional(),
   pricingVariant: z.enum(['consultation', 'hire', 'training']).optional(),
+  pricing: z.object({
+    subTitle: z.string().optional(),
+    title: z.string().optional(),
+    description: z.string().optional(),
+    items: z.array(z.object({
+      title: z.string(),
+      price: z.string(),
+      description: z.string().optional(),
+      features: z.array(z.string()).optional(),
+      icon: z.string().optional(),
+    })).optional(),
+  }).optional(),
   faqsVariant: z.enum(['consultation', 'hire']).optional(),
+  faqs: z.array(z.object({
+    question: z.string(),
+    answer: z.string(),
+  })).optional(),
   showProjects: z.boolean().optional(),
   bgSections: z.boolean().optional(),
   spokesTitle: z.string().optional(),
@@ -239,7 +255,7 @@ const landingBlocksSchema = {
 
 const landingClusterCollection = defineCollection({
   loader: glob({
-    pattern: '*/index.md',
+    pattern: '**/index.md',
     base: "./src/content/landings",
     generateId: ({ entry }) => entry.replace(/\/index\.md$/, ''),
   }),
@@ -247,6 +263,8 @@ const landingClusterCollection = defineCollection({
     title: z.string(),
     description: z.string(),
     hub: z.boolean().optional(),
+    cluster: z.string().optional(),
+    order: z.number().default(0),
     layout: z.string().optional(),
     seo: z.object({ title: z.string(), description: z.string() }).optional(),
     ...landingBlocksSchema,
@@ -254,7 +272,7 @@ const landingClusterCollection = defineCollection({
 });
 
 const landingSpokeCollection = defineCollection({
-  loader: glob({ pattern: ['*/*.md', '!*/index.md'], base: "./src/content/landings" }),
+  loader: glob({ pattern: ['**/*.md', '!**/index.md'], base: "./src/content/landings" }),
   schema: z.object({
     layout: z.string().optional(),
     cluster: z.string(),

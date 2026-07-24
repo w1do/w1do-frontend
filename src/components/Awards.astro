@@ -46,6 +46,12 @@ const {
     sliderText = "Использую лучшие технологии индустрии",
     showSocialLinks = false
 } = Astro.props;
+
+// Обработка числового значения для счетчика
+const match = counterValue.toString().match(/^(\d+(?:\.\d+)?)(.*)$/);
+const numericValue = match ? match[1] : counterValue;
+const suffix = match ? match[2] : "";
+const isNumeric = match !== null;
 ---
 <!-- Our Awards Section Start -->
 <div class='our-awards-prime bg-section'>
@@ -64,7 +70,14 @@ const {
 
                     <!-- Awards Item Counter Box Start -->
                     <div class='awards-counter-box-prime wow fadeInUp'>
-                        <h2><span class='counter'>{counterValue}</span>+</h2>
+                        <h2>
+                            {isNumeric ? (
+                                <span class='counter'>{numericValue}</span>
+                            ) : (
+                                <span>{numericValue}</span>
+                            )}
+                            {suffix || "+"}
+                        </h2>
                         <p>{counterDesc}</p>
                     </div>
                     <!-- Awards Item Counter Box End -->
