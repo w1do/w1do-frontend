@@ -1,5 +1,9 @@
 https://w1do.ru/
 https://w1do.ru/about
+https://w1do.ru/ai-agents
+https://w1do.ru/ai-agents/ai-agent-automation
+https://w1do.ru/ai-agents/ai-agent-for-business
+https://w1do.ru/ai-agents/ai-agent-implementation
 https://w1do.ru/ai-training
 https://w1do.ru/ai-training/ai-engineer-course
 https://w1do.ru/ai-training/mcp-servers-training
@@ -40,6 +44,7 @@ https://w1do.ru/consultation/business-automation-consultation
 https://w1do.ru/consultation/claude-cursor-setup
 https://w1do.ru/consultation/online-ai-consultation
 https://w1do.ru/contact
+https://w1do.ru/cookies
 https://w1do.ru/sozdanie-saita
 https://w1do.ru/sozdanie-saita/landing-page
 https://w1do.ru/sozdanie-saita/internet-magazin

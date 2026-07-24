@@ -1,0 +1,133 @@
+---
+---
+
+<!-- Cookie Notice Start -->
+<div class="cookie-notice" data-cookie-notice aria-live="polite">
+    <div class="cookie-notice-content">
+        <div class="cookie-notice-text">
+            <span class="cookie-notice-icon" aria-hidden="true">🍪</span>
+            <p>Я использую <a href="/cookies">cookie-файлы</a>, чтобы понимать клики по сайту и аккуратно обрабатывать заявки из форм.</p>
+        </div>
+        <button class="btn-default cookie-notice-btn" type="button" data-cookie-accept data-cursor="-opaque">Понятно</button>
+    </div>
+</div>
+<!-- Cookie Notice End -->
+
+<style>
+    .cookie-notice {
+        position: fixed;
+        left: 50%;
+        bottom: 30px;
+        width: min(calc(100% - 60px), 820px);
+        z-index: 999;
+        display: none;
+        transform: translateX(-50%);
+        pointer-events: none;
+    }
+
+    .cookie-notice.is-visible {
+        display: block;
+    }
+
+    .cookie-notice-content {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 18px 20px 18px 24px;
+        background: var(--secondary-color);
+        border: 1px solid var(--dark-divider-color);
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+        pointer-events: auto;
+    }
+
+    .cookie-notice-text {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .cookie-notice-icon {
+        flex: 0 0 auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        font-size: 24px;
+        background: var(--accent-secondary-color);
+        border: 1px solid var(--dark-divider-color);
+        border-radius: 50%;
+    }
+
+    .cookie-notice-text p {
+        margin: 0;
+        color: var(--text-color);
+        font-size: 16px;
+        line-height: 1.5em;
+    }
+
+    .cookie-notice-text a {
+        color: var(--accent-color);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+
+    .cookie-notice-btn {
+        flex: 0 0 auto;
+        border: none;
+    }
+
+    @media only screen and (max-width: 767px) {
+        .cookie-notice {
+            width: calc(100% - 30px);
+            bottom: 15px;
+        }
+
+        .cookie-notice-content {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 18px;
+            border-radius: 16px;
+        }
+
+        .cookie-notice-text {
+            align-items: flex-start;
+        }
+
+        .cookie-notice-btn {
+            width: 100%;
+            text-align: center;
+        }
+    }
+</style>
+
+<script>
+    const COOKIE_NOTICE_STORAGE_KEY = 'w1do-cookie-notice-accepted';
+
+    function setupCookieNotice() {
+        const notice = document.querySelector('[data-cookie-notice]');
+        const acceptButton = document.querySelector('[data-cookie-accept]');
+
+        if (!(notice instanceof HTMLElement) || !(acceptButton instanceof HTMLButtonElement)) {
+            return;
+        }
+
+        if (localStorage.getItem(COOKIE_NOTICE_STORAGE_KEY) === 'true') {
+            notice.classList.remove('is-visible');
+            return;
+        }
+
+        notice.classList.add('is-visible');
+
+        acceptButton.addEventListener('click', () => {
+            localStorage.setItem(COOKIE_NOTICE_STORAGE_KEY, 'true');
+            notice.classList.remove('is-visible');
+        }, { once: true });
+    }
+
+    setupCookieNotice();
+    document.addEventListener('astro:after-swap', setupCookieNotice);
+</script>

@@ -9,6 +9,7 @@ interface Props {
 	schema?: Record<string, any> | Array<Record<string, any>>;
 }
 
+import CookieNotice from "../components/shared/CookieNotice.astro";
 import JsonLd from "../components/shared/JsonLd.astro";
 import "../styles/fonts.css";
 import "../styles/bootstrap.min.css";
@@ -118,6 +119,7 @@ const schemas = [organizationSchema, websiteSchema, ...extraSchemas];
 </head>
 <body>
 <slot/>
+<CookieNotice/>
 
 <!-- Jquery Library File -->
 <script src="/js/jquery-3.7.1.min.js" is:inline></script>
