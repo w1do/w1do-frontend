@@ -20,6 +20,12 @@ const navigationLinks = [
     { label: "Цены", href: "/pricing" },
     { label: "Проекты", href: "/case" },
 ];
+
+const legalLinks = [
+    { label: "Политика конфиденциальности", href: "/privacy-policy" },
+    { label: "Пользовательское соглашение", href: "/user-agreement" },
+    { label: "Cookie-файлы", href: "/cookies" },
+];
 ---
 <!-- Main Footer Start -->
 <div class="main-footer-prime bg-section">
@@ -108,6 +114,12 @@ const navigationLinks = [
                     </div>
                     <!-- Footer Links End -->
                 </div>
+
+                <div class="footer-legal-links">
+                    {legalLinks.map((link) => (
+                        <a href={link.href}>{link.label}</a>
+                    ))}
+                </div>
                 <!-- Footer Links Box End -->
             </div>
         </div>
@@ -142,6 +154,23 @@ const navigationLinks = [
     .expandable-list {
         margin-bottom: 0 !important;
     }
+    .footer-legal-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px 24px;
+        margin-top: 34px;
+    }
+    .footer-legal-links a {
+        color: var(--text-color);
+        font-size: 15px;
+        line-height: 1.4em;
+        text-decoration: underline;
+        text-underline-offset: 4px;
+        transition: all 0.3s ease;
+    }
+    .footer-legal-links a:hover {
+        color: var(--accent-color);
+    }
 </style>
 
 <script>
@@ -153,11 +182,11 @@ const navigationLinks = [
                 if (list) {
                     const hiddenLinks = list.querySelectorAll('.hidden-link');
                     const isExpanding = button.textContent === 'Показать еще';
-                    
+
                     hiddenLinks.forEach(link => {
                         (link as HTMLElement).style.display = isExpanding ? 'block' : 'none';
                     });
-                    
+
                     button.textContent = isExpanding ? 'Скрыть' : 'Показать еще';
                 }
             });

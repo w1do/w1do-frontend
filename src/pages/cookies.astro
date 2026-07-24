@@ -23,9 +23,9 @@ import Footer from "../components/shared/Footer.astro";
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-10">
-                    <div class="cookie-policy-content">
+                    <article class="cookie-policy-content">
                         <span class="section-sub-title">Как сайт использует данные</span>
-                        <h2>Я использую cookie-файлы только для базовой аналитики и заявок</h2>
+                        <h2>Я использую cookie-файлы для базовой аналитики и заявок</h2>
                         <p>
                             Cookie-файлы помогают мне понять, как посетители взаимодействуют с сайтом: какие страницы открывают,
                             куда кликают и какие элементы вызывают интерес. Эти данные нужны, чтобы улучшать структуру,
@@ -39,9 +39,10 @@ import Footer from "../components/shared/Footer.astro";
                         <p>
                             Я не составляю подробные персональные профили и не использую cookie-файлы для отслеживания действий
                             на сторонних сайтах. Если нужно ограничить cookie-файлы, это можно сделать в настройках браузера,
-                            но часть функций сайта может работать менее удобно.
+                            но часть функций сайта может работать менее удобно. Подробнее порядок обработки данных описан в
+                            <a href="/privacy-policy">политике конфиденциальности</a>.
                         </p>
-                    </div>
+                    </article>
                 </div>
             </div>
         </div>
@@ -72,6 +73,12 @@ import Footer from "../components/shared/Footer.astro";
         color: var(--text-color);
         font-size: 18px;
         line-height: 1.7em;
+    }
+
+    .cookie-policy-content a {
+        color: var(--accent-color);
+        text-decoration: underline;
+        text-underline-offset: 4px;
     }
 
     .cookie-policy-content p:last-child {

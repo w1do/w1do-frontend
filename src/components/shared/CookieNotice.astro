@@ -6,7 +6,10 @@
     <div class="cookie-notice-content">
         <div class="cookie-notice-text">
             <span class="cookie-notice-icon" aria-hidden="true">🍪</span>
-            <p>Я использую <a href="/cookies">cookie-файлы</a>, чтобы понимать клики по сайту и аккуратно обрабатывать заявки из форм.</p>
+            <p>
+                Я использую <a href="/cookies">cookie-файлы</a>, чтобы сайт работал корректно, а также чтобы понимать клики и посещения страниц.
+                Подробнее — в <a href="/privacy-policy">политике конфиденциальности</a>.
+            </p>
         </div>
         <button class="btn-default cookie-notice-btn" type="button" data-cookie-accept data-cursor="-opaque">Понятно</button>
     </div>
@@ -125,7 +128,7 @@
         acceptButton.addEventListener('click', () => {
             localStorage.setItem(COOKIE_NOTICE_STORAGE_KEY, 'true');
             notice.classList.remove('is-visible');
-        }, { once: true });
+        });
     }
 
     setupCookieNotice();
