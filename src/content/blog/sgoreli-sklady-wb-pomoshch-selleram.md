@@ -3,7 +3,7 @@ layout: "../../layouts/BlogLayout.astro"
 title: "Сгорели склады WB: что делать селлерам после пожара Wildberries"
 description: "Сгорели склады WB — что делать селлеру Wildberries после пожара, как сохранить продажи, заявки и клиентов, пока идут компенсации и восстановление поставок."
 pubDate: 2026-07-24
-image: "https://ichef.bbci.co.uk/ace/ws/640/cpsprodpb/72f9/live/e14bb660-8458-11f1-8cf4-43aed99842b4.jpg.webp"
+image: "/images/sgoreli-sklady-wb-pomoshch-selleram.webp"
 tags: ["сгорели склады WB", "пожар Wildberries", "селлеры Wildberries", "помощь селлерам WB", "компенсации WB", "интернет-магазин для селлеров"]
 ---
 
