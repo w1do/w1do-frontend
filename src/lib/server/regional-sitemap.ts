@@ -23,7 +23,10 @@ export async function regionalSitemap(pages: SitemapPage[], baseUrl: string, inc
   const defaultCitySlug = includeCityHomes ? defaultCity(allCities).slug : "";
   const cities = allCities.filter(city => !city.seo?.robots?.includes("noindex"));
   const unique = [...new Map(pages.map(page => [page.path, page])).values()];
-  const entries: SitemapPage[] = [...unique.filter(page => page.path !== "/"), ...cities.map(city => ({ path: cityPath(city.slug, defaultCitySlug), priority: 1, changefreq: "weekly" }))];
+  const entries: SitemapPage[] = [...new Map([...unique.filter(page => page.path !== "/"),
+    ...cities.map(city => ({ ...unique.find(page => page.path === cityPath(city.slug, defaultCitySlug)),
+      path: cityPath(city.slug, defaultCitySlug), priority: 1, changefreq: "weekly" }))]
+    .map(page => [page.path, page])).values()];
   const urls = entries.map(page => `<url><loc>${xmlEscape(baseUrl + page.path)}</loc>`
     + (page.lastmod ? `<lastmod>${xmlEscape(page.lastmod)}</lastmod>` : "")
     + (page.changefreq ? `<changefreq>${xmlEscape(page.changefreq)}</changefreq>` : "")
