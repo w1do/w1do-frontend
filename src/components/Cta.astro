@@ -6,7 +6,6 @@ interface Props {
     title?: string;
     description?: string;
     formTitle?: string;
-    project?: string;
     btnText?: string;
     btnLink?: string;
 }
@@ -16,7 +15,6 @@ const {
     title = "Воплотите ваши идеи в реальность с помощью ИИ",
     description = "Я работаю в тесном контакте с вами, чтобы понять ваши цели и превратить ваши идеи в мощные цифровые решения на базе искусственного интеллекта.",
     formTitle = "Оставить заявку",
-    project = "chistotyumen",
     btnText = "Узнать больше",
     btnLink = "contact.html"
 } = Astro.props;
@@ -40,7 +38,7 @@ const {
             </div>
 
             <div class="col-xl-6">
-                <CtaForm client:load title={formTitle} project={project} />
+                <CtaForm client:load title={formTitle} />
             </div>
         </div>
     </div>

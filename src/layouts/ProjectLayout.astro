@@ -1,5 +1,4 @@
 ---
-import { getCollection } from 'astro:content';
 import Layout from "./Layout.astro";
 import Header from "../components/shared/Header.astro";
 import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
@@ -10,20 +9,31 @@ import Testimonials from "../components/Testimonials.astro";
 
 const { frontmatter } = Astro.props;
 
-const seoTitle = frontmatter.seo?.title || frontmatter.title;
-const seoDescription = frontmatter.seo?.description || frontmatter.description;
+const seoTitle = frontmatter.seoTitle || frontmatter.title;
+const seoDescription = frontmatter.seoDescription || frontmatter.description;
+const projectCoverIsSvg = frontmatter.image?.split("?")[0].toLowerCase().endsWith(".svg") ?? false;
+const sectionTitle = frontmatter.sectionTitle || "Проекты";
+const sectionHref = frontmatter.sectionHref || "/case";
+const infoTitle = frontmatter.infoTitle || "Информация о проекте";
+const defaultInfoItems = [
+    ["Название", frontmatter.title],
+    ["Категория", frontmatter.category],
+    ["Клиент", frontmatter.clientName],
+    ["Локация", frontmatter.location],
+    ["Сроки", frontmatter.timeline],
+];
+const infoItems = (frontmatter.infoItems || defaultInfoItems)
+    .filter((item: any) => item?.[0] && item?.[1]);
 
 const breadcrumbItems = [
     { label: "Главная", href: "/" },
-    { label: "Проекты", href: "/case" },
+    { label: sectionTitle, href: sectionHref },
     { label: frontmatter.title, active: true }
 ];
 
-const projects = await getCollection('case');
-
 const siteUrl = Astro.site?.href?.replace(/\/$/, "") || "https://w1do.ru";
-const pageUrl = Astro.url.href;
-const projectImage = frontmatter.image ? new URL(frontmatter.image, Astro.site || Astro.url).href : undefined;
+const pageUrl = new URL(Astro.url.pathname, Astro.site || "https://w1do.ru").href;
+const projectImage = frontmatter.image || undefined;
 
 const projectSchema = {
     "@context": "https://schema.org",
@@ -75,13 +85,11 @@ const schema = [projectSchema, breadcrumbSchema, faqSchema].filter(Boolean);
                     <div class="page-single-sidebar">
                         <!-- Page Category List Start -->
                         <div class="page-category-list project-category-list wow fadeInUp">
-                            <h2 class="page-category-list-title">Информация о проекте</h2>
+                            <h2 class="page-category-list-title">{infoTitle}</h2>
                             <ul>
-                                <li>Название: <span>{frontmatter.title}</span></li>
-                                <li>Категория: <span>{frontmatter.category}</span></li>
-                                <li>Клиент: <span>{frontmatter.clientName}</span></li>
-                                <li>Локация: <span>{frontmatter.location}</span></li>
-                                <li>Сроки: <span>{frontmatter.timeline}</span></li>
+                                {infoItems.map(([label, value]: [string, string]) => (
+                                    <li>{label}: <span set:html={value} /></li>
+                                ))}
                             </ul>
                         </div>
                         <!-- Page Category List End -->
@@ -115,7 +123,7 @@ const schema = [projectSchema, breadcrumbSchema, faqSchema].filter(Boolean);
                         <!-- Page Single image Start -->
                         <div class="page-single-image">
                             <figure class="image-anime reveal">
-                                <img src={frontmatter.image} alt={frontmatter.title}>
+                                <img class:list={{ "project-cover-svg": projectCoverIsSvg }} style={projectCoverIsSvg ? "filter: brightness(0) invert(1) !important" : undefined} src={frontmatter.image} alt={frontmatter.title}>
                             </figure>
                         </div>
                         <!-- Page Single image End -->
@@ -127,7 +135,7 @@ const schema = [projectSchema, breadcrumbSchema, faqSchema].filter(Boolean);
                             </div>
 
                             <!-- Project Entry Challenge Box Start -->
-                            {frontmatter.challenges && frontmatter.challenges.length > 0 && (
+                            {frontmatter.challenges?.length > 0 && (
                             <div class="project-entry-challenge-box">
                                 <!-- Section Title Start -->
                                 <div class="section-title">
@@ -140,21 +148,16 @@ const schema = [projectSchema, breadcrumbSchema, faqSchema].filter(Boolean);
                                 <!-- Project Challenge Solution Box Start -->
                                 <div class="project-challenge-solution-box">
                                     {frontmatter.challenges.map((challenge: any, index: number) => (
-                                    <!-- Project Challenge Item Start -->
                                     <div class="project-challenge-item">
-                                        <!-- Project Challenge Image Start -->
-                                        <div class="project-challenge-image">
+                                        <div class:list={["project-challenge-image", { "project-challenge-svg": challenge.image?.split("?")[0].toLowerCase().endsWith(".svg") }]}>
                                             <figure class="image-anime reveal">
                                                 <img src={challenge.image} alt={challenge.title}>
                                             </figure>
                                         </div>
-                                        <!-- Project Challenge Image End -->
-
-                                        <!-- Project Challenge Content Box Start -->
                                         <div class="project-challenge-content-box box-border-gradiant wow fadeInUp" data-wow-delay={`${0.4 + index * 0.2}s`}>
                                             <div class="project-challenge-item-header">
                                                 <div class="icon-box">
-                                                    <img src={challenge.icon || `/images/icon-project-challenge-item-${index + 1}.svg`} alt="">
+                                                    <img src={`/images/icon-project-challenge-item-${index + 1}.svg`} alt="">
                                                 </div>
                                                 <div class="project-challenge-item-content">
                                                     <h3>{challenge.title}</h3>
@@ -162,18 +165,14 @@ const schema = [projectSchema, breadcrumbSchema, faqSchema].filter(Boolean);
                                                 </div>
                                             </div>
                                             <div class="project-challenge-item-body">
-                                                {challenge.points && (
+                                                {challenge.points.length > 0 && (
                                                 <ul>
-                                                    {challenge.points.map((point: string) => (
-                                                        <li>{point}</li>
-                                                    ))}
+                                                    {challenge.points.map((point: string) => <li>{point}</li>)}
                                                 </ul>
                                                 )}
                                             </div>
                                         </div>
-                                        <!-- Project Challenge Content Box Start -->
                                     </div>
-                                    <!-- Project Challenge Item End -->
                                     ))}
                                 </div>
                                 <!-- Project Challenge Solution Box End -->
@@ -182,7 +181,7 @@ const schema = [projectSchema, breadcrumbSchema, faqSchema].filter(Boolean);
                             <!-- Project Entry Challenge Box End -->
 
                             <!-- Project Work Box Start -->
-                            {frontmatter.approach && frontmatter.approach.length > 0 && (
+                            {frontmatter.approach?.length > 0 && (
                             <div class="project-work-box">
                                 <!-- Section Title Start -->
                                 <div class="section-title">
@@ -195,11 +194,10 @@ const schema = [projectSchema, breadcrumbSchema, faqSchema].filter(Boolean);
                                 <!-- Project Work Item List Start -->
                                 <div class="project-work-item-list">
                                     {frontmatter.approach.map((step: any, index: number) => (
-                                    <!-- Project Work Item Start -->
                                     <div class="project-work-item box-border-gradiant wow fadeInUp" data-wow-delay={`${index * 0.2}s`}>
                                         <div class="project-work-item-header">
                                             <div class="icon-box">
-                                                <img src={step.icon || `/images/icon-project-work-item-header-${index + 1}.svg`} alt="">
+                                                <img src={`/images/icon-project-work-item-header-${index + 1}.svg`} alt="">
                                             </div>
                                             <div class="project-work-item-no">
                                                 <h3>{(index + 1).toString().padStart(2, '0')}.</h3>
@@ -210,7 +208,6 @@ const schema = [projectSchema, breadcrumbSchema, faqSchema].filter(Boolean);
                                             <p>{step.description}</p>
                                         </div>
                                     </div>
-                                    <!-- Project Work Item End -->
                                     ))}
                                 </div>
                                 <!-- Project Work Item List End -->
@@ -248,7 +245,7 @@ const schema = [projectSchema, breadcrumbSchema, faqSchema].filter(Boolean);
                         <!-- Project Entry End -->
 
                         <!-- Page Single FAQs Start -->
-                        {(frontmatter.faqs || frontmatter.projectFaqs) && (
+                        {frontmatter.projectFaqs?.length > 0 && (
                         <div class="page-single-faq">
                             <!-- Section Title Start -->
                             <div class="section-title">
@@ -260,7 +257,7 @@ const schema = [projectSchema, breadcrumbSchema, faqSchema].filter(Boolean);
 
                             <!-- FAQ Accordion Start -->
                             <div class="faqs-accordion" id="accordion">
-                                {(frontmatter.faqs || frontmatter.projectFaqs).map((faq: any, index: number) => (
+                                {frontmatter.projectFaqs.map((faq: any, index: number) => (
                                 <!-- FAQ Item Start -->
                                 <div class="accordion-item wow fadeInUp" data-wow-delay={`${index * 0.2}s`}>
                                     <h2 class="accordion-header" id={`heading${index}`}>
@@ -289,7 +286,7 @@ const schema = [projectSchema, breadcrumbSchema, faqSchema].filter(Boolean);
     </div>
     <!-- Page Project Single End -->
     
-    <Faqs customFaqs={frontmatter.faqs || frontmatter.projectFaqs} />
+    {frontmatter.projectFaqs?.length > 0 && <Faqs customFaqs={frontmatter.projectFaqs} />}
     <Testimonials/>
     <Cta/>
     <Footer/>
@@ -302,4 +299,8 @@ const schema = [projectSchema, breadcrumbSchema, faqSchema].filter(Boolean);
     .page-single-image .reveal {
         visibility: visible;
     }
+    .project-rich-content :global(h3) { margin: 1.5rem 0 0.75rem; }
+    .project-rich-content :global(p), .project-rich-content :global(li) { line-height: 1.7; }
+    .project-rich-content :global(img) { max-width: 100%; height: auto; border-radius: 12px; }
+    .project-rich-content :global(ul) { padding-left: 1.25rem; }
 </style>

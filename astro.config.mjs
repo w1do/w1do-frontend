@@ -1,10 +1,7 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, envField } from 'astro/config';
 import node from '@astrojs/node';
-import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
-import llms from 'astro-llms-md';
-import { serializeSitemapItem } from './src/utils/sitemap.js';
 
 // https://astro.build/config
 export default defineConfig({
@@ -12,19 +9,20 @@ export default defineConfig({
   server: {
     host: "0.0.0.0"
   },
-  output: 'static',
+  env: {
+    schema: {
+      // Read at runtime from the environment, never inlined into the build.
+      LEADS_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
+      LEADS_API_BASE_URL: envField.string({ context: 'server', access: 'secret', optional: true }),
+      W1DO_DEFAULT_CITY: envField.string({ context: 'server', access: 'secret', default: 'moscow' }),
+    },
+  },
+  output: 'server',
   adapter: node({
     mode: 'standalone'
   }),
   trailingSlash: 'never',
-  integrations: [react(), sitemap({
-    serialize: serializeSitemapItem,
-  }), llms({
-    name: 'Разработчик ИИ, внедрение и автоматизация',
-    description: 'Разработка AI-агентов, автоматизация CRM и создание MVP. Внедряю нейросети в бизнес и сокращаю расходы до 70%.',
-    contentSelector: 'body',
-    excludeSelectors: ['header', 'footer', 'nav', 'form', 'noscript'],
-  })],
+  integrations: [react()],
   prefetch: true,
   build: {
     assets: '_astro',

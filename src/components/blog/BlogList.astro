@@ -40,6 +40,7 @@ const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
                                     <li>
                                         <img src="/images/icon-calendar-date.svg" alt="">
                                         {new Date(post.data.pubDate).toLocaleDateString('ru-RU', {
+                                            timeZone: 'Asia/Irkutsk',
                                             year: 'numeric',
                                             month: 'long',
                                             day: 'numeric'
@@ -80,3 +81,9 @@ const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
     </div>
 </div>
 <!-- Page Blog Start -->
+
+<style>
+    .post-item-image figure { background: var(--primary-color); }
+    .post-item-image figure::before { background: linear-gradient(180deg, transparent 35%, rgba(22, 22, 22, 0.85) 75%, #161616 100%); }
+    .post-item-image img { object-fit: contain; padding: 20px 20px 125px; }
+</style>

@@ -1,7 +1,7 @@
 ---
-import { getCollection } from 'astro:content';
+import { getBlogPosts } from "../../lib/server/w1do/blog";
 
-const posts = await getCollection('blog');
+const posts = await getBlogPosts();
 const latestPosts = posts
     .sort((a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf())
     .slice(0, 3);
@@ -71,6 +71,7 @@ const latestPosts = posts
                                     <li>
                                         <img src="/images/icon-calendar-date.svg" alt="Дата">
                                         {new Date(post.data.pubDate).toLocaleDateString('ru-RU', {
+                                            timeZone: 'Asia/Irkutsk',
                                             year: 'numeric',
                                             month: 'long',
                                             day: 'numeric'
@@ -89,3 +90,9 @@ const latestPosts = posts
     </div>
 </div>
 <!-- Our Blog Section End -->
+
+<style>
+    .post-item-image figure { background: var(--primary-color); }
+    .post-item-image figure::before { background: linear-gradient(180deg, transparent 35%, rgba(22, 22, 22, 0.85) 75%, #161616 100%); }
+    .post-item-image img { object-fit: contain; padding: 20px 20px 125px; }
+</style>

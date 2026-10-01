@@ -45,14 +45,17 @@ https://w1do.ru/consultation/business-automation-consultation
 https://w1do.ru/consultation/claude-cursor-setup
 https://w1do.ru/consultation/online-ai-consultation
 https://w1do.ru/contact
-https://w1do.ru/cookies
+https://w1do.ru/docs/cookies
+https://w1do.ru/docs/personal-data-consent
+https://w1do.ru/docs/privacy-policy
+https://w1do.ru/docs/public-offer
+https://w1do.ru/docs/user-agreement
 https://w1do.ru/sozdanie-saita
 https://w1do.ru/sozdanie-saita/landing-page
 https://w1do.ru/sozdanie-saita/internet-magazin
 https://w1do.ru/sozdanie-saita/internet-magazin/internet-magazin-dlya-sellerov
 https://w1do.ru/knowledge
 https://w1do.ru/pricing
-https://w1do.ru/privacy-policy
 https://w1do.ru/services
 https://w1do.ru/services/ai-agent-development
 https://w1do.ru/services/ai-agent-development/ai-agent-for-business
@@ -143,7 +146,6 @@ https://w1do.ru/services/web-support
 https://w1do.ru/services/web-support/website-speed-optimization
 https://w1do.ru/services/web-support/website-technical-support
 https://w1do.ru/testimonials
-https://w1do.ru/user-agreement
 https://w1do.ru/vibe-coding
 https://w1do.ru/vibe-coding/ai-agents-rag-development
 https://w1do.ru/vibe-coding/mlops-engineer

@@ -5,10 +5,13 @@ interface Props {
 	keywords?: string;
 	image?: string;
 	canonical?: string;
+	robots?: string;
 	type?: string;
 	schema?: Record<string, any> | Array<Record<string, any>>;
 }
 
+import { DEFAULT_OG_IMAGE, pageSeo } from "../lib/seo";
+import { cityPath, regionalSchema } from "../lib/regions";
 import CookieNotice from "../components/shared/CookieNotice.astro";
 import JsonLd from "../components/shared/JsonLd.astro";
 import "../styles/fonts.css";
@@ -21,15 +24,41 @@ import "../styles/magnific-popup.css";
 import "../styles/mousecursor.css";
 import "../styles/custom.css";
 
-const { 
-	title = "Инженер по AI автоматизации | Внедрение ИИ в бизнес", 
-	description = "Разработка AI-агентов, автоматизация CRM и создание MVP. Сокращаю расходы бизнеса до 70% за счет внедрения нейросетей.", 
-	keywords = "AI инженер, автоматизация бизнеса, внедрение нейросетей, разработка AI агентов, интеграция ИИ, CRM автоматизация",
-	image = "/images/og-image.jpg",
-	canonical = Astro.url.href,
-	type = "website",
-	schema
+const region = Astro.locals.region;
+const pagePath = region?.path || Astro.url.pathname;
+const citySeo = region?.city.seo;
+const isCityHome = Boolean(region && pagePath === "/");
+const currentSeo = pageSeo[pagePath.replace(/\/$/, "") || "/"];
+const {
+    title: suppliedTitle,
+    description: suppliedDescription,
+    keywords: suppliedKeywords,
+    image: suppliedImage,
+    canonical: suppliedCanonical,
+    robots: suppliedRobots,
+    type = "website",
+    schema,
 } = Astro.props;
+const pageTitle = currentSeo?.title || suppliedTitle || pageSeo["/"].title;
+const pageDescription = currentSeo?.description || suppliedDescription || pageSeo["/"].description;
+const title = isCityHome && citySeo?.title ? citySeo.title : region ? `${pageTitle} | ${region.city.name}` : pageTitle;
+const description = isCityHome && citySeo?.description ? citySeo.description
+    : region && citySeo?.description ? `${pageDescription} ${citySeo.description}` : pageDescription;
+const keywords = [currentSeo?.keywords || suppliedKeywords, citySeo?.keywords].filter(Boolean).join(", ").replace(/разработчик_ии/g, "разработчик ИИ");
+const robots = suppliedRobots?.includes("noindex") ? suppliedRobots
+    : citySeo?.robots?.includes("noindex") ? citySeo.robots : suppliedRobots || citySeo?.robots;
+const canonical = region ? new URL(cityPath(region.city.slug, region.defaultCitySlug), Astro.site || "https://w1do.ru").href
+    : suppliedCanonical || new URL(Astro.url.pathname, Astro.site || "https://w1do.ru").href;
+const ogTitle = isCityHome ? citySeo?.og_title || title : title;
+const ogDescription = isCityHome ? citySeo?.og_description || description : description;
+let image = (isCityHome ? citySeo?.og_image : undefined) || suppliedImage || DEFAULT_OG_IMAGE;
+if (image.startsWith("/images/og-")) image = DEFAULT_OG_IMAGE;
+if (image.startsWith("/images/blog/") && image.endsWith(".svg")) {
+    image = image.replace("/images/blog/", "/images/og/").replace(/\.svg$/, ".jpg");
+} else if (image.split("?")[0].toLowerCase().endsWith(".svg")) {
+    image = DEFAULT_OG_IMAGE;
+}
+const socialImage = new URL(image, Astro.site || "https://w1do.ru").href;
 
 const siteUrl = Astro.site?.href?.replace(/\/$/, "") || "https://w1do.ru";
 const logoUrl = new URL("/images/favicon.png", Astro.site || Astro.url).href;
@@ -45,7 +74,7 @@ const organizationSchema = {
 		"@type": "ImageObject",
 		"url": logoUrl
 	},
-	"description": "Разработка AI-агентов, автоматизация CRM и создание MVP. Внедряю нейросети в бизнес и сокращаю расходы до 70%.",
+	"description": pageSeo["/"].description,
 	"sameAs": [
 		"https://t.me/W1DO_DIGITAL"
 	]
@@ -61,8 +90,20 @@ const websiteSchema = {
 	"publisher": { "@id": `${siteUrl}/#organization` }
 };
 
-const extraSchemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
-const schemas = [organizationSchema, websiteSchema, ...extraSchemas];
+const suppliedSchemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
+if (isCityHome && citySeo?.json_ld) suppliedSchemas.push(citySeo.json_ld);
+const extraSchemas = region ? suppliedSchemas.map(item => regionalSchema(item, region) as Record<string, unknown>) : suppliedSchemas;
+const webPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${canonical}#webpage`,
+    "url": canonical,
+    "name": title,
+    "description": description,
+    "inLanguage": "ru-RU",
+    "isPartOf": { "@id": `${siteUrl}/#website` },
+};
+const schemas = [organizationSchema, websiteSchema, webPageSchema, ...extraSchemas];
 ---
 
 <!doctype html>
@@ -72,8 +113,9 @@ const schemas = [organizationSchema, websiteSchema, ...extraSchemas];
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
     <meta name="description" content={description}>
-    <meta name="keywords" content={keywords}>
-    <meta name="author" content="Awaiken">
+    {keywords && <meta name="keywords" content={keywords}>}
+    {robots && <meta name="robots" content={robots}>}
+    <meta name="author" content="Денис Митрофанов">
     <meta name="generator" content={Astro.generator}/>
 
     <!-- Canonical URL -->
@@ -81,18 +123,18 @@ const schemas = [organizationSchema, websiteSchema, ...extraSchemas];
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content={type}>
-    <meta property="og:url" content={Astro.url.href}>
+    <meta property="og:url" content={canonical}>
     <meta property="og:locale" content="ru_RU">
-    <meta property="og:title" content={title}>
-    <meta property="og:description" content={description}>
-    <meta property="og:image" content={new URL(image, Astro.url)}>
+    <meta property="og:title" content={ogTitle}>
+    <meta property="og:description" content={ogDescription}>
+    <meta property="og:image" content={socialImage}>
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content={Astro.url.href}>
-    <meta property="twitter:title" content={title}>
-    <meta property="twitter:description" content={description}>
-    <meta property="twitter:image" content={new URL(image, Astro.url)}>
+    <meta name="twitter:card" content={isCityHome ? citySeo?.twitter_card || "summary_large_image" : "summary_large_image"}>
+    <meta name="twitter:url" content={canonical}>
+    <meta name="twitter:title" content={title}>
+    <meta name="twitter:description" content={description}>
+    <meta name="twitter:image" content={socialImage}>
 
     <!-- Structured Data / JSON-LD -->
     <JsonLd schema={schemas} />
@@ -128,7 +170,6 @@ const schemas = [organizationSchema, websiteSchema, ...extraSchemas];
 <!-- Bootstrap js file -->
 <script src="/js/bootstrap.min.js" is:inline defer></script>
 <!-- Validator js file -->
-<script src="/js/validator.min.js" is:inline defer></script>
 <!-- SlickNav js file -->
 <script src="/js/jquery.slicknav.js" is:inline defer></script>
 <!-- Swiper js file -->

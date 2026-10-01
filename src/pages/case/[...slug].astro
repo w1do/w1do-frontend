@@ -1,18 +1,24 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { getCaseBySlug } from "../../lib/server/w1do/cases";
 import Layout from "../../layouts/ProjectLayout.astro";
+import BaseLayout from "../../layouts/Layout.astro";
 
-export async function getStaticPaths() {
-  const entries = await getCollection('case');
-  return entries.map(entry => ({
-    params: { slug: entry.id }, props: { entry },
-  }));
-}
+export const prerender = false;
 
-const { entry } = Astro.props;
-const { Content } = await render(entry);
+const entry = await getCaseBySlug(Astro.params.slug || "");
+if (!entry) Astro.response.status = 404;
 ---
 
-<Layout frontmatter={entry.data}>
-  <Content />
-</Layout>
+{entry ? (
+  <Layout frontmatter={entry}>
+    <div class="project-rich-content" set:html={entry.bodyHtml} />
+  </Layout>
+) : (
+  <BaseLayout robots="noindex,follow" title="Кейс не найден" description="Такого проекта нет в опубликованных кейсах." image="/images/og-projects.jpg">
+    <main class="container" style="padding: 6rem 1rem;">
+      <h1>Кейс не найден</h1>
+      <p>Возможно, этот проект снят с публикации.</p>
+      <a href="/case">Вернуться ко всем кейсам</a>
+    </main>
+  </BaseLayout>
+)}

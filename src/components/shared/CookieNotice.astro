@@ -1,4 +1,5 @@
 ---
+import { LEGAL_DOCS } from "../../lib/legal";
 ---
 
 <!-- Cookie Notice Start -->
@@ -7,8 +8,8 @@
         <div class="cookie-notice-text">
             <span class="cookie-notice-icon" aria-hidden="true">🍪</span>
             <p>
-                Я использую <a href="/cookies">cookie-файлы</a>, чтобы сайт работал корректно, а также чтобы понимать клики и посещения страниц.
-                Подробнее — в <a href="/privacy-policy">политике конфиденциальности</a>.
+                Я использую <a href={LEGAL_DOCS.cookies.href}>cookie-файлы</a>, чтобы сайт работал корректно, а также чтобы понимать клики и посещения страниц.
+                Подробнее — в <a href={LEGAL_DOCS.privacyPolicy.href}>политике обработки персональных данных</a>.
             </p>
         </div>
         <button class="btn-default cookie-notice-btn" type="button" data-cookie-accept data-cursor="-opaque">Понятно</button>

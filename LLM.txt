@@ -1,0 +1,372 @@
+# Интеграция сайта с платформой
+
+## Подключение
+
+- Базовый адрес API: `https://backend.w1do.ru`
+- Идентификатор проекта: `01m15zc30ghk21dmk2a4ph5wkg`
+- Ключ проекта передаётся заголовком: `X-Api-Key: [REDACTED: set LEADS_API_KEY]`
+
+Ключ подставлен в памятку. Храните его в переменных окружения — платформа показывает его один раз.
+
+Проект определяется самим ключом: передавать идентификатор в запросах не нужно.
+
+Успешный ответ приходит в конверте `{"data": …}`, ошибка — в конверте
+`{"error": {"code", "message", "details", "trace_id"}}`.
+
+## Контент
+
+#### GET /api/v1/content/posts
+
+Лента опубликованных постов с курсорной пагинацией.
+
+Требования: заголовок X-Api-Key.
+
+Запрос:
+
+```
+Параметры запроса (все необязательные): locale, category, tag, cursor.
+```
+
+Ответ:
+
+```
+{"data":[{"id":12,"title":"Заголовок","slug":"zagolovok","body":"<p>Текст</p>","locale":"ru","status":"published","published_at":"2026-01-15T10:00:00+00:00","blocks":[],"categories":[3],"tags":["новости"],"seo":{"title":"Заголовок","description":"Описание"},"cover":null,"banner":null,"path":"/posts/novosti/zagolovok","url":"https://site.ru/posts/novosti/zagolovok"}],"meta":{"per_page":15,"next_cursor":null,"prev_cursor":null}}
+```
+
+#### GET /api/v1/content/posts/{slug}
+
+Один опубликованный пост по слагу с развёрнутыми перелинковками.
+
+Требования: заголовок X-Api-Key.
+
+Запрос:
+
+```
+Параметр запроса (необязательный): locale.
+```
+
+Ответ:
+
+```
+{"data":{"id":12,"title":"Заголовок","slug":"zagolovok","body":"<p>Текст</p>","locale":"ru","status":"published","published_at":"2026-01-15T10:00:00+00:00","blocks":[],"categories":[3],"tags":["новости"],"seo":{"title":"Заголовок","description":"Описание"},"cover":null,"banner":null,"path":"/posts/novosti/zagolovok","url":"https://site.ru/posts/novosti/zagolovok"}}
+```
+
+#### GET /api/v1/content/pages/{slug}
+
+Статическая страница проекта по слагу.
+
+Требования: заголовок X-Api-Key.
+
+Ответ:
+
+```
+{"data":{"id":4,"title":"О компании","slug":"about","body":"<p>Текст</p>","locale":"ru","status":"published","seo":{"title":"О компании","description":"Описание"},"path":"/docs/about","url":"https://site.ru/docs/about"}}
+```
+
+#### GET /api/v1/content/categories
+
+Дерево категорий проекта: поддерево лежит в children.
+
+Требования: заголовок X-Api-Key.
+
+Ответ:
+
+```
+{"data":[{"id":3,"name":"Новости","slug":"novosti","parent_id":null,"full_path":"novosti","url":"https://site.ru/categories/novosti","children":[{"id":7,"name":"Релизы","slug":"relizy","parent_id":3,"full_path":"novosti/relizy","url":"https://site.ru/categories/novosti/relizy","children":[]}]}]}
+```
+
+#### GET /api/v1/content/resolve
+
+Разбор адреса страницы сайта: путь целиком → тип сущности, её идентификатор и публичные данные.
+
+Требования: заголовок X-Api-Key.
+
+Запрос:
+
+```
+Параметр запроса (обязательный): path — путь материала с ведущей косой чертой или без неё.
+```
+
+Ответ:
+
+```
+{"data":{"type":"post","id":12,"entity":{"id":12,"title":"Заголовок","slug":"zagolovok","path":"/posts/azs/ceny/zagolovok","url":"https://site.ru/posts/azs/ceny/zagolovok"}}}
+```
+
+#### GET /api/v1/content/cities
+
+Города проекта, включённые для сайта.
+
+Требования: заголовок X-Api-Key.
+
+Ответ:
+
+```
+{"data":[{"id":1,"name":"Москва","slug":"moskva","region":"Москва"}]}
+```
+
+#### GET /api/v1/content/cities/{slug}
+
+Один город проекта по слагу.
+
+Требования: заголовок X-Api-Key.
+
+Ответ:
+
+```
+{"data":{"id":1,"name":"Москва","slug":"moskva","region":"Москва"}}
+```
+
+#### GET /sitemap.xml
+
+Карта сайта проекта.
+
+Требования: заголовок X-Api-Key.
+
+Ответ:
+
+```
+XML-документ urlset со ссылками на опубликованные материалы проекта.
+```
+
+#### GET /robots.txt
+
+Файл robots.txt проекта.
+
+Требования: заголовок X-Api-Key.
+
+Ответ:
+
+```
+Текстовый файл директив для поисковых роботов.
+```
+
+## Заявки
+
+#### POST /api/v1/leads
+
+Приём заявки с формы сайта; поле max — ловушка для ботов, оставляйте пустым.
+
+Требования: заголовок X-Api-Key.
+
+Запрос:
+
+```
+{"email":"client@example.com","phone":"+7 900 000-00-00","subject":"Вопрос","message":"Текст обращения","source":"popup","payload":{"utm_source":"ya"}}
+```
+
+Ответ:
+
+```
+{"data":{"id":"01hz…","status":"new"}}
+```
+
+## Аналитика
+
+#### POST /api/v1/collect
+
+Приём событий сайта пачкой до 100 штук; ответ всегда 202.
+
+Требования: заголовок X-Api-Key со скоупом collect.
+
+Запрос:
+
+```
+{"events":[{"name":"page.view","path":"/","session_id":"s-1","occurred_at":"2026-01-15T10:00:00+00:00","props":{}}]}
+```
+
+Ответ:
+
+```
+{"data":{"accepted":true}}
+```
+
+#### GET /api/v1/analytics/config
+
+Идентификаторы внешних счётчиков для инъекции скриптов на сайте.
+
+Требования: заголовок X-Api-Key.
+
+Ответ:
+
+```
+{"data":{"yandex":{"enabled":true,"id":"12345678"},"google":{"enabled":false,"id":null}}}
+```
+
+## Оплаты
+
+#### GET /api/v1/pay/plans
+
+Каталог активных тарифных планов проекта.
+
+Требования: заголовок X-Api-Key.
+
+Ответ:
+
+```
+{"data":[{"id":1,"code":"pro","name":"Профи","price_minor":149000,"currency":"RUB","interval":"month","archived":false,"options":{"seats":"5"},"features":["export"]}]}
+```
+
+#### GET /api/v1/pay/subscriptions
+
+Подписки текущего пользователя сайта.
+
+Требования: заголовок X-Api-Key и X-User-Token: <токен пользователя>.
+
+Ответ:
+
+```
+{"data":[{"id":"01hz…","subscriber":{"type":"site_user","id":"42"},"status":"active","grants_access":true,"current_period_ends_at":"2026-02-15T10:00:00+00:00","subject":{"type":"plan","id":"1"}}]}
+```
+
+#### POST /api/v1/pay/subscriptions
+
+Оформление подписки на тариф: возвращает подписку и платёж.
+
+Требования: заголовок X-Api-Key и X-User-Token: <токен пользователя>.
+
+Запрос:
+
+```
+{"plan_code":"pro"} — необязательный заголовок Idempotency-Key защищает от повторной оплаты.
+```
+
+Ответ:
+
+```
+{"data":{"subscription":{"id":"01hz…","status":"pending","grants_access":false,"current_period_ends_at":"2026-02-15T10:00:00+00:00"},"payment":{"id":"01hz…","status":"pending","amount_minor":149000,"currency":"RUB","confirmation_url":"https://…"}}}
+```
+
+#### POST /api/v1/pay/subscriptions/{subscription}/{action}
+
+Смена состояния подписки: cancel, resume или pause.
+
+Требования: заголовок X-Api-Key и X-User-Token: <токен пользователя>.
+
+Запрос:
+
+```
+Тела нет; действие задаётся последним сегментом пути.
+```
+
+Ответ:
+
+```
+{"data":{"id":"01hz…","subscriber":{"type":"site_user","id":"42"},"status":"canceled","grants_access":false,"current_period_ends_at":"2026-02-15T10:00:00+00:00"}}
+```
+
+## Пользователи сайта
+
+#### POST /api/v1/auth/register
+
+Регистрация пользователя сайта: сразу возвращает токен.
+
+Требования: заголовок X-Api-Key.
+
+Запрос:
+
+```
+{"email":"client@example.com","password":"не короче 8 символов","name":"Иван"}
+```
+
+Ответ:
+
+```
+{"data":{"token":"1|…","user":{"id":42,"name":"Иван","email":"client@example.com","project_id":"01hz…","blocked":false}}}
+```
+
+#### POST /api/v1/auth/login
+
+Вход пользователя сайта.
+
+Требования: заголовок X-Api-Key.
+
+Запрос:
+
+```
+{"email":"client@example.com","password":"пароль"}
+```
+
+Ответ:
+
+```
+{"data":{"token":"1|…","user":{"id":42,"name":"Иван","email":"client@example.com","project_id":"01hz…","blocked":false}}}
+```
+
+#### POST /api/v1/auth/forgot-password
+
+Письмо со ссылкой сброса пароля; существование аккаунта не раскрывается.
+
+Требования: заголовок X-Api-Key.
+
+Запрос:
+
+```
+{"email":"client@example.com"}
+```
+
+Ответ:
+
+```
+{"data":{"sent":true}}
+```
+
+#### POST /api/v1/auth/reset-password
+
+Установка нового пароля по токену из письма.
+
+Требования: заголовок X-Api-Key.
+
+Запрос:
+
+```
+{"email":"client@example.com","token":"токен из письма","password":"не короче 8 символов"}
+```
+
+Ответ:
+
+```
+{"data":{"reset":true}}
+```
+
+#### GET /api/v1/auth/me
+
+Профиль текущего пользователя сайта.
+
+Требования: заголовок X-Api-Key и Authorization: Bearer <токен пользователя>.
+
+Ответ:
+
+```
+{"data":{"id":42,"name":"Иван","email":"client@example.com","project_id":"01hz…","blocked":false}}
+```
+
+#### PATCH /api/v1/auth/me
+
+Правка профиля; смена пароля требует current_password.
+
+Требования: заголовок X-Api-Key и Authorization: Bearer <токен пользователя>.
+
+Запрос:
+
+```
+{"name":"Иван","password":"новый пароль","current_password":"текущий пароль"}
+```
+
+Ответ:
+
+```
+{"data":{"id":42,"name":"Иван","email":"client@example.com","project_id":"01hz…","blocked":false}}
+```
+
+#### POST /api/v1/auth/logout
+
+Выход пользователя сайта: токен отзывается.
+
+Требования: заголовок X-Api-Key и Authorization: Bearer <токен пользователя>.
+
+Ответ:
+
+```
+204 без тела.
+```

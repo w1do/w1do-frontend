@@ -1,12 +1,11 @@
 ---
-import { getCollection } from 'astro:content';
+import { FOOTER_LEGAL_LINKS } from '../../lib/legal';
+import { getServiceHubs } from '../../lib/server/w1do/services';
 
-const entries = await getCollection('services');
-const services = entries.map((entry) => ({
-    title: entry.data.title,
-    link: `/services/${entry.id}`,
-    no: entry.data.no || "99"
-})).sort((a, b) => (a.no || "").localeCompare(b.no || ""));
+const services = (await getServiceHubs()).map((service) => ({
+    title: service.title,
+    link: service.url,
+}));
 
 const navigationLinks = [
     { label: "Главная", href: "/" },
@@ -19,62 +18,42 @@ const navigationLinks = [
     { label: "Обучение разработке с ИИ", href: "/ai-training" },
     { label: "Цены", href: "/pricing" },
     { label: "Проекты", href: "/case" },
-];
-
-const legalLinks = [
-    { label: "Политика конфиденциальности", href: "/privacy-policy" },
-    { label: "Пользовательское соглашение", href: "/user-agreement" },
-    { label: "Cookie-файлы", href: "/cookies" },
+    { label: "OpenSource", href: "/opensource" },
 ];
 ---
-<!-- Main Footer Start -->
 <div class="main-footer-prime bg-section">
     <div class="container">
         <div class="row">
             <div class="col-xl-12">
-                <!-- Footer Header Start -->
                 <div class="footer-header-prime">
-                    <!-- Footer Logo Start -->
                     <div class="footer-logo-prime">
                         <img src="/images/logo.svg" alt="AI агентство">
                     </div>
-                    <!-- Footer Logo End -->
-
-                    <!-- Section Title Start -->
                     <div class="section-title">
-                        <h2 class="text-anime-style-3"><a href={import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1DO_DIGITAL"} data-cursor="-opaque">Давайте создадим ваше ИИ-решение</a></h2>
+                        <h2 class="text-anime-style-3">
+                            <a href={import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1DO_DIGITAL"} data-cursor="-opaque">Давайте создадим ваше ИИ-решение</a>
+                        </h2>
                     </div>
-                    <!-- Section Title End -->
                 </div>
-                <!-- Footer Header End -->
             </div>
 
             <div class="col-xl-4">
-                <!-- About Footer Start -->
                 <div class="about-footer-prime">
-                    <!-- About Footer Content Start -->
                     <div class="about-footer-content-prime">
                         <h2>Обо мне</h2>
                         <p>Специализируюсь на разработке ИИ-агентов, RAG-систем и автоматизации бизнес-процессов для повышения эффективности вашей компании.</p>
                     </div>
-                    <!-- About Footer Content End -->
-
-                    <!-- Footer Contact List Start -->
                     <div class="footer-contact-list-prime">
                         <ul>
                             <li><img src="/images/icon-mail-accent.svg" alt="Telegram"><a href={import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1DO_DIGITAL"} data-cursor="-opaque">Написать в Telegram</a></li>
                             <li><img src="/images/icon-mail-accent.svg" alt="Email"><a href="mailto:uniqdeveloper@yandex.ru" data-cursor="-opaque">Написать на почту</a></li>
                         </ul>
                     </div>
-                    <!-- Footer Contact List End -->
                 </div>
-                <!-- About Footer End -->
             </div>
 
             <div class="col-xl-8">
-                <!-- Footer Links Box Start -->
                 <div class="footer-links-box-prime">
-                    <!-- Footer Links Start -->
                     <div class="footer-links-prime">
                         <h2>Навигация</h2>
                         <ul class="expandable-list" data-limit="5">
@@ -82,13 +61,9 @@ const legalLinks = [
                                 <li class={index >= 5 ? "hidden-link" : ""}><a href={link.href}>{link.label}</a></li>
                             ))}
                         </ul>
-                        {navigationLinks.length > 5 && (
-                            <button class="show-more-btn" data-cursor="-opaque">Показать еще</button>
-                        )}
+                        {navigationLinks.length > 5 && <button class="show-more-btn" data-cursor="-opaque">Показать еще</button>}
                     </div>
-                    <!-- Footer Links End -->
 
-                    <!-- Footer Links Start -->
                     <div class="footer-links-prime">
                         <h2>Услуги</h2>
                         <ul class="expandable-list" data-limit="5">
@@ -96,64 +71,46 @@ const legalLinks = [
                                 <li class={index >= 5 ? "hidden-link" : ""}><a href={service.link}>{service.title}</a></li>
                             ))}
                         </ul>
-                        {services.length > 5 && (
-                            <button class="show-more-btn" data-cursor="-opaque">Показать еще</button>
-                        )}
+                        {services.length > 5 && <button class="show-more-btn" data-cursor="-opaque">Показать еще</button>}
                     </div>
-                    <!-- Footer Links End -->
 
-                    <!-- Footer Links Start -->
                     <div class="footer-links-prime footer-newsletter-form-prime">
                         <h2>IT-ИИшница в Telegram</h2>
-
                         <div class="footer-social-links">
                             <ul>
                                 <li><a href="https://t.me/+sJeHrjLGkbNjN2Yy" data-cursor="-opaque"><i class="fa-brands fa-telegram"></i></a></li>
                             </ul>
                         </div>
                     </div>
-                    <!-- Footer Links End -->
                 </div>
 
                 <div class="footer-legal-links">
-                    {legalLinks.map((link) => (
-                        <a href={link.href}>{link.label}</a>
-                    ))}
+                    {FOOTER_LEGAL_LINKS.map((link) => <a href={link.href}>{link.label}</a>)}
                 </div>
-                <!-- Footer Links Box End -->
             </div>
         </div>
     </div>
 
-    <!-- Footer Copyright Start -->
     <div class="footer-copyright-prime">
         <p>Copyright © 2022-2024 AI Agency. Все права защищены.</p>
     </div>
-    <!-- Footer Copyright End -->
 </div>
-<!-- Main Footer End -->
 
 <style>
-    .hidden-link {
-        display: none;
-    }
+    .hidden-link { display: none; }
     .show-more-btn {
         background: none;
         border: none;
         color: var(--primary-color);
         cursor: pointer;
-        padding: 5px 0;
         font-size: 14px;
         font-weight: 500;
-        transition: all 0.3s ease;
         margin-top: 10px;
+        padding: 5px 0;
+        transition: all 0.3s ease;
     }
-    .show-more-btn:hover {
-        opacity: 0.8;
-    }
-    .expandable-list {
-        margin-bottom: 0 !important;
-    }
+    .show-more-btn:hover { opacity: 0.8; }
+    .expandable-list { margin-bottom: 0 !important; }
     .footer-legal-links {
         display: flex;
         flex-wrap: wrap;
@@ -168,34 +125,25 @@ const legalLinks = [
         text-underline-offset: 4px;
         transition: all 0.3s ease;
     }
-    .footer-legal-links a:hover {
-        color: var(--accent-color);
-    }
+    .footer-legal-links a:hover { color: var(--accent-color); }
 </style>
 
 <script>
     function setupShowMore() {
-        const buttons = document.querySelectorAll('.show-more-btn');
-        buttons.forEach(button => {
+        document.querySelectorAll('.show-more-btn').forEach((button) => {
             button.addEventListener('click', () => {
                 const list = button.previousElementSibling;
-                if (list) {
-                    const hiddenLinks = list.querySelectorAll('.hidden-link');
-                    const isExpanding = button.textContent === 'Показать еще';
+                if (!list) return;
 
-                    hiddenLinks.forEach(link => {
-                        (link as HTMLElement).style.display = isExpanding ? 'block' : 'none';
-                    });
-
-                    button.textContent = isExpanding ? 'Скрыть' : 'Показать еще';
-                }
+                const isExpanding = button.textContent === 'Показать еще';
+                list.querySelectorAll('.hidden-link').forEach((link) => {
+                    (link as HTMLElement).style.display = isExpanding ? 'block' : 'none';
+                });
+                button.textContent = isExpanding ? 'Скрыть' : 'Показать еще';
             });
         });
     }
 
-    // Setup on initial load
     setupShowMore();
-
-    // Setup on Astro page transitions if using ViewTransitions
     document.addEventListener('astro:after-swap', setupShowMore);
 </script>

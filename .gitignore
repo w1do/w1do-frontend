@@ -31,3 +31,6 @@ AGENTS.md
 idea.md
 plan.md
 SUMMARY.md
+
+# Local MCP configuration contains project credentials
+.codex/config.toml

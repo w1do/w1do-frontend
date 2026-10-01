@@ -8,6 +8,7 @@ interface Props {
 const { title, pubDate, author = "Admin" } = Astro.props;
 
 const formattedDate = new Date(pubDate).toLocaleDateString('ru-RU', {
+                                            timeZone: 'Asia/Irkutsk',
     year: 'numeric',
     month: 'long',
     day: 'numeric'

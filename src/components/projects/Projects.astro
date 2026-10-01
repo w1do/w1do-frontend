@@ -1,6 +1,6 @@
 ---
-import { getCollection } from 'astro:content';
 import ProjectCard from "./ProjectCard.astro";
+import { getCases } from "../../lib/server/w1do/cases";
 
 interface Props {
     subTitle?: string;
@@ -24,7 +24,7 @@ const {
     footerLinkText = "Посмотреть все проекты."
 } = Astro.props;
 
-const projects = await getCollection('case');
+const projects = await getCases();
 
 const featuredProjects = projects.slice(0, 3);
 ---

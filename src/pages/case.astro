@@ -6,6 +6,11 @@ import ProjectsList from "../components/projects/ProjectsList.astro";
 import Faqs from "../components/Faqs.astro";
 import Footer from "../components/shared/Footer.astro";
 import Testimonials from "../components/Testimonials.astro";
+import { getCases } from "../lib/server/w1do/cases";
+
+export const prerender = false;
+
+const projects = await getCases();
 ---
 <Layout 
     title="Кейсы и проекты по AI автоматизации | RAG, OpenAI, Claude"
@@ -18,7 +23,7 @@ import Testimonials from "../components/Testimonials.astro";
         {label: "Главная", href: "/"},
         {label: "Проекты", active: true}
     ]}/>
-    <ProjectsList/>
+    <ProjectsList projects={projects}/>
     <Faqs/>
     <Testimonials/>
     <Footer/>

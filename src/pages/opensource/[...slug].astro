@@ -1,0 +1,72 @@
+---
+import { getOpenSourceProjectBySlug } from "../../lib/server/w1do/opensource";
+import Layout from "../../layouts/ProjectLayout.astro";
+import BaseLayout from "../../layouts/Layout.astro";
+
+export const prerender = false;
+
+const entry = await getOpenSourceProjectBySlug(Astro.params.slug || "");
+if (!entry) Astro.response.status = 404;
+---
+
+{entry ? (
+  <Layout frontmatter={entry}>
+    <div class="project-rich-content opensource-rich-content" set:html={entry.bodyHtml} />
+    {entry.purposeHtml && <h3>Для чего</h3>}
+    {entry.purposeHtml && <div class="project-rich-content opensource-rich-content" set:html={entry.purposeHtml} />}
+    {entry.solvesHtml && <h3>Что решает</h3>}
+    {entry.solvesHtml && <div class="project-rich-content opensource-rich-content" set:html={entry.solvesHtml} />}
+    {entry.installationHtml && <h3>Инструкция по установке</h3>}
+    {entry.installationHtml && <div class="project-rich-content opensource-rich-content" set:html={entry.installationHtml} />}
+  </Layout>
+) : (
+  <BaseLayout robots="noindex,follow" title="OpenSource проект не найден" description="Такой проект не опубликован." image="/images/og-projects.jpg">
+    <main class="container" style="padding: 6rem 1rem;">
+      <h1>OpenSource проект не найден</h1>
+      <p>Возможно, материал снят с публикации.</p>
+      <a href="/opensource">Вернуться в OpenSource</a>
+    </main>
+  </BaseLayout>
+)}
+
+<script>
+  document.querySelectorAll<HTMLPreElement>(".opensource-rich-content pre").forEach((terminal) => {
+    if (terminal.querySelector(".terminal-copy-button")) return;
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "terminal-copy-button";
+    button.setAttribute("aria-label", "Скопировать команды из блока");
+    button.title = "Скопировать команды";
+
+    const icon = document.createElement("img");
+    icon.src = "/images/icon-copy.svg";
+    icon.alt = "";
+    icon.setAttribute("aria-hidden", "true");
+    button.append(icon);
+    terminal.append(button);
+
+    button.addEventListener("click", async () => {
+      const code = terminal.querySelector("code")?.textContent ?? terminal.textContent ?? "";
+
+      try {
+        await navigator.clipboard.writeText(code.trim());
+        button.classList.add("is-copied");
+        button.setAttribute("aria-label", "Команды скопированы");
+        button.title = "Скопировано";
+        window.setTimeout(() => {
+          button.classList.remove("is-copied");
+          button.setAttribute("aria-label", "Скопировать команды из блока");
+          button.title = "Скопировать команды";
+        }, 1800);
+      } catch {
+        button.setAttribute("aria-label", "Не удалось скопировать команды");
+        button.title = "Не удалось скопировать";
+        window.setTimeout(() => {
+          button.setAttribute("aria-label", "Скопировать команды из блока");
+          button.title = "Скопировать команды";
+        }, 1800);
+      }
+    });
+  });
+</script>

@@ -1,0 +1,60 @@
+---
+import { getCollection } from 'astro:content';
+import LandingClusterLayout from '../layouts/LandingClusterLayout.astro';
+
+async function getLandingPaths() {
+  const hubs = await getCollection('landingCluster', ({ data }) => data.hub === true);
+  const spokes = await getCollection('landingSpoke');
+
+  const uniqueByUrl = <T extends { url: string }>(items: T[]): T[] => {
+    const urls = new Set();
+    return items.filter((item) => {
+      const normalizedUrl = item.url.replace(/\/$/, '');
+      if (urls.has(normalizedUrl)) {
+        return false;
+      }
+      urls.add(normalizedUrl);
+      return true;
+    });
+  };
+
+  return hubs.map((pillar) => {
+    const pillarSpokes = spokes
+      .filter(({ data }) => data.cluster === pillar.id)
+      .map((entry) => ({
+        title: entry.data.title,
+        description: entry.data.description,
+        excerpt: entry.data.excerpt,
+        order: entry.data.order,
+        url: `/${pillar.id}/${entry.id.split('/').pop()}`,
+      }));
+
+    const childHubs = hubs
+      .filter(({ data }) => data.cluster === pillar.id)
+      .map((entry) => ({
+        title: entry.data.title,
+        description: entry.data.description,
+        excerpt: entry.data.description,
+        order: entry.data.order,
+        url: `/${entry.id}`,
+      }));
+
+    return {
+      params: { cluster: pillar.id },
+      props: {
+        pillar,
+        spokes: uniqueByUrl([...childHubs, ...pillarSpokes]).sort((a, b) => a.order - b.order),
+      },
+    };
+  });
+}
+
+const path = Astro.params.cluster || "";
+const match = (await getLandingPaths()).find(item => item.params.cluster === path);
+const entry = match ? undefined : (await getCollection('landingSpoke')).find(item =>
+  `${item.data.cluster}/${item.id.split('/').pop()}` === path);
+if (!match && !entry) return Astro.rewrite("/404");
+const frontmatter = match ? match.props.pillar.data : entry!.data;
+const spokes = match?.props.spokes || [];
+---
+<LandingClusterLayout frontmatter={frontmatter} spokes={spokes} />

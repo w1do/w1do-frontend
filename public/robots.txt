@@ -113,7 +113,6 @@ Allow: /
 Disallow: /*?
 Disallow: /admin
 Disallow: /api/
-Disallow: /_astro/
 Disallow: /node_modules/
 Disallow: /Dockerfile
 Disallow: /package.json

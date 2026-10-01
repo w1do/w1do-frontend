@@ -1,10 +1,19 @@
 /**
  * Функция для сериализации элементов карты сайта.
  * @param {import('@astrojs/sitemap').SitemapItem} item
- * @returns {import('@astrojs/sitemap').SitemapItem}
+ * @returns {import('@astrojs/sitemap').SitemapItem | undefined}
  */
 export function serializeSitemapItem(item) {
   const isHome = item.url === 'https://w1do.ru' || item.url === 'https://w1do.ru/';
+  const legacyLegalUrls = new Set([
+    'https://w1do.ru/cookies',
+    'https://w1do.ru/privacy-policy',
+    'https://w1do.ru/user-agreement',
+  ]);
+
+  if (legacyLegalUrls.has(item.url)) {
+    return undefined;
+  }
   
   const config = [
     { pattern: /services/, changefreq: 'daily', priority: 1.0 },

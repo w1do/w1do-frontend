@@ -1,12 +1,11 @@
 ---
-import { getCollection } from 'astro:content';
+import { getServiceHubs } from '../../lib/server/w1do/services';
+import CitySelector from './CitySelector.astro';
 
-const entries = await getCollection('services');
-const services = entries.map((entry) => ({
-    title: entry.data.title,
-    link: `/services/${entry.id}`,
-    no: entry.data.no || "99"
-})).sort((a, b) => a.no.localeCompare(b.no));
+const services = (await getServiceHubs()).map((service) => ({
+    title: service.title,
+    link: service.url,
+}));
 ---
 <!-- Header Start -->
 <header class="main-header">
@@ -24,7 +23,6 @@ const services = entries.map((entry) => ({
                     <div class="nav-menu-wrapper">
                         <ul class="navbar-nav mr-auto" id="menu">
                             <li class="nav-item"><a class="nav-link" href="/">Главная</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/about">Обо мне</a></li>
                             <li class="nav-item submenu has-mega-menu"><a class="nav-link" href="/services">Услуги</a>
                                 <ul class="services-mega-menu">
                                     {services.map((service) => (
@@ -38,13 +36,15 @@ const services = entries.map((entry) => ({
                                     <li class="nav-item"><a class="nav-link" href="/ai-agents">AI agents</a></li>
                                 </ul>
                             </li>
-                            <li class="nav-item"><a class="nav-link" href="/pricing">Цены</a></li>
                             <li class="nav-item submenu"><a class="nav-link" href="#">Страницы</a>
                                 <ul>
+                                    <li class="nav-item"><a class="nav-link" href="/about">Обо мне</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="/pricing">Цены</a></li>
                                     <li class="nav-item"><a class="nav-link" href="/consultation">Консультация по ИИ</a></li>
                                     <li class="nav-item"><a class="nav-link" href="/vibe-coding">Вайб кодер, MLOps</a></li>
                                     <li class="nav-item"><a class="nav-link" href="/ai-training">Обучение ИИ</a></li>
                                     <li class="nav-item"><a class="nav-link" href="/case">Проекты</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="/opensource">OpenSource</a></li>
                                     <li class="nav-item"><a class="nav-link" href="/knowledge">База знаний</a></li>
                                 </ul>
                             </li>
@@ -60,6 +60,7 @@ const services = entries.map((entry) => ({
                     <!-- Header Btn End -->
                 </div>
                 <!-- Main Menu End -->
+                <CitySelector />
                 <div class="navbar-toggle"></div>
             </div>
         </nav>

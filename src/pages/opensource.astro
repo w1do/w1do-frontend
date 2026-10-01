@@ -1,0 +1,35 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/shared/Header.astro";
+import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
+import ProjectsList from "../components/projects/ProjectsList.astro";
+import Faqs from "../components/Faqs.astro";
+import Footer from "../components/shared/Footer.astro";
+import Testimonials from "../components/Testimonials.astro";
+import { getOpenSourceProjects } from "../lib/server/w1do/opensource";
+
+export const prerender = false;
+
+const projects = await getOpenSourceProjects();
+---
+<Layout
+    title="OpenSource проекты W1DO | AI-инструменты и репозитории"
+    description="OpenSource-раздел W1DO: публичные инструменты, репозитории, инструкции по установке, FAQ и практические сценарии применения."
+    keywords="OpenSource, open source, AI инструменты, репозитории, установка, W1DO"
+    image="/images/og-projects.jpg"
+>
+    <Header/>
+    <Breadcrumbs title="OpenSource" breadcrumbItems={[
+        {label: "Главная", href: "/"},
+        {label: "OpenSource", active: true}
+    ]}/>
+    <ProjectsList projects={projects} basePath="/opensource" actionText="Смотреть репозиторий"/>
+    {projects.length === 0 && (
+        <section class="container" style="padding: 0 1rem 5rem;">
+            <p>Раздел готов, материалы появятся после публикации коллекции OpenSource в CMS.</p>
+        </section>
+    )}
+    <Faqs/>
+    <Testimonials/>
+    <Footer/>
+</Layout>

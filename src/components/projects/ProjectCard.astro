@@ -1,15 +1,31 @@
 ---
-import { Image } from 'astro:assets';
-
-interface Props {
-    project: any;
-    delay?: string;
-    className?: string;
+interface ProjectCardEntry {
+    id: string;
+    title: string;
+    description?: string;
+    category?: string;
+    categorySlug?: string;
+    image?: string;
 }
 
-const { project, delay = "0s", className = "" } = Astro.props;
-const { title = "Без названия", description = "", category = "Прочее", categorySlug = "", image = "/images/project-1.jpg" } = project?.data || {};
-const url = `/case/${project?.id}` || "#";
+interface Props {
+    project: ProjectCardEntry;
+    delay?: string;
+    className?: string;
+    basePath?: string;
+    actionText?: string;
+}
+
+const {
+    project,
+    delay = "0s",
+    className = "",
+    basePath = "/case",
+    actionText = "Смотреть проект",
+} = Astro.props;
+const { title, description, category, categorySlug, image, id } = project;
+const url = `${basePath}/${id}`;
+const isSvg = image?.split("?")[0].toLowerCase().endsWith(".svg") ?? false;
 ---
 
 <div class={`col-xl-4 col-md-6 project-item-box ${categorySlug} ${className}`}>
@@ -17,7 +33,7 @@ const url = `/case/${project?.id}` || "#";
         <div class="project-item-image">
             <a href={url} data-cursor-text="View">
                 <figure>
-                    <Image src={image} alt={title} width={600} height={400} loading="lazy" />
+                    <img class:list={{ "project-item-svg": isSvg }} src={image || "/images/project-1.jpg"} alt={title} width="600" height="400" loading="lazy" />
                 </figure>
             </a>
         </div>
@@ -30,8 +46,88 @@ const url = `/case/${project?.id}` || "#";
                 {description && <p style="margin-top: 10px; font-size: 0.9em; line-height: 1.4; color: #ffffff;">{description}</p>}
             </div>
             <div class="project-item-btn">
-                <a href={url} class="readmore-btn">Смотреть проект</a>
+                <a href={url} class="readmore-btn">{actionText}</a>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+.project-item {
+    justify-content: flex-start;
+    gap: 0;
+    height: calc(100% - 30px);
+    min-height: 450px;
+    overflow: hidden;
+    padding: 0;
+    border-radius: 20px;
+    background: #050505;
+}
+
+.project-item-image {
+    position: relative;
+    inset: auto;
+    display: flex;
+    flex: 0 0 210px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 210px;
+    overflow: hidden;
+    padding: 12px 24px 0;
+}
+
+.project-item-image a,
+.project-item-image a figure {
+    width: 100%;
+    height: 100%;
+}
+
+.project-item-image a figure {
+    margin: 0;
+    background: transparent;
+}
+
+.project-item-image a figure::before {
+    display: none;
+}
+
+.project-item-image a figure img {
+    object-fit: contain;
+}
+
+.project-item-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 12px 30px 28px;
+}
+
+.project-item-image a figure img.project-item-svg {
+    filter: brightness(0) invert(1);
+    transform: scale(1.7);
+}
+
+.project-item:hover .project-item-image a figure img.project-item-svg {
+    transform: scale(1.78);
+}
+
+.project-item-btn {
+    margin-top: auto;
+}
+
+@media (max-width: 575px) {
+    .project-item {
+        min-height: 420px;
+    }
+
+    .project-item-image {
+        flex-basis: 185px;
+        height: 185px;
+    }
+
+    .project-item-body {
+        padding: 10px 22px 24px;
+    }
+}
+</style>

@@ -18,7 +18,7 @@ const breadcrumbItems = [
 ];
 
 const siteUrl = Astro.site?.href?.replace(/\/$/, "") || "https://w1do.ru";
-const pageUrl = Astro.url.href;
+const pageUrl = new URL(Astro.url.pathname, Astro.site || Astro.url).href;
 const articleImage = frontmatter.image ? new URL(frontmatter.image, Astro.site || Astro.url).href : undefined;
 
 const articleSchema = {
@@ -29,6 +29,7 @@ const articleSchema = {
     "url": pageUrl,
     "mainEntityOfPage": { "@type": "WebPage", "@id": pageUrl },
     "inLanguage": "ru-RU",
+    ...(frontmatter.modifiedDate ? { "dateModified": frontmatter.modifiedDate } : {}),
     ...(articleImage ? { "image": articleImage } : {}),
     ...(frontmatter.pubDate ? { "datePublished": new Date(frontmatter.pubDate).toISOString() } : {}),
     ...(frontmatter.tags ? { "keywords": frontmatter.tags.join(", ") } : {}),
@@ -50,7 +51,7 @@ const breadcrumbSchema = {
 const schema = [articleSchema, breadcrumbSchema];
 ---
 
-<Layout title={seoTitle} description={seoDescription} schema={schema} type="article" image={frontmatter.image}>
+<Layout title={seoTitle} description={seoDescription} keywords={frontmatter.tags?.join(", ")} schema={schema} type="article" image={frontmatter.image} canonical={pageUrl} robots={frontmatter.isIndex === false ? "noindex,follow" : undefined}>
     <Header/>
     <BlogBreadcrumbs title={frontmatter.title} pubDate={frontmatter.pubDate} />
 
@@ -214,4 +215,9 @@ const schema = [articleSchema, breadcrumbSchema];
             width: auto;
         }
     }
+</style>
+
+<style>
+    .post-image figure { background: var(--primary-color); }
+    .post-image img { object-fit: contain; padding: 24px; }
 </style>

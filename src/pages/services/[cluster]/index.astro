@@ -1,33 +1,11 @@
 ---
-import { getCollection, render } from 'astro:content';
 import ServiceLayout from '../../../layouts/ServiceLayout.astro';
+import { getServiceByPath, getServiceSpokes } from '../../../lib/server/w1do/services';
 
-export async function getStaticPaths() {
-  const hubs = await getCollection('services', ({ data }) => data.hub === true);
-  const spokes = await getCollection('serviceLanding');
-  return hubs.map((pillar) => ({
-    params: { cluster: pillar.id },
-    props: {
-      pillar,
-      spokes: spokes
-        .filter(({ data }) => data.cluster === pillar.id)
-        .sort((a, b) => a.data.order - b.data.order)
-        .map((entry) => ({
-          title: entry.data.title,
-          description: entry.data.description,
-          excerpt: entry.data.excerpt,
-          icon: entry.data.icon,
-          tags: entry.data.tags,
-          url: `/services/${pillar.id}/${entry.id.split('/').pop()}`,
-        })),
-    },
-  }));
-}
-
-const { pillar, spokes } = Astro.props;
-const { Content } = await render(pillar);
+const pillar = await getServiceByPath([Astro.params.cluster || ""]);
+if (!pillar?.hub) return Astro.rewrite("/404");
+const spokes = await getServiceSpokes(pillar.cluster);
 ---
-
-<ServiceLayout frontmatter={pillar.data} spokes={spokes}>
-  <Content />
+<ServiceLayout frontmatter={pillar} spokes={spokes}>
+  <div set:html={pillar.bodyHtml} />
 </ServiceLayout>

@@ -1,0 +1,15 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+export const prerender = false;
+Astro.response.status = 404;
+---
+<Layout title="Страница не найдена | W1DO"
+  description="Страница не найдена или больше не опубликована. Перейдите на главную, в каталог услуг или блог W1DO."
+  robots="noindex,follow">
+  <main class="container" style="padding: 6rem 1rem;">
+    <h1>Страница не найдена</h1>
+    <p>Проверьте адрес или перейдите в нужный раздел.</p>
+    <p><a href="/">Главная</a> · <a href="/services">Услуги</a> · <a href="/blog">Блог</a></p>
+  </main>
+</Layout>

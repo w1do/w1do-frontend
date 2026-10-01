@@ -1,7 +1,13 @@
 ---
-import { getCollection } from 'astro:content';
 import ProjectCard from "./ProjectCard.astro";
-const projects = await getCollection('case');
+
+interface Props {
+    projects: import("./ProjectCard.astro").Props["project"][];
+    basePath?: string;
+    actionText?: string;
+}
+
+const { projects, basePath = "/case", actionText = "Смотреть проект" } = Astro.props;
 ---
 
 <!-- Page Projects Start -->
@@ -12,6 +18,8 @@ const projects = await getCollection('case');
                 <ProjectCard 
                     project={project} 
                     delay={`${(index % 3) * 0.2}s`}
+                    basePath={basePath}
+                    actionText={actionText}
                 />
             ))}
         </div>

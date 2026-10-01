@@ -1,19 +1,10 @@
 ---
-import { getCollection, render } from 'astro:content';
 import Layout from "../../../layouts/ServiceLandingLayout.astro";
+import { getServiceByPath } from '../../../lib/server/w1do/services';
 
-export async function getStaticPaths() {
-  const entries = await getCollection('serviceLanding');
-  return entries.map(entry => ({
-    params: { cluster: entry.data.cluster, post: entry.id.split('/').pop() },
-    props: { entry },
-  }));
-}
-
-const { entry } = Astro.props;
-const { Content } = await render(entry);
+const entry = await getServiceByPath([Astro.params.cluster || "", Astro.params.post || ""]);
+if (!entry || entry.hub) return Astro.rewrite("/404");
 ---
-
-<Layout frontmatter={entry.data}>
-  <Content />
+<Layout frontmatter={entry}>
+  <div set:html={entry.bodyHtml} />
 </Layout>

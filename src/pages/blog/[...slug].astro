@@ -1,18 +1,32 @@
 ---
-import { getCollection, render } from 'astro:content';
-import Layout from "../../layouts/BlogLayout.astro";
+import { createMarkdownProcessor } from "@astrojs/markdown-remark";
+import { getBlogPostBySlug } from "../../lib/server/w1do/blog";
+import BlogLayout from "../../layouts/BlogLayout.astro";
+import Layout from "../../layouts/Layout.astro";
 
-export async function getStaticPaths() {
-  const blogEntries = await getCollection('blog');
-  return blogEntries.map(entry => ({
-    params: { slug: entry.id }, props: { entry },
-  }));
+export const prerender = false;
+let entry;
+let failed = false;
+try {
+  entry = await getBlogPostBySlug(Astro.params.slug || "");
+} catch {
+  failed = true;
 }
-
-const { entry } = Astro.props;
-const { Content } = await render(entry);
+if (!entry) Astro.response.status = failed ? 502 : 404;
+const processor = entry ? await createMarkdownProcessor() : undefined;
+const bodyHtml = entry && processor ? (await processor.render(entry.body)).code : "";
 ---
 
-<Layout frontmatter={entry.data}>
-  <Content />
-</Layout>
+{entry ? (
+  <BlogLayout frontmatter={entry.data}>
+    <div set:html={bodyHtml} />
+  </BlogLayout>
+) : (
+  <Layout title={failed ? "Блог временно недоступен" : "Статья не найдена"} robots="noindex,follow">
+    <main class="container" style="padding: 6rem 1rem;">
+      <h1>{failed ? "Блог временно недоступен" : "Статья не найдена"}</h1>
+      <p>{failed ? "Попробуйте открыть страницу позже." : "Статья не опубликована или адрес указан неверно."}</p>
+      <a href="/blog">Вернуться в блог</a>
+    </main>
+  </Layout>
+)}

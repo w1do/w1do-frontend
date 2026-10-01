@@ -1,52 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
-const blogCollection = defineCollection({
-  loader: glob({ pattern: '**/[^_]*.md', base: "./src/content/blog" }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    pubDate: z.coerce.date(),
-    image: z.string().optional(),
-    tags: z.array(z.string()).optional(),
-    layout: z.string().optional(),
-  }),
-});
-
-const caseCollection = defineCollection({
-  loader: glob({ pattern: '**/[^_]*.md', base: "./src/content/case" }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    seo: z.object({
-      title: z.string(),
-      description: z.string(),
-    }).optional(),
-    layout: z.string().optional(),
-    category: z.string(),
-    categorySlug: z.string(),
-    image: z.string(),
-    clientName: z.string().optional(),
-    location: z.string().optional(),
-    timeline: z.string().optional(),
-    challenges: z.array(z.object({
-      title: z.string(),
-      description: z.string(),
-      image: z.string().optional(),
-      points: z.array(z.string()).optional(),
-    })).optional(),
-    approach: z.array(z.object({
-      title: z.string(),
-      description: z.string(),
-    })).optional(),
-    approachConclusion: z.string().optional(),
-    projectFaqs: z.array(z.object({
-      question: z.string(),
-      answer: z.string(),
-    })).optional(),
-  }),
-});
-
 const servicesCollection = defineCollection({
   loader: glob({
     pattern: '*/index.md',
@@ -286,8 +240,6 @@ const landingSpokeCollection = defineCollection({
 });
 
 export const collections = {
-  'blog': blogCollection,
-  'case': caseCollection,
   'services': servicesCollection,
   'serviceLanding': serviceLandingCollection,
   'landingCluster': landingClusterCollection,

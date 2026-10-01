@@ -1,5 +1,4 @@
 ---
-import { getCollection } from 'astro:content';
 import Layout from "./Layout.astro";
 import Header from "../components/shared/Header.astro";
 import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
@@ -12,6 +11,7 @@ import Process from "../components/Process.astro";
 import Works from "../components/Works.astro";
 import Spacer from "../components/shared/Spacer.astro";
 import ClusterSpokes from "../components/services/cluster/ClusterSpokes.astro";
+import { getServiceHubs } from "../lib/server/w1do/services";
 
 const { frontmatter, spokes } = Astro.props;
 
@@ -25,10 +25,10 @@ const breadcrumbItems = [
 ];
 
 // Получаем список всех услуг для сайдбара
-const services = await getCollection('services');
+const services = await getServiceHubs();
 
 const siteUrl = Astro.site?.href?.replace(/\/$/, "") || "https://w1do.ru";
-const pageUrl = Astro.url.href;
+const pageUrl = new URL(Astro.url.pathname, Astro.site || "https://w1do.ru").href;
 const serviceImage = frontmatter.image ? new URL(frontmatter.image, Astro.site || Astro.url).href : undefined;
 
 const serviceSchema = {
@@ -83,8 +83,8 @@ const schema = [serviceSchema, breadcrumbSchema, faqSchema].filter(Boolean);
                         <div class="page-category-list wow fadeInUp">
                             <h2 class="page-category-list-title">Другие услуги</h2>
                             <ul>
-                                {services.map((service: any) => (
-                                    <li><a href={`/services/${service.id}`}>{service.data.title}</a></li>
+                                {services.map((service) => (
+                                    <li><a href={service.url}>{service.title}</a></li>
                                 ))}
                             </ul>
                         </div>
@@ -111,7 +111,7 @@ const schema = [serviceSchema, breadcrumbSchema, faqSchema].filter(Boolean);
                     <div class="service-single-content">
                         <!-- Page Single Image Start -->
                         {frontmatter.image && (
-                            <div class="page-single-image">
+                            <div class="page-single-image service-single-image">
                                 <figure class="image-anime reveal">
                                     <img src={frontmatter.image} alt={frontmatter.title}>
                                 </figure>
@@ -244,5 +244,14 @@ const schema = [serviceSchema, breadcrumbSchema, faqSchema].filter(Boolean);
     }
     .page-single-image .reveal {
         visibility: visible;
+    }
+    .service-single-image figure {
+        background: #fff;
+        overflow: hidden;
+    }
+    .service-single-image img {
+        background: #fff;
+        object-fit: contain;
+        padding: clamp(24px, 6vw, 54px);
     }
 </style>

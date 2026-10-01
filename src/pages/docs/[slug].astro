@@ -1,0 +1,120 @@
+---
+import Breadcrumbs from "../../components/shared/Breadcrumbs.astro";
+import Footer from "../../components/shared/Footer.astro";
+import Header from "../../components/shared/Header.astro";
+import { markdownToHtml } from "../../lib/server/markdown";
+import { getPublishedPageBySlug } from "../../lib/server/w1do/pages";
+import Layout from "../../layouts/Layout.astro";
+
+export const prerender = false;
+
+const slug = Astro.params.slug || "";
+let page = null;
+let failed = false;
+
+try {
+    page = await getPublishedPageBySlug(slug);
+} catch (error) {
+    failed = true;
+    console.error("[docs] W1DO page request failed:", error);
+}
+
+if (!page) Astro.response.status = failed ? 502 : 404;
+
+const title = page?.seoTitle || "Документ не найден";
+const description = page?.seoDescription || "Документ не найден или снят с публикации.";
+const canonical = page?.canonical || new URL(page?.path || Astro.url.pathname, Astro.site || Astro.url).href;
+const robots = !page || page.isIndex === false ? "noindex,follow" : undefined;
+const bodyHtml = page ? markdownToHtml(page.body.replace(/^#\s+[^\n]+\n+/, "")) : "";
+const schema = page ? {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": page.title,
+    "url": canonical,
+    "inLanguage": "ru-RU",
+} : undefined;
+---
+
+<Layout title={title} description={description} canonical={canonical} robots={robots} schema={schema}>
+    <Header />
+    <Breadcrumbs title={page?.title || "Документ не найден"} breadcrumbItems={[
+        { label: "Главная", href: "/" },
+        { label: "Документы", active: true },
+    ]} />
+
+    <main class="legal-page">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                    {page ? (
+                        <article class="legal-content" set:html={bodyHtml} />
+                    ) : (
+                        <article class="legal-content">
+                            <h2>{failed ? "Документ временно недоступен" : "Документ не найден"}</h2>
+                            <p>
+                                {failed
+                                    ? "Не удалось получить документ из W1DO. Попробуйте открыть страницу позже."
+                                    : "Документ не опубликован или адрес указан неверно."}
+                            </p>
+                            <p><a href="/">Вернуться на главную</a></p>
+                        </article>
+                    )}
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <Footer />
+</Layout>
+
+<style>
+    .legal-page { padding: 100px 0; }
+    .legal-content {
+        padding: 40px;
+        background: var(--secondary-color);
+        border: 1px solid var(--dark-divider-color);
+        border-radius: 24px;
+    }
+    .legal-content :global(h1) {
+        margin: 0 0 24px;
+        color: var(--white-color);
+        font-size: 42px;
+    }
+    .legal-content :global(h2) {
+        margin: 36px 0 16px;
+        color: var(--white-color);
+        font-size: 28px;
+    }
+    .legal-content :global(p),
+    .legal-content :global(li) {
+        color: var(--text-color);
+        font-size: 18px;
+        line-height: 1.7em;
+    }
+    .legal-content :global(p) { margin-bottom: 18px; }
+    .legal-content :global(ul) {
+        margin: 0 0 22px;
+        padding-left: 24px;
+    }
+    .legal-content :global(li) { margin-bottom: 10px; }
+    .legal-content :global(a) {
+        color: var(--accent-color);
+        text-decoration: underline;
+        text-underline-offset: 4px;
+    }
+    .legal-content :global(code) {
+        color: var(--white-color);
+        word-break: break-word;
+    }
+    @media only screen and (max-width: 767px) {
+        .legal-page { padding: 50px 0; }
+        .legal-content {
+            padding: 24px;
+            border-radius: 18px;
+        }
+        .legal-content :global(h1) { font-size: 30px; }
+        .legal-content :global(h2) { font-size: 22px; }
+        .legal-content :global(p),
+        .legal-content :global(li) { font-size: 16px; }
+    }
+</style>

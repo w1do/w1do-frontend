@@ -1,5 +1,7 @@
 ---
-import { getCollection } from 'astro:content';
+import { getBlogCategories } from "../../lib/server/w1do/blog-categories";
+import { getBlogPosts } from "../../lib/server/w1do/blog";
+export const prerender = false;
 import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/shared/Header.astro";
 import Breadcrumbs from "../../components/shared/Breadcrumbs.astro";
@@ -9,7 +11,7 @@ import Footer from "../../components/shared/Footer.astro";
 
 const POSTS_PER_PAGE = 10;
 
-const posts = await getCollection('blog');
+const [posts, categories] = await Promise.all([getBlogPosts(), getBlogCategories()]);
 const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 const totalPages = Math.max(1, Math.ceil(sortedPosts.length / POSTS_PER_PAGE));
@@ -24,7 +26,13 @@ const breadcrumbItems = [
 <Layout title="Блог | ИИ в бизнесе и автоматизация" description="Статьи об искусственном интеллекте, автоматизации бизнес-процессов и цифровом маркетинге.">
     <Header/>
     <Breadcrumbs title="Наш Блог" breadcrumbItems={breadcrumbItems} />
+    <nav class="container blog-topics" aria-label="Темы блога">
+        {categories.map(category => <a href={`/categories/${category.slug}`}>{category.name}</a>)}
+    </nav>
     <BlogList posts={pagePosts} currentPage={1} totalPages={totalPages} />
     <Cta/>
     <Footer/>
 </Layout>
+<style>
+    .blog-topics { display: flex; flex-wrap: wrap; gap: 16px 24px; padding-top: 32px; }
+</style>

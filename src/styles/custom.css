@@ -4237,6 +4237,17 @@ header.main-header .header-sticky.active{
     border-radius: 20px;
 }
 
+/* Keep monochrome case illustrations visible and uncropped. */
+.project-challenge-svg figure {
+    background: var(--secondary-color);
+}
+
+.project-challenge-svg figure img {
+    object-fit: contain;
+    padding: clamp(32px, 4vw, 56px);
+    filter: invert(1);
+}
+
 .project-challenge-content-box{
 	padding: 40px;
 	display: flex;
@@ -4309,7 +4320,7 @@ header.main-header .header-sticky.active{
 	min-height: 280px;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	justify-content: flex-start;
 	gap: 30px;
 	transition: all 0.4s ease-in-out;
 	padding: 30px;
@@ -11909,4 +11920,92 @@ header.main-header .header-sticky.active{
     .main-menu ul li:hover > ul.services-mega-menu {
         transform: none;
     }
+}
+
+/* Open Source installation snippets as terminal panels. */
+.opensource-rich-content pre {
+	position: relative;
+	margin: 1.25rem 0 2rem;
+	padding: 2.75rem 1.25rem 3.25rem;
+	overflow-x: auto;
+	border: 1px solid #303846;
+	border-radius: 12px;
+	background: #11151c;
+	color: #dbe4f0;
+	line-height: 1.7;
+	white-space: pre;
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.opensource-rich-content pre::before {
+	position: absolute;
+	inset: 0 0 auto;
+	padding: 0.72rem 1rem;
+	border-bottom: 1px solid #303846;
+	color: #a1adbd;
+	content: "●  ●  ●   TERMINAL";
+	font: 600 0.68rem/1.2 sans-serif;
+	letter-spacing: 0.08em;
+}
+
+.opensource-rich-content .terminal-copy-button {
+	position: absolute;
+	right: 1rem;
+	bottom: 0.75rem;
+	z-index: 1;
+	display: grid;
+	width: 2rem;
+	height: 2rem;
+	padding: 0;
+	place-items: center;
+	border: 1px solid #3a4554;
+	border-radius: 6px;
+	background: #1b222d;
+	color: #dbe4f0;
+	cursor: pointer;
+	transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.opensource-rich-content .terminal-copy-button img {
+	width: 16px;
+	height: 16px;
+	filter: invert(1);
+}
+
+.opensource-rich-content .terminal-copy-button:hover {
+	border-color: #65758b;
+	background: #252f3d;
+}
+
+.opensource-rich-content .terminal-copy-button:focus-visible {
+	outline: 2px solid #91b7ff;
+	outline-offset: 2px;
+}
+
+.opensource-rich-content .terminal-copy-button.is-copied {
+	border-color: #3f8b68;
+	background: #1c3a2d;
+}
+
+.opensource-rich-content pre code {
+	padding: 0;
+	background: transparent;
+	color: inherit;
+	font-size: 0.92em;
+}
+
+.opensource-rich-content :not(pre) > code {
+	padding: 0.12em 0.4em;
+	border-radius: 5px;
+	background: rgba(132, 146, 166, 0.16);
+	color: #d93f82;
+	font-size: 0.9em;
+	overflow-wrap: anywhere;
+}
+
+@media (max-width: 575px) {
+	.opensource-rich-content pre {
+		padding: 2.6rem 0.9rem 3rem;
+		font-size: 0.85rem;
+	}
 }
