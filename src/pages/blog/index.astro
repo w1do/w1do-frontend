@@ -1,4 +1,5 @@
 ---
+import BlogTopics from "../../components/blog/BlogTopics.astro";
 import { getBlogCategories } from "../../lib/server/w1do/blog-categories";
 import { getBlogPosts } from "../../lib/server/w1do/blog";
 export const prerender = false;
@@ -26,13 +27,8 @@ const breadcrumbItems = [
 <Layout title="Блог | ИИ в бизнесе и автоматизация" description="Статьи об искусственном интеллекте, автоматизации бизнес-процессов и цифровом маркетинге.">
     <Header/>
     <Breadcrumbs title="Наш Блог" breadcrumbItems={breadcrumbItems} />
-    <nav class="container blog-topics" aria-label="Темы блога">
-        {categories.map(category => <a href={`/categories/${category.slug}`}>{category.name}</a>)}
-    </nav>
+    <BlogTopics categories={categories} />
     <BlogList posts={pagePosts} currentPage={1} totalPages={totalPages} />
     <Cta/>
     <Footer/>
 </Layout>
-<style>
-    .blog-topics { display: flex; flex-wrap: wrap; gap: 16px 24px; padding-top: 32px; }
-</style>

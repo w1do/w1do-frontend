@@ -1,4 +1,6 @@
 ---
+import BlogTopics from "../../../components/blog/BlogTopics.astro";
+import { getBlogCategories } from "../../../lib/server/w1do/blog-categories";
 import { getBlogPosts } from "../../../lib/server/w1do/blog";
 export const prerender = false;
 import Layout from "../../../layouts/Layout.astro";
@@ -10,7 +12,7 @@ import Footer from "../../../components/shared/Footer.astro";
 
 const POSTS_PER_PAGE = 10;
 
-const posts = await getBlogPosts();
+const [posts, categories] = await Promise.all([getBlogPosts(), getBlogCategories()]);
 const sortedPosts = posts;
 const totalPages = Math.max(1, Math.ceil(posts.length / POSTS_PER_PAGE));
 const page = Number(Astro.params.page);
@@ -30,6 +32,7 @@ const breadcrumbItems = [
 <Layout title={`Блог об ИИ и автоматизации — страница ${page} | W1DO`} description={`Страница ${page} блога W1DO: статьи об AI-агентах, разработке и автоматизации. Практические материалы, выбор инструментов и подготовка проектов.`}>
     <Header/>
     <Breadcrumbs title="Наш Блог" breadcrumbItems={breadcrumbItems} />
+    <BlogTopics categories={categories} />
     <BlogList posts={pagePosts} currentPage={page} totalPages={totalPages} />
     <Cta/>
     <Footer/>

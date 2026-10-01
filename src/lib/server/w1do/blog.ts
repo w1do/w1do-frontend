@@ -3,6 +3,7 @@ import { LEADS_API_BASE_URL, LEADS_API_KEY } from "astro:env/server";
 
 interface ApiPost {
   slug: string;
+  url: string;
   title: string;
   body: string | null;
   status: string;
@@ -15,6 +16,7 @@ interface ApiPost {
 
 export interface BlogPost {
   id: string;
+  url: string;
   body: string;
   data: {
     title: string;
@@ -29,11 +31,16 @@ export interface BlogPost {
 }
 
 function mapPost(post: ApiPost): BlogPost {
+  const url = new URL(post.url, "https://w1do.ru");
+  if (!["w1do.ru", "www.w1do.ru"].includes(url.hostname) || !/^\/blog\/(?:[a-z0-9-]+\/)*[a-z0-9-]+$/.test(url.pathname)) {
+    throw new Error("W1DO post returned an invalid URL.");
+  }
   const description = post.seo?.description || (post.body || "").replace(/[#*_`]/g, "").slice(0,160);
   const originalDate = post.seo?.json_ld?.datePublished;
   const modifiedDate = post.seo?.json_ld?.dateModified;
   return {
     id: post.slug,
+    url: url.pathname,
     body: post.body || "",
     data: {
       title: post.title,
@@ -41,17 +48,18 @@ function mapPost(post: ApiPost): BlogPost {
       pubDate: new Date(typeof originalDate === "string" ? originalDate : post.published_at),
       modifiedDate: typeof modifiedDate === "string" ? modifiedDate : undefined,
       image: post.cover?.url ? (localCovers as Record<string, string>)[post.cover.url] || post.cover.url : undefined,
-      tags: post.tags || [],
+      tags: [...new Set((post.tags || []).filter((tag): tag is string => typeof tag === "string")
+        .map(tag => tag.trim()).filter(Boolean))],
       isIndex: post.is_index,
       seo: { title: post.seo?.title || post.title, description },
     },
   };
 }
 
-async function request(path: string, cursor?: string, category?: number): Promise<Response> {
+async function request(path: string, cursor?: string, category?: number, localized = true): Promise<Response> {
   if (!LEADS_API_KEY) throw new Error("W1DO API key is not configured.");
   const url = new URL(path, LEADS_API_BASE_URL || "https://backend.w1do.ru");
-  url.searchParams.set("locale", "ru");
+  if (localized) url.searchParams.set("locale", "ru");
   if (cursor) url.searchParams.set("cursor", cursor);
   if (category) url.searchParams.set("category", String(category));
   return fetch(url, {
@@ -84,5 +92,18 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPost | undefi
   if (response.status === 404) return undefined;
   if (!response.ok) throw new Error(`W1DO posts API returned HTTP ${response.status}.`);
   const result = await response.json() as { data: ApiPost };
-  return result.data?.status === "published" ? mapPost(result.data) : undefined;
+  if (result.data?.status !== "published") return undefined;
+  const post = mapPost(result.data);
+  // W1DO's localized response can omit names for tags that have no Russian translation.
+  // Keep the localized article and recover only its existing tag names.
+  if (!post.data.tags.length && result.data.tags?.length) {
+    const fallback = await request(`/api/v1/content/posts/${encodeURIComponent(slug)}`, undefined, undefined, false);
+    if (fallback.ok) {
+      const original = await fallback.json() as { data: ApiPost };
+      if (original.data?.slug === result.data.slug && original.data.status === "published") {
+        post.data.tags = mapPost(original.data).data.tags;
+      }
+    }
+  }
+  return post;
 }

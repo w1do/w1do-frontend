@@ -8,7 +8,7 @@ export const GET: APIRoute = async ({ site }) => {
   const pages: SitemapPage[] = [{ path: "/blog" }];
   for (let page = 2; page <= Math.ceil(posts.length / 10); page += 1) pages.push({ path: `/blog/page/${page}` });
   pages.push(...posts.filter(post => post.data.isIndex).map(post => ({
-    path: `/blog/${encodeURIComponent(post.id)}`,
+    path: post.url,
     lastmod: post.data.modifiedDate || post.data.pubDate.toISOString(),
     changefreq: "monthly", priority: 0.7,
   })));

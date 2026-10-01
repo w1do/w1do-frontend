@@ -1,0 +1,33 @@
+---
+import type { BlogCategory } from "../../lib/server/w1do/blog-categories";
+interface Props { categories: BlogCategory[] }
+const { categories } = Astro.props;
+---
+<div class="category-grid">
+  {categories.map((category, index) => (
+    <a class="category-card" href={`/blog/categories/${category.slug}`}>
+      <div class="card-top">
+        <span class="category-number">{String(index + 1).padStart(2, "0")}</span>
+        <span class="category-arrow" aria-hidden="true"><img src="/images/arrow-primary.svg" alt="" width="20" height="20" /></span>
+      </div>
+      <h2>{category.name}</h2>
+      <p>{category.seoDescription}</p>
+      <span class="category-action">Смотреть статьи <span aria-hidden="true">↗</span></span>
+    </a>
+  ))}
+</div>
+<style>
+  .category-grid { --card-radius: 20px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+  .category-card { display: flex; flex-direction: column; padding: 32px; background: var(--secondary-color); border: 1px solid var(--dark-divider-color); border-radius: var(--card-radius); color: var(--primary-color); transition: border-color .2s, background-color .2s; }
+  .card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; }
+  .category-number { color: var(--text-color); font-size: 14px; line-height: 1.4; }
+  .category-arrow { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; background: var(--accent-color); }
+  h2 { font-size: 26px; line-height: 1.2; margin-bottom: 16px; }
+  p { color: var(--text-color); font-size: 16px; line-height: 1.6; margin-bottom: 28px; }
+  .category-action { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 20px; border-top: 1px solid var(--dark-divider-color); font-size: 15px; line-height: 1.4; color: var(--accent-color); }
+  .category-card:hover { border-color: var(--accent-color); background: var(--accent-secondary-color); }
+  .category-card:focus-visible { outline: 2px solid var(--accent-color); outline-offset: 4px; }
+  @media (max-width: 1199px) { .category-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 767px) { .category-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; } .category-card { padding: 24px; } h2 { font-size: 24px; } .card-top { margin-bottom: 24px; } }
+  @media (prefers-reduced-motion: reduce) { .category-card { transition: none; } }
+</style>

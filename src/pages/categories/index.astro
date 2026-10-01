@@ -1,27 +1,4 @@
 ---
-import Breadcrumbs from "../../components/shared/Breadcrumbs.astro";
-import Footer from "../../components/shared/Footer.astro";
-import Header from "../../components/shared/Header.astro";
-import Layout from "../../layouts/Layout.astro";
-import { getBlogCategories } from "../../lib/server/w1do/blog-categories";
-
 export const prerender = false;
-const categories = await getBlogCategories();
+return Astro.redirect(`/blog/categories${Astro.url.search}`, 301);
 ---
-<Layout>
-  <Header />
-  <Breadcrumbs title="Темы блога" breadcrumbItems={[
-    { label: "Главная", href: "/" }, { label: "Блог", href: "/blog" }, { label: "Темы", active: true },
-  ]} />
-  <main class="container category-list">
-    {categories.map(category => <article>
-      <h2><a href={`/categories/${category.slug}`}>{category.name}</a></h2>
-      <p>{category.seoDescription}</p>
-    </article>)}
-  </main>
-  <Footer />
-</Layout>
-<style>
-  .category-list { padding-top: 60px; padding-bottom: 60px; display: grid; gap: 32px; }
-  .category-list h2 { font-size: 28px; margin-bottom: 12px; }
-</style>

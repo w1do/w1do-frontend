@@ -3,9 +3,10 @@ interface Props {
     title: string;
     pubDate: string | Date;
     author?: string;
+    breadcrumbItems: { label: string; href?: string; active?: boolean }[];
 }
 
-const { title, pubDate, author = "Admin" } = Astro.props;
+const { title, pubDate, breadcrumbItems, author = "Admin" } = Astro.props;
 
 const formattedDate = new Date(pubDate).toLocaleDateString('ru-RU', {
                                             timeZone: 'Asia/Irkutsk',
@@ -22,6 +23,15 @@ const formattedDate = new Date(pubDate).toLocaleDateString('ru-RU', {
                 <!-- Page Header Box Start -->
                 <div class="page-header-box">
                     <h1 class="text-anime-style-3" data-cursor="-opaque">{title}</h1>
+                    <nav class="article-breadcrumbs" aria-label="Хлебные крошки">
+                        <ol class="breadcrumb">
+                            {breadcrumbItems.map(item => (
+                                <li class:list={["breadcrumb-item", { active: item.active }]} aria-current={item.active ? "page" : undefined}>
+                                    {item.active ? item.label : <a href={item.href}>{item.label}</a>}
+                                </li>
+                            ))}
+                        </ol>
+                    </nav>
                     <div class="post-single-meta wow fadeInUp">
                         <ol class="breadcrumb">
                             <li><i class="fa-regular fa-user"></i> {author}</li>
@@ -34,4 +44,8 @@ const formattedDate = new Date(pubDate).toLocaleDateString('ru-RU', {
         </div>
     </div>
 </div>
-<!-- Page Header Section End -->
+<!-- Page Header Section End --><style>
+    .article-breadcrumbs { margin-top: 24px; }
+    .article-breadcrumbs .breadcrumb { flex-wrap: wrap; row-gap: 8px; line-height: 1.5; }
+    .article-breadcrumbs a:focus-visible { outline: 2px solid var(--accent-color); outline-offset: 4px; }
+</style>

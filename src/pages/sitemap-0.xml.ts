@@ -9,7 +9,7 @@ export const GET: APIRoute = async ({ site }) => {
     getCmsSitemapPages(), getBlogPosts(), getCollection("landingCluster", ({ data }) => data.hub === true), getCollection("landingSpoke"),
   ]);
   const cmsPaths = new Set(cmsPages.map(page => page.path));
-  const paths = ["/", "/about", "/contact", "/services", "/pricing", "/testimonials", "/knowledge", "/blog", "/case", "/categories", "/opensource",
+  const paths = ["/", "/about", "/contact", "/services", "/pricing", "/testimonials", "/knowledge", "/blog", "/case", "/blog/categories", "/opensource",
     ...Array.from({ length: Math.max(0, Math.ceil(posts.length / 10) - 1) }, (_, index) => `/blog/page/${index + 2}`),
     ...hubs.map(hub => `/${hub.id}`),
     ...spokes.map(entry => `/${entry.data.cluster}/${entry.id.split("/").pop()}`),

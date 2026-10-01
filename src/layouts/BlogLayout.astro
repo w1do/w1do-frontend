@@ -4,6 +4,7 @@ import Header from "../components/shared/Header.astro";
 import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
 import Cta from "../components/Cta.astro";
 import Footer from "../components/shared/Footer.astro";
+import { getBlogCategories } from "../lib/server/w1do/blog-categories";
 import BlogBreadcrumbs from "../components/blog/BlogBreadcrumbs.astro";
 
 const { frontmatter } = Astro.props;
@@ -11,9 +12,12 @@ const { frontmatter } = Astro.props;
 const seoTitle = frontmatter.seo?.title || frontmatter.title;
 const seoDescription = frontmatter.seo?.description || frontmatter.description;
 
+const categoryPath = Astro.url.pathname.split("/").slice(2, -1).join("/");
+const category = categoryPath ? (await getBlogCategories()).find(item => item.slug === categoryPath) : undefined;
 const breadcrumbItems = [
     { label: "Главная", href: "/" },
     { label: "Блог", href: "/blog" },
+    ...(category ? [{ label: category.name, href: `/blog/categories/${category.slug}` }] : []),
     { label: frontmatter.title, active: true }
 ];
 
@@ -53,7 +57,7 @@ const schema = [articleSchema, breadcrumbSchema];
 
 <Layout title={seoTitle} description={seoDescription} keywords={frontmatter.tags?.join(", ")} schema={schema} type="article" image={frontmatter.image} canonical={pageUrl} robots={frontmatter.isIndex === false ? "noindex,follow" : undefined}>
     <Header/>
-    <BlogBreadcrumbs title={frontmatter.title} pubDate={frontmatter.pubDate} />
+    <BlogBreadcrumbs title={frontmatter.title} pubDate={frontmatter.pubDate} breadcrumbItems={breadcrumbItems} />
 
     <!-- Page Single Post Start -->
     <div class="page-single-post">
@@ -81,24 +85,18 @@ const schema = [articleSchema, breadcrumbSchema];
                         <!-- Post Tag Links Start -->
                         <div class="post-tag-links">
                             <div class="row align-items-center">
-                                <div class="col-lg-8">
+                                {frontmatter.tags?.length > 0 && <div class="col-lg-8">
                                     <!-- Post Tags Start -->
                                     <div class="post-tags wow fadeInUp" data-wow-delay="0.8s">
                                         <span class="tag-links">
                                             Теги:
-                                            {frontmatter.tags ? frontmatter.tags.map((tag, index) => (
+                                            {frontmatter.tags.map((tag) => (
                                                 <a href="#">{tag}</a>
-                                            )) : (
-                                                <>
-                                                    <a href="#">Искусственный интеллект</a>
-                                                    <a href="#">Автоматизация</a>
-                                                    <a href="#">Бизнес</a>
-                                                </>
-                                            )}
+                                            ))}
                                         </span>
                                     </div>
                                     <!-- Post Tags End -->
-                                </div>
+                                </div>}
 
                                 <div class="col-lg-4">
                                     <!-- Post Social Links Start -->

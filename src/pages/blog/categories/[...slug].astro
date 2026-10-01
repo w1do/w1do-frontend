@@ -1,0 +1,57 @@
+---
+import BlogList from "../../../components/blog/BlogList.astro";
+import Breadcrumbs from "../../../components/shared/Breadcrumbs.astro";
+import Footer from "../../../components/shared/Footer.astro";
+import Header from "../../../components/shared/Header.astro";
+import Layout from "../../../layouts/Layout.astro";
+import { getBlogCategories } from "../../../lib/server/w1do/blog-categories";
+import { getBlogPosts } from "../../../lib/server/w1do/blog";
+
+export const prerender = false;
+const categories = await getBlogCategories();
+const category = categories.find(item => item.slug === Astro.params.slug);
+if (!category) return Astro.rewrite("/404");
+const posts = await getBlogPosts(category.id);
+const canonical = new URL(`/blog/categories/${category.slug}`, Astro.site || "https://w1do.ru").href;
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: category.name,
+  description: category.seoDescription,
+  url: canonical,
+  mainEntity: {
+    "@type": "ItemList",
+    itemListElement: posts.map((post, index) => ({
+      "@type": "ListItem", position: index + 1,
+      name: post.data.title,
+      url: new URL(post.url, Astro.site || "https://w1do.ru").href,
+    })),
+  },
+};
+---
+<Layout title={category.seoTitle} description={category.seoDescription} keywords={category.keywords}
+  image={category.image} canonical={canonical} robots={category.isIndex ? "index,follow" : "noindex,follow"} schema={schema}>
+  <Header />
+  <Breadcrumbs title={category.name} breadcrumbItems={[
+    { label: "Главная", href: "/" }, { label: "Блог", href: "/blog" },
+    { label: category.name, active: true },
+  ]} />
+  <div class="container category-intro">
+    <div class="category-intro-panel">
+      <p>{category.seoDescription}</p>
+      <a class="btn-default" href="/blog/categories">Все темы блога</a>
+    </div>
+  </div>
+  <BlogList posts={posts} />
+  {posts.length === 0 && <p class="container">Статьи в этой категории пока не опубликованы.</p>}
+  <Footer />
+</Layout>
+<style>
+  .category-intro { --intro-radius: 20px; padding-top: 40px; }
+  .category-intro-panel { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding: 32px; border: 1px solid var(--dark-divider-color); border-radius: var(--intro-radius); background: var(--secondary-color); }
+  .category-intro p { flex: 1; max-width: 820px; margin: 0; color: var(--text-color); font-size: 18px; line-height: 1.6; }
+  .category-intro a { flex-shrink: 0; }
+  .category-intro a:focus-visible { outline: 2px solid var(--accent-color); outline-offset: 4px; }
+  @media (max-width: 991px) { .category-intro-panel { flex-direction: column; align-items: flex-start; gap: 24px; } }
+  @media (max-width: 767px) { .category-intro { padding-top: 28px; } .category-intro-panel { padding: 24px; } .category-intro p { font-size: 16px; } }
+</style>

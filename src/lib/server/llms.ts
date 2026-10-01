@@ -30,7 +30,7 @@ export async function llmsResponse(full: boolean): Promise<Response> {
   const entries = [
     ...Object.entries(pageSeo).map(([path, seo]) => ({ path, title: seo.title, description: seo.description, body: "" })),
     ...services.filter(entry => cmsPaths.has(entry.url)).map(entry => ({ path: entry.url, title: entry.title, description: entry.description, body: textContent(entry.bodyHtml) })),
-    ...posts.filter(entry => entry.data.isIndex).map(entry => ({ path: `/blog/${entry.id}`, title: entry.data.title, description: entry.data.description, body: entry.body })),
+    ...posts.filter(entry => entry.data.isIndex).map(entry => ({ path: entry.url, title: entry.data.title, description: entry.data.description, body: entry.body })),
     ...cases.map(entry => ({ path: `/case/${entry.id}`, title: entry.title, description: entry.description, body: textContent(entry.bodyHtml) })),
     ...projects.map(entry => ({ path: `/opensource/${entry.id}`, title: entry.title, description: entry.description, body: textContent(entry.bodyHtml) })),
     ...hubs.map(entry => ({ path: `/${entry.id}`, title: entry.data.title, description: entry.data.description, body: entry.body || "" })),

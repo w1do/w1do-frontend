@@ -22,7 +22,7 @@ const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
                         <!-- Post Item Button Start -->
                         <div class="post-item-btn">
-                            <a href={`/blog/${post.id}`}><img src="/images/arrow-primary.svg" alt=""></a>
+                            <a href={post.url}><img src="/images/arrow-primary.svg" alt=""></a>
                         </div>
                         <!-- Post Item Button End -->
 
@@ -30,7 +30,7 @@ const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
                         <div class="post-item-body">
                             <!-- Post Item Content Start -->
                             <div class="post-item-content">
-                                <h2><a href={`/blog/${post.id}`}>{post.data.title}</a></h2>
+                                <h2><a href={post.url}>{post.data.title}</a></h2>
                             </div>
                             <!-- Post Item Content End -->
 

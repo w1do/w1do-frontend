@@ -8,7 +8,16 @@ export const prerender = false;
 let entry;
 let failed = false;
 try {
-  entry = await getBlogPostBySlug(Astro.params.slug || "");
+  const path = Astro.params.slug || "";
+  const slug = path.split("/").pop() || "";
+  const lookupSlug = slug === "ai-agent-engineering" ? "engineering" : slug;
+  entry = await getBlogPostBySlug(lookupSlug);
+  if (entry && `/blog/${path}` !== entry.url) {
+    if (path === slug || path === "ai-agents/ai-agent-engineering") {
+      return Astro.redirect(`${entry.url}${Astro.url.search}`, 301);
+    }
+    entry = undefined;
+  }
 } catch {
   failed = true;
 }
