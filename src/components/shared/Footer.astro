@@ -1,5 +1,6 @@
 ---
 import { FOOTER_LEGAL_LINKS } from '../../lib/legal';
+import { CONTACT_EMAILS } from '../../lib/contact-emails';
 import { getServiceHubs } from '../../lib/server/w1do/services';
 
 const services = (await getServiceHubs()).map((service) => ({
@@ -89,6 +90,14 @@ const navigationLinks = [
                 </div>
             </div>
         </div>
+        <div class="footer-business-emails" aria-label="Почта для обращений">
+            {CONTACT_EMAILS.map(({ label, address }) => (
+                <div class="footer-business-email">
+                    <span>{label}</span>
+                    <a href={`mailto:${address}`} data-cursor="-opaque">{address}</a>
+                </div>
+            ))}
+        </div>
     </div>
 
     <div class="footer-copyright-prime">
@@ -126,6 +135,38 @@ const navigationLinks = [
         transition: all 0.3s ease;
     }
     .footer-legal-links a:hover { color: var(--accent-color); }
+    .footer-business-emails {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 20px 32px;
+        margin-top: 28px;
+        padding-top: 22px;
+        border-top: 1px solid var(--dark-divider-color);
+    }
+    .footer-business-email span,
+    .footer-business-email a {
+        display: block;
+    }
+    .footer-business-email span {
+        color: var(--text-color);
+        font-size: 14px;
+        margin-bottom: 4px;
+    }
+    .footer-business-email a {
+        color: var(--primary-color);
+        font-size: 16px;
+        font-weight: 600;
+        overflow-wrap: anywhere;
+        transition: color 0.3s ease;
+    }
+    .footer-business-email a:hover { color: var(--accent-color); }
+
+    @media (max-width: 767px) {
+        .footer-business-emails {
+            grid-template-columns: 1fr;
+            gap: 14px;
+        }
+    }
 </style>
 
 <script>

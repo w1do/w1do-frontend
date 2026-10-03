@@ -4,8 +4,9 @@ import Header from "../components/shared/Header.astro";
 import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
 import Footer from "../components/shared/Footer.astro";
 import ContactForm from "../components/contact/ContactForm.tsx";
+import { CONTACT_EMAILS } from "../lib/contact-emails";
 ---
-<Layout 
+<Layout
     title="Контакты | Инженер по AI автоматизации"
     description="Свяжитесь со мной для обсуждения вашего проекта по внедрению ИИ и автоматизации бизнеса. Нахожусь в Тюмени, работаю по всему миру."
     keywords="контакты, заказать AI автоматизацию, Тюмень, разработка ИИ, внедрение нейросетей"
@@ -30,6 +31,18 @@ import ContactForm from "../components/contact/ContactForm.tsx";
                                 <h2 class="text-anime-style-3" data-cursor="-opaque">Давайте воплотим ваши идеи в реальность</h2>
                             </div>
                             <!-- Section Title Start -->
+
+                            <section class="contact-email-section" aria-labelledby="contact-email-title">
+                                <h3 id="contact-email-title">Почта для обращений</h3>
+                                <ul class="contact-email-list">
+                                    {CONTACT_EMAILS.map(({ label, address }) => (
+                                        <li>
+                                            <span>{label}</span>
+                                            <a href={`mailto:${address}`}>{address}</a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </section>
 
                             <!-- Contact Ticker Box Start -->
                             <div class="contact-ticker-box">
@@ -119,6 +132,47 @@ import ContactForm from "../components/contact/ContactForm.tsx";
     <Footer/>
 </Layout>
     <style>
+        .contact-email-section h3 {
+            color: var(--primary-color);
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0 0 16px;
+        }
+
+        .contact-email-list {
+            display: grid;
+            gap: 12px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .contact-email-list li {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 12px 16px;
+            border: 1px solid var(--dark-divider-color);
+            border-radius: 10px;
+        }
+
+        .contact-email-list li span {
+            color: var(--text-color);
+            font-size: 14px;
+        }
+
+        .contact-email-list li a {
+            color: var(--primary-color);
+            font-weight: 600;
+            overflow-wrap: anywhere;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .contact-email-list li a:hover {
+            color: var(--accent-color);
+        }
+
         .scrolling-content img {
             filter: brightness(0) invert(1);
             max-height: 40px;

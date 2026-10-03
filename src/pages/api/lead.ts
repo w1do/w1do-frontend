@@ -1,6 +1,5 @@
 import type { APIRoute } from "astro";
 import { LEADS_API_BASE_URL, LEADS_API_KEY } from "astro:env/server";
-import { LEGAL_DOCS } from "../../lib/legal";
 
 export const prerender = false;
 
@@ -68,16 +67,12 @@ export const POST: APIRoute = async ({ request }) => {
         return json({ ok: false, message: GENERIC_ERROR }, 500);
     }
 
-    const payload = body.payload && typeof body.payload === "object" && !Array.isArray(body.payload)
+    const requestPayload = body.payload && typeof body.payload === "object" && !Array.isArray(body.payload)
         ? { ...(body.payload as Record<string, unknown>) }
         : {};
-
-    payload.legal = {
-        consent: true,
-        accepted_at: new Date().toISOString(),
-        documents: Object.fromEntries(Object.entries(LEGAL_DOCS).map(([key, doc]) => [key, doc.href])),
-    };
-
+    const payload = Object.fromEntries(
+        Object.entries(requestPayload).filter((entry): entry is [string, string] => typeof entry[1] === "string"),
+    );
     const leadPayload: Record<string, unknown> = {
         phone,
         subject: asText(body.subject) || `Заявка с сайта: ${name}`,

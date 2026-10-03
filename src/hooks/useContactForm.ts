@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { LEGAL_CONSENT_VALUE, LEGAL_DOCS } from "../lib/legal";
+import { LEGAL_CONSENT_VALUE } from "../lib/legal";
 
 export interface UseContactFormOptions {
     /** Which form the lead came from, e.g. "contact-page" or "cta-block". */
@@ -84,10 +84,6 @@ export function useContactForm({ source }: UseContactFormOptions) {
         }
 
         const payload = collectPayload();
-        payload.legalConsent = LEGAL_CONSENT_VALUE;
-        payload.legalDocuments = Object.fromEntries(
-            Object.entries(LEGAL_DOCS).map(([key, doc]) => [key, doc.href]),
-        );
 
         const body: Record<string, unknown> = {
             name,
