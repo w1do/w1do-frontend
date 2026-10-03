@@ -23,12 +23,53 @@ try {
 }
 if (!entry) Astro.response.status = failed ? 502 : 404;
 const processor = entry ? await createMarkdownProcessor() : undefined;
-const bodyHtml = entry && processor ? (await processor.render(entry.body)).code : "";
+let bodyHtml = entry && processor ? (await processor.render(entry.body)).code : "";
+const sections = new Map<string, { id: string; title: string }>();
+if (entry) {
+  for (const block of entry.blocks) {
+    if (!sections.has(block.title.trim())) sections.set(block.title.trim(), {
+      id: `section-${block.id.toLowerCase().replace(/[^a-z0-9-]/g, "")}`,
+      title: block.title.trim(),
+    });
+  }
+  const linkedSections = new Set<string>();
+  bodyHtml = bodyHtml.replace(/<(h[2-6])\b([^>]*)>([\s\S]*?)<\/\1>/gi, (heading, tag, attributes, content) => {
+    const title = content.replace(/<[^>]*>/g, "").replace(/&nbsp;/g, " ").trim();
+    const section = sections.get(title);
+    if (!section || linkedSections.has(section.id)) return heading;
+    linkedSections.add(section.id);
+    const cleanAttributes = attributes.replace(/\s+id=(?:"[^"]*"|'[^']*'|[^\s>]+)/i, "");
+    return `<${tag}${cleanAttributes} id="${section.id}">${content}</${tag}>`;
+  });
+  for (const [title, section] of sections) {
+    if (!linkedSections.has(section.id)) sections.delete(title);
+  }
+}
 ---
 
 {entry ? (
   <BlogLayout frontmatter={entry.data}>
+    {sections.size > 0 && (
+      <nav class="article-toc" aria-label="Содержание статьи">
+        <p class="article-toc__title">Содержание</p>
+        <ul>
+          {[...sections.values()].map(section => (
+            <li><a href={`#${section.id}`}>{section.title}</a></li>
+          ))}
+        </ul>
+      </nav>
+    )}
     <div set:html={bodyHtml} />
+    <style>
+      .article-toc { margin: 0 0 36px; }
+      .article-toc__title { margin: 0 0 8px; color: var(--white-color); font-weight: 700; }
+      .article-toc ul { margin: 0; padding-left: 22px; }
+      .article-toc li { padding-left: 2px; color: var(--text-color); }
+      .article-toc a { color: var(--accent-color); line-height: 1.6; text-decoration: underline; text-decoration-color: currentColor; text-underline-offset: 3px; transition: color .2s ease, text-decoration-thickness .2s ease; }
+      .article-toc a:hover, .article-toc a:focus-visible { color: var(--white-color); text-decoration-thickness: 2px; }
+      :global(.post-entry h2[id], .post-entry h3[id], .post-entry h4[id], .post-entry h5[id], .post-entry h6[id]) { scroll-margin-top: 110px; }
+      @media (max-width: 767px) { .article-toc { margin-bottom: 28px; } }
+    </style>
   </BlogLayout>
 ) : (
   <Layout title={failed ? "Блог временно недоступен" : "Статья не найдена"} robots="noindex,follow">

@@ -6,6 +6,7 @@ interface ApiPost {
   url: string;
   title: string;
   body: string | null;
+  blocks?: Array<{ id: string; title: string; markdown: string }>;
   status: string;
   published_at: string;
   is_index: boolean;
@@ -18,6 +19,7 @@ export interface BlogPost {
   id: string;
   url: string;
   body: string;
+  blocks: Array<{ id: string; title: string; markdown: string }>;
   data: {
     title: string;
     description: string;
@@ -42,6 +44,9 @@ function mapPost(post: ApiPost): BlogPost {
     id: post.slug,
     url: url.pathname,
     body: post.body || "",
+    blocks: Array.isArray(post.blocks) ? post.blocks.filter(block =>
+      block && typeof block.id === "string" && typeof block.title === "string" && typeof block.markdown === "string"
+    ) : [],
     data: {
       title: post.title,
       description,
