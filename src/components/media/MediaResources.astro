@@ -1,0 +1,149 @@
+---
+import { MEDIA_RESOURCES, MEDIA_SECTION, type MediaResource } from "../../lib/media-resources";
+
+interface Props {
+    subTitle?: string;
+    title?: string;
+    description?: string;
+    counterValue?: string;
+    counterDesc?: string;
+    resources?: readonly MediaResource[];
+}
+
+const {
+    subTitle = MEDIA_SECTION.subTitle,
+    title = MEDIA_SECTION.title,
+    description = MEDIA_SECTION.description,
+    counterValue = MEDIA_SECTION.counterValue,
+    counterDesc = MEDIA_SECTION.counterDesc,
+    resources = MEDIA_RESOURCES,
+} = Astro.props;
+---
+<!-- Media Resources Section Start -->
+<div class='our-awards-prime bg-section'>
+    <div class='container'>
+        <div class='row'>
+            <div class='col-xl-6'>
+                <div class='awards-content-prime'>
+                    <div class='section-title'>
+                        <span class='section-sub-title wow fadeInUp'>{subTitle}</span>
+                        <h2 class='text-anime-style-3' data-cursor='-opaque'>{title}</h2>
+                        <p class='wow fadeInUp' data-wow-delay='0.2s'>{description}</p>
+                    </div>
+
+                    <div class='awards-counter-box-prime wow fadeInUp'>
+                        <h2><span class='counter'>{counterValue}</span></h2>
+                        <p>{counterDesc}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class='col-xl-6'>
+                <div class='awards-item-list-prime box-border-gradiant'>
+                    {resources.map((resource, index) => (
+                        <a
+                            class='awards-item-prime media-resource-item wow fadeInUp'
+                            data-wow-delay={index > 0 ? `${index * 0.2}s` : undefined}
+                            href={resource.href}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            data-cursor='-opaque'
+                        >
+                            <div class='awards-item-body-prime'>
+                                <div class='icon-box'>
+                                    <img src={resource.icon} alt='' width='80' height='80' loading='lazy' style='width: 80px; height: 80px; filter: brightness(0) invert(1);'>
+                                </div>
+                                <div class='awards-item-content-prime'>
+                                    <h3>{resource.title}</h3>
+                                    <p>{resource.description}</p>
+                                </div>
+                            </div>
+                            <div class='awards-item-year-prime'>
+                                <h3>{resource.label}</h3>
+                            </div>
+                        </a>
+                    ))}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Media Resources Section End -->
+
+<style>
+    .our-awards-prime { margin-bottom: 60px; }
+
+    .media-resource-item,
+    .media-resource-item:hover {
+        position: relative;
+        color: var(--text-color);
+    }
+
+    .media-resource-item:focus-visible {
+        outline: 2px solid var(--accent-color);
+        outline-offset: 8px;
+        border-radius: 4px;
+    }
+
+    .awards-item-year-prime h3 {
+        font-size: 32px !important;
+    }
+
+    @media only screen and (max-width: 767px) {
+        .awards-counter-box-prime {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .media-resource-item {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .media-resource-item .awards-item-body-prime {
+            width: 100%;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .media-resource-item .awards-item-body-prime .icon-box img {
+            width: 40px !important;
+            height: 40px !important;
+        }
+
+        .media-resource-item .awards-item-content-prime {
+            width: 100%;
+        }
+
+        .media-resource-item .awards-item-year-prime {
+            width: 100%;
+        }
+
+        .media-resource-item .awards-item-year-prime h3 {
+            font-size: 24px !important;
+            line-height: 1;
+        }
+    }
+
+    @media only screen and (min-width: 768px) {
+        .media-resource-item .awards-item-body-prime {
+            width: 100%;
+        }
+
+        .media-resource-item .awards-item-content-prime {
+            width: calc(100% - 80px);
+        }
+
+        .media-resource-item .awards-item-year-prime {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: auto;
+        }
+
+        .media-resource-item .awards-item-year-prime h3 {
+            line-height: 1;
+        }
+    }
+</style>

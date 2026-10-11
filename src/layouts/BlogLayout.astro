@@ -164,6 +164,24 @@ const schema = [articleSchema, breadcrumbSchema];
         color: var(--black-color) !important;
     }
 
+    .entry-content :global(figure) {
+        margin: 36px 0;
+    }
+
+    .entry-content :global(figure img) {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 16px;
+    }
+
+    .entry-content :global(figcaption) {
+        margin-top: 12px;
+        color: var(--text-color);
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
     /* Table Styles */
     .entry-content :global(table) {
         width: 100%;
@@ -205,6 +223,9 @@ const schema = [articleSchema, breadcrumbSchema];
     }
 
     @media (max-width: 767px) {
+        .entry-content :global(figure) {
+            margin: 28px 0;
+        }
         .entry-content :global(table) {
             display: block;
             overflow-x: auto;
