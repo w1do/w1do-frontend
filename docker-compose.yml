@@ -8,8 +8,6 @@ services:
         # Unset = production CDN (https://w1do.ru). Set to empty for local testing (same-origin assets).
         ASSETS_PREFIX: ${ASSETS_PREFIX-https://w1do.ru}
     restart: unless-stopped
-    env_file:
-      - .env
     environment:
       REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379
     ports:
