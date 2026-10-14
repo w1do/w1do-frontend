@@ -15,6 +15,11 @@ export default defineConfig({
       LEADS_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
       LEADS_API_BASE_URL: envField.string({ context: 'server', access: 'secret', optional: true }),
       W1DO_DEFAULT_CITY: envField.string({ context: 'server', access: 'secret', default: 'moscow' }),
+      POLZA_AI_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
+      POLZA_AI_MODEL: envField.string({ context: 'server', access: 'secret', default: 'openai/gpt-4o-mini' }),
+      REDIS_URL: envField.string({ context: 'server', access: 'secret', optional: true }),
+      TRUSTED_PROXY_HOPS: envField.number({ context: 'server', access: 'secret', default: 0 }),
+      CHAT_LEAD_HASH_SECRET: envField.string({ context: 'server', access: 'secret', optional: true }),
     },
   },
   output: 'server',
@@ -27,7 +32,8 @@ export default defineConfig({
   build: {
     assets: '_astro',
     inlineStylesheets: 'auto',
-    assetsPrefix: 'https://w1do.ru'
+    // Empty ASSETS_PREFIX serves assets from the same origin (local compose); default is the production CDN.
+    assetsPrefix: process.env.ASSETS_PREFIX ?? 'https://w1do.ru'
   },
   vite: {
     build: {
