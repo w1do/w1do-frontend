@@ -12,7 +12,7 @@ const DEFAULT_ENDPOINT = "/api/lead";
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"] as const;
 
-function collectPayload(): Record<string, unknown> {
+export function collectPayload(): Record<string, unknown> {
     const payload: Record<string, unknown> = {};
 
     if (typeof window === "undefined") {

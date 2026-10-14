@@ -1,0 +1,36 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/shared/Header.astro";
+import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
+import Footer from "../components/shared/Footer.astro";
+import AiChat from "../components/chat/AiChat.tsx";
+---
+<Layout
+    title="ИИ-консультант W1DO: вопросы об услугах и заказе"
+    description="Задайте вопрос ИИ-консультанту W1DO об услугах, сроках и порядке работы. Чтобы заказать разработку, консультант даст ссылку на форму заявки."
+    robots="index, follow"
+>
+    <Header/>
+    <Breadcrumbs title="ИИ-консультант" breadcrumbItems={[
+        { label: "Главная", href: "/" },
+        { label: "ИИ-консультант", active: true }
+    ]}/>
+    <div class="page-ai-chat">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title section-title-center">
+                        <span class="section-sub-title">Онлайн-консультация</span>
+                        <h2>Спросите ИИ-консультанта</h2>
+                        <p>Консультант отвечает по каталогу услуг W1DO и частым вопросам.</p>
+                    </div>
+                    <AiChat client:load variant="page" source="chat-page" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <Footer/>
+</Layout>
+<style is:global>
+    .page-ai-chat { padding: 40px 0 100px; }
+</style>

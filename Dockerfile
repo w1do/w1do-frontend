@@ -12,6 +12,8 @@ FROM base AS build-deps
 RUN npm ci || npm ci
 
 FROM build-deps AS build
+ARG ASSETS_PREFIX=https://w1do.ru
+ENV ASSETS_PREFIX=$ASSETS_PREFIX
 COPY . .
 RUN npm run build
 

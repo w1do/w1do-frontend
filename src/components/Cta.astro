@@ -1,5 +1,5 @@
 ---
-import CtaForm from "./cta/CtaForm";
+import ChatWidget from "./chat/ChatWidget";
 
 interface Props {
     subTitle?: string;
@@ -38,7 +38,7 @@ const {
             </div>
 
             <div class="col-xl-6">
-                <CtaForm client:load title={formTitle} />
+                <ChatWidget client:load title={formTitle} />
             </div>
         </div>
     </div>
