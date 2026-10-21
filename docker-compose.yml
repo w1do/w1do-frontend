@@ -17,6 +17,9 @@ services:
       POLZA_AI_MODEL: ${POLZA_AI_MODEL:-openai/gpt-4o-mini}
       TRUSTED_PROXY_HOPS: ${TRUSTED_PROXY_HOPS:-0}
       CHAT_LEAD_HASH_SECRET: ${CHAT_LEAD_HASH_SECRET:-}
+      RAG_API_URL: ${RAG_API_URL:-}
+      RAG_API_KEY: ${RAG_API_KEY:-}
+      RAG_PROJECT_ID: ${RAG_PROJECT_ID:-}
     ports:
       - "127.0.0.1:4380:4321"
     depends_on:

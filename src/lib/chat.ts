@@ -5,7 +5,7 @@ export interface ChatMessage {
     content: string;
 }
 
-export type ChatSource = "chat-page" | "chat-widget";
+export type ChatSource = "chat-page" | "chat-widget" | "chat-popup";
 export type ChatLeadStatus = "sent" | "duplicate" | "invalid" | "limited" | "failed";
 
 export interface ChatLeadDraft {

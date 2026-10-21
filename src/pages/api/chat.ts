@@ -6,6 +6,8 @@ import {
 } from "../../lib/chat";
 import { createPolzaCompletion, type PolzaFailure } from "../../lib/server/polza/chat";
 import { buildSystemPrompt } from "../../lib/server/chat/system-prompt";
+import { fetchRagContext } from "../../lib/server/rag/context";
+import { buildRagQuery } from "../../lib/server/rag/query";
 import { checkRateLimit, clientKeyFrom } from "../../lib/server/chat/rate-limit";
 import { INVALID_REQUEST, readBoundedText, readChatId, readUserMessage } from "../../lib/server/chat/chat-request";
 import {
@@ -45,7 +47,8 @@ async function runTurn(kv: ChatKv, chatId: string, text: string, wantsConsent: b
     const consentAccepted = isConsentValid(state, now, CHAT_CONSENT_VERSION);
     const history: ChatMessage[] = [...state.messages, { role: "user", content: text }];
 
-    const systemPrompt = await buildSystemPrompt({ consentAccepted, leadSent: state.leadSent });
+    const rag = await fetchRagContext(buildRagQuery(history));
+    const systemPrompt = buildSystemPrompt({ consentAccepted, leadSent: state.leadSent }, rag);
     const result = await createPolzaCompletion([
         { role: "system", content: systemPrompt },
         ...history.slice(-CHAT_MAX_HISTORY),
