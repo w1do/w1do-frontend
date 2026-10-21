@@ -34,3 +34,4 @@ SUMMARY.md
 
 # Local MCP configuration contains project credentials
 .codex/config.toml
+.memory/

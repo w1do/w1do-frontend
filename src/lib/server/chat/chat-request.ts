@@ -8,6 +8,8 @@ export const TOO_LONG = `Сообщение слишком длинное: до 
 // UTF-8 uses at most 4 bytes per character, so this cap never rejects a body that fits CHAT_MAX_BODY_CHARS.
 const MAX_BODY_BYTES = CHAT_MAX_BODY_CHARS * 4;
 
+const CHAT_SOURCES: readonly ChatSource[] = ["chat-page", "chat-widget", "chat-popup"];
+
 const ATTRIBUTION_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "page", "referrer"];
 
 export interface LeadRequestContext {
@@ -66,7 +68,7 @@ export function readLeadRequestContext(body: any): LeadRequestContext {
     }
 
     return {
-        source: body?.source === "chat-widget" ? "chat-widget" : "chat-page",
+        source: CHAT_SOURCES.includes(body?.source) ? body.source : "chat-page",
         attribution,
         honeypot: typeof body?.max === "string" ? body.max.trim() : "",
     };
