@@ -1,5 +1,4 @@
 ---
-import { Image } from 'astro:assets';
 
 interface Props {
     title?: string;
@@ -11,32 +10,23 @@ const {
     description = "Разработка ИИ-агентов, автоматизация бизнеса и внедрение нейросетей."
 } = Astro.props;
 ---
-<!-- Hero Section Start -->
 <div class="hero-prime">
-    <!-- Video Start -->
     <div class="hero-bg-video-prime">
-        <!-- Selfhosted Video Start -->
-        <!-- <video autoplay muted loop id="herovideo"><source src="/images/hero-bg-video.mp4" type="video/mp4"></video> -->
         <video autoplay="" muted="" playsinline="" loop="" id="myvideo" preload="metadata"><source src="/videos/hero.mp4" type="video/mp4"></video>
-        <!-- Selfhosted Video End -->
-
-        <!-- Youtube Video Start -->
-        <!-- <div id="herovideo" class="player" data-property="{videoURL:'OjTRVpgtcG4',containment:'.hero-video', showControls:false, autoPlay:true, loop:true, vol:0, mute:false, startAt:0,  stopAt:296, opacity:1, addRaster:true, quality:'large', optimizeDisplay:true}"></div> -->
-        <!-- Youtube Video End -->
     </div>
-    <!-- Video End -->
 
     <div class="container">
         <div class="row">
             <div class="col-xl-12">
                 <!-- Hero Content Box Start -->
                 <div class="hero-content-box-prime">
-                    <!-- Hero Sub Heading Start -->
-                    <a href="/chat" data-open-chat aria-haspopup="dialog" class="hero-sub-heading-prime hero-assistant-notice wow fadeInUp">
+                    <div class="hero-sub-heading-prime hero-assistant-notice wow fadeInUp">
                         <img src="/images/assistant-robot.svg" alt="" aria-hidden="true" width="44" height="44">
                         <span>Заявки принимаются только через ИИ ассистента</span>
-                    </a>
-                    <!-- Hero Sub Heading End -->
+                        <a href="/chat" data-open-chat aria-haspopup="dialog" aria-label="Открыть ИИ ассистента" class="hero-assistant-notice__button">
+                            <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+                        </a>
+                    </div>
 
                     <!-- Section Title Start -->
                     <div class="section-title">
@@ -99,12 +89,13 @@ const {
         </div>
     </div>
 </div>
-<!-- Hero Section End -->
 
 <style>
     .hero-assistant-notice {
+        position: relative;
+        isolation: isolate;
         width: min(720px, 100%);
-        justify-content: center;
+        justify-content: space-between;
         min-height: 58px;
         padding: 8px 22px;
         color: var(--white-color);
@@ -113,11 +104,36 @@ const {
         line-height: 1.5;
         text-align: left;
     }
-    .hero-assistant-notice:hover { color: var(--white-color); }
-    .hero-assistant-notice:focus-visible {
-        outline: 2px solid var(--accent-color);
-        outline-offset: 4px;
+    .hero-assistant-notice > span { flex: 1; min-width: 0; font-size: 18px; text-align: center; }
+    .hero-assistant-notice__button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 42px;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: var(--accent-color);
+        color: #101010;
+        font-size: 18px;
     }
+    .hero-assistant-notice__button:hover { color: #101010; }
+    .hero-assistant-notice__button:focus-visible { outline: 2px solid white; outline-offset: 3px; }
+    @property --assistant-border-angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+    .hero-assistant-notice::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 2px;
+        background: conic-gradient(from var(--assistant-border-angle), #cff85e, #66dfcf, #9daeff, #cff85e);
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask-composite: exclude;
+        pointer-events: none;
+        animation: assistant-border-flow 8s linear infinite;
+    }
+    @keyframes assistant-border-flow { to { --assistant-border-angle: 360deg; } }
+    @media (prefers-reduced-motion: reduce) { .hero-assistant-notice::before { animation: none; } }
     .hero-assistant-notice img {
         flex: 0 0 42px;
         width: 42px;
@@ -126,6 +142,8 @@ const {
         filter: brightness(0) invert(1);
     }
     @media (max-width: 767px) {
-        .hero-assistant-notice { gap: 12px; padding: 8px 14px; font-size: 15px; }
+        .hero-assistant-notice { gap: 10px; padding: 8px 14px; }
+        .hero-assistant-notice > span { font-size: 15px; text-align: left; }
+        .hero-assistant-notice__button { flex-basis: 36px; width: 36px; height: 36px; }
     }
 </style>
