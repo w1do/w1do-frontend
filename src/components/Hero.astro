@@ -9,6 +9,30 @@ const {
     title = "Разработка ИИ-агентов для бизнеса",
     description = "Проектируем и внедряем ИИ-агентов для работы с заявками, клиентами, документами и внутренними процессами. Интегрируем с CRM, ERP, мессенджерами и вашими данными."
 } = Astro.props;
+
+const services = [
+    {
+        title: "Инфраструктура для ИИ",
+        description: "Разворачиваем и масштабируем надёжную инфраструктуру под ваши ИИ-задачи.",
+        image: "/images/hero-service-infrastructure.webp",
+        previousPrice: "от 80 000 ₽",
+        price: "от 59 000 ₽"
+    },
+    {
+        title: "Настройка Claude Code",
+        description: "Интегрируем и настраиваем Claude Code под ваши процессы и команду.",
+        image: "/images/hero-service-claude-code.webp",
+        previousPrice: "от 45 000 ₽",
+        price: "от 35 000 ₽"
+    },
+    {
+        title: "ИИ-агенты для бизнеса",
+        description: "Создаём автономных ИИ-агентов, которые берут на себя рутину и приносят результат.",
+        image: "/images/hero-service-ai-agents.webp",
+        previousPrice: "от 120 000 ₽",
+        price: "от 89 000 ₽"
+    }
+];
 ---
 <div class="hero-prime">
     <div class="hero-bg-video-prime">
@@ -35,30 +59,29 @@ const {
                     </div>
                     <!-- Section Title End -->
 
-                    <!-- Hero Content Counter Box Start -->
-                    <div class="hero-content-counter-box-prime">
-                        <!-- Hero Counter Box Start -->
-                        <div class="hero-counter-box-prime">
-                            <h2><span class="counter">95</span>%</h2>
-                            <p>Уровень удовлетворенности</p>
-                        </div>
-                        <!-- Hero Counter Box End -->
-
-                        <!-- Hero Counter Box Start -->
-                        <div class="hero-counter-box-prime">
-                            <h2><span class="counter">12</span>+ лет</h2>
-                            <p>Опыта в разработке и автоматизации</p>
-                        </div>
-                        <!-- Hero Counter Box End -->
-
-                        <!-- Hero Counter Box Start -->
-                        <div class="hero-counter-box-prime">
-                            <h2><span class="counter">250</span>+</h2>
-                            <p>Реализованных проектов</p>
-                        </div>
-                        <!-- Hero Counter Box End -->
+                    <!-- Hero Services Start -->
+                    <div class="hero-content-counter-box-prime hero-services">
+                        {services.map((service) => (
+                            <article class="hero-service">
+                                <img class="hero-service__image" src={service.image} alt="" width="960" height="640" loading="eager" decoding="async" />
+                                <div class="hero-service__body">
+                                    <h2>{service.title}</h2>
+                                    <p class="hero-service__description">{service.description}</p>
+                                    <div class="hero-service__prices">
+                                        <span class="hero-service__sr-only">Прежняя стоимость: </span>
+                                        <del>{service.previousPrice}</del>
+                                        <span class="hero-service__sr-only">Текущая стоимость: </span>
+                                        <strong>{service.price}</strong>
+                                    </div>
+                                    <a href="/chat" data-open-chat aria-haspopup="dialog" aria-label={`Обсудить услугу «${service.title}»`} class="hero-service__button">
+                                        <span>Обсудить</span>
+                                        <span class="hero-service__arrow" aria-hidden="true">→</span>
+                                    </a>
+                                </div>
+                            </article>
+                        ))}
                     </div>
-                    <!-- Hero Content Counter Box End -->
+                    <!-- Hero Services End -->
 
                     <!-- Hero Footer Start -->
                     <div class="hero-footer-prime wow fadeInUp" data-wow-delay="0.2s">
@@ -91,6 +114,137 @@ const {
 </div>
 
 <style>
+    .hero-services {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        width: 100%;
+        max-width: none;
+        gap: 20px;
+        align-items: stretch;
+        text-align: left;
+    }
+    .hero-service {
+        position: relative;
+        isolation: isolate;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        padding: 12px;
+        border: 1px solid rgba(255, 255, 255, .18);
+        border-radius: 24px;
+        background: linear-gradient(145deg, rgba(255, 255, 255, .055), transparent 42%), rgba(20, 20, 20, .58);
+        -webkit-backdrop-filter: blur(16px);
+        backdrop-filter: blur(16px);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 18px 42px rgba(0, 0, 0, .15);
+        transition: border-color .25s ease, box-shadow .25s ease;
+    }
+    .hero-service__image {
+        display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1.75;
+        object-fit: cover;
+        border-radius: 16px;
+    }
+    .hero-service__body {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        padding: 24px 4px 12px;
+    }
+    .hero-service h2 {
+        margin: 0 0 14px;
+        color: #fff;
+        font-size: 26px;
+        line-height: 1.22;
+        font-weight: 600;
+        letter-spacing: -.02em;
+    }
+    .hero-service__description {
+        margin: 0 0 26px;
+        color: #d5d5d5;
+        font-family: var(--default-font), sans-serif;
+        font-size: 15px;
+        line-height: 1.6;
+    }
+    .hero-service__prices {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        margin-top: auto;
+        margin-bottom: 22px;
+    }
+    .hero-service__prices del {
+        color: #c0c0c0;
+        font-size: 16px;
+        line-height: 1.5;
+        text-decoration-thickness: 1px;
+    }
+    .hero-service__prices strong {
+        color: #cff85e;
+        font-size: 28px;
+        font-weight: 700;
+        line-height: 1.25;
+        letter-spacing: -.02em;
+    }
+    .hero-service__button {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        width: 100%;
+        min-height: 52px;
+        padding: 13px 18px;
+        border: 1px solid rgba(255, 255, 255, .24);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, .045);
+        color: #fff;
+        font-size: 16px;
+        line-height: 1.5;
+        font-weight: 600;
+        transition: border-color .25s ease, background-color .25s ease, color .25s ease;
+    }
+    .hero-service__arrow { font-size: 22px; line-height: 1; }
+    .hero-service__button:focus-visible {
+        outline: 2px solid #cff85e;
+        outline-offset: 4px;
+        border-color: #cff85e;
+        color: #cff85e;
+    }
+    .hero-service:has(.hero-service__button:focus-visible) { border-color: rgba(207, 248, 94, .55); }
+    .hero-service__sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+    }
+    @media (hover: hover) and (pointer: fine) {
+        .hero-service:hover {
+            border-color: rgba(207, 248, 94, .48);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 18px 42px rgba(0, 0, 0, .15), 0 0 24px rgba(207, 248, 94, .06);
+        }
+        .hero-service__button:hover {
+            border-color: rgba(207, 248, 94, .55);
+            background: rgba(207, 248, 94, .08);
+            color: #cff85e;
+        }
+    }
+    @media (max-width: 1023px) {
+        .hero-services { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 640px) {
+        .hero-services { grid-template-columns: minmax(0, 1fr); }
+        .hero-service__body { padding: 22px 10px 10px; }
+        .hero-service h2 { font-size: 25px; }
+        .hero-service__description { font-size: 16px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .hero-service, .hero-service__button { transition: none; }
+    }
     .hero-assistant-notice {
         position: relative;
         isolation: isolate;
