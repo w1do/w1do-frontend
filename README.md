@@ -94,7 +94,7 @@ LEADS_API_KEY=pk_live_… node ./dist/server/entry.mjs
 Страница `/chat` (`src/pages/chat.astro`, React-остров `src/components/chat/AiChat.tsx`) даёт
 посетителю диалог с ИИ-консультантом. Ответы строятся моделью `openai/gpt-4o-mini` через PolzaAI.
 Знания для промпта берутся из услуг W1DO (`getServices()`, включая FAQ). Для заказа консультант
-направляет на `/contact`. Ссылка на `/chat` в шапке и подвале сайта не выводится.
+направляет на `/contact`. Кнопки «Обсудить проект», «Связаться» и обращение в футере открывают всплывающий чат ассистента и переводят фокус в поле ввода. Без JavaScript ссылка ведёт на `/chat`.
 
 Страница индексируется: `robots` = `index, follow`, SEO берётся из `pageSeo["/chat"]` в
 `src/lib/seo.ts`, адрес входит в `sitemap-0.xml`.

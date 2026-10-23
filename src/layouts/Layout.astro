@@ -164,7 +164,7 @@ const showChatPopup = pagePath.replace(/\/+$/, "") !== "/chat";
 <body>
 <slot/>
 <CookieNotice/>
-{showChatPopup && <ChatPopup client:idle />}
+{showChatPopup && <ChatPopup client:load />}
 
 <!-- Jquery Library File -->
 <script src="/js/jquery-3.7.1.min.js" is:inline></script>

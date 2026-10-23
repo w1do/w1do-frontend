@@ -32,38 +32,10 @@ const {
                 <!-- Hero Content Box Start -->
                 <div class="hero-content-box-prime">
                     <!-- Hero Sub Heading Start -->
-                    <div class="hero-sub-heading-prime wow fadeInUp">
-                        <!-- Satisfy Client Images Start -->
-                        <div class="satisfy-client-images">
-                            <div class="satisfy-client-image">
-                                <figure class="image-anime">
-                                    <img src="/images/author-1.jpg" alt="Разработчик ИИ Денис анализирует код">
-                                </figure>
-                            </div>
-                            <div class="satisfy-client-image">
-                                <figure class="image-anime">
-                                    <img src="/images/author-2.jpg" alt="Интеграция ИИ в CRM систему">
-                                </figure>
-                            </div>
-                            <div class="satisfy-client-image">
-                                <figure class="image-anime">
-                                    <img src="/images/author-3.jpg" alt="Нейросеть обрабатывает данные бизнеса">
-                                </figure>
-                            </div>
-                            <div class="satisfy-client-image">
-                                <figure class="image-anime">
-                                    <img src="/images/author-4.jpg" alt="Автоматизация процессов через ИИ-агентов">
-                                </figure>
-                            </div>
-                        </div>
-                        <!-- Satisfy Client Images End -->
-
-                        <!-- Satisfy Client Content Start -->
-                        <div class="hero-satisfy-client-content-prime">
-                            <p>Клиенты, которые уже автоматизировали процессы</p>
-                        </div>
-                        <!-- Satisfy Client Content End -->
-                    </div>
+                    <a href="/chat" data-open-chat aria-haspopup="dialog" class="hero-sub-heading-prime hero-assistant-notice wow fadeInUp">
+                        <img src="/images/assistant-robot.svg" alt="" aria-hidden="true" width="44" height="44">
+                        <span>Заявки принимаются только через ИИ ассистента</span>
+                    </a>
                     <!-- Hero Sub Heading End -->
 
                     <!-- Section Title Start -->
@@ -102,7 +74,7 @@ const {
                     <div class="hero-footer-prime wow fadeInUp" data-wow-delay="0.2s">
                         <!-- Hero Button Start -->
                         <div class="hero-btn-prime">
-                            <a href={import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1DO_DIGITAL"} class="btn-default" data-cursor="-opaque">Начать автоматизацию</a>
+                            <a href="/chat" data-open-chat aria-haspopup="dialog" class="btn-default" data-cursor="-opaque">Обсудить проект</a>
                         </div>
                         <!-- Hero Button End -->
 
@@ -128,3 +100,32 @@ const {
     </div>
 </div>
 <!-- Hero Section End -->
+
+<style>
+    .hero-assistant-notice {
+        width: min(720px, 100%);
+        justify-content: center;
+        min-height: 58px;
+        padding: 8px 22px;
+        color: var(--white-color);
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.5;
+        text-align: left;
+    }
+    .hero-assistant-notice:hover { color: var(--white-color); }
+    .hero-assistant-notice:focus-visible {
+        outline: 2px solid var(--accent-color);
+        outline-offset: 4px;
+    }
+    .hero-assistant-notice img {
+        flex: 0 0 42px;
+        width: 42px;
+        height: 42px;
+        object-fit: contain;
+        filter: brightness(0) invert(1);
+    }
+    @media (max-width: 767px) {
+        .hero-assistant-notice { gap: 12px; padding: 8px 14px; font-size: 15px; }
+    }
+</style>

@@ -357,8 +357,7 @@ Build/SSR: `index.astro` → `MediaResources.astro` читает констан�
 
 Запрещено трогать всё остальное, в частности уже изменённые до этой задачи и не относящиеся
 к ней файлы: `src/components/shared/Header.astro`, `src/layouts/BlogLayout.astro`,
-`src/lib/server/full-sitemap.ts`, `openspec/changes/add-instructions-guides/`,
-`src/lib/server/w1do/guides.ts`. Не коммитить их, не форматировать, не откатывать.
+`src/lib/server/full-sitemap.ts`. Не коммитить их, не форматировать, не откатывать.
 
 ## 16. Ordered implementation steps (Implementer)
 
