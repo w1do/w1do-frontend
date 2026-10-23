@@ -34,9 +34,8 @@ export default defineConfig({
   prefetch: true,
   build: {
     assets: '_astro',
-    inlineStylesheets: 'auto',
-    // Empty ASSETS_PREFIX serves assets from the same origin (local compose); default is the production CDN.
-    assetsPrefix: process.env.ASSETS_PREFIX ?? 'https://aicraft.agency'
+    // Keep generated assets on the current origin, including after domain changes.
+    inlineStylesheets: 'auto'
   },
   vite: {
     build: {
