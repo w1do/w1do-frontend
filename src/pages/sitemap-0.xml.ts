@@ -1,10 +1,11 @@
+import { SITE_ORIGIN } from "../lib/regions";
 import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
 import { regionalSitemap } from "../lib/server/regional-sitemap";
 import { getCmsSitemapPages } from "../lib/server/w1do/sitemap";
 import { getBlogPosts } from "../lib/server/w1do/blog";
 
-export const GET: APIRoute = async ({ site }) => {
+export const GET: APIRoute = async () => {
   const [cmsPages, posts, hubs, spokes] = await Promise.all([
     getCmsSitemapPages(), getBlogPosts(), getCollection("landingCluster", ({ data }) => data.hub === true), getCollection("landingSpoke"),
   ]);
@@ -15,5 +16,5 @@ export const GET: APIRoute = async ({ site }) => {
     ...spokes.map(entry => `/${entry.data.cluster}/${entry.id.split("/").pop()}`),
   ];
   return regionalSitemap(paths.filter(path => !cmsPaths.has(path)).map(path => ({ path, changefreq: "weekly", priority: path === "/" ? 1 : 0.7 })),
-    site?.href.replace(/\/$/, "") || "https://w1do.ru", true);
+    SITE_ORIGIN, true);
 };

@@ -1,4 +1,5 @@
 import localCovers from "./blog-covers.json";
+import { SITE_ORIGIN } from "../../regions";
 import { LEADS_API_BASE_URL, LEADS_API_KEY } from "astro:env/server";
 
 interface ApiPost {
@@ -33,8 +34,10 @@ export interface BlogPost {
 }
 
 function mapPost(post: ApiPost): BlogPost {
-  const url = new URL(post.url, "https://aicraft.agency");
-  if (!["aicraft.agency", "www.aicraft.agency"].includes(url.hostname) || !/^\/blog\/(?:[a-z0-9-]+\/)*[a-z0-9-]+$/.test(url.pathname)) {
+  const url = new URL(post.url, SITE_ORIGIN);
+  const site = new URL(SITE_ORIGIN);
+  const isSiteHost = url.hostname.replace(/^www\./, "") === site.hostname.replace(/^www\./, "");
+  if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password || url.port !== site.port || !isSiteHost || !/^\/blog\/(?:[a-z0-9-]+\/)*[a-z0-9-]+$/.test(url.pathname)) {
     throw new Error("W1DO post returned an invalid URL.");
   }
   const description = post.seo?.description || (post.body || "").replace(/[#*_`]/g, "").slice(0,160);

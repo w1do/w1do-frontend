@@ -5,8 +5,7 @@ services:
     build:
       context: .
       args:
-        # Unset = production CDN (https://w1do.ru). Set to empty for local testing (same-origin assets).
-        ASSETS_PREFIX: ${ASSETS_PREFIX-https://w1do.ru}
+        SITE_URL: ${SITE_URL:?Set SITE_URL to the public site origin}
     restart: unless-stopped
     environment:
       REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379

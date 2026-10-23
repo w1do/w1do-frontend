@@ -24,7 +24,7 @@ export interface RegionContext {
   path: string;
 }
 
-export const SITE_ORIGIN = "https://w1do.ru";
+export const SITE_ORIGIN = new URL(import.meta.env.SITE).origin;
 const sharedPaths = /^\/(?:api|_astro|images|videos|fonts|js|assets|chunks|entry)(?:\/|$)/;
 
 export function isSharedPath(path: string): boolean {
