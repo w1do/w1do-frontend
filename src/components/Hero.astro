@@ -31,6 +31,13 @@ const services = [
         image: "/images/hero-service-ai-agents.webp",
         previousPrice: "от 120 000 ₽",
         price: "от 89 000 ₽"
+    },
+    {
+        title: "Туннелирование Claude Code",
+        description: "Настраиваем туннелирование трафика Claude Code с привязкой к выбранному гео.",
+        image: "/images/hero-service-geo-tunnel.webp",
+        previousPrice: null,
+        price: "По запросу"
     }
 ];
 ---
@@ -68,8 +75,12 @@ const services = [
                                     <h2>{service.title}</h2>
                                     <p class="hero-service__description">{service.description}</p>
                                     <div class="hero-service__prices">
-                                        <span class="hero-service__sr-only">Прежняя стоимость: </span>
-                                        <del>{service.previousPrice}</del>
+                                        {service.previousPrice && (
+                                            <>
+                                                <span class="hero-service__sr-only">Прежняя стоимость: </span>
+                                                <del>{service.previousPrice}</del>
+                                            </>
+                                        )}
                                         <span class="hero-service__sr-only">Текущая стоимость: </span>
                                         <strong>{service.price}</strong>
                                     </div>
@@ -116,7 +127,7 @@ const services = [
 <style>
     .hero-services {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         width: 100%;
         max-width: none;
         gap: 20px;
@@ -232,9 +243,6 @@ const services = [
             background: rgba(207, 248, 94, .08);
             color: #cff85e;
         }
-    }
-    @media (max-width: 1023px) {
-        .hero-services { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 640px) {
         .hero-services { grid-template-columns: minmax(0, 1fr); }
