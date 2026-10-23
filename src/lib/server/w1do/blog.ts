@@ -33,8 +33,8 @@ export interface BlogPost {
 }
 
 function mapPost(post: ApiPost): BlogPost {
-  const url = new URL(post.url, "https://w1do.ru");
-  if (!["w1do.ru", "www.w1do.ru"].includes(url.hostname) || !/^\/blog\/(?:[a-z0-9-]+\/)*[a-z0-9-]+$/.test(url.pathname)) {
+  const url = new URL(post.url, "https://aicraft.agency");
+  if (!["aicraft.agency", "www.aicraft.agency"].includes(url.hostname) || !/^\/blog\/(?:[a-z0-9-]+\/)*[a-z0-9-]+$/.test(url.pathname)) {
     throw new Error("W1DO post returned an invalid URL.");
   }
   const description = post.seo?.description || (post.body || "").replace(/[#*_`]/g, "").slice(0,160);
