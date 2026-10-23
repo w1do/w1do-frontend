@@ -14,7 +14,7 @@ const services = (await getServiceHubs()).map((service) => ({
             <div class="container">
                 <!-- Logo Start -->
                 <a class="navbar-brand" href="/">
-                    <img src="/images/logo-aicraft.png" alt="AiCRAFT.AGENCY" width="180" height="60" style="width: 180px; max-width: 100%; height: auto;">
+                    <img src="/images/logo-aicraft.png" alt="AiCRAFT.AGENCY" width="240" height="80">
                 </a>
                 <!-- Logo End -->
 
@@ -69,3 +69,26 @@ const services = (await getServiceHubs()).map((service) => ({
     </div>
 </header>
 <!-- Header End -->
+
+<style>
+    .navbar-brand {
+        display: flex;
+        align-items: center;
+        flex: 0 0 240px;
+        width: 240px;
+        height: 48px;
+        overflow: hidden;
+    }
+    .navbar-brand img {
+        display: block;
+        flex-shrink: 0;
+        width: 100%;
+        height: auto;
+    }
+    @media (max-width: 1199px) {
+        .navbar-brand { flex-basis: 200px; width: 200px; height: 44px; }
+    }
+    @media (max-width: 767px) {
+        .navbar-brand { flex-basis: 180px; width: 180px; height: 40px; }
+    }
+</style>
