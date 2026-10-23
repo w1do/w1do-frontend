@@ -5,7 +5,7 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://w1do.ru',
+  site: 'https://aicraft.agency',
   server: {
     host: "0.0.0.0"
   },
@@ -36,7 +36,7 @@ export default defineConfig({
     assets: '_astro',
     inlineStylesheets: 'auto',
     // Empty ASSETS_PREFIX serves assets from the same origin (local compose); default is the production CDN.
-    assetsPrefix: process.env.ASSETS_PREFIX ?? 'https://w1do.ru'
+    assetsPrefix: process.env.ASSETS_PREFIX ?? 'https://aicraft.agency'
   },
   vite: {
     build: {
