@@ -1,4 +1,5 @@
 ---
+import { SITE_ORIGIN } from "../lib/regions";
 import Layout from "./Layout.astro";
 import Header from "../components/shared/Header.astro";
 import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
@@ -31,8 +32,8 @@ const breadcrumbItems = [
     { label: frontmatter.title, active: true }
 ];
 
-const siteUrl = Astro.site?.href?.replace(/\/$/, "") || "https://w1do.ru";
-const pageUrl = new URL(Astro.url.pathname, Astro.site || "https://w1do.ru").href;
+const siteUrl = SITE_ORIGIN;
+const pageUrl = new URL(Astro.url.pathname, SITE_ORIGIN).href;
 const projectImage = frontmatter.image || undefined;
 
 const projectSchema = {
@@ -55,7 +56,7 @@ const breadcrumbSchema = {
         "@type": "ListItem",
         "position": index + 1,
         "name": item.label,
-        ...(item.href ? { "item": new URL(item.href, Astro.site || Astro.url).href } : {})
+        ...(item.href ? { "item": new URL(item.href, SITE_ORIGIN).href } : {})
     }))
 };
 

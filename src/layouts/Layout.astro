@@ -11,7 +11,7 @@ interface Props {
 }
 
 import { DEFAULT_OG_IMAGE, pageSeo } from "../lib/seo";
-import { cityPath, regionalSchema } from "../lib/regions";
+import { SITE_ORIGIN, cityPath, regionalSchema } from "../lib/regions";
 import CookieNotice from "../components/shared/CookieNotice.astro";
 import JsonLd from "../components/shared/JsonLd.astro";
 import ChatPopup from "../components/chat/ChatPopup";
@@ -48,8 +48,8 @@ const description = isCityHome && citySeo?.description ? citySeo.description
 const keywords = [currentSeo?.keywords || suppliedKeywords, citySeo?.keywords].filter(Boolean).join(", ").replace(/разработчик_ии/g, "разработчик ИИ");
 const robots = suppliedRobots?.includes("noindex") ? suppliedRobots
     : citySeo?.robots?.includes("noindex") ? citySeo.robots : suppliedRobots || citySeo?.robots;
-const canonical = region ? new URL(cityPath(region.city.slug, region.defaultCitySlug), Astro.site || "https://w1do.ru").href
-    : suppliedCanonical || new URL(Astro.url.pathname, Astro.site || "https://w1do.ru").href;
+const canonical = region ? new URL(cityPath(region.city.slug, region.defaultCitySlug), SITE_ORIGIN).href
+    : suppliedCanonical || new URL(Astro.url.pathname, SITE_ORIGIN).href;
 const ogTitle = isCityHome ? citySeo?.og_title || title : title;
 const ogDescription = isCityHome ? citySeo?.og_description || description : description;
 let image = (isCityHome ? citySeo?.og_image : undefined) || suppliedImage || DEFAULT_OG_IMAGE;
@@ -59,10 +59,10 @@ if (image.startsWith("/images/blog/") && image.endsWith(".svg")) {
 } else if (image.split("?")[0].toLowerCase().endsWith(".svg")) {
     image = DEFAULT_OG_IMAGE;
 }
-const socialImage = new URL(image, Astro.site || "https://w1do.ru").href;
+const socialImage = new URL(image, SITE_ORIGIN).href;
 
-const siteUrl = Astro.site?.href?.replace(/\/$/, "") || "https://w1do.ru";
-const logoUrl = new URL("/images/favicon.png", Astro.site || Astro.url).href;
+const siteUrl = SITE_ORIGIN;
+const logoUrl = new URL("/images/favicon.png", SITE_ORIGIN).href;
 
 // Базовые структурированные данные (Schema.org) для всех страниц
 const organizationSchema = {
@@ -164,7 +164,7 @@ const showChatPopup = pagePath.replace(/\/+$/, "") !== "/chat";
 <body>
 <slot/>
 <CookieNotice/>
-{showChatPopup && <ChatPopup client:idle />}
+{showChatPopup && <ChatPopup client:load />}
 
 <!-- Jquery Library File -->
 <script src="/js/jquery-3.7.1.min.js" is:inline></script>

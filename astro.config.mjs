@@ -2,10 +2,20 @@
 import { defineConfig, envField } from 'astro/config';
 import node from '@astrojs/node';
 import react from '@astrojs/react';
+import { loadEnv } from 'vite';
+
+const configuredSite = process.env.SITE_URL || loadEnv(process.env.NODE_ENV || 'development', process.cwd(), 'SITE_URL').SITE_URL;
+if (!configuredSite && process.env.NODE_ENV === 'production') {
+  throw new Error('Set SITE_URL to the public site origin before building.');
+}
+const siteUrl = new URL(configuredSite || 'http://localhost:4321');
+if (!['http:', 'https:'].includes(siteUrl.protocol) || siteUrl.username || siteUrl.password || siteUrl.pathname !== '/' || siteUrl.search || siteUrl.hash) {
+  throw new Error('SITE_URL must be an HTTP(S) origin without credentials, path, query or fragment.');
+}
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://aicraft.agency',
+  site: siteUrl.origin,
   server: {
     host: "0.0.0.0"
   },

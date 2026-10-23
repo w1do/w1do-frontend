@@ -94,7 +94,7 @@ LEADS_API_KEY=pk_live_… node ./dist/server/entry.mjs
 Страница `/chat` (`src/pages/chat.astro`, React-остров `src/components/chat/AiChat.tsx`) даёт
 посетителю диалог с ИИ-консультантом. Ответы строятся моделью `openai/gpt-4o-mini` через PolzaAI.
 Знания для промпта берутся из услуг W1DO (`getServices()`, включая FAQ). Для заказа консультант
-направляет на `/contact`. Ссылка на `/chat` в шапке и подвале сайта не выводится.
+направляет на `/contact`. Кнопки «Обсудить проект», «Связаться» и обращение в футере открывают всплывающий чат ассистента и переводят фокус в поле ввода. Без JavaScript ссылка ведёт на `/chat`.
 
 Страница индексируется: `robots` = `index, follow`, SEO берётся из `pageSeo["/chat"]` в
 `src/lib/seo.ts`, адрес входит в `sitemap-0.xml`.
@@ -129,7 +129,7 @@ LEADS_API_KEY=pk_live_… node ./dist/server/entry.mjs
 | `TRUSTED_PROXY_HOPS` | Число обратных прокси перед контейнером: `1` за одним прокси, `0` без прокси. При `0` за прокси все клиенты делят один лимит |
 | `CHAT_LEAD_HASH_SECRET` | Случайная строка не короче 32 байт для HMAC-маркера телефона |
 | `LEADS_API_KEY` | Ключ отправки заявок в платформу W1DO (`/api/lead`, `/api/chat-lead`) |
-| `ASSETS_PREFIX` | Адрес, с которого берутся ассеты. По умолчанию `https://w1do.ru`. Пустое значение для локальной проверки на том же origin |
+| `SITE_URL` | Публичный origin сайта, например `https://aicraft.agency`. Обязателен при production-сборке; Docker Compose передаёт его как build argument. Используется Astro, canonical, региональными ссылками и проверками URL блога и sitemap. При смене требуется пересборка образа. Ассеты загружаются с текущего origin |
 
 Redis должен работать с политикой `maxmemory-policy noeviction`, чтобы ключи диалогов не вытеснялись до истечения срока (24 часа).
 

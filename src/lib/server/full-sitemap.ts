@@ -4,7 +4,6 @@ import { getCmsSitemapPages } from "./w1do/sitemap";
 import { getBlogPosts } from "./w1do/blog";
 import { getBlogCategories } from "./w1do/blog-categories";
 import { getCases } from "./w1do/cases";
-import { getGuides, getGuideRubrics } from "./w1do/guides";
 import { getOpenSourceProjects } from "./w1do/opensource";
 import { getServices } from "./w1do/services";
 import { mergeSitemapPages } from "./sitemap-merge.ts";
@@ -23,8 +22,8 @@ export async function getFullSitemapPages(): Promise<SitemapPage[]> {
 }
 
 async function collectPages(): Promise<SitemapPage[]> {
-  const [cms, posts, categories, cases, projects, guides, rubrics, services, hubs, spokes] = await Promise.all([
-    getCmsSitemapPages(), getBlogPosts(), getBlogCategories(), getCases(), getOpenSourceProjects(), getGuides(), getGuideRubrics(), getServices(),
+  const [cms, posts, categories, cases, projects, services, hubs, spokes] = await Promise.all([
+    getCmsSitemapPages(), getBlogPosts(), getBlogCategories(), getCases(), getOpenSourceProjects(), getServices(),
     getCollection("landingCluster", ({ data }) => data.hub === true), getCollection("landingSpoke"),
   ]);
   const paths = ["/", "/about", "/contact", "/services", "/pricing", "/testimonials", "/knowledge",
@@ -33,9 +32,6 @@ async function collectPages(): Promise<SitemapPage[]> {
     ...categories.filter(category => category.isIndex).map(category => `/blog/categories/${category.slug}`),
     ...cases.map(entry => `/case/${encodeURIComponent(entry.id)}`),
     ...projects.map(entry => `/opensource/${encodeURIComponent(entry.id)}`),
-    "/instructions",
-    ...rubrics.map(rubric => `/instructions/${rubric.slug}`),
-    ...guides.map(guide => `/instructions/${guide.rubricSlug}/${encodeURIComponent(guide.id)}`),
     ...services.map(service => service.url),
     ...hubs.map(hub => `/${hub.id}`),
     ...spokes.map(entry => `/${entry.data.cluster}/${entry.id.split("/").pop()}`),

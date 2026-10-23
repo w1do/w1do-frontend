@@ -44,6 +44,21 @@ export default function ChatPopup() {
     }, []);
 
     useEffect(() => {
+        const openFromButton = (event: MouseEvent) => {
+            if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+            const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('a[data-open-chat], a.btn-default') : null;
+            if (!link) return;
+            if (!link.hasAttribute('data-open-chat') && new URL(link.href).hostname !== 't.me') return;
+            event.preventDefault();
+            show(true);
+            saveState('opened');
+            requestAnimationFrame(() => panelRef.current?.querySelector('textarea')?.focus());
+        };
+        document.addEventListener('click', openFromButton);
+        return () => document.removeEventListener('click', openFromButton);
+    }, []);
+
+    useEffect(() => {
         const target = focusTarget.current;
         focusTarget.current = null;
         if (!open) {
