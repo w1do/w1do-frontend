@@ -12,7 +12,7 @@ const categories = await getBlogCategories();
 const category = categories.find(item => item.slug === Astro.params.slug);
 if (!category) return Astro.rewrite("/404");
 const posts = await getBlogPosts(category.id);
-const canonical = new URL(`/blog/categories/${category.slug}`, Astro.site || "https://w1do.ru").href;
+const canonical = new URL(`/blog/categories/${category.slug}`, Astro.site || "https://aicraft.agency").href;
 const schema = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
@@ -24,7 +24,7 @@ const schema = {
     itemListElement: posts.map((post, index) => ({
       "@type": "ListItem", position: index + 1,
       name: post.data.title,
-      url: new URL(post.url, Astro.site || "https://w1do.ru").href,
+      url: new URL(post.url, Astro.site || "https://aicraft.agency").href,
     })),
   },
 };

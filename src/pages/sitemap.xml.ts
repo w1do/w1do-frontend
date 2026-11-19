@@ -6,7 +6,7 @@ export const prerender = false;
 export const GET: APIRoute = async ({ site }) => {
   try {
     return await regionalSitemap(await getFullSitemapPages(),
-      site?.href.replace(/\/$/, "") || "https://w1do.ru", true);
+      site?.href.replace(/\/$/, "") || "https://aicraft.agency", true);
   } catch {
     // Do not present a partial sitemap as complete when a required API is unavailable.
     return new Response("Карта сайта временно недоступна. Попробуйте позже.", {
