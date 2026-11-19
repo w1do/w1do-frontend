@@ -19,6 +19,11 @@ const LEGACY_REDIRECTS: Record<string, string> = {
   "/pricing.html": "/pricing",
   "/blog.html": "/blog",
   "/testimonials.html": "/testimonials",
+  "/services/ai-agent-development": "/ai-agents",
+  "/services/ai-agent-development/ai-agent-for-business": "/ai-agents/ai-agent-for-business",
+  "/services/ai-agent-development/ai-automation-services": "/ai-agents/ai-agent-automation",
+  "/services/ai-agent-development/ai-development": "/ai-agents/ai-agent-implementation",
+  "/services/ai-agent-development/ai-solutions-development": "/ai-agents",
 };
 
 export const onRequest = defineMiddleware(async (context, next) => {
