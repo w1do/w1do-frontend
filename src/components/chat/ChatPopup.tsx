@@ -29,17 +29,13 @@ export default function ChatPopup() {
         saveState("closed");
     };
 
+    // Чат открывается только по явному действию посетителя: автопопап
+    // перекрывал первый экран на мобильных и мешал читать оффер.
     useEffect(() => {
-        let stored: string | null = null;
         try {
-            stored = sessionStorage.getItem(STORAGE_KEY);
+            sessionStorage.getItem(STORAGE_KEY);
         } catch {
-            show();
-            return;
-        }
-        if (stored === null) {
-            show();
-            saveState("opened");
+            // sessionStorage может быть недоступен — это не повод открывать чат.
         }
     }, []);
 
