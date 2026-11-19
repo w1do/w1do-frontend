@@ -1,14 +1,20 @@
 ---
-import { formatPrice, getPackages } from "../../lib/pricing";
+import { formatPrice } from "../../lib/pricing";
+import { getStartingPackage } from "../../lib/service-pricing";
 
-const mvp = getPackages().find((pkg) => pkg.id === "mvp") ?? getPackages()[0];
+interface Props {
+    cluster?: string;
+}
+const { cluster } = Astro.props;
+const pkg = getStartingPackage(cluster);
+if (!pkg) return;
 ---
 <div class="service-price-note">
     <div class="container">
         <div class="service-price-note__inner">
             <div class="service-price-note__facts">
-                <span>Стоимость: <strong>{formatPrice(mvp)}</strong></span>
-                <span>Срок: {mvp.term}</span>
+                <span>Стоимость: <strong>{formatPrice(pkg)}</strong></span>
+                <span>Срок: {pkg.term}</span>
             </div>
             <a href="/calculator" class="service-price-note__link">Рассчитать под задачу →</a>
         </div>
