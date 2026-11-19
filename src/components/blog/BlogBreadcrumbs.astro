@@ -6,7 +6,7 @@ interface Props {
     breadcrumbItems: { label: string; href?: string; active?: boolean }[];
 }
 
-const { title, pubDate, breadcrumbItems, author = "Admin" } = Astro.props;
+const { title, pubDate, breadcrumbItems, author = "Денис Митрофанов" } = Astro.props;
 
 const formattedDate = new Date(pubDate).toLocaleDateString('ru-RU', {
                                             timeZone: 'Asia/Irkutsk',

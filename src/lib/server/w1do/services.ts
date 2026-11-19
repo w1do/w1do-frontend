@@ -75,6 +75,9 @@ let pending: Promise<ServiceEntry[]> | undefined;
 const text = (value: unknown, fallback = ""): string =>
   typeof value === "string" ? value : fallback;
 
+// В CMS остались служебные подстановки вида «разработчик_ии» — чиним на выходе.
+const cleanText = (value: string): string => value.replace(/разработчик_ии/g, "разработчик ИИ");
+
 function resolveImage(values: Record<string, unknown>, cluster: string): string | undefined {
   if (CLUSTER_IMAGE_URLS[cluster]) return CLUSTER_IMAGE_URLS[cluster];
   const image = text(values.image_media, text(values.image));
@@ -99,8 +102,8 @@ function mapEntry(entry: Awaited<ReturnType<typeof fetchServiceEntries>>[number]
 
   const hub = type === "hub";
   return {
-    title: entry.title,
-    description: text(values.description),
+    title: cleanText(entry.title),
+    description: cleanText(text(values.description)),
     seo: {
       title: text(entry.seo_title, entry.title),
       description: text(entry.seo_description, text(values.description)),
@@ -110,14 +113,14 @@ function mapEntry(entry: Awaited<ReturnType<typeof fetchServiceEntries>>[number]
     postSlug: text(values.post_slug),
     url: text(values.public_path, hub ? `/services/${cluster}` : `/services/${cluster}/${text(values.post_slug)}`),
     cmsPath: `/services/${entry.slug}`,
-    bodyHtml: text(values.body_html),
+    bodyHtml: cleanText(text(values.body_html)),
     image: resolveImage(values, cluster),
     imageAlt: text(values.image_alt) || undefined,
     icon: text(values.icon, "/images/icon-service-3.svg"),
     no: text(values.display_no, "99"),
     order: Number(values.display_order) || 0,
     tags: json(values.tags_json, []),
-    excerpt: text(values.excerpt) || undefined,
+    excerpt: cleanText(text(values.excerpt)) || undefined,
     dateLabel: text(values.date_label) || undefined,
     offersTitle: text(values.offers_title) || undefined,
     offersDescription: text(values.offers_description) || undefined,
