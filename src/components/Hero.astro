@@ -60,9 +60,9 @@ const services = [
 
                     <!-- Hero Services Start -->
                     <div class="hero-content-counter-box-prime hero-services">
-                        {services.map((service) => (
+                        {services.map((service, index) => (
                             <article class="hero-service">
-                                <img class="hero-service__image" src={service.image} alt="" width="960" height="640" loading="eager" decoding="async" />
+                                <img class="hero-service__image" src={service.image} alt="" width="960" height="640" loading="eager" decoding="async" fetchpriority={index === 0 ? "high" : undefined} />
                                 <div class="hero-service__body">
                                     <h2>{service.title}</h2>
                                     <p class="hero-service__description">{service.description}</p>
