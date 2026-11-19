@@ -25,7 +25,7 @@ feature:
 introVideo:
   subTitle: "Как я работаю"
   title: "От установки до продуктивной разработки"
-  tickerItems: ["Claude 3.5 Sonnet", "Cursor IDE", ".cursorrules", "Промпт-инжиниринг"]
+  tickerItems: ["Claude", "Cursor IDE", ".cursorrules", "Промпт-инжиниринг"]
 services:
   subTitle: "Смежные темы"
   title: "Что ещё я помогу разобрать"

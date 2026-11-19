@@ -23,7 +23,7 @@ feature:
 introVideo:
   subTitle: "Курсы по обучению искусственному интеллекту"
   title: "Технологии, которые я помогу тебе освоить"
-  tickerItems: ["Claude 3.5 Sonnet", "RAG Architecture", "MCP Setup", "AI Orchestration", "Agentic Workflows"]
+  tickerItems: ["Claude", "RAG Architecture", "MCP Setup", "AI Orchestration", "Agentic Workflows"]
 services:
   subTitle: "Специалист по обучению ИИ"
   title: "Направления моей программы"

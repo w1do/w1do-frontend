@@ -25,7 +25,7 @@ feature:
 introVideo:
   subTitle: "Как я работаю"
   title: "От заявки до готовых рекомендаций"
-  tickerItems: ["Видеосвязь", "Claude 3.5 Sonnet", "Разбор задачи", "Резюме встречи"]
+  tickerItems: ["Видеосвязь", "Claude", "Разбор задачи", "Резюме встречи"]
 services:
   subTitle: "Смежные темы"
   title: "Что я помогу разобрать онлайн"

@@ -19,11 +19,11 @@ about:
 feature:
   subTitle: "Автоматизация рутины"
   title: "Инструменты для твоей продуктивности"
-  description: "Я обучаю работе с инструментами, которые сам использую ежедневно: <strong>Claude 3.5 Sonnet</strong> для глубокого анализа, <strong>Cursor</strong> для сверхбыстрой разработки и <strong>n8n</strong> для автоматизации рутинных процессов."
+  description: "Я обучаю работе с инструментами, которые сам использую ежедневно: <strong>Claude</strong> для глубокого анализа, <strong>Cursor</strong> для сверхбыстрой разработки и <strong>n8n</strong> для автоматизации рутинных процессов."
 introVideo:
   subTitle: "Как я работаю"
   title: "От аудита до внедрения ИИ-агентов"
-  tickerItems: ["Claude 3.5 Sonnet", "Cursor IDE", "Автоматизация рутины", "Внедрение ИИ"]
+  tickerItems: ["Claude", "Cursor IDE", "Автоматизация рутины", "Внедрение ИИ"]
 services:
   subTitle: "Темы консультации"
   title: "Что я помогу тебе разобрать"
