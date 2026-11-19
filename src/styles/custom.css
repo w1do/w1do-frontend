@@ -79,7 +79,7 @@ body{
 	font-weight: 400;
 	line-height: 1em;
 	color: var(--text-color);
-	background: url('/images/site-bg-image.png') var(--bg-color);
+	background: url('/images/site-bg-image.jpg') var(--bg-color);
 	background-repeat: repeat-y;
 	background-position: top center;
 	background-size: 100% auto;
