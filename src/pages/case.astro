@@ -14,7 +14,7 @@ export const prerender = false;
 const projects = await getCases();
 const pageBreadcrumbs = breadcrumbSchema([
     { name: "Главная", path: "/" },
-    { name: "Проекты", path: "/case" }
+    { name: "Кейсы", path: "/case" }
 ]);
 
 ---
@@ -26,9 +26,9 @@ const pageBreadcrumbs = breadcrumbSchema([
     image="/images/og-projects.jpg"
 >
     <Header/>
-    <Breadcrumbs title="Проекты" breadcrumbItems={[
+    <Breadcrumbs title="Кейсы" breadcrumbItems={[
         {label: "Главная", href: "/"},
-        {label: "Проекты", active: true}
+        {label: "Кейсы", active: true}
     ]}/>
     <ProjectsList projects={projects}/>
     <Faqs/>
