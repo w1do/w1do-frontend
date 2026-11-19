@@ -1,5 +1,6 @@
 ---
 import { SITE_ORIGIN } from "../lib/regions";
+import { aiAgentsCanonical } from "../lib/ai-agents-canonical";
 import { getStartingPackage } from "../lib/service-pricing";
 import Layout from "./Layout.astro";
 import Header from "../components/shared/Header.astro";
@@ -24,6 +25,9 @@ const brandName = (value: string): string => value
     .replace(/разработчик_ии/g, "разработчик ИИ");
 const seoTitle = brandName(frontmatter.seo?.title || frontmatter.title);
 const seoDescription = brandName(frontmatter.seo?.description || frontmatter.description);
+const canonicalOverride = frontmatter.cluster === "ai-agent-development"
+  ? new URL(aiAgentsCanonical(), SITE_ORIGIN).href
+  : undefined;
 
 const breadcrumbItems = [
     { label: "Главная", href: "/" },
@@ -85,7 +89,7 @@ const faqSchema = frontmatter.faqs && frontmatter.faqs.length > 0 ? {
 const schema = [serviceSchema, breadcrumbSchema, faqSchema].filter(Boolean);
 ---
 
-<Layout title={seoTitle} description={seoDescription} schema={schema} image={frontmatter.image}>
+<Layout title={seoTitle} description={seoDescription} schema={schema} image={frontmatter.image} canonical={canonicalOverride}>
     <Header/>
     <Breadcrumbs title={frontmatter.title} breadcrumbItems={breadcrumbItems}/>
     <ServicePriceNote cluster={frontmatter.cluster} />

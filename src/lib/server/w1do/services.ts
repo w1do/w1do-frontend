@@ -111,7 +111,9 @@ function mapEntry(entry: Awaited<ReturnType<typeof fetchServiceEntries>>[number]
     hub,
     cluster,
     postSlug: text(values.post_slug),
-    url: text(values.public_path, hub ? `/services/${cluster}` : `/services/${cluster}/${text(values.post_slug)}`),
+    url: cluster === "ai-agent-development" && hub
+      ? "/ai-agents"
+      : text(values.public_path, hub ? `/services/${cluster}` : `/services/${cluster}/${text(values.post_slug)}`),
     cmsPath: `/services/${entry.slug}`,
     bodyHtml: cleanText(text(values.body_html)),
     image: resolveImage(values, cluster),

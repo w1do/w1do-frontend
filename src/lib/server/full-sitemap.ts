@@ -32,7 +32,7 @@ async function collectPages(): Promise<SitemapPage[]> {
     ...categories.filter(category => category.isIndex).map(category => `/blog/categories/${category.slug}`),
     ...cases.map(entry => `/case/${encodeURIComponent(entry.id)}`),
     ...projects.map(entry => `/opensource/${encodeURIComponent(entry.id)}`),
-    ...services.map(service => service.url),
+    ...services.filter(service => service.cluster !== "ai-agent-development").map(service => service.url),
     ...hubs.map(hub => `/${hub.id}`),
     ...spokes.map(entry => `/${entry.data.cluster}/${entry.id.split("/").pop()}`),
   ];
