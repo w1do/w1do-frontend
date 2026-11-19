@@ -9,15 +9,6 @@ interface Props {
     title?: string;
     description?: string;
     customFaqs?: FaqItemData[];
-    counter1Value?: string;
-    counter1Title?: string;
-    counter1Desc?: string;
-    counter2Value?: string;
-    counter2Title?: string;
-    counter2Desc?: string;
-    counter3Value?: string;
-    counter3Title?: string;
-    counter3Desc?: string;
 }
 
 import FaqItem from "./shared/faq/FaqItem.astro";
@@ -25,31 +16,9 @@ const {
     subTitle = "Часто задаваемые вопросы",
     title = "Ответы на ключевые вопросы по внедрению ИИ",
     description = "Узнайте больше о том, как искусственный интеллект может трансформировать ваш бизнес, оптимизировать процессы и создать новые возможности для роста.",
-    customFaqs,
-    counter1Value = "120",
-    counter1Title = "Успешных проектов",
-    counter1Desc = "Мы внедрили десятки ИИ-решений для бизнеса разного масштаба.",
-    counter2Value = "98",
-    counter2Title = "Довольных клиентов",
-    counter2Desc = "Наши клиенты отмечают значительный рост эффективности процессов.",
-    counter3Value = "15",
-    counter3Title = "ИИ-экспертов в команде",
-    counter3Desc = "Команда инженеров, специализирующихся на LLM и анализе данных."
+    customFaqs
 } = Astro.props;
 
-// Обработка числовых значений для счетчиков
-const getCounterData = (val: string) => {
-    const match = val.toString().match(/^(\d+(?:\.\d+)?)(.*)$/);
-    return {
-        numericValue: match ? match[1] : val,
-        suffix: match ? match[2] : "",
-        isNumeric: match !== null
-    };
-};
-
-const c1 = getCounterData(counter1Value);
-const c2 = getCounterData(counter2Value);
-const c3 = getCounterData(counter3Value);
 
 const defaultFaqs = [
     {
@@ -113,7 +82,7 @@ const faqs = customFaqs || defaultFaqs;
 
                     <!-- Contact Us Circle Start -->
                     <div class="contact-us-circle wow fadeInUp" data-wow-delay="0.4s">
-                        <a href="contact.html">
+                        <a href="/contact">
                             <img src="/images/contact-us-circle.svg" alt="Задать вопрос по ИИ">
                         </a>
                     </div>
@@ -138,68 +107,7 @@ const faqs = customFaqs || defaultFaqs;
                 <!-- FAQ Accordion End -->
             </div>
 
-            <div class="col-lg-12">
-                <!-- Faq Counter Items List Start -->
-                <div class="faq-counter-items-list box-border-gradiant">
-                    <!-- Faq Counter Item Start -->
-                    <div class="faq-counter-item">
-                        <div class="faq-counter-item-header">
-                            <h2>
-                                {c1.isNumeric ? (
-                                    <span class="counter">{c1.numericValue}</span>
-                                ) : (
-                                    <span>{c1.numericValue}</span>
-                                )}
-                                {c1.suffix || "+"}
-                            </h2>
-                            <h3>{counter1Title}</h3>
-                        </div>
-                        <div class="faq-counter-item-body">
-                            <p>{counter1Desc}</p>
-                        </div>
-                    </div>
-                    <!-- Faq Counter Item End -->
 
-                    <!-- Faq Counter Item Start -->
-                    <div class="faq-counter-item">
-                        <div class="faq-counter-item-header">
-                            <h2>
-                                {c2.isNumeric ? (
-                                    <span class="counter">{c2.numericValue}</span>
-                                ) : (
-                                    <span>{c2.numericValue}</span>
-                                )}
-                                {c2.suffix || "%"}
-                            </h2>
-                            <h3>{counter2Title}</h3>
-                        </div>
-                        <div class="faq-counter-item-body">
-                            <p>{counter2Desc}</p>
-                        </div>
-                    </div>
-                    <!-- Faq Counter Item End -->
-
-                    <!-- Faq Counter Item Start -->
-                    <div class="faq-counter-item">
-                        <div class="faq-counter-item-header">
-                            <h2>
-                                {c3.isNumeric ? (
-                                    <span class="counter">{c3.numericValue}</span>
-                                ) : (
-                                    <span>{c3.numericValue}</span>
-                                )}
-                                {c3.suffix || "+"}
-                            </h2>
-                            <h3>{counter3Title}</h3>
-                        </div>
-                        <div class="faq-counter-item-body">
-                            <p>{counter3Desc}</p>
-                        </div>
-                    </div>
-                    <!-- Faq Counter Item End -->
-                </div>
-                <!-- Faq Counter Items List End -->
-            </div>
         </div>
     </div>
 </div>
