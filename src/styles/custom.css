@@ -12057,3 +12057,11 @@ header.main-header .header-sticky.active{
 	.about-counter-box-header h2{ font-size: 96px; white-space: nowrap; }
 	.about-counter-box-header h2 sup{ font-size: 16px; top: -40px; }
 }
+
+
+/* Mobile hero spacing: separate the notice, heading and first card */
+@media only screen and (max-width: 767px){
+	.hero-content-box-prime .section-title{ margin-bottom: 40px; }
+	.hero-content-box-prime .section-title h1{ margin-top: 10px; }
+	.hero-content-box-prime .section-title p{ margin-top: 12px; }
+}
