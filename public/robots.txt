@@ -118,4 +118,7 @@ Disallow: /Dockerfile
 Disallow: /package.json
 Disallow: /package-lock.json
 
+# Яндекс: не индексировать дубли с UTM-метками
+Clean-param: utm_source&utm_medium&utm_campaign&utm_term&utm_content&yclid&gclid /
+
 Sitemap: https://aicraft.agency/sitemap-index.xml
