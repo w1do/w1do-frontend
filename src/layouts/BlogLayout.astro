@@ -10,8 +10,9 @@ import BlogBreadcrumbs from "../components/blog/BlogBreadcrumbs.astro";
 
 const { frontmatter } = Astro.props;
 
-const seoTitle = frontmatter.seo?.title || frontmatter.title;
-const seoDescription = frontmatter.seo?.description || frontmatter.description;
+const brandName = (value: string): string => value.replace(/W1DO DIGITAL/g, "AiCRAFT.AGENCY").replace(/W1DO/g, "AiCRAFT");
+const seoTitle = brandName(frontmatter.seo?.title || frontmatter.title);
+const seoDescription = brandName(frontmatter.seo?.description || frontmatter.description);
 
 const categoryPath = Astro.url.pathname.split("/").slice(2, -1).join("/");
 const category = categoryPath ? (await getBlogCategories()).find(item => item.slug === categoryPath) : undefined;

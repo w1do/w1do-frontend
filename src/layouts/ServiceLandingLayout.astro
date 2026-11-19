@@ -18,8 +18,9 @@ import { getServiceHubs, getServiceSpokes } from "../lib/server/w1do/services";
 const { frontmatter } = Astro.props;
 
 const cluster = frontmatter.cluster;
-const seoTitle = frontmatter.seo?.title || frontmatter.title;
-const seoDescription = frontmatter.seo?.description || frontmatter.description;
+const brandName = (value: string): string => value.replace(/W1DO DIGITAL/g, "AiCRAFT.AGENCY").replace(/W1DO/g, "AiCRAFT");
+const seoTitle = brandName(frontmatter.seo?.title || frontmatter.title);
+const seoDescription = brandName(frontmatter.seo?.description || frontmatter.description);
 
 // Родительский хаб кластера
 const hubUrl = `/services/${cluster}`;
