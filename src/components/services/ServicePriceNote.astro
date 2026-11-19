@@ -1,0 +1,43 @@
+---
+import { formatPrice, getPackages } from "../../lib/pricing";
+
+const mvp = getPackages().find((pkg) => pkg.id === "mvp") ?? getPackages()[0];
+---
+<div class="service-price-note">
+    <div class="container">
+        <div class="service-price-note__inner">
+            <div class="service-price-note__facts">
+                <span>Стоимость: <strong>{formatPrice(mvp)}</strong></span>
+                <span>Срок: {mvp.term}</span>
+            </div>
+            <a href="/calculator" class="service-price-note__link">Рассчитать под задачу →</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .service-price-note { padding: 18px 0 0; }
+    .service-price-note__inner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 18px 22px;
+        border: 1px solid var(--divider-color);
+        border-radius: 16px;
+        background: rgba(207, 248, 94, 0.05);
+    }
+    .service-price-note__facts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        color: var(--primary-color);
+        font-size: 16px;
+    }
+    .service-price-note__facts strong { color: var(--accent-color); }
+    .service-price-note__link { color: var(--accent-color); font-weight: 600; }
+    @media (max-width: 575px) {
+        .service-price-note__inner { flex-direction: column; align-items: flex-start; }
+    }
+</style>

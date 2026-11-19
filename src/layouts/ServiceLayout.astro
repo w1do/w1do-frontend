@@ -11,6 +11,7 @@ import Pricing from "../components/Pricing.astro";
 import Process from "../components/Process.astro";
 import Works from "../components/Works.astro";
 import Spacer from "../components/shared/Spacer.astro";
+import ServicePriceNote from "../components/services/ServicePriceNote.astro";
 import ClusterSpokes from "../components/services/cluster/ClusterSpokes.astro";
 import { getServiceHubs } from "../lib/server/w1do/services";
 
@@ -72,6 +73,7 @@ const schema = [serviceSchema, breadcrumbSchema, faqSchema].filter(Boolean);
 <Layout title={seoTitle} description={seoDescription} schema={schema} image={frontmatter.image}>
     <Header/>
     <Breadcrumbs title={frontmatter.title} breadcrumbItems={breadcrumbItems}/>
+    <ServicePriceNote />
     
     <!-- Page Service Single Start -->
     <div class="page-service-single">
