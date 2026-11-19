@@ -125,14 +125,14 @@ export default function ContactForm({
 
                         {isSuccess && (
                             <div className="h4 text-success mt-3" role="status">
-                                Сообщение успешно отправлено!
+                                Заявка отправлена. Я свяжусь с вами.
                             </div>
                         )}
 
                         {isError && (
                             <div className="help-block with-errors" role="alert">
                                 <ul className="list-unstyled">
-                                    <li>{message || "Что-то пошло не так!"}</li>
+                                    <li>{message || "Не удалось отправить заявку. Попробуйте ещё раз."}</li>
                                 </ul>
                             </div>
                         )}
