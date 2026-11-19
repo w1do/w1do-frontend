@@ -11,6 +11,7 @@ interface Props {
 }
 
 import { DEFAULT_OG_IMAGE, pageSeo } from "../lib/seo";
+import { REQUISITES } from "../lib/requisites";
 import { SITE_ORIGIN, cityPath, regionalSchema } from "../lib/regions";
 import CookieNotice from "../components/shared/CookieNotice.astro";
 import JsonLd from "../components/shared/JsonLd.astro";
@@ -78,6 +79,9 @@ const organizationSchema = {
 		"height": 724
 	},
 	"description": pageSeo["/"].description,
+	"legalName": REQUISITES.legalName,
+	"taxID": REQUISITES.inn,
+	"email": REQUISITES.email,
 	"founder": { "@type": "Person", "name": "Денис Митрофанов" },
 	"sameAs": [
 		"https://t.me/W1DO_DIGITAL",

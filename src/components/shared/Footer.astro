@@ -1,6 +1,7 @@
 ---
 import { FOOTER_LEGAL_LINKS } from '../../lib/legal';
 import { CONTACT_EMAILS } from '../../lib/contact-emails';
+import { REQUISITES } from '../../lib/requisites';
 import { getServiceHubs } from '../../lib/server/w1do/services';
 
 const currentYear = new Date().getFullYear();
@@ -103,12 +104,24 @@ const navigationLinks = [
         </div>
     </div>
 
+    <div class="footer-requisites" aria-label="Реквизиты исполнителя">
+        <p>Исполнитель: {REQUISITES.legalName} · {REQUISITES.status} · ИНН {REQUISITES.inn}</p>
+    </div>
+
     <div class="footer-copyright-prime">
         <p>Copyright © 2022–{currentYear} AiCRAFT.AGENCY. Все права защищены.</p>
     </div>
 </div>
 
 <style>
+    .footer-requisites {
+        padding: 18px 0 0;
+        border-top: 1px solid var(--dark-divider-color);
+        color: var(--text-color);
+        font-size: 13px;
+        text-align: center;
+    }
+    .footer-requisites p { margin: 0; }
     .hidden-link { display: none; }
     .show-more-btn {
         background: none;
