@@ -104,12 +104,28 @@ const {
                 </div>
                 <!-- Pricing Benifit List End -->
             </div>
+
+            <div class="col-lg-12">
+                <div class="pricing-calculator-cta">
+                    <p>Не знаете, какой формат подходит? Ответьте на четыре вопроса.</p>
+                    <a href="/calculator" class="btn-default" data-cursor="-opaque">Рассчитать стоимость</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 <!-- Our Pricing Plan Section End -->
 
 <style>
+    .pricing-calculator-cta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        align-items: center;
+        justify-content: center;
+        margin-top: 32px;
+    }
+    .pricing-calculator-cta p { margin: 0; color: var(--text-color); }
     .pricing-item-term {
         margin: 4px 0 12px;
         color: var(--accent-color);

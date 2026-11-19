@@ -26,7 +26,7 @@ async function collectPages(): Promise<SitemapPage[]> {
     getCmsSitemapPages(), getBlogPosts(), getBlogCategories(), getCases(), getOpenSourceProjects(), getServices(),
     getCollection("landingCluster", ({ data }) => data.hub === true), getCollection("landingSpoke"),
   ]);
-  const paths = ["/", "/about", "/contact", "/services", "/pricing", "/testimonials", "/knowledge",
+  const paths = ["/", "/about", "/contact", "/services", "/pricing", "/calculator", "/testimonials", "/knowledge",
     "/blog", "/case", "/blog/categories", "/opensource",
     ...Array.from({ length: Math.max(0, Math.ceil(posts.length / 10) - 1) }, (_, i) => `/blog/page/${i + 2}`),
     ...categories.filter(category => category.isIndex).map(category => `/blog/categories/${category.slug}`),
