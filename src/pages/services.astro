@@ -5,6 +5,7 @@ import IntroVideo from "../components/IntroVideo.astro";
 import Feature from "../components/Feature.astro";
 import Faqs from "../components/Faqs.astro";
 import Testimonials from "../components/Testimonials.astro";
+import { breadcrumbSchema } from "../lib/breadcrumbs";
 import Layout from "../layouts/Layout.astro";
 import Footer from "../components/shared/Footer.astro";
 import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
@@ -19,6 +20,11 @@ const services = entries.map((service) => ({
     link: service.url,
     delay: `${(parseInt(service.no || "0") - 1) * 0.2}s`
 }));
+const pageBreadcrumbs = breadcrumbSchema([
+    { name: "Главная", path: "/" },
+    { name: "Услуги", path: "/services" }
+]);
+
 ---
 
 <Layout 
@@ -26,6 +32,7 @@ const services = entries.map((service) => ({
     description="Разработка ИИ-агентов, чат-ботов и RAG, интеграции с CRM и 1С, автоматизация процессов. Цены, сроки и примеры — на странице."
     keywords="внедрение ии в бизнес, услуги ии, разработка ии агентов, автоматизация бизнеса, интеграции crm"
     image="/images/og-services.jpg"
+    schema={pageBreadcrumbs}
 >
     <Header/>
     <Breadcrumbs title="Услуги по внедрению ИИ в бизнес" breadcrumbItems={[

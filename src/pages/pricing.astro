@@ -1,4 +1,5 @@
 ---
+import { breadcrumbSchema } from "../lib/breadcrumbs";
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/shared/Header.astro";
 import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
@@ -13,12 +14,18 @@ import Spacer from "../components/shared/Spacer.astro";
 import HireFaqs from "../components/hire/HireFaqs.astro";
 import DevPricing from "../components/pricing/DevPricing.astro";
 
+const pageBreadcrumbs = breadcrumbSchema([
+    { name: "Главная", path: "/" },
+    { name: "Цены", path: "/pricing" }
+]);
+
 ---
 
 <Layout 
     title="Цены на разработку и внедрение ИИ — Claude, Gemini, RAG | AiCRAFT"
     description="Узнайте стоимость разработки и внедрения искусственного интеллекта в ваш бизнес. Прозрачные цены на создание AI-агентов, RAG-систем и автоматизацию на базе Claude и Gemini."
     keywords="цены на разработку ии, стоимость внедрения нейросетей, разработка claude, внедрение gemini, ai агент цена, rag система стоимость"
+    schema={pageBreadcrumbs}
 >
     <Header/>
     

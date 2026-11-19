@@ -1,4 +1,5 @@
 ---
+import { breadcrumbSchema } from "../lib/breadcrumbs";
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/shared/Header.astro";
 import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
@@ -8,10 +9,16 @@ import { getPackages } from "../lib/pricing";
 
 const packages = getPackages();
 const pricingJson = JSON.stringify(packages);
+const pageBreadcrumbs = breadcrumbSchema([
+    { name: "Главная", path: "/" },
+    { name: "Калькулятор стоимости", path: "/calculator" }
+]);
+
 ---
 <Layout
     title="Калькулятор стоимости ИИ-решения | AiCRAFT"
     description="Ответьте на четыре вопроса и получите вилку стоимости внедрения ИИ-агента, срок и рекомендацию по формату работы."
+    schema={pageBreadcrumbs}
 >
     <Header />
     <Breadcrumbs

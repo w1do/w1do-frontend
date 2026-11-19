@@ -5,11 +5,18 @@ import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
 import Footer from "../components/shared/Footer.astro";
 import ContactForm from "../components/contact/ContactForm.tsx";
 import { CONTACT_EMAILS } from "../lib/contact-emails";
+import { breadcrumbSchema } from "../lib/breadcrumbs";
+const pageBreadcrumbs = breadcrumbSchema([
+    { name: "Главная", path: "/" },
+    { name: "Контакты", path: "/contact" }
+]);
+
 ---
 <Layout
     title="Контакты | Инженер по AI автоматизации"
     description="Свяжитесь со мной для обсуждения вашего проекта по внедрению ИИ и автоматизации бизнеса. Нахожусь в Тюмени, работаю по всему миру."
     keywords="контакты, заказать AI автоматизацию, Тюмень, разработка ИИ, внедрение нейросетей"
+    schema={pageBreadcrumbs}
 >
     <Header/>
     <Breadcrumbs title="Контакты" breadcrumbItems={[

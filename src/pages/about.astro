@@ -10,6 +10,7 @@ import Faqs from "../components/Faqs.astro";
 import Testimonials from "../components/Testimonials.astro";
 import Cta from "../components/Cta.astro";
 import { SITE_ORIGIN } from "../lib/regions";
+import { breadcrumbSchema } from "../lib/breadcrumbs";
 
 const personSchema = {
     "@context": "https://schema.org",
@@ -23,13 +24,18 @@ const personSchema = {
         "https://www.youtube.com/@w1do_digital"
     ]
 };
+const pageBreadcrumbs = breadcrumbSchema([
+    { name: "Главная", path: "/" },
+    { name: "Обо мне", path: "/about" }
+]);
+
 ---
 <Layout 
     title="Денис Митрофанов | Разработчик LLM и эксперт по автоматизации ИИ"
     description="Я Денис Митрофанов, разработчик с 10-летним опытом (Senior, TechLead). Помогаю компаниям внедрять LLM, строить ИИ-архитектуру и автоматизировать рутину."
     keywords="разработчик LLM, Денис Митрофанов, внедрение ИИ, автоматизация бизнеса, Senior Developer, TechLead ИИ, разработка на Laravel"
     image="/images/og-about.jpg"
-    schema={personSchema}
+    schema={[personSchema, pageBreadcrumbs]}
 >
     <Header/>
     <Breadcrumbs 
