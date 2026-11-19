@@ -4,7 +4,26 @@ import { defaultCity, getCities } from "./lib/server/w1do/cities";
 import { regionalHtml } from "./lib/server/regional-html";
 import { legacyContentPath } from "./lib/server/w1do/sitemap";
 
+// Старые адреса шаблона и файлов .html: постоянные редиректы на актуальные страницы.
+const LEGACY_REDIRECTS: Record<string, string> = {
+  "/index.html": "/",
+  "/projects": "/case",
+  "/projects.html": "/case",
+  "/team": "/about",
+  "/team.html": "/about",
+  "/faqs": "/knowledge",
+  "/faqs.html": "/knowledge",
+  "/services.html": "/services",
+  "/about.html": "/about",
+  "/contact.html": "/contact",
+  "/pricing.html": "/pricing",
+  "/blog.html": "/blog",
+  "/testimonials.html": "/testimonials",
+};
+
 export const onRequest = defineMiddleware(async (context, next) => {
+  const legacyTarget = LEGACY_REDIRECTS[context.url.pathname.replace(/\/$/, "")];
+  if (legacyTarget) return context.redirect(legacyTarget + context.url.search, 301);
   // Rewrites run middleware again. Only the outer request regionalises the response.
   if (context.locals.region || isSharedPath(context.url.pathname)) return next();
   let cities;
