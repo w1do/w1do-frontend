@@ -3,15 +3,21 @@ import LegalConsent from "../legal/LegalConsent";
 
 interface ContactFormProps {
     title?: string;
+    /** "compact" — три поля для главной и CTA-блоков, "full" — форма страницы контактов. */
+    variant?: "full" | "compact";
+    source?: string;
 }
 
 export default function ContactForm({
     title = "Оставить заявку",
+    variant = "full",
+    source = "contact-page",
 }: ContactFormProps) {
-    const { status, message, handleSubmit } = useContactForm({ source: "contact-page" });
+    const { status, message, handleSubmit } = useContactForm({ source });
     const isLoading = status === "loading";
     const isSuccess = status === "success";
     const isError = status === "error";
+    const compact = variant === "compact";
 
     return (
         <div className="contact-form">
@@ -33,28 +39,38 @@ export default function ContactForm({
                     </div>
 
                     <div className="form-group col-md-6 mb-4">
-                        <label>Имя *</label>
-                        <input type="text" name="fname" className="form-control" id="fname" placeholder="Введите имя *" required />
+                        <label htmlFor="fname">Имя *</label>
+                        <input type="text" name="fname" className="form-control" id="fname" placeholder="Введите имя *" autoComplete="given-name" required />
                     </div>
 
-                    <div className="form-group col-md-6 mb-4">
-                        <label>Фамилия</label>
-                        <input type="text" name="lname" className="form-control" id="lname" placeholder="Введите фамилию" />
-                    </div>
+                    {!compact && (
+                        <div className="form-group col-md-6 mb-4">
+                            <label htmlFor="lname">Фамилия</label>
+                            <input type="text" name="lname" className="form-control" id="lname" placeholder="Введите фамилию" autoComplete="family-name" />
+                        </div>
+                    )}
 
                     <div className="form-group col-md-6 mb-4">
-                        <label>Номер телефона *</label>
-                        <input type="text" name="phone" className="form-control" id="phone" placeholder="Введите номер телефона *" required />
+                        <label htmlFor="phone">Номер телефона *</label>
+                        <input type="tel" name="phone" className="form-control" id="phone" placeholder="Введите номер телефона *" autoComplete="tel" required />
                     </div>
 
-                    <div className="form-group col-md-6 mb-4">
-                        <label>Email</label>
-                        <input type="email" name="email" className="form-control" id="email" placeholder="Введите Email" />
-                    </div>
+                    {!compact && (
+                        <div className="form-group col-md-6 mb-4">
+                            <label htmlFor="email">Email</label>
+                            <input type="email" name="email" className="form-control" id="email" placeholder="Введите Email" autoComplete="email" />
+                        </div>
+                    )}
 
                     <div className="form-group col-md-12 mb-5">
-                        <label>Сообщение</label>
-                        <textarea name="message" className="form-control" id="message" rows={5} placeholder="Ваше сообщение..."></textarea>
+                        <label htmlFor="message">{compact ? "Какая задача?" : "Сообщение"}</label>
+                        <textarea
+                            name="message"
+                            className="form-control"
+                            id="message"
+                            rows={compact ? 3 : 5}
+                            placeholder={compact ? "Например: автоматизировать ответы в поддержке" : "Ваше сообщение..."}
+                        ></textarea>
                     </div>
 
                     <LegalConsent id="leadFormLegalConsent" />
