@@ -12065,3 +12065,10 @@ header.main-header .header-sticky.active{
 	.hero-content-box-prime .section-title h1{ margin-top: 10px; }
 	.hero-content-box-prime .section-title p{ margin-top: 12px; }
 }
+
+
+/* Mobile footer columns: stack them to avoid horizontal clipping */
+@media only screen and (max-width: 767px){
+	.footer-links-box-prime{ gap: 24px; }
+	.footer-links-prime{ flex: 1 1 100%; max-width: 100%; }
+}
