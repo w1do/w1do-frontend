@@ -18,7 +18,10 @@ import { getServiceHubs } from "../lib/server/w1do/services";
 
 const { frontmatter, spokes } = Astro.props;
 
-const brandName = (value: string): string => value.replace(/W1DO DIGITAL/g, "AiCRAFT.AGENCY").replace(/W1DO/g, "AiCRAFT");
+const brandName = (value: string): string => value
+    .replace(/W1DO DIGITAL/g, "AiCRAFT.AGENCY")
+    .replace(/W1DO/g, "AiCRAFT")
+    .replace(/разработчик_ии/g, "разработчик ИИ");
 const seoTitle = brandName(frontmatter.seo?.title || frontmatter.title);
 const seoDescription = brandName(frontmatter.seo?.description || frontmatter.description);
 
