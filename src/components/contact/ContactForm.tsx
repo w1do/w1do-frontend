@@ -57,6 +57,11 @@ export default function ContactForm({
 
     return (
         <div className="contact-form">
+            {compact && (
+                <div className="section-title section-title-center">
+                    <h2 className="text-anime-style-3" data-cursor="-opaque">{title}</h2>
+                </div>
+            )}
             <form
                 id="leadForm"
                 method="POST"
