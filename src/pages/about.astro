@@ -9,6 +9,20 @@ import Footer from "../components/shared/Footer.astro";
 import Faqs from "../components/Faqs.astro";
 import Testimonials from "../components/Testimonials.astro";
 import Cta from "../components/Cta.astro";
+import { SITE_ORIGIN } from "../lib/regions";
+
+const personSchema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Денис Митрофанов",
+    "jobTitle": "Разработчик ИИ и LLM",
+    "url": new URL("/about", SITE_ORIGIN).href,
+    "worksFor": { "@id": `${SITE_ORIGIN}/#organization` },
+    "sameAs": [
+        "https://t.me/W1DO_DIGITAL",
+        "https://www.youtube.com/@w1do_digital"
+    ]
+};
 ---
 <Layout 
     title="Денис Митрофанов | Разработчик LLM и эксперт по автоматизации ИИ"
