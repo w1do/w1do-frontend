@@ -38,7 +38,7 @@ const articleSchema = {
     ...(articleImage ? { "image": articleImage } : {}),
     ...(frontmatter.pubDate ? { "datePublished": new Date(frontmatter.pubDate).toISOString() } : {}),
     ...(frontmatter.tags ? { "keywords": frontmatter.tags.join(", ") } : {}),
-    "author": { "@type": "Organization", "name": "W1DO DIGITAL", "url": siteUrl },
+    "author": { "@type": "Organization", "name": "AiCRAFT.AGENCY", "url": siteUrl },
     "publisher": { "@id": `${siteUrl}/#organization` }
 };
 

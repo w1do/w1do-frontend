@@ -3,6 +3,8 @@ import { FOOTER_LEGAL_LINKS } from '../../lib/legal';
 import { CONTACT_EMAILS } from '../../lib/contact-emails';
 import { getServiceHubs } from '../../lib/server/w1do/services';
 
+const currentYear = new Date().getFullYear();
+
 const services = (await getServiceHubs()).map((service) => ({
     title: service.title,
     link: service.url,
@@ -101,7 +103,7 @@ const navigationLinks = [
     </div>
 
     <div class="footer-copyright-prime">
-        <p>Copyright © 2022-2024 AI Agency. Все права защищены.</p>
+        <p>Copyright © 2022–{currentYear} AiCRAFT.AGENCY. Все права защищены.</p>
     </div>
 </div>
 
