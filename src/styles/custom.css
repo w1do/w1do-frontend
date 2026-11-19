@@ -12048,3 +12048,12 @@ header.main-header .header-sticky.active{
 	color: var(--accent-color);
 	text-decoration: underline;
 }
+
+
+/* Mobile About counter: keep the number and its suffix on one line */
+@media only screen and (max-width: 767px){
+	.about-counter-box{ width: 100%; }
+	.about-counter-box::before{ display: none; }
+	.about-counter-box-header h2{ font-size: 96px; white-space: nowrap; }
+	.about-counter-box-header h2 sup{ font-size: 16px; top: -40px; }
+}
