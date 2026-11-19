@@ -14,29 +14,25 @@ const services = [
     {
         title: "Инфраструктура для ИИ",
         description: "Разворачиваем и масштабируем надёжную инфраструктуру под ваши ИИ-задачи.",
-        image: "/images/hero-service-infrastructure.webp",
-        previousPrice: "от 80 000 ₽",
+        image: "/images/hero-service-infrastructure.webp",
         price: "от 59 000 ₽"
     },
     {
         title: "Настройка Claude Code",
         description: "Интегрируем и настраиваем Claude Code под ваши процессы и команду.",
-        image: "/images/hero-service-claude-code.webp",
-        previousPrice: "от 45 000 ₽",
+        image: "/images/hero-service-claude-code.webp",
         price: "от 35 000 ₽"
     },
     {
         title: "ИИ-агенты для бизнеса",
         description: "Создаём автономных ИИ-агентов, которые берут на себя рутину и приносят результат.",
-        image: "/images/hero-service-ai-agents.webp",
-        previousPrice: "от 120 000 ₽",
+        image: "/images/hero-service-ai-agents.webp",
         price: "от 89 000 ₽"
     },
     {
         title: "Туннелирование Claude Code",
         description: "Настраиваем туннелирование трафика Claude Code с привязкой к выбранному гео.",
-        image: "/images/hero-service-geo-tunnel.webp",
-        previousPrice: null,
+        image: "/images/hero-service-geo-tunnel.webp",
         price: "По запросу"
     }
 ];
@@ -75,12 +71,6 @@ const services = [
                                     <h2>{service.title}</h2>
                                     <p class="hero-service__description">{service.description}</p>
                                     <div class="hero-service__prices">
-                                        {service.previousPrice && (
-                                            <>
-                                                <span class="hero-service__sr-only">Прежняя стоимость: </span>
-                                                <del>{service.previousPrice}</del>
-                                            </>
-                                        )}
                                         <span class="hero-service__sr-only">Текущая стоимость: </span>
                                         <strong>{service.price}</strong>
                                     </div>
