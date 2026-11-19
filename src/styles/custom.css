@@ -12022,3 +12022,29 @@ header.main-header .header-sticky.active{
 		font-size: 0.85rem;
 	}
 }
+
+
+/* Legal consent checkbox: keep the label from overlapping the input */
+.legal-consent{
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	padding-left: 0;
+}
+.legal-consent .form-check-input{
+	position: static;
+	flex: 0 0 18px;
+	width: 18px;
+	height: 18px;
+	margin: 4px 0 0;
+}
+.legal-consent .form-check-label{
+	margin: 0;
+	font-size: 14px;
+	line-height: 1.55;
+	color: var(--text-color);
+}
+.legal-consent .form-check-label a{
+	color: var(--accent-color);
+	text-decoration: underline;
+}
