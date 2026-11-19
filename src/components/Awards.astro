@@ -99,7 +99,7 @@ const isNumeric = match !== null;
                         <div class='awards-item-prime wow fadeInUp' data-wow-delay={index > 0 ? `${index * 0.2}s` : undefined}>
                             <div class='awards-item-body-prime'>
                                 <div class='icon-box'>
-                                    <img src={award.icon} alt={award.title} style='width: 80px; height: 80px; filter: brightness(0) invert(1);'>
+                                    <img loading="lazy" decoding="async" src={award.icon} alt={award.title} style='width: 80px; height: 80px; filter: brightness(0) invert(1);'>
                                 </div>
                                 <div class='awards-item-content-prime'>
                                     <h3>{award.title}</h3>
