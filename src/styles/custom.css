@@ -1713,7 +1713,7 @@ header.main-header .header-sticky.active{
 
 .intro-video{
 	position: relative;
-	background-image: url('/images/intro-video-image.jpg');
+	background-image: url('/images/intro-video-image.webp');
 	background-position: center center;
 	padding: 120px 0 30px;
 }
