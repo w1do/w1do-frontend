@@ -132,9 +132,12 @@ const pricingJson = JSON.stringify(packages);
                     "Точную смету считаем после разбора задачи: она зависит от данных, интеграций и правил передачи диалога человеку.";
 
                 result.hidden = false;
+                const cta = result.querySelector('a[href="/contact"]');
+                if (cta && window.location.search) cta.href = "/contact" + window.location.search;
                 result.scrollIntoView({ behavior: "smooth", block: "start" });
                 if (typeof window.ym === "function") {
                     window.ym(109810952, "reachGoal", "calculator_result");
+                    window.ym(109810952, "reachGoal", "quiz_complete");
                 }
             });
         })();
