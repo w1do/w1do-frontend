@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useId, useRef } from "react";
 import { useContactForm } from "../../hooks/useContactForm";
 import LegalConsent from "../legal/LegalConsent";
 
@@ -20,6 +20,7 @@ export default function ContactForm({
     const isError = status === "error";
     const compact = variant === "compact";
     const messageRef = useRef<HTMLTextAreaElement>(null);
+    const formId = useId().replaceAll(":", "");
 
     // Калькулятор передаёт ответы в query — подставляем их в задачу.
     useEffect(() => {
@@ -63,7 +64,7 @@ export default function ContactForm({
                 </div>
             )}
             <form
-                id="leadForm"
+                id={`${formId}-form`}
                 method="POST"
                 className="contact-form wow fadeInUp"
                 data-wow-delay="0.2s"
@@ -80,42 +81,42 @@ export default function ContactForm({
                     </div>
 
                     <div className="form-group col-md-6 mb-4">
-                        <label htmlFor="fname">Имя *</label>
-                        <input type="text" name="fname" className="form-control" id="fname" placeholder="Введите имя *" autoComplete="given-name" required />
+                        <label htmlFor={`${formId}-fname`}>Имя *</label>
+                        <input type="text" name="fname" className="form-control" id={`${formId}-fname`} placeholder="Введите имя *" autoComplete="given-name" required />
                     </div>
 
                     {!compact && (
                         <div className="form-group col-md-6 mb-4">
-                            <label htmlFor="lname">Фамилия</label>
-                            <input type="text" name="lname" className="form-control" id="lname" placeholder="Введите фамилию" autoComplete="family-name" />
+                            <label htmlFor={`${formId}-lname`}>Фамилия</label>
+                            <input type="text" name="lname" className="form-control" id={`${formId}-lname`} placeholder="Введите фамилию" autoComplete="family-name" />
                         </div>
                     )}
 
                     <div className="form-group col-md-6 mb-4">
-                        <label htmlFor="phone">Номер телефона *</label>
-                        <input type="tel" name="phone" className="form-control" id="phone" placeholder="Введите номер телефона *" autoComplete="tel" required />
+                        <label htmlFor={`${formId}-phone`}>Номер телефона *</label>
+                        <input type="tel" name="phone" className="form-control" id={`${formId}-phone`} placeholder="Введите номер телефона *" autoComplete="tel" required />
                     </div>
 
                     {!compact && (
                         <div className="form-group col-md-6 mb-4">
-                            <label htmlFor="email">Email</label>
-                            <input type="email" name="email" className="form-control" id="email" placeholder="Введите Email" autoComplete="email" />
+                            <label htmlFor={`${formId}-email`}>Email</label>
+                            <input type="email" name="email" className="form-control" id={`${formId}-email`} placeholder="Введите Email" autoComplete="email" />
                         </div>
                     )}
 
                     <div className="form-group col-md-12 mb-5">
-                        <label htmlFor="message">{compact ? "Какая задача?" : "Сообщение"}</label>
+                        <label htmlFor={`${formId}-message`}>{compact ? "Какая задача?" : "Сообщение"}</label>
                         <textarea
                             name="message"
                             className="form-control"
-                            id="message"
+                            id={`${formId}-message`}
                             ref={messageRef}
                             rows={compact ? 3 : 5}
                             placeholder={compact ? "Например: автоматизировать ответы в поддержке" : "Ваше сообщение..."}
                         ></textarea>
                     </div>
 
-                    <LegalConsent id="leadFormLegalConsent" />
+                    <LegalConsent id={`${formId}-legal`} />
 
                     <div className="col-md-12">
                         <button type="submit" className="btn-default" disabled={isLoading}>
