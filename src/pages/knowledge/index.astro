@@ -1,4 +1,5 @@
 ---
+import { breadcrumbSchema } from "../../lib/breadcrumbs";
 import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/shared/Header.astro";
 import Breadcrumbs from "../../components/shared/Breadcrumbs.astro";
@@ -17,8 +18,14 @@ const categories = [
     { label: "Стоимость и Процессы", href: "#faq_pricing" },
     { label: "Разработка и Боты", href: "#faq_dev" },
 ];
+const pageBreadcrumbs = breadcrumbSchema([
+    { name: "Главная", path: "/" },
+    { name: "База знаний", path: "/knowledge" }
+]);
+
 ---
-<Layout 
+<Layout
+    schema={pageBreadcrumbs} 
     title="База знаний по RAG, LLM и разработке с помощью AI (Claude) | AiCRAFT"
     description="Узнайте всё о внедрении RAG, использовании LLM (Claude, Gemini) и автоматизации бизнеса с помощью ИИ-агентов. Ответы на технические и бизнес вопросы."
     keywords="RAG, LLM, разработка AI, Claude, ИИ агенты, база знаний ИИ, автоматизация бизнеса, внедрение ИИ"

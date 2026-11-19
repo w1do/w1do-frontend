@@ -1,4 +1,5 @@
 ---
+import { breadcrumbSchema } from "../lib/breadcrumbs";
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/shared/Header.astro";
 import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
@@ -11,8 +12,14 @@ import { getCases } from "../lib/server/w1do/cases";
 export const prerender = false;
 
 const projects = await getCases();
+const pageBreadcrumbs = breadcrumbSchema([
+    { name: "Главная", path: "/" },
+    { name: "Проекты", path: "/case" }
+]);
+
 ---
-<Layout 
+<Layout
+    schema={pageBreadcrumbs} 
     title="Кейсы и проекты по AI автоматизации | RAG, OpenAI, Claude"
     description="Примеры успешных проектов по внедрению ИИ: RAG системы, OpenAI интеграции, автоматизация на базе Claude и Antigravity. Реальные кейсы повышения эффективности бизнеса."
     keywords="RAG, OpenAI, Claude, Antigravity, LLM, Skills, SEO, кейсы AI, примеры автоматизации"

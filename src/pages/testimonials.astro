@@ -1,4 +1,5 @@
 ---
+import { breadcrumbSchema } from "../lib/breadcrumbs";
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/shared/Header.astro";
 import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
@@ -56,9 +57,15 @@ const testimonials = [
 const title = "Отзывы клиентов | Внедрение ИИ в бизнес — AiCRAFT.AGENCY";
 const description = "Отзывы реальных клиентов о внедрении ИИ-агентов, RAG-систем и автоматизации бизнес-процессов. Узнайте, как наши решения помогают компаниям расти.";
 const keywords = "отзывы ИИ, внедрение нейросетей отзывы, кейсы ИИ автоматизация, AI агент отзывы, AiCRAFT.AGENCY отзывы";
+const pageBreadcrumbs = breadcrumbSchema([
+    { name: "Главная", path: "/" },
+    { name: "Отзывы", path: "/testimonials" }
+]);
+
 ---
 
-<Layout title={title} description={description} keywords={keywords}>
+<Layout
+    schema={pageBreadcrumbs} title={title} description={description} keywords={keywords}>
     <Header/>
     <Breadcrumbs 
         title="Отзывы клиентов" 
