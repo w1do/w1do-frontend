@@ -38,7 +38,7 @@ export async function llmsResponse(full: boolean): Promise<Response> {
   ];
   const unique = [...new Map(entries.filter(entry => !["/cookies", "/privacy-policy", "/user-agreement"].includes(entry.path))
     .map(entry => [entry.path, entry])).values()];
-  const lines = ["# W1DO — разработка ИИ и автоматизация", "", `> ${city.seo?.description || pageSeo["/"].description}`, "",
+  const lines = ["# AiCRAFT — разработка ИИ и автоматизация", "", `> ${city.seo?.description || pageSeo["/"].description}`, "",
     `Карта сайта: ${SITE_ORIGIN}/sitemap-index.xml`, "", "## Города", "",
     ...cities.filter(city => !city.seo?.robots?.includes("noindex")).map(city => `- [${city.name}](${SITE_ORIGIN}${cityPath(city.slug, defaultCitySlug)})`),
     "", "## Страницы", "",

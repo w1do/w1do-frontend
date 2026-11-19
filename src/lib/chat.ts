@@ -31,7 +31,7 @@ export interface ChatResponse {
 
 // Any change to the ChatConsent text or CHAT_CONSENT_NOTICE requires a new CHAT_CONSENT_VERSION.
 export const CHAT_CONSENT_VERSION = "chat-consent-2026-10-14";
-export const CHAT_CONSENT_NOTICE = "Для заявки нужны имя, телефон и описание задачи. Их получит W1DO. Сообщения чата обрабатывает ИИ-сервис PolzaAI. Переписка хранится на сервере не дольше 24 часов с начала диалога и удаляется сразу после отправки заявки.";
+export const CHAT_CONSENT_NOTICE = "Для заявки нужны имя, телефон и описание задачи. Их получит AiCRAFT.AGENCY. Сообщения чата обрабатывает ИИ-сервис PolzaAI. Переписка хранится на сервере не дольше 24 часов с начала диалога и удаляется сразу после отправки заявки.";
 export const CHAT_BUSY_MESSAGE = "Предыдущее сообщение ещё обрабатывается. Дождитесь ответа.";
 
 export const CHAT_ENDPOINT = "/api/chat";

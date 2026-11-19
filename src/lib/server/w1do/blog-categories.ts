@@ -39,7 +39,7 @@ export async function getBlogCategories(): Promise<BlogCategory[]> {
     slug: category.full_path || category.slug,
     isIndex: category.is_index,
     seoTitle: category.seo?.title || category.name,
-    seoDescription: category.seo?.description || `Статьи по теме «${category.name}» в блоге W1DO.`,
+    seoDescription: category.seo?.description || `Статьи по теме «${category.name}» в блоге AiCRAFT.`,
     keywords: category.seo?.keywords || category.name,
     image: category.seo?.og_image,
   }));
