@@ -14,26 +14,22 @@ const services = [
     {
         title: "Инфраструктура для ИИ",
         description: "Разворачиваем и масштабируем надёжную инфраструктуру под ваши ИИ-задачи.",
-        image: "/images/hero-service-infrastructure.webp",
-        price: "от 59 000 ₽"
+        image: "/images/hero-service-infrastructure.webp",
     },
     {
         title: "Настройка Claude Code",
         description: "Интегрируем и настраиваем Claude Code под ваши процессы и команду.",
-        image: "/images/hero-service-claude-code.webp",
-        price: "от 35 000 ₽"
+        image: "/images/hero-service-claude-code.webp",
     },
     {
         title: "ИИ-агенты для бизнеса",
         description: "Создаём автономных ИИ-агентов, которые берут на себя рутину и приносят результат.",
-        image: "/images/hero-service-ai-agents.webp",
-        price: "от 89 000 ₽"
+        image: "/images/hero-service-ai-agents.webp",
     },
     {
         title: "Туннелирование Claude Code",
         description: "Настраиваем туннелирование трафика Claude Code с привязкой к выбранному гео.",
-        image: "/images/hero-service-geo-tunnel.webp",
-        price: "По запросу"
+        image: "/images/hero-service-geo-tunnel.webp",
     }
 ];
 ---
@@ -70,10 +66,6 @@ const services = [
                                 <div class="hero-service__body">
                                     <h2>{service.title}</h2>
                                     <p class="hero-service__description">{service.description}</p>
-                                    <div class="hero-service__prices">
-                                        <span class="hero-service__sr-only">Текущая стоимость: </span>
-                                        <strong>{service.price}</strong>
-                                    </div>
                                     <a href="/contact" aria-label={`Обсудить услугу «${service.title}»`} class="hero-service__button">
                                         <span>Обсудить</span>
                                         <span class="hero-service__arrow" aria-hidden="true">→</span>
@@ -167,27 +159,6 @@ const services = [
         font-family: var(--default-font), sans-serif;
         font-size: 15px;
         line-height: 1.6;
-    }
-    .hero-service__prices {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 4px;
-        margin-top: auto;
-        margin-bottom: 22px;
-    }
-    .hero-service__prices del {
-        color: #c0c0c0;
-        font-size: 16px;
-        line-height: 1.5;
-        text-decoration-thickness: 1px;
-    }
-    .hero-service__prices strong {
-        color: #cff85e;
-        font-size: 28px;
-        font-weight: 700;
-        line-height: 1.25;
-        letter-spacing: -.02em;
     }
     .hero-service__button {
         display: flex;
