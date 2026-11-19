@@ -4,9 +4,6 @@ import { getPackages, type PricingPackage } from "./pricing";
 const PACKAGE_BY_CLUSTER: Record<string, string> = {
     "ai-roadmap-consulting": "audit",
     "consultation": "audit",
-    "ai-training": "audit",
-    "ai-workshops-education": "audit",
-    "web-support": "audit",
     "ai-assistants-chatbots": "mvp",
     "ai-bot-avito": "mvp",
     "ai-data-scraping": "mvp",
