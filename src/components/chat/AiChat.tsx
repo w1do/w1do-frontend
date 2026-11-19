@@ -22,7 +22,7 @@ const SUGGESTIONS = {
     popup: ["Какие услуги вы оказываете?", "Сколько стоит разработка ИИ-агента?", "Хочу оставить заявку"],
 };
 
-// Plain text only: React escapes everything, and only w1do.ru URLs become links.
+// Plain text only: React escapes everything, and only site URLs become links.
 function renderText(text: string): ReactNode[] {
     return text.split(LINK_PATTERN).map((part, index) => {
         if (index % 2 === 0) return part;
