@@ -221,7 +221,7 @@ const quickTelegramUrl = import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1
     <a class="mobile-cta__primary" href="/contact">Оставить заявку</a>
     <a class="mobile-cta__secondary" href={quickTelegramUrl} rel="noopener">Telegram</a>
 </div>
-{showChatPopup && <ChatPopup client:load />}
+{showChatPopup && <ChatPopup client:idle />}
 
 <!-- Jquery Library File -->
 <script src="/js/jquery-3.7.1.min.js" is:inline></script>
