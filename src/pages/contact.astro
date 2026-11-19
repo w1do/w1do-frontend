@@ -5,6 +5,7 @@ import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
 import Footer from "../components/shared/Footer.astro";
 import ContactForm from "../components/contact/ContactForm.tsx";
 import { CONTACT_EMAILS } from "../lib/contact-emails";
+import { REQUISITES } from "../lib/requisites";
 import { breadcrumbSchema } from "../lib/breadcrumbs";
 const pageBreadcrumbs = breadcrumbSchema([
     { name: "Главная", path: "/" },
@@ -48,6 +49,15 @@ const pageBreadcrumbs = breadcrumbSchema([
                                             <a href={`mailto:${address}`}>{address}</a>
                                         </li>
                                     ))}
+                                </ul>
+                            </section>
+
+                            <section class="contact-email-section contact-requisites" aria-labelledby="contact-requisites-title">
+                                <h3 id="contact-requisites-title">Реквизиты</h3>
+                                <ul class="contact-email-list">
+                                    <li><span>Исполнитель</span><span>{REQUISITES.legalName}, {REQUISITES.status}</span></li>
+                                    <li><span>ИНН</span><span>{REQUISITES.inn}</span></li>
+                                    <li><span>Адрес для корреспонденции</span><a href={`mailto:${REQUISITES.email}`}>{REQUISITES.email}</a></li>
                                 </ul>
                             </section>
 
