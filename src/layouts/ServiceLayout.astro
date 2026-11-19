@@ -1,5 +1,6 @@
 ---
 import { SITE_ORIGIN } from "../lib/regions";
+import { getPackages } from "../lib/pricing";
 import Layout from "./Layout.astro";
 import Header from "../components/shared/Header.astro";
 import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
@@ -32,6 +33,7 @@ const services = await getServiceHubs();
 const siteUrl = SITE_ORIGIN;
 const pageUrl = new URL(Astro.url.pathname, SITE_ORIGIN).href;
 const serviceImage = frontmatter.image ? new URL(frontmatter.image, SITE_ORIGIN).href : undefined;
+const startingPrice = getPackages().find((pkg) => pkg.id === "mvp")?.priceFrom ?? 150000;
 
 const serviceSchema = {
     "@context": "https://schema.org",
@@ -43,7 +45,14 @@ const serviceSchema = {
     "inLanguage": "ru-RU",
     ...(serviceImage ? { "image": serviceImage } : {}),
     "provider": { "@id": `${siteUrl}/#organization` },
-    "areaServed": { "@type": "Country", "name": "Россия" }
+    "areaServed": { "@type": "Country", "name": "Россия" },
+    "offers": {
+        "@type": "Offer",
+        "url": pageUrl,
+        "priceCurrency": "RUB",
+        "price": String(startingPrice),
+        "availability": "https://schema.org/InStock"
+    }
 };
 
 const breadcrumbSchema = {
