@@ -42,7 +42,7 @@ const articleSchema = {
     ...(articleImage ? { "image": articleImage } : {}),
     ...(frontmatter.pubDate ? { "datePublished": new Date(frontmatter.pubDate).toISOString() } : {}),
     ...(frontmatter.tags ? { "keywords": frontmatter.tags.join(", ") } : {}),
-    "author": { "@type": "Organization", "name": "AiCRAFT.AGENCY", "url": siteUrl },
+    "author": { "@type": "Person", "name": "Денис Митрофанов", "url": siteUrl },
     "publisher": { "@id": `${siteUrl}/#organization` }
 };
 

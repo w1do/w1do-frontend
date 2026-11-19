@@ -18,7 +18,7 @@ export const MEDIA_SECTION = {
 export const MEDIA_RESOURCES: readonly MediaResource[] = [
     {
         icon: "/images/media/icon-youtube.svg",
-        title: "YouTube @w1do_digital",
+        title: "YouTube-канал",
         description:
             "Записи экрана без монтажных чудес: подключаю LLM к живым сервисам, собираю агентов в Cursor и Claude Code и показываю, на каком шаге всё пошло не так и как я это починил.",
         label: "Видео",
@@ -26,7 +26,7 @@ export const MEDIA_RESOURCES: readonly MediaResource[] = [
     },
     {
         icon: "/images/media/icon-telegram-channel.svg",
-        title: "Telegram @W1DO_DIGITAL",
+        title: "Telegram",
         description:
             "Напишите напрямую, если хотите обсудить проект или задать вопрос по разработке. Ответ придёт в Telegram.",
         label: "Личка",
