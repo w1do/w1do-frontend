@@ -169,17 +169,23 @@ const pageBreadcrumbs = breadcrumbSchema([
 
 <style>
     .calculator-section { padding: 80px 0 40px; }
+    .calculator-section .section-title {
+        max-width: 880px;
+        margin: 0 auto 36px;
+        text-align: center;
+    }
+    .calculator-section .section-title p { margin-left: auto; margin-right: auto; }
     .calculator {
         display: grid;
-        gap: 20px;
+        gap: 14px;
         max-width: 880px;
         margin: 0 auto;
     }
     .calculator-step {
         margin: 0;
-        padding: 24px;
+        padding: 20px;
         border: 1px solid var(--divider-color);
-        border-radius: 20px;
+        border-radius: 18px;
         background: rgba(255, 255, 255, 0.02);
     }
     .calculator-step legend {
@@ -188,56 +194,59 @@ const pageBreadcrumbs = breadcrumbSchema([
         gap: 10px;
         padding: 0 8px;
         color: var(--primary-color);
-        font-size: 18px;
+        font-size: 17px;
         font-weight: 600;
     }
     .calculator-step legend span {
         color: var(--accent-color);
-        font-size: 13px;
+        font-size: 12px;
         letter-spacing: 0.08em;
     }
     .calculator-options {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 10px;
-        margin-top: 16px;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 8px;
+        margin-top: 14px;
     }
     .calculator-options label {
         position: relative;
         display: flex;
         align-items: center;
-        gap: 10px;
-        min-height: 52px;
-        padding: 12px 16px;
+        justify-content: center;
+        min-height: 48px;
+        padding: 10px 16px;
         border: 1px solid var(--divider-color);
-        border-radius: 12px;
+        border-radius: 999px;
         color: var(--primary-color);
+        text-align: center;
         cursor: pointer;
-        transition: border-color 0.2s, background 0.2s;
+        transition: border-color 0.2s, background 0.2s, color 0.2s;
     }
+    .calculator-options label:hover { border-color: rgba(207, 248, 94, 0.5); }
     .calculator-options label:has(input:checked) {
         border-color: var(--accent-color);
-        background: rgba(207, 248, 94, 0.08);
+        background: var(--accent-color);
+        color: #0b0b0b;
     }
     .calculator-options input {
         position: absolute;
         opacity: 0;
         pointer-events: none;
     }
-    .calculator-options label:focus-within { outline: 2px solid var(--accent-color); outline-offset: 2px; }
-    .calculator-options label span { font-size: 15px; line-height: 1.35; }
+    .calculator-options label:focus-within { outline: 2px solid var(--accent-color); outline-offset: 3px; }
+    .calculator-options label span { font-size: 14px; line-height: 1.35; font-weight: 500; }
     .calculator-actions {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         gap: 16px;
         justify-content: center;
-        padding-top: 8px;
+        padding-top: 6px;
     }
     .calculator-hint { color: var(--text-color); font-size: 14px; }
     .calculator-result {
         max-width: 880px;
-        margin: 32px auto 0;
+        margin: 24px auto 0;
         padding: 32px;
         border: 1px solid var(--accent-color);
         border-radius: 24px;
@@ -259,9 +268,12 @@ const pageBreadcrumbs = breadcrumbSchema([
         color: var(--primary-color);
         font-weight: 600;
     }
+    @media (max-width: 767px) {
+        .calculator-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
     @media (max-width: 575px) {
         .calculator-section { padding: 48px 0 24px; }
-        .calculator-step { padding: 18px; }
+        .calculator-step { padding: 16px; }
         .calculator-options { grid-template-columns: 1fr; }
         .calculator-result { padding: 24px 18px; }
         .calculator-result__price { font-size: 32px; }
