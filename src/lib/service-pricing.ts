@@ -18,7 +18,6 @@ const PACKAGE_BY_CLUSTER: Record<string, string> = {
     "payment-integration": "mvp",
     "vibe-coding": "mvp",
     "web-development": "mvp",
-    "ai-agent-development": "business",
     "ai-integration-1c-crm": "business",
     "ai-integration": "business",
     "ai-video-surveillance": "business",
