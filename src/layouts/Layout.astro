@@ -148,6 +148,15 @@ const quickTelegramUrl = import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1
     <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png">
 
     <style is:global>
+        a:focus-visible,
+        button:focus-visible,
+        input:focus-visible,
+        textarea:focus-visible,
+        select:focus-visible,
+        summary:focus-visible {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 3px;
+        }
         .mobile-cta { display: none; }
         @media (max-width: 767px) {
             body { padding-bottom: 84px; }
