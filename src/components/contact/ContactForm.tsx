@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { useContactForm } from "../../hooks/useContactForm";
 import LegalConsent from "../legal/LegalConsent";
 
@@ -18,6 +19,41 @@ export default function ContactForm({
     const isSuccess = status === "success";
     const isError = status === "error";
     const compact = variant === "compact";
+    const messageRef = useRef<HTMLTextAreaElement>(null);
+
+    // Калькулятор передаёт ответы в query — подставляем их в задачу.
+    useEffect(() => {
+        const el = messageRef.current;
+        if (!el || el.value.trim()) return;
+        const params = new URLSearchParams(window.location.search);
+        const taskLabels: Record<string, string> = {
+            support: "поддержка клиентов",
+            sales: "продажи и заявки",
+            docs: "документы и база знаний",
+            unknown: "задача не определена",
+        };
+        const scaleLabels: Record<string, string> = {
+            small: "до 100 обращений в день",
+            medium: "100–1000 обращений в день",
+            large: "больше 1000 обращений в день",
+        };
+        const systemLabels: Record<string, string> = { crm: "CRM", "1c": "1С", messengers: "мессенджеры" };
+        const deadlineLabels: Record<string, string> = {
+            fast: "2–3 недели",
+            normal: "1–2 месяца",
+            flexible: "без жёсткого срока",
+        };
+        const parts: string[] = [];
+        const task = params.get("task");
+        const scale = params.get("scale");
+        const deadline = params.get("deadline");
+        const systems = (params.get("systems") || "").split(",").filter(Boolean).map((value) => systemLabels[value]).filter(Boolean);
+        if (task && taskLabels[task]) parts.push("Задача: " + taskLabels[task]);
+        if (scale && scaleLabels[scale]) parts.push("Объём: " + scaleLabels[scale]);
+        if (systems.length) parts.push("Интеграции: " + systems.join(", "));
+        if (deadline && deadlineLabels[deadline]) parts.push("Срок: " + deadlineLabels[deadline]);
+        if (parts.length) el.value = parts.join(". ") + ".";
+    }, []);
 
     return (
         <div className="contact-form">
@@ -68,6 +104,7 @@ export default function ContactForm({
                             name="message"
                             className="form-control"
                             id="message"
+                            ref={messageRef}
                             rows={compact ? 3 : 5}
                             placeholder={compact ? "Например: автоматизировать ответы в поддержке" : "Ваше сообщение..."}
                         ></textarea>

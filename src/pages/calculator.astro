@@ -133,7 +133,15 @@ const pricingJson = JSON.stringify(packages);
 
                 result.hidden = false;
                 const cta = result.querySelector('a[href="/contact"]');
-                if (cta && window.location.search) cta.href = "/contact" + window.location.search;
+                if (cta) {
+                    const params = new URLSearchParams(window.location.search);
+                    params.set("task", String(task || ""));
+                    params.set("scale", String(scale || ""));
+                    params.set("deadline", String(deadline || ""));
+                    if (systems.length) params.set("systems", systems.join(","));
+                    else params.delete("systems");
+                    cta.href = "/contact?" + params.toString();
+                }
                 result.scrollIntoView({ behavior: "smooth", block: "start" });
                 if (typeof window.ym === "function") {
                     window.ym(109810952, "reachGoal", "calculator_result");
