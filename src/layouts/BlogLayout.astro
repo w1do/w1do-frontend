@@ -42,7 +42,7 @@ const articleSchema = {
     ...(articleImage ? { "image": articleImage } : {}),
     ...(frontmatter.pubDate ? { "datePublished": new Date(frontmatter.pubDate).toISOString() } : {}),
     ...(frontmatter.tags ? { "keywords": frontmatter.tags.join(", ") } : {}),
-    "author": { "@type": "Person", "name": "Денис Митрофанов", "url": siteUrl },
+    "author": { "@type": "Person", "name": "Денис Митрофанов", "url": new URL("/about", SITE_ORIGIN).href },
     "publisher": { "@id": `${siteUrl}/#organization` }
 };
 
