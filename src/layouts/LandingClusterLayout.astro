@@ -1,5 +1,6 @@
 ---
 import Layout from "./Layout.astro";
+import { SITE_ORIGIN } from "../lib/regions";
 import Header from "../components/shared/Header.astro";
 import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
 import About from "../components/About.astro";
@@ -49,9 +50,41 @@ const {
 
 const metaTitle = seo?.title ?? title;
 const metaDescription = seo?.description ?? description;
+
+const pageUrl = new URL(Astro.url.pathname, SITE_ORIGIN).href;
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": breadcrumbTitle ?? title,
+  "description": metaDescription,
+  "url": pageUrl,
+  "serviceType": title,
+  "provider": { "@id": `${SITE_ORIGIN}/#organization` },
+  "areaServed": { "@type": "Country", "name": "Россия" }
+};
+const breadcrumbsJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Главная", "item": new URL("/", SITE_ORIGIN).href },
+    { "@type": "ListItem", "position": 2, "name": breadcrumbLabel ?? title, "item": pageUrl }
+  ]
+};
+const faqJsonLd = Array.isArray(customFaqs) && customFaqs.length
+  ? {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": customFaqs.map((faq: { question: string; answer: string }) => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": { "@type": "Answer", "text": faq.answer }
+      }))
+    }
+  : null;
+const pageSchemas = [serviceSchema, breadcrumbsJsonLd, faqJsonLd].filter(Boolean);
 ---
 
-<Layout title={metaTitle} description={metaDescription} keywords={keywords} image={image}>
+<Layout title={metaTitle} description={metaDescription} keywords={keywords} image={image} schema={pageSchemas}>
   <Header />
 
   <Breadcrumbs
