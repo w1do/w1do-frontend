@@ -38,43 +38,169 @@ const pageBreadcrumbs = breadcrumbSchema([
             </div>
 
             <form class="calculator" id="calculator" novalidate>
-                <fieldset class="calculator-step">
-                    <legend><span>01</span> Что нужно автоматизировать</legend>
-                    <div class="calculator-options">
-                        <label><input type="radio" name="task" value="support" checked><span>Поддержку клиентов</span></label>
-                        <label><input type="radio" name="task" value="sales"><span>Продажи и заявки</span></label>
-                        <label><input type="radio" name="task" value="docs"><span>Документы и базу знаний</span></label>
-                        <label><input type="radio" name="task" value="unknown"><span>Пока не знаю</span></label>
+                <section class="calculator-step box-border-gradiant" aria-labelledby="calc-step-1">
+                    <div class="calculator-step__head">
+                        <div class="icon-box"><img src="/images/icon-purpose-item-1.svg" alt="" width="40" height="40" loading="lazy" decoding="async"></div>
+                        <div class="calculator-step__heading">
+                            <p class="calculator-step__num">Шаг 01 · из 4</p>
+                            <h3 id="calc-step-1">Что нужно автоматизировать</h3>
+                            <p class="calculator-step__desc">Выберите главный сценарий. От него зависит архитектура агента и состав интеграций.</p>
+                        </div>
                     </div>
-                </fieldset>
+                    <div class="calculator-options">
+                        <label class="calculator-option">
+                            <input type="radio" name="task" value="support" checked>
+                            <span class="calculator-option__icon"><img src="/images/icon-headphone-white.svg" alt="" width="22" height="22" loading="lazy" decoding="async"></span>
+                            <span class="calculator-option__body">
+                                <span class="calculator-option__title">Поддержку клиентов</span>
+                                <span class="calculator-option__text">Ответы 24/7 и передача сложных диалогов человеку</span>
+                            </span>
+                        </label>
+                        <label class="calculator-option">
+                            <input type="radio" name="task" value="sales">
+                            <span class="calculator-option__icon"><img src="/images/icon-pricing-2.svg" alt="" width="22" height="22" loading="lazy" decoding="async"></span>
+                            <span class="calculator-option__body">
+                                <span class="calculator-option__title">Продажи и заявки</span>
+                                <span class="calculator-option__text">Квалификация лидов и доведение до сделки</span>
+                            </span>
+                        </label>
+                        <label class="calculator-option">
+                            <input type="radio" name="task" value="docs">
+                            <span class="calculator-option__icon"><img src="/images/icon-service-5.svg" alt="" width="22" height="22" loading="lazy" decoding="async"></span>
+                            <span class="calculator-option__body">
+                                <span class="calculator-option__title">Документы и базу знаний</span>
+                                <span class="calculator-option__text">Поиск по регламентам, ответы со ссылками</span>
+                            </span>
+                        </label>
+                        <label class="calculator-option">
+                            <input type="radio" name="task" value="unknown">
+                            <span class="calculator-option__icon"><img src="/images/icon-asterisk-white.svg" alt="" width="22" height="22" loading="lazy" decoding="async"></span>
+                            <span class="calculator-option__body">
+                                <span class="calculator-option__title">Пока не знаю</span>
+                                <span class="calculator-option__text">Разберём задачу и найдём точку автоматизации на аудите</span>
+                            </span>
+                        </label>
+                    </div>
+                </section>
 
-                <fieldset class="calculator-step">
-                    <legend><span>02</span> Объём обращений</legend>
-                    <div class="calculator-options">
-                        <label><input type="radio" name="scale" value="small" checked><span>До 100 в день</span></label>
-                        <label><input type="radio" name="scale" value="medium"><span>100–1000 в день</span></label>
-                        <label><input type="radio" name="scale" value="large"><span>Больше 1000 в день</span></label>
+                <section class="calculator-step box-border-gradiant" aria-labelledby="calc-step-2">
+                    <div class="calculator-step__head">
+                        <div class="icon-box"><img src="/images/icon-purpose-item-2.svg" alt="" width="40" height="40" loading="lazy" decoding="async"></div>
+                        <div class="calculator-step__heading">
+                            <p class="calculator-step__num">Шаг 02 · из 4</p>
+                            <h3 id="calc-step-2">Объём обращений</h3>
+                            <p class="calculator-step__desc">От нагрузки зависят очереди, лимиты модели и стоимость инфраструктуры.</p>
+                        </div>
                     </div>
-                </fieldset>
+                    <div class="calculator-options">
+                        <label class="calculator-option">
+                            <input type="radio" name="scale" value="small" checked>
+                            <span class="calculator-option__icon"><img src="/images/icon-service-4.svg" alt="" width="22" height="22" loading="lazy" decoding="async"></span>
+                            <span class="calculator-option__body">
+                                <span class="calculator-option__title">До 100 в день</span>
+                                <span class="calculator-option__text">Точечный агент под один процесс</span>
+                            </span>
+                        </label>
+                        <label class="calculator-option">
+                            <input type="radio" name="scale" value="medium">
+                            <span class="calculator-option__icon"><img src="/images/icon-service-2.svg" alt="" width="22" height="22" loading="lazy" decoding="async"></span>
+                            <span class="calculator-option__body">
+                                <span class="calculator-option__title">100–1000 в день</span>
+                                <span class="calculator-option__text">Несколько сценариев и интеграций</span>
+                            </span>
+                        </label>
+                        <label class="calculator-option">
+                            <input type="radio" name="scale" value="large">
+                            <span class="calculator-option__icon"><img src="/images/icon-service-6.svg" alt="" width="22" height="22" loading="lazy" decoding="async"></span>
+                            <span class="calculator-option__body">
+                                <span class="calculator-option__title">Больше 1000 в день</span>
+                                <span class="calculator-option__text">Очереди, приоритеты и мониторинг качества</span>
+                            </span>
+                        </label>
+                    </div>
+                </section>
 
-                <fieldset class="calculator-step">
-                    <legend><span>03</span> С чем нужно интегрироваться</legend>
-                    <div class="calculator-options">
-                        <label><input type="checkbox" name="systems" value="crm"><span>CRM</span></label>
-                        <label><input type="checkbox" name="systems" value="1c"><span>1С</span></label>
-                        <label><input type="checkbox" name="systems" value="messengers"><span>Мессенджеры</span></label>
-                        <label><input type="checkbox" name="systems" value="none"><span>Пока ни с чем</span></label>
+                <section class="calculator-step box-border-gradiant" aria-labelledby="calc-step-3">
+                    <div class="calculator-step__head">
+                        <div class="icon-box"><img src="/images/icon-service-2.svg" alt="" width="40" height="40" loading="lazy" decoding="async"></div>
+                        <div class="calculator-step__heading">
+                            <p class="calculator-step__num">Шаг 03 · из 4</p>
+                            <h3 id="calc-step-3">С чем нужно интегрироваться</h3>
+                            <p class="calculator-step__desc">Можно выбрать несколько вариантов — каждая интеграция добавляет работ по подключению.</p>
+                        </div>
                     </div>
-                </fieldset>
+                    <div class="calculator-options">
+                        <label class="calculator-option">
+                            <input type="checkbox" name="systems" value="crm">
+                            <span class="calculator-option__icon"><img src="/images/icon-service-1.svg" alt="" width="22" height="22" loading="lazy" decoding="async"></span>
+                            <span class="calculator-option__body">
+                                <span class="calculator-option__title">CRM</span>
+                                <span class="calculator-option__text">Битрикс24, amoCRM и другие</span>
+                            </span>
+                        </label>
+                        <label class="calculator-option">
+                            <input type="checkbox" name="systems" value="1c">
+                            <span class="calculator-option__icon"><img src="/images/icon-service-3.svg" alt="" width="22" height="22" loading="lazy" decoding="async"></span>
+                            <span class="calculator-option__body">
+                                <span class="calculator-option__title">1С</span>
+                                <span class="calculator-option__text">Обмен данными и документами</span>
+                            </span>
+                        </label>
+                        <label class="calculator-option">
+                            <input type="checkbox" name="systems" value="messengers">
+                            <span class="calculator-option__icon"><img src="/images/icon-process-item-2.svg" alt="" width="22" height="22" loading="lazy" decoding="async"></span>
+                            <span class="calculator-option__body">
+                                <span class="calculator-option__title">Мессенджеры</span>
+                                <span class="calculator-option__text">Telegram, WhatsApp, VK</span>
+                            </span>
+                        </label>
+                        <label class="calculator-option">
+                            <input type="checkbox" name="systems" value="none">
+                            <span class="calculator-option__icon"><img src="/images/icon-asterisk-white.svg" alt="" width="22" height="22" loading="lazy" decoding="async"></span>
+                            <span class="calculator-option__body">
+                                <span class="calculator-option__title">Пока ни с чем</span>
+                                <span class="calculator-option__text">Начнём с автономного контура</span>
+                            </span>
+                        </label>
+                    </div>
+                </section>
 
-                <fieldset class="calculator-step">
-                    <legend><span>04</span> Когда нужен результат</legend>
-                    <div class="calculator-options">
-                        <label><input type="radio" name="deadline" value="fast" checked><span>Через 2–3 недели</span></label>
-                        <label><input type="radio" name="deadline" value="normal"><span>В течение 1–2 месяцев</span></label>
-                        <label><input type="radio" name="deadline" value="flexible"><span>Без жёсткого срока</span></label>
+                <section class="calculator-step box-border-gradiant" aria-labelledby="calc-step-4">
+                    <div class="calculator-step__head">
+                        <div class="icon-box"><img src="/images/icon-calendar-date.svg" alt="" width="40" height="40" loading="lazy" decoding="async"></div>
+                        <div class="calculator-step__heading">
+                            <p class="calculator-step__num">Шаг 04 · из 4</p>
+                            <h3 id="calc-step-4">Когда нужен результат</h3>
+                            <p class="calculator-step__desc">Срок влияет на формат: быстрый MVP или полный цикл с пилотом.</p>
+                        </div>
                     </div>
-                </fieldset>
+                    <div class="calculator-options">
+                        <label class="calculator-option">
+                            <input type="radio" name="deadline" value="fast" checked>
+                            <span class="calculator-option__icon"><img src="/images/icon-process-item-1.svg" alt="" width="22" height="22" loading="lazy" decoding="async"></span>
+                            <span class="calculator-option__body">
+                                <span class="calculator-option__title">Через 2–3 недели</span>
+                                <span class="calculator-option__text">Срочный запуск, MVP-контур</span>
+                            </span>
+                        </label>
+                        <label class="calculator-option">
+                            <input type="radio" name="deadline" value="normal">
+                            <span class="calculator-option__icon"><img src="/images/icon-calendar-date.svg" alt="" width="22" height="22" loading="lazy" decoding="async"></span>
+                            <span class="calculator-option__body">
+                                <span class="calculator-option__title">В течение 1–2 месяцев</span>
+                                <span class="calculator-option__text">Полный цикл с пилотом</span>
+                            </span>
+                        </label>
+                        <label class="calculator-option">
+                            <input type="radio" name="deadline" value="flexible">
+                            <span class="calculator-option__icon"><img src="/images/icon-purpose-item-3.svg" alt="" width="22" height="22" loading="lazy" decoding="async"></span>
+                            <span class="calculator-option__body">
+                                <span class="calculator-option__title">Без жёсткого срока</span>
+                                <span class="calculator-option__text">Спокойный план и итерации</span>
+                            </span>
+                        </label>
+                    </div>
+                </section>
 
                 <div class="calculator-actions">
                     <button type="submit" class="btn-default" data-cursor="-opaque">Показать вилку</button>
@@ -82,9 +208,14 @@ const pageBreadcrumbs = breadcrumbSchema([
                 </div>
             </form>
 
-            <div class="calculator-result" id="calculatorResult" hidden aria-live="polite">
-                <span class="calculator-result__label">Рекомендуемый формат</span>
-                <h3 id="resultPackage">AI MVP</h3>
+            <div class="calculator-result box-border-gradiant" id="calculatorResult" hidden aria-live="polite">
+                <div class="calculator-result__header">
+                    <div class="icon-box"><img src="/images/icon-pricing-1.svg" alt="" width="40" height="40" loading="lazy" decoding="async"></div>
+                    <div class="calculator-step__heading">
+                        <p class="calculator-result__label">Рекомендуемый формат</p>
+                        <h3 id="resultPackage">AI MVP</h3>
+                    </div>
+                </div>
                 <p class="calculator-result__price" id="resultPrice">от 150 000 ₽</p>
                 <p class="calculator-result__term" id="resultTerm">Срок: 2–3 недели</p>
                 <p class="calculator-result__note" id="resultNote">Точную смету считаем после разбора задачи: она зависит от данных, интеграций и правил передачи диалога человеку.</p>
@@ -106,6 +237,18 @@ const pageBreadcrumbs = breadcrumbSchema([
 
             const packages = JSON.parse(dataEl.textContent || "[]");
             const byId = Object.fromEntries(packages.map((pkg) => [pkg.id, pkg]));
+
+            // «Пока ни с чем» не сочетается с остальными интеграциями.
+            form.addEventListener("change", (event) => {
+                const target = event.target;
+                if (!(target instanceof HTMLInputElement) || target.name !== "systems") return;
+                if (target.value === "none" && target.checked) {
+                    form.querySelectorAll('input[name="systems"]:not([value="none"])').forEach((input) => { input.checked = false; });
+                } else if (target.value !== "none" && target.checked) {
+                    const none = form.querySelector('input[name="systems"][value="none"]');
+                    if (none) none.checked = false;
+                }
+            });
 
             const formatPrice = (pkg) => {
                 const value = new Intl.NumberFormat("ru-RU").format(pkg.priceFrom).replace(/\u00A0/g, " ");
@@ -177,85 +320,180 @@ const pageBreadcrumbs = breadcrumbSchema([
     .calculator-section .section-title p { margin-left: auto; margin-right: auto; }
     .calculator {
         display: grid;
-        gap: 14px;
-        max-width: 880px;
+        gap: 20px;
+        max-width: 1000px;
         margin: 0 auto;
     }
     .calculator-step {
         margin: 0;
-        padding: 20px;
-        border: 1px solid var(--divider-color);
-        border-radius: 18px;
-        background: rgba(255, 255, 255, 0.02);
+        padding: 32px;
     }
-    .calculator-step legend {
+    .calculator-step__head {
         display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 0 8px;
-        color: var(--primary-color);
-        font-size: 17px;
-        font-weight: 600;
+        align-items: flex-start;
+        gap: 18px;
+        padding-bottom: 24px;
+        margin-bottom: 24px;
+        border-bottom: 1px solid var(--dark-divider-color);
     }
-    .calculator-step legend span {
+    .calculator-step .icon-box,
+    .calculator-result .icon-box {
+        position: relative;
+        flex: 0 0 auto;
+        width: 40px;
+        height: 40px;
+    }
+    .calculator-step .icon-box::before,
+    .calculator-result .icon-box::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 18px;
+        height: 18px;
+        background: var(--accent-color);
+        border-radius: 50%;
+        z-index: -1;
+    }
+    .calculator-step .icon-box img,
+    .calculator-result .icon-box img {
+        display: block;
+        width: 40px;
+        height: 40px;
+    }
+    .calculator-step__heading { min-width: 0; }
+    .calculator-step__num,
+    .calculator-result__label {
+        margin: 0 0 4px;
         color: var(--accent-color);
         font-size: 12px;
+        font-weight: 600;
         letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+    .calculator-step__head h3,
+    .calculator-result__header h3 {
+        margin: 0 0 6px;
+        color: var(--primary-color);
+        font-size: 22px;
+        line-height: 1.3;
+    }
+    .calculator-step__desc {
+        margin: 0;
+        color: var(--text-color);
+        font-size: 14px;
+        line-height: 1.6;
     }
     .calculator-options {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 8px;
-        margin-top: 14px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
     }
-    .calculator-options label {
+    .calculator-option {
         position: relative;
         display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 48px;
-        padding: 10px 16px;
-        border: 1px solid var(--divider-color);
-        border-radius: 999px;
-        color: var(--primary-color);
-        text-align: center;
+        align-items: flex-start;
+        gap: 14px;
+        margin: 0;
+        padding: 16px 44px 16px 16px;
+        border: 1px solid var(--dark-divider-color);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.02);
         cursor: pointer;
-        transition: border-color 0.2s, background 0.2s, color 0.2s;
+        transition: border-color 0.25s ease, background-color 0.25s ease;
     }
-    .calculator-options label:hover { border-color: rgba(207, 248, 94, 0.5); }
-    .calculator-options label:has(input:checked) {
+    .calculator-option:hover { border-color: rgba(207, 248, 94, 0.45); }
+    .calculator-option:has(input:checked) {
         border-color: var(--accent-color);
-        background: var(--accent-color);
-        color: #0b0b0b;
+        background: rgba(207, 248, 94, 0.07);
     }
-    .calculator-options input {
+    .calculator-option:focus-within {
+        outline: 2px solid var(--accent-color);
+        outline-offset: 3px;
+    }
+    .calculator-option input {
         position: absolute;
         opacity: 0;
         pointer-events: none;
     }
-    .calculator-options label:focus-within { outline: 2px solid var(--accent-color); outline-offset: 3px; }
-    .calculator-options label span { font-size: 14px; line-height: 1.35; font-weight: 500; }
+    .calculator-option::after {
+        content: '';
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        width: 18px;
+        height: 18px;
+        border: 1px solid var(--dark-divider-color);
+        border-radius: 50%;
+        transition: all 0.25s ease;
+    }
+    .calculator-option:has(input:checked)::after {
+        border-color: var(--accent-color);
+        background: var(--accent-color) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230b0b0b' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E") center / 10px no-repeat;
+    }
+    .calculator-option__icon {
+        flex: 0 0 44px;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--dark-divider-color);
+        border-radius: 12px;
+        background: var(--secondary-color);
+    }
+    .calculator-option__icon img {
+        display: block;
+        width: 22px;
+        height: 22px;
+    }
+    .calculator-option__body { min-width: 0; }
+    .calculator-option__title {
+        display: block;
+        margin-bottom: 3px;
+        color: var(--primary-color);
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 1.35;
+    }
+    .calculator-option__text {
+        display: block;
+        color: var(--text-color);
+        font-size: 13px;
+        line-height: 1.5;
+    }
     .calculator-actions {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         gap: 16px;
         justify-content: center;
-        padding-top: 6px;
+        padding-top: 8px;
     }
     .calculator-hint { color: var(--text-color); font-size: 14px; }
     .calculator-result {
-        max-width: 880px;
+        max-width: 1000px;
         margin: 24px auto 0;
         padding: 32px;
-        border: 1px solid var(--accent-color);
-        border-radius: 24px;
-        background: rgba(207, 248, 94, 0.06);
         text-align: center;
     }
-    .calculator-result__label { color: var(--text-color); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
-    .calculator-result h3 { margin: 8px 0 4px; color: var(--primary-color); font-size: 28px; }
-    .calculator-result__price { margin: 0; color: var(--accent-color); font-size: 42px; font-weight: 700; line-height: 1.1; }
+    .calculator-result__header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid var(--dark-divider-color);
+        text-align: left;
+    }
+    .calculator-result__price {
+        margin: 0;
+        color: var(--accent-color);
+        font-size: 42px;
+        font-weight: 700;
+        line-height: 1.1;
+    }
     .calculator-result__term { margin: 8px 0 16px; color: var(--primary-color); font-size: 17px; }
     .calculator-result__note { max-width: 620px; margin: 0 auto 22px; color: var(--text-color); font-size: 15px; line-height: 1.6; }
     .calculator-result__actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
@@ -269,12 +507,13 @@ const pageBreadcrumbs = breadcrumbSchema([
         font-weight: 600;
     }
     @media (max-width: 767px) {
-        .calculator-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .calculator-options { grid-template-columns: 1fr; }
+        .calculator-step { padding: 20px; }
+        .calculator-step__head { gap: 14px; padding-bottom: 18px; margin-bottom: 18px; }
+        .calculator-step__head h3, .calculator-result__header h3 { font-size: 18px; }
     }
     @media (max-width: 575px) {
         .calculator-section { padding: 48px 0 24px; }
-        .calculator-step { padding: 16px; }
-        .calculator-options { grid-template-columns: 1fr; }
         .calculator-result { padding: 24px 18px; }
         .calculator-result__price { font-size: 32px; }
     }
