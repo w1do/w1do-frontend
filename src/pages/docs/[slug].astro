@@ -16,7 +16,7 @@ try {
     page = await getPublishedPageBySlug(slug);
 } catch (error) {
     failed = true;
-    console.error("[docs] W1DO page request failed:", error);
+    console.error("[docs] AiCRAFT page request failed:", error);
 }
 
 if (!page) Astro.response.status = failed ? 502 : 404;
@@ -53,7 +53,7 @@ const schema = page ? {
                             <h2>{failed ? "Документ временно недоступен" : "Документ не найден"}</h2>
                             <p>
                                 {failed
-                                    ? "Не удалось получить документ из W1DO. Попробуйте открыть страницу позже."
+                                    ? "Не удалось получить документ из AiCRAFT. Попробуйте открыть страницу позже."
                                     : "Документ не опубликован или адрес указан неверно."}
                             </p>
                             <p><a href="/">Вернуться на главную</a></p>

@@ -39,7 +39,8 @@ export default defineConfig({
   adapter: node({
     mode: 'standalone'
   }),
-  trailingSlash: 'never',
+  // Normalize slashes in middleware after resolving legacy aliases in one hop.
+  trailingSlash: 'ignore',
   integrations: [react()],
   prefetch: true,
   build: {

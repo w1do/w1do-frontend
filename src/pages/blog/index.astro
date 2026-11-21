@@ -3,6 +3,7 @@ import BlogTopics from "../../components/blog/BlogTopics.astro";
 import { getBlogCategories } from "../../lib/server/w1do/blog-categories";
 import { getBlogPosts } from "../../lib/server/w1do/blog";
 export const prerender = false;
+import { breadcrumbSchema } from "../../lib/breadcrumbs";
 import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/shared/Header.astro";
 import Breadcrumbs from "../../components/shared/Breadcrumbs.astro";
@@ -22,11 +23,17 @@ const breadcrumbItems = [
     { label: "Главная", href: "/" },
     { label: "Блог", active: true }
 ];
+const pageBreadcrumbs = breadcrumbSchema([
+    { name: "Главная", path: "/" },
+    { name: "Блог", path: "/blog" }
+]);
+
 ---
 
-<Layout title="Блог | ИИ в бизнесе и автоматизация" description="Статьи об искусственном интеллекте, автоматизации бизнес-процессов и цифровом маркетинге.">
+<Layout
+    schema={pageBreadcrumbs} title="Блог AiCRAFT об ИИ-агентах и автоматизации" description="Разбираем, как работают ИИ-агенты, как подключать данные и инструменты и как оценивать сценарии перед внедрением.">
     <Header/>
-    <Breadcrumbs title="Наш Блог" breadcrumbItems={breadcrumbItems} />
+    <Breadcrumbs title="Блог об ИИ-агентах и автоматизации" breadcrumbItems={breadcrumbItems} />
     <BlogTopics categories={categories} />
     <BlogList posts={pagePosts} currentPage={1} totalPages={totalPages} />
     <Cta/>

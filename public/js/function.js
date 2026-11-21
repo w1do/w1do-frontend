@@ -4,27 +4,6 @@
 	var $window = $(window); 
 	var $body = $('body'); 
 
-	var hidePreloader = function(){
-		$(".preloader").fadeOut(600);
-	};
-
-	/* Preloader Effect */
-	$window.on('load', hidePreloader);
-
-	// Fallback for preloader if load event already fired or we are in a module environment
-	if (document.readyState === 'complete') {
-		hidePreloader();
-	} else {
-		// Just in case, also hide after a timeout if it's still there
-		setTimeout(hidePreloader, 3000);
-	}
-
-	$(document).ready(function() {
-		if (document.readyState === 'complete') {
-			hidePreloader();
-		}
-	});
-
 	/* Sticky Header */	
 	if($('.active-sticky-header').length){
 		$window.on('resize', function(){

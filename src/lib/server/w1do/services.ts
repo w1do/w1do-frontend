@@ -1,4 +1,6 @@
 import { fetchServiceEntries } from "./services-api";
+import { canonicalServicePath } from "../../ai-agents-canonical";
+import { canonicalCmsHtml } from "../regional-html";
 const CACHE_TTL = 60_000;
 const GENERIC_SERVICE_IMAGE = "uhkgnmd2Bfd0VOWFyKCtbmD93bIEl0AaMOKnNvPW.jpg";
 const MEDIA_BASE_URL = "https://backend.w1do.ru/media/projects/01m15zc30ghk21dmk2a4ph5wkg/media";
@@ -44,6 +46,7 @@ export interface ServiceEntry {
   hub: boolean;
   cluster: string;
   postSlug: string;
+  publicPath: string;
   url: string;
   cmsPath: string;
   bodyHtml: string;
@@ -75,6 +78,9 @@ let pending: Promise<ServiceEntry[]> | undefined;
 const text = (value: unknown, fallback = ""): string =>
   typeof value === "string" ? value : fallback;
 
+// В CMS остались служебные подстановки вида «разработчик_ии» — чиним на выходе.
+const cleanText = (value: string): string => value.replace(/разработчик_ии/g, "разработчик ИИ");
+
 function resolveImage(values: Record<string, unknown>, cluster: string): string | undefined {
   if (CLUSTER_IMAGE_URLS[cluster]) return CLUSTER_IMAGE_URLS[cluster];
   const image = text(values.image_media, text(values.image));
@@ -98,26 +104,29 @@ function mapEntry(entry: Awaited<ReturnType<typeof fetchServiceEntries>>[number]
   if (!entry.title || !cluster || !["hub", "spoke"].includes(type)) return undefined;
 
   const hub = type === "hub";
+  const postSlug = text(values.post_slug);
+  const publicPath = text(values.public_path, hub ? `/services/${cluster}` : `/services/${cluster}/${postSlug}`);
   return {
-    title: entry.title,
-    description: text(values.description),
+    title: cleanText(entry.title),
+    description: cleanText(text(values.description)),
     seo: {
       title: text(entry.seo_title, entry.title),
       description: text(entry.seo_description, text(values.description)),
     },
     hub,
     cluster,
-    postSlug: text(values.post_slug),
-    url: text(values.public_path, hub ? `/services/${cluster}` : `/services/${cluster}/${text(values.post_slug)}`),
+    postSlug,
+    publicPath,
+    url: canonicalServicePath(publicPath),
     cmsPath: `/services/${entry.slug}`,
-    bodyHtml: text(values.body_html),
+    bodyHtml: canonicalCmsHtml(cleanText(text(values.body_html)), publicPath),
     image: resolveImage(values, cluster),
     imageAlt: text(values.image_alt) || undefined,
     icon: text(values.icon, "/images/icon-service-3.svg"),
     no: text(values.display_no, "99"),
     order: Number(values.display_order) || 0,
     tags: json(values.tags_json, []),
-    excerpt: text(values.excerpt) || undefined,
+    excerpt: cleanText(text(values.excerpt)) || undefined,
     dateLabel: text(values.date_label) || undefined,
     offersTitle: text(values.offers_title) || undefined,
     offersDescription: text(values.offers_description) || undefined,
@@ -158,5 +167,5 @@ export async function getServiceSpokes(cluster: string): Promise<ServiceEntry[]>
 
 export async function getServiceByPath(parts: string[]): Promise<ServiceEntry | undefined> {
   const path = `/services/${parts.join("/")}`;
-  return (await getServices()).find((entry) => entry.url === path);
+  return (await getServices()).find((entry) => entry.publicPath === path && entry.url === path);
 }

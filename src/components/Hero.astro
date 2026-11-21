@@ -15,35 +15,27 @@ const services = [
         title: "Инфраструктура для ИИ",
         description: "Разворачиваем и масштабируем надёжную инфраструктуру под ваши ИИ-задачи.",
         image: "/images/hero-service-infrastructure.webp",
-        previousPrice: "от 80 000 ₽",
-        price: "от 59 000 ₽"
     },
     {
         title: "Настройка Claude Code",
         description: "Интегрируем и настраиваем Claude Code под ваши процессы и команду.",
         image: "/images/hero-service-claude-code.webp",
-        previousPrice: "от 45 000 ₽",
-        price: "от 35 000 ₽"
     },
     {
         title: "ИИ-агенты для бизнеса",
         description: "Создаём автономных ИИ-агентов, которые берут на себя рутину и приносят результат.",
         image: "/images/hero-service-ai-agents.webp",
-        previousPrice: "от 120 000 ₽",
-        price: "от 89 000 ₽"
     },
     {
         title: "Туннелирование Claude Code",
         description: "Настраиваем туннелирование трафика Claude Code с привязкой к выбранному гео.",
         image: "/images/hero-service-geo-tunnel.webp",
-        previousPrice: null,
-        price: "По запросу"
     }
 ];
 ---
 <div class="hero-prime">
     <div class="hero-bg-video-prime">
-        <video autoplay="" muted="" playsinline="" loop="" id="myvideo" preload="metadata"><source src="/videos/hero.mp4" type="video/mp4"></video>
+        <video autoplay muted playsinline loop id="myvideo" preload="metadata" poster="/images/hero-poster.webp" aria-hidden="true" tabindex="-1"><source src="/videos/hero.mp4" type="video/mp4" media="(min-width: 768px)"></video>
     </div>
 
     <div class="container">
@@ -53,8 +45,8 @@ const services = [
                 <div class="hero-content-box-prime">
                     <div class="hero-sub-heading-prime hero-assistant-notice wow fadeInUp">
                         <img src="/images/assistant-robot.svg" alt="" aria-hidden="true" width="44" height="44">
-                        <span>Заявки принимаются только через ИИ ассистента</span>
-                        <a href="/chat" data-open-chat aria-haspopup="dialog" aria-label="Открыть ИИ ассистента" class="hero-assistant-notice__button">
+                        <span>Оставьте заявку — обсудим задачу и предложим решение</span>
+                        <a href="/contact" aria-label="Оставить заявку" class="hero-assistant-notice__button">
                             <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
                         </a>
                     </div>
@@ -68,23 +60,13 @@ const services = [
 
                     <!-- Hero Services Start -->
                     <div class="hero-content-counter-box-prime hero-services">
-                        {services.map((service) => (
+                        {services.map((service, index) => (
                             <article class="hero-service">
-                                <img class="hero-service__image" src={service.image} alt="" width="960" height="640" loading="eager" decoding="async" />
+                                <img class="hero-service__image" src={service.image} alt="" width="960" height="640" loading="eager" decoding="async" fetchpriority={index === 0 ? "high" : undefined} />
                                 <div class="hero-service__body">
                                     <h2>{service.title}</h2>
                                     <p class="hero-service__description">{service.description}</p>
-                                    <div class="hero-service__prices">
-                                        {service.previousPrice && (
-                                            <>
-                                                <span class="hero-service__sr-only">Прежняя стоимость: </span>
-                                                <del>{service.previousPrice}</del>
-                                            </>
-                                        )}
-                                        <span class="hero-service__sr-only">Текущая стоимость: </span>
-                                        <strong>{service.price}</strong>
-                                    </div>
-                                    <a href="/chat" data-open-chat aria-haspopup="dialog" aria-label={`Обсудить услугу «${service.title}»`} class="hero-service__button">
+                                    <a href="/contact" aria-label={`Обсудить услугу «${service.title}»`} class="hero-service__button">
                                         <span>Обсудить</span>
                                         <span class="hero-service__arrow" aria-hidden="true">→</span>
                                     </a>
@@ -98,7 +80,7 @@ const services = [
                     <div class="hero-footer-prime wow fadeInUp" data-wow-delay="0.2s">
                         <!-- Hero Button Start -->
                         <div class="hero-btn-prime">
-                            <a href="/chat" data-open-chat aria-haspopup="dialog" class="btn-default" data-cursor="-opaque">Обсудить ИИ-агента</a>
+                            <a href="/contact" class="btn-default" data-cursor="-opaque">Обсудить ИИ-агента</a>
                         </div>
                         <!-- Hero Button End -->
 
@@ -177,27 +159,6 @@ const services = [
         font-family: var(--default-font), sans-serif;
         font-size: 15px;
         line-height: 1.6;
-    }
-    .hero-service__prices {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 4px;
-        margin-top: auto;
-        margin-bottom: 22px;
-    }
-    .hero-service__prices del {
-        color: #c0c0c0;
-        font-size: 16px;
-        line-height: 1.5;
-        text-decoration-thickness: 1px;
-    }
-    .hero-service__prices strong {
-        color: #cff85e;
-        font-size: 28px;
-        font-weight: 700;
-        line-height: 1.25;
-        letter-spacing: -.02em;
     }
     .hero-service__button {
         display: flex;

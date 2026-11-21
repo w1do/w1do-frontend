@@ -1,7 +1,7 @@
 import { getCollection } from "astro:content";
 import { parseFragment, type DefaultTreeAdapterMap } from "parse5";
 import { pageSeo } from "../seo";
-import { cityPath, SITE_ORIGIN } from "../regions";
+import { isIndexableCityHome, SITE_ORIGIN } from "../regions";
 import { defaultCity, getCities } from "./w1do/cities";
 import { getCmsSitemapPages } from "./w1do/sitemap";
 import { getServices } from "./w1do/services";
@@ -25,11 +25,11 @@ export async function llmsResponse(full: boolean): Promise<Response> {
     getCollection("landingCluster", ({ data }) => data.hub === true), getCollection("landingSpoke"),
   ]);
   const city = defaultCity(cities);
-  const defaultCitySlug = city.slug;
   const cmsPaths = new Set(indexed.map(page => page.path));
   const entries = [
-    ...Object.entries(pageSeo).map(([path, seo]) => ({ path, title: seo.title, description: seo.description, body: "" })),
-    ...services.filter(entry => cmsPaths.has(entry.url)).map(entry => ({ path: entry.url, title: entry.title, description: entry.description, body: textContent(entry.bodyHtml) })),
+    ...Object.entries(pageSeo).filter(([path]) => path !== "/" || isIndexableCityHome(city, city.slug))
+      .map(([path, seo]) => ({ path, title: seo.title, description: seo.description, body: "" })),
+    ...services.filter(entry => entry.publicPath === entry.url && cmsPaths.has(entry.url)).map(entry => ({ path: entry.url, title: entry.title, description: entry.description, body: textContent(entry.bodyHtml) })),
     ...posts.filter(entry => entry.data.isIndex).map(entry => ({ path: entry.url, title: entry.data.title, description: entry.data.description, body: entry.body })),
     ...cases.map(entry => ({ path: `/case/${entry.id}`, title: entry.title, description: entry.description, body: textContent(entry.bodyHtml) })),
     ...projects.map(entry => ({ path: `/opensource/${entry.id}`, title: entry.title, description: entry.description, body: textContent(entry.bodyHtml) })),
@@ -38,13 +38,11 @@ export async function llmsResponse(full: boolean): Promise<Response> {
   ];
   const unique = [...new Map(entries.filter(entry => !["/cookies", "/privacy-policy", "/user-agreement"].includes(entry.path))
     .map(entry => [entry.path, entry])).values()];
-  const lines = ["# W1DO — разработка ИИ и автоматизация", "", `> ${city.seo?.description || pageSeo["/"].description}`, "",
-    `Карта сайта: ${SITE_ORIGIN}/sitemap-index.xml`, "", "## Города", "",
-    ...cities.filter(city => !city.seo?.robots?.includes("noindex")).map(city => `- [${city.name}](${SITE_ORIGIN}${cityPath(city.slug, defaultCitySlug)})`),
-    "", "## Страницы", "",
+  const lines = ["# AiCRAFT — агентство по разработке ИИ-агентов", "", `> ${pageSeo["/"].description}`, "",
+    `Карта сайта: ${SITE_ORIGIN}/sitemap-index.xml`, "", "## Страницы", "",
     ...unique.map(entry => full
-      ? `## ${entry.title}\n\n${SITE_ORIGIN}${(entry.path === "/" ? cityPath(city.slug, defaultCitySlug) : entry.path)}\n\n${entry.body || entry.description}\n`
-      : `- [${entry.title}](${SITE_ORIGIN}${(entry.path === "/" ? cityPath(city.slug, defaultCitySlug) : entry.path)}): ${entry.description}`),
+      ? `## ${entry.title}\n\n${SITE_ORIGIN}${entry.path}\n\n${entry.body || entry.description}\n`
+      : `- [${entry.title}](${SITE_ORIGIN}${entry.path}): ${entry.description}`),
   ];
   return new Response(lines.join("\n"), { headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "public, max-age=60" } });
 }

@@ -1,0 +1,87 @@
+---
+const segments = [
+    {
+        title: "Поддержка клиентов",
+        task: "Отвечает по базе знаний, уточняет детали и передаёт сложное человеку.",
+        result: "Меньше пропущенных обращений",
+    },
+    {
+        title: "Продажи и заявки",
+        task: "Квалифицирует обращение, собирает контакты и записывает сделку в CRM.",
+        result: "Быстрее первый ответ",
+    },
+    {
+        title: "Документы и регламенты",
+        task: "Извлекает данные из договоров и находит нужный пункт в инструкции.",
+        result: "Меньше ручной сверки",
+    },
+    {
+        title: "Производство",
+        task: "Ищет по технической документации и подсказывает порядок действий.",
+        result: "Реже ошибаются на входе",
+    },
+];
+---
+<section class="segments-section">
+    <div class="container">
+        <div class="section-title section-title-center">
+            <span class="section-sub-title wow fadeInUp">Кому подходит</span>
+            <h2 class="text-anime-style-3">Где ИИ-агент забирает рутину</h2>
+            <p class="wow fadeInUp">Четыре типовые точки входа. Если вашей задачи нет в списке — опишите её, подберём сценарий.</p>
+        </div>
+        <div class="segments-grid">
+            {segments.map((segment, index) => (
+                <article class="segment-card" data-wow-delay={`${index * 0.1}s`}>
+                    <h3>{segment.title}</h3>
+                    <p>{segment.task}</p>
+                    <span class="segment-card__result">{segment.result}</span>
+                </article>
+            ))}
+        </div>
+    </div>
+</section>
+
+<style>
+    .segments-section { padding: 80px 0 40px; }
+    .segments-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+    }
+    .segment-card {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 24px;
+        border: 1px solid var(--divider-color);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.02);
+    }
+    .segment-card h3 {
+        margin: 0;
+        color: var(--primary-color);
+        font-size: 20px;
+        line-height: 1.25;
+    }
+    .segment-card p {
+        margin: 0;
+        color: var(--text-color);
+        font-size: 15px;
+        line-height: 1.6;
+    }
+    .segment-card__result {
+        margin-top: auto;
+        padding-top: 12px;
+        color: var(--accent-color);
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+    }
+    @media (max-width: 991px) {
+        .segments-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 575px) {
+        .segments-section { padding: 48px 0 24px; }
+        .segments-grid { grid-template-columns: 1fr; }
+    }
+</style>

@@ -4,7 +4,7 @@ import Header from "../components/shared/Header.astro";
 import IntroVideo from "../components/IntroVideo.astro";
 import Feature from "../components/Feature.astro";
 import Faqs from "../components/Faqs.astro";
-import Testimonials from "../components/Testimonials.astro";
+import { breadcrumbSchema } from "../lib/breadcrumbs";
 import Layout from "../layouts/Layout.astro";
 import Footer from "../components/shared/Footer.astro";
 import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
@@ -19,25 +19,41 @@ const services = entries.map((service) => ({
     link: service.url,
     delay: `${(parseInt(service.no || "0") - 1) * 0.2}s`
 }));
+const pageBreadcrumbs = breadcrumbSchema([
+    { name: "Главная", path: "/" },
+    { name: "Услуги", path: "/services" }
+]);
+
 ---
 
 <Layout 
-    title="Услуги AI автоматизации и разработки | Claude, Cursor"
-    description="Заказать автоматизацию бизнес-процессов и разработку ИИ-решений. Используем Claude и Cursor для создания эффективных AI-агентов и MVP."
-    keywords="Услуги AI, заказать автоматизацию, разработка ИИ, Claude, Cursor, AI ассистенты, автоматизация бизнеса"
+    title="Услуги AiCRAFT | ИИ-агенты, agent harness и Claude Code"
+    description="Услуги по разработке ИИ-агентов, подключению CRM, 1С и баз знаний. Настройка agent harness и инфраструктуры Claude Code для команд."
+    keywords="внедрение ии в бизнес, услуги ии, разработка ии агентов, автоматизация бизнеса, интеграции crm"
     image="/images/og-services.jpg"
+    schema={pageBreadcrumbs}
 >
     <Header/>
-    <Breadcrumbs title="Услуги по внедрению AI В бизнес, Claude, Junie, N8n" breadcrumbItems={[
+    <Breadcrumbs title="Услуги по внедрению ИИ в бизнес" breadcrumbItems={[
         {label: "Главная", href: "/"},
-        {label: "Заказать услуги по внедрению ИИ", active: true}
+        {label: "Услуги", active: true}
     ]}/>
-    <Pricing/>
+    <section class="container mb-5" aria-labelledby="service-directions">
+        <div class="section-title">
+            <h2 id="service-directions">Основные направления</h2>
+            <p>Выберите, что требуется вашей команде — запустить агента, спроектировать среду его работы или настроить Claude Code.</p>
+        </div>
+        <ul>
+            <li><a href="/ai-agents">Разработка ИИ-агентов под ключ</a></li>
+            <li><a href="/services/ai-solution-architecture/ai-agent-development">Разработка agent harness</a></li>
+            <li><a href="/consultation/claude-cursor-setup">Инфраструктура Claude Code для команд</a></li>
+        </ul>
+    </section>
     <ServicesList services={services} isListPage={true} />
+    <Pricing/>
     <IntroVideo/>
     <Feature/>
     <Faqs/>
-    <Testimonials/>
     <Projects/>
     <Spacer/>
     <Footer/>

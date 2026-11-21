@@ -1,17 +1,29 @@
 ---
+import { breadcrumbSchema } from "../../lib/breadcrumbs";
+import { canonicalSitePath } from "../../lib/regions";
+import JsonLd from "./JsonLd.astro";
+
 interface Props {
     title?: string;
     breadcrumbItems?: { label: string; href?: string; active?: boolean }[];
+    withSchema?: boolean;
 }
 
 const { 
-    title = "Мои услуги",
+    title = "Услуги",
     breadcrumbItems = [
         { label: "Главная", href: "/" },
-        { label: "Мои услуги", active: true }
-    ] 
+        { label: "Услуги", active: true }
+    ],
+    withSchema = false,
 } = Astro.props;
+
+const schema = withSchema && breadcrumbItems.length > 1 ? breadcrumbSchema(breadcrumbItems.map(item => ({
+    name: item.label,
+    path: item.href || canonicalSitePath(Astro.url.pathname),
+}))) : undefined;
 ---
+{schema && <JsonLd schema={schema} />}
 <!-- Page Header Start -->
 <div class="page-header dark-section parallaxie">
     <div class="container">
@@ -21,7 +33,7 @@ const {
                 <div class="page-header-box">
                     <h1 class="text-anime-style-3" data-cursor="-opaque">{title}</h1>
                     <slot name="after-title" />
-                    <nav class="wow fadeInUp">
+                    <nav class="wow fadeInUp" aria-label="Хлебные крошки">
                         <ol class="breadcrumb">
                             {breadcrumbItems.map((item) => (
                                 <li class={`breadcrumb-item ${item.active ? 'active' : ''}`} aria-current={item.active ? "page" : undefined}>

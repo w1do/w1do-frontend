@@ -12,7 +12,7 @@ export type MarkdownBlock =
     | { type: "paragraph"; children: MarkdownInline[] }
     | { type: "list"; ordered: boolean; start: number; items: MarkdownInline[][] };
 
-export const LINK_PATTERN = /(https:\/\/w1do\.ru(?:\/[^\s<>"'«»()]*)?)/g;
+export const LINK_PATTERN = /(https:\/\/(?:aicraft\.agency|w1do\.ru)(?:\/[^\s<>"'«»()]*)?)/g;
 
 const LINK_PLACEHOLDER = "\uE000";
 const LINK_TRAILING = /[.,;:!?*_]+$/;

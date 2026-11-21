@@ -1,4 +1,5 @@
 ---
+import { brandName } from "../lib/brand";
 import { SITE_ORIGIN } from "../lib/regions";
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/shared/Header.astro";
@@ -10,8 +11,8 @@ import BlogBreadcrumbs from "../components/blog/BlogBreadcrumbs.astro";
 
 const { frontmatter } = Astro.props;
 
-const seoTitle = frontmatter.seo?.title || frontmatter.title;
-const seoDescription = frontmatter.seo?.description || frontmatter.description;
+const seoTitle = brandName(frontmatter.seo?.title || frontmatter.title);
+const seoDescription = brandName(frontmatter.seo?.description || frontmatter.description);
 
 const categoryPath = Astro.url.pathname.split("/").slice(2, -1).join("/");
 const category = categoryPath ? (await getBlogCategories()).find(item => item.slug === categoryPath) : undefined;
@@ -38,7 +39,7 @@ const articleSchema = {
     ...(articleImage ? { "image": articleImage } : {}),
     ...(frontmatter.pubDate ? { "datePublished": new Date(frontmatter.pubDate).toISOString() } : {}),
     ...(frontmatter.tags ? { "keywords": frontmatter.tags.join(", ") } : {}),
-    "author": { "@type": "Organization", "name": "W1DO DIGITAL", "url": siteUrl },
+    "author": { "@type": "Person", "name": "Денис Митрофанов", "url": new URL("/about", SITE_ORIGIN).href },
     "publisher": { "@id": `${siteUrl}/#organization` }
 };
 
@@ -103,10 +104,10 @@ const schema = [articleSchema, breadcrumbSchema];
                                     <!-- Post Social Links Start -->
                                     <div class="post-social-sharing wow fadeInUp" data-wow-delay="0.8s">
                                         <ul>
-                                            <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
-                                            <li><a href="#"><i class="fa-brands fa-linkedin-in"></i></a></li>
-                                            <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
-                                            <li><a href="#"><i class="fa-brands fa-x-twitter"></i></a></li>
+                                            <li><a href={`https://t.me/share/url?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent(frontmatter.title)}`} target="_blank" rel="noopener noreferrer" aria-label="Поделиться в Telegram"><i class="fa-brands fa-telegram"></i></a></li>
+                                            <li><a href={`https://vk.com/share.php?url=${encodeURIComponent(pageUrl)}`} target="_blank" rel="noopener noreferrer" aria-label="Поделиться во ВКонтакте"><i class="fa-brands fa-vk"></i></a></li>
+                                            <li><a href={`https://wa.me/?text=${encodeURIComponent(frontmatter.title + " " + pageUrl)}`} target="_blank" rel="noopener noreferrer" aria-label="Поделиться в WhatsApp"><i class="fa-brands fa-whatsapp"></i></a></li>
+                                            
                                         </ul>
                                     </div>
                                     <!-- Post Social Links End -->
@@ -127,6 +128,17 @@ const schema = [articleSchema, breadcrumbSchema];
 </Layout>
 
 <style>
+    .article-service-cta {
+        margin-top: 32px;
+        padding: 28px;
+        border: 1px solid var(--divider-color);
+        border-radius: 20px;
+        background: rgba(207, 248, 94, 0.05);
+    }
+    .article-service-cta h2 { margin: 0 0 10px; color: var(--primary-color); font-size: 26px; }
+    .article-service-cta p { margin: 0 0 18px; color: var(--text-color); font-size: 16px; line-height: 1.6; }
+    .article-service-cta__actions { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+    .article-service-cta__link { color: var(--accent-color); font-weight: 600; }
     .post-content {
         max-width: 100%;
     }

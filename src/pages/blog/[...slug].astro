@@ -1,8 +1,29 @@
 ---
 import { createMarkdownProcessor } from "@astrojs/markdown-remark";
-import { getBlogPostBySlug } from "../../lib/server/w1do/blog";
+import { parseFragment, serialize, type DefaultTreeAdapterMap } from "parse5";
+import { canonicalCmsHtml } from "../../lib/server/regional-html";
+import { getBlogCanonicalPaths, getBlogPostBySlug } from "../../lib/server/w1do/blog";
 import BlogLayout from "../../layouts/BlogLayout.astro";
 import Layout from "../../layouts/Layout.astro";
+
+type HtmlNode = DefaultTreeAdapterMap["node"];
+type HtmlElement = DefaultTreeAdapterMap["element"];
+
+const sectionIdPattern = /^section-[a-z0-9-]+$/;
+const headingTagPattern = /^h[2-6]$/;
+const sectionAnchorAttribute = "data-section-anchor";
+
+function* htmlElements(node: HtmlNode): IterableIterator<HtmlElement> {
+  if ("tagName" in node) yield node;
+  if ("childNodes" in node) {
+    for (const child of node.childNodes) yield* htmlElements(child);
+  }
+}
+
+function headingText(node: HtmlNode): string {
+  if ("value" in node) return node.value;
+  return "childNodes" in node ? node.childNodes.map(headingText).join("") : "";
+}
 
 export const prerender = false;
 let entry;
@@ -24,36 +45,59 @@ try {
 if (!entry) Astro.response.status = failed ? 502 : 404;
 const processor = entry ? await createMarkdownProcessor() : undefined;
 let bodyHtml = entry && processor ? (await processor.render(entry.body)).code : "";
-const sections = new Map<string, { id: string; title: string }>();
+const sections: Array<{ id: string; title: string }> = [];
 if (entry) {
+  bodyHtml = canonicalCmsHtml(bodyHtml, entry.url, await getBlogCanonicalPaths());
+  const fallbackIds = new Map<string, string>();
   for (const block of entry.blocks) {
-    if (!sections.has(block.title.trim())) sections.set(block.title.trim(), {
-      id: `section-${block.id.toLowerCase().replace(/[^a-z0-9-]/g, "")}`,
-      title: block.title.trim(),
-    });
+    const title = block.title.trim();
+    const id = `section-${block.id.toLowerCase().replace(/[^a-z0-9-]/g, "")}`;
+    if (title && sectionIdPattern.test(id) && !fallbackIds.has(title)) fallbackIds.set(title, id);
   }
-  const linkedSections = new Set<string>();
-  bodyHtml = bodyHtml.replace(/<(h[2-6])\b([^>]*)>([\s\S]*?)<\/\1>/gi, (heading, tag, attributes, content) => {
-    const title = content.replace(/<[^>]*>/g, "").replace(/&nbsp;/g, " ").trim();
-    const section = sections.get(title);
-    if (!section || linkedSections.has(section.id)) return heading;
-    linkedSections.add(section.id);
-    const cleanAttributes = attributes.replace(/\s+id=(?:"[^"]*"|'[^']*'|[^\s>]+)/i, "");
-    return `<${tag}${cleanAttributes} id="${section.id}">${content}</${tag}>`;
-  });
-  for (const [title, section] of sections) {
-    if (!linkedSections.has(section.id)) sections.delete(title);
+  const fragment = parseFragment(bodyHtml);
+  const elements = [...htmlElements(fragment)];
+  const headings = elements.filter((element) => headingTagPattern.test(element.tagName));
+  const explicitHeadings = new Map<HtmlElement, string>();
+  for (const heading of headings) {
+    if (!heading.attrs.some((attribute) => attribute.name === sectionAnchorAttribute)) continue;
+    const id = heading.attrs.find((attribute) => attribute.name === "id")?.value;
+    if (!id || !sectionIdPattern.test(id)) continue;
+    heading.attrs = heading.attrs.filter((attribute) => attribute.name !== sectionAnchorAttribute);
+    explicitHeadings.set(heading, id);
+  }
+  const explicitIds = new Set(explicitHeadings.values());
+  const sectionHeadings = new Map<string, HtmlElement>();
+  for (const heading of headings) {
+    const title = headingText(heading).replace(/\u00a0/g, " ").trim();
+    const authoredId = explicitHeadings.get(heading);
+    const fallbackId = fallbackIds.get(title);
+    const id = authoredId ?? (fallbackId && !explicitIds.has(fallbackId) ? fallbackId : undefined);
+    if (!id || sectionHeadings.has(id)) continue;
+    const attribute = heading.attrs.find((item) => item.name === "id");
+    if (attribute) attribute.value = id;
+    else heading.attrs.push({ name: "id", value: id });
+    sectionHeadings.set(id, heading);
+    if (title) sections.push({ id, title });
+  }
+  if (sectionHeadings.size) {
+    for (const element of elements) {
+      element.attrs = element.attrs.filter((attribute) => {
+        const heading = attribute.name === "id" && sectionHeadings.get(attribute.value);
+        return !heading || heading === element;
+      });
+    }
+    bodyHtml = serialize(fragment);
   }
 }
 ---
 
 {entry ? (
   <BlogLayout frontmatter={entry.data}>
-    {sections.size > 0 && (
+    {sections.length > 0 && (
       <nav class="article-toc" aria-label="Содержание статьи">
         <p class="article-toc__title">Содержание</p>
         <ul>
-          {[...sections.values()].map(section => (
+          {sections.map(section => (
             <li><a href={`#${section.id}`}>{section.title}</a></li>
           ))}
         </ul>

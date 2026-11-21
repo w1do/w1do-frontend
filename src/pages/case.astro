@@ -1,4 +1,5 @@
 ---
+import { breadcrumbSchema } from "../lib/breadcrumbs";
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/shared/Header.astro";
 import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
@@ -11,17 +12,23 @@ import { getCases } from "../lib/server/w1do/cases";
 export const prerender = false;
 
 const projects = await getCases();
+const pageBreadcrumbs = breadcrumbSchema([
+    { name: "Главная", path: "/" },
+    { name: "Кейсы", path: "/case" }
+]);
+
 ---
-<Layout 
-    title="Кейсы и проекты по AI автоматизации | RAG, OpenAI, Claude"
-    description="Примеры успешных проектов по внедрению ИИ: RAG системы, OpenAI интеграции, автоматизация на базе Claude и Antigravity. Реальные кейсы повышения эффективности бизнеса."
-    keywords="RAG, OpenAI, Claude, Antigravity, LLM, Skills, SEO, кейсы AI, примеры автоматизации"
+<Layout
+    schema={pageBreadcrumbs} 
+    title="Кейсы AiCRAFT | ИИ-агенты, RAG и автоматизация"
+    description="Проекты AiCRAFT по внедрению ИИ и автоматизации. Исходные задачи, решения и интеграции с рабочими системами."
+    keywords="кейсы ИИ-агентов, проекты RAG, примеры автоматизации процессов"
     image="/images/og-projects.jpg"
 >
     <Header/>
-    <Breadcrumbs title="Проекты" breadcrumbItems={[
+    <Breadcrumbs title="Кейсы внедрения ИИ и автоматизации" breadcrumbItems={[
         {label: "Главная", href: "/"},
-        {label: "Проекты", active: true}
+        {label: "Кейсы", active: true}
     ]}/>
     <ProjectsList projects={projects}/>
     <Faqs/>

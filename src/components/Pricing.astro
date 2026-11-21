@@ -1,46 +1,41 @@
 ---
+import { formatPrice, getPackages, INDIVIDUAL_PRICE_LABEL } from "../lib/pricing";
+
 interface PricingItem {
     title: string;
-    price: string;
+    price?: string;
+    estimateBasis?: string;
     description: string;
     features: string[];
     icon?: string;
+    term?: string;
+    highlighted?: boolean;
 }
 
 interface Props {
+    homeOriginal?: boolean;
     subTitle?: string;
     title?: string;
     description?: string;
     pricingItems?: PricingItem[];
+    contactHref?: string;
 }
 
 const {
-    subTitle = "Тарифные планы",
-    title = "Выберите подходящий вариант для вашего бизнеса",
-    description = "Гибкие условия сотрудничества, адаптированные под масштаб и задачи вашего проекта. От простых интеграций до разработки сложных экосистем.",
-    pricingItems = [
-        {
-            title: "Автоматизация",
-            price: "от 750 ₽/час",
-            description: "Оптимально для настройки готовых решений и работы с API.",
-            features: ["Интеграция сторонних API", "Автоматизация рутинных задач", "Настройка Make / Zapier"],
-            icon: "/images/icon-pricing-1.svg"
-        },
-        {
-            title: "Разработка",
-            price: "от 1 100 ₽/час",
-            description: "Разработка кастомных AI-агентов на базе Claude и GPT под ключ.",
-            features: ["Кастомные AI-агенты (Claude)", "Разработка промпт-инженерных систем", "Создание MVP продукта"],
-            icon: "/images/icon-pricing-2.svg"
-        },
-        {
-            title: "Сложные решения",
-            price: "от 1 800 ₽/час",
-            description: "Архитектурные решения с поддержкой и масштабированием.",
-            features: ["RAG-системы для бизнеса", "Приоритетная поддержка", "Масштабируемая инфраструктура"],
-            icon: "/images/icon-pricing-3.svg"
-        }
-    ]
+    homeOriginal = false,
+    subTitle = "Форматы работы",
+    title = "Стоимость работ по внедрению ИИ",
+    description = "Оцениваем отдельно проектирование, пилот и подключение к рабочим системам.",
+    contactHref = "/contact",
+    pricingItems = getPackages().map((pkg) => ({
+        title: pkg.name,
+        price: formatPrice(pkg),
+        description: pkg.description,
+        features: pkg.features,
+        icon: pkg.icon,
+        term: pkg.term,
+        highlighted: pkg.highlighted,
+    })),
 } = Astro.props;
 ---
 <!-- Our Pricing Plan Section Start -->
@@ -62,11 +57,11 @@ const {
             {pricingItems.map((item, index) => (
                 <div class="col-xl-4 col-md-6">
                     <!-- Pricing Item Start -->
-                    <div class="pricing-item box-border-gradiant wow fadeInUp" data-wow-delay={`${index * 0.2}s`}>
+                    <div class:list={["pricing-item", "box-border-gradiant", "wow", "fadeInUp", { "pricing-item--highlighted": item.highlighted }]} data-wow-delay={`${index * 0.2}s`}>
                         <!-- Pricing Item Header Start -->
                         <div class="pricing-item-header">
                             <div class="icon-box">
-                                <img src={item.icon || `/images/icon-pricing-${index + 1}.svg`} alt={item.title}>
+                                <img src={item.icon || `/images/icon-pricing-${index + 1}.svg`} alt={item.title} loading="lazy" decoding="async">
                             </div>
                             <div class="pricing-item-header-title">
                                 <h2>{item.title}</h2>
@@ -76,20 +71,25 @@ const {
 
                         <!-- Pricing Item Price Start -->
                         <div class="pricing-item-price">
-                            <h2>{item.price}</h2>
+                            {item.price ? (
+                                <h2 class:list={{ "pricing-estimate-basis": item.price === INDIVIDUAL_PRICE_LABEL }}>{item.price}</h2>
+                            ) : item.estimateBasis && (
+                                <h2 class="pricing-estimate-basis">{item.estimateBasis}</h2>
+                            )}
+                            {item.term && <p class="pricing-item-term">Срок: {item.term}</p>}
                             <p>{item.description}</p>
                         </div>
                         <!-- Pricing Item Price End -->
 
                         <!-- Pricing Item Button Start -->
                         <div class="pricing-item-btn">
-                            <a href={import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1DO_DIGITAL"} class="btn-default" data-cursor="-opaque">Обсудить проект</a>
+                            <a href={contactHref} class="btn-default" data-cursor="-opaque">{homeOriginal ? "Обсудить проект" : "Запросить оценку"}</a>
                         </div>
                         <!-- Pricing Item Button End -->
 
                         <!-- Pricing Item List Start -->
                         <div class="pricing-item-list">
-                            <h3>Что включено:</h3>
+                            <h3>{homeOriginal ? "Что включено:" : "Что входит"}</h3>
                             <ul>
                                 {item.features.map((feature) => (
                                     <li>{feature}</li>
@@ -106,14 +106,41 @@ const {
                 <!-- Pricing Benifit List Start -->
                 <div class="pricing-benefit-list wow fadeInUp" data-wow-delay="0.6s">
                     <ul>
-                        <li><img src="/images/icon-pricing-benefit-1.svg" alt="Гарантия">Бесплатная консультация</li>
-                        <li><img src="/images/icon-pricing-benefit-2.svg" alt="Прозрачность">Никаких скрытых платежей</li>
-                        <li><img src="/images/icon-pricing-benefit-3.svg" alt="Гибкость">Гибкое управление задачами</li>
+                        <li><img src="/images/icon-pricing-benefit-1.svg" alt={homeOriginal ? "Гарантия" : ""} loading="lazy">{homeOriginal ? "Разбор задачи перед стартом" : "Согласуем границы работ"}</li>
+                        <li><img src="/images/icon-pricing-benefit-2.svg" alt={homeOriginal ? "Прозрачность" : ""} loading="lazy">{homeOriginal ? "Никаких скрытых платежей" : "Отдельно оцениваем интеграции"}</li>
+                        <li><img src="/images/icon-pricing-benefit-3.svg" alt={homeOriginal ? "Гибкость" : ""} loading="lazy">{homeOriginal ? "Гибкое управление задачами" : "Учитываем расходы на эксплуатацию"}</li>
                     </ul>
                 </div>
                 <!-- Pricing Benifit List End -->
             </div>
+
+            <div class="col-lg-12">
+                <div class="pricing-calculator-cta">
+                    <p>{homeOriginal ? "Не знаете, какой формат подходит? Ответьте на четыре вопроса." : "В калькуляторе можно указать объём задач и нужные интеграции, чтобы подготовить бриф."}</p>
+                    <a href="/calculator" class="btn-default" data-cursor="-opaque">{homeOriginal ? "Рассчитать стоимость" : "Открыть калькулятор"}</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<!-- Our Pricing Plan Section Start -->
+<!-- Our Pricing Plan Section End -->
+
+<style>
+    .pricing-calculator-cta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        align-items: center;
+        justify-content: center;
+        margin-top: 32px;
+    }
+    .pricing-calculator-cta p { margin: 0; color: var(--text-color); }
+    .pricing-item-term {
+        margin: 4px 0 12px;
+        color: var(--accent-color);
+        font-size: 15px;
+    }
+    .pricing-item--highlighted {
+        border-color: var(--accent-color);
+    }
+</style>

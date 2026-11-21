@@ -1,22 +1,77 @@
+import { useEffect, useId, useRef } from "react";
 import { useContactForm } from "../../hooks/useContactForm";
 import LegalConsent from "../legal/LegalConsent";
 
 interface ContactFormProps {
     title?: string;
+    /** "compact" — три поля для главной и CTA-блоков, "full" — форма страницы контактов. */
+    variant?: "full" | "compact";
+    source?: string;
+    formId?: string;
+    homeOriginal?: boolean;
 }
 
 export default function ContactForm({
     title = "Оставить заявку",
+    variant = "full",
+    source = "contact-page",
+    formId: assignedFormId,
+    homeOriginal = false,
 }: ContactFormProps) {
-    const { status, message, handleSubmit } = useContactForm({ source: "contact-page" });
+    const { status, message, handleSubmit } = useContactForm({ source });
     const isLoading = status === "loading";
     const isSuccess = status === "success";
     const isError = status === "error";
+    const compact = variant === "compact";
+    const messagePlaceholder = compact
+        ? (homeOriginal ? "Например: автоматизировать ответы в поддержке" : "Например, перенести заявки из почты в CRM")
+        : "Что нужно изменить в вашем процессе?";
+    const messageRef = useRef<HTMLTextAreaElement>(null);
+    const formId = useId().replaceAll(":", "");
+
+    // Калькулятор передаёт ответы в query — подставляем их в задачу.
+    useEffect(() => {
+        const el = messageRef.current;
+        if (!el || el.value.trim()) return;
+        const params = new URLSearchParams(window.location.search);
+        const taskLabels: Record<string, string> = {
+            support: "поддержка клиентов",
+            sales: "продажи и заявки",
+            docs: "документы и база знаний",
+            unknown: "задача не определена",
+        };
+        const scaleLabels: Record<string, string> = {
+            small: "до 100 обращений в день",
+            medium: "100–1000 обращений в день",
+            large: "больше 1000 обращений в день",
+        };
+        const systemLabels: Record<string, string> = { crm: "CRM", "1c": "1С", messengers: "мессенджеры" };
+        const deadlineLabels: Record<string, string> = {
+            fast: "2–3 недели",
+            normal: "1–2 месяца",
+            flexible: "без жёсткого срока",
+        };
+        const parts: string[] = [];
+        const task = params.get("task");
+        const scale = params.get("scale");
+        const deadline = params.get("deadline");
+        const systems = (params.get("systems") || "").split(",").filter(Boolean).map((value) => systemLabels[value]).filter(Boolean);
+        if (task && taskLabels[task]) parts.push("Задача: " + taskLabels[task]);
+        if (scale && scaleLabels[scale]) parts.push("Объём: " + scaleLabels[scale]);
+        if (systems.length) parts.push("Интеграции: " + systems.join(", "));
+        if (deadline && deadlineLabels[deadline]) parts.push("Срок: " + deadlineLabels[deadline]);
+        if (parts.length) el.value = parts.join(". ") + ".";
+    }, []);
 
     return (
         <div className="contact-form">
+            {compact && (homeOriginal || title) && (
+                <div className="section-title section-title-center">
+                    <h2 className="text-anime-style-3" data-cursor="-opaque">{title}</h2>
+                </div>
+            )}
             <form
-                id="leadForm"
+                id={assignedFormId ?? `${formId}-form`}
                 method="POST"
                 className="contact-form wow fadeInUp"
                 data-wow-delay="0.2s"
@@ -33,31 +88,42 @@ export default function ContactForm({
                     </div>
 
                     <div className="form-group col-md-6 mb-4">
-                        <label>Имя *</label>
-                        <input type="text" name="fname" className="form-control" id="fname" placeholder="Введите имя *" required />
+                        <label htmlFor={`${formId}-fname`}>Имя *</label>
+                        <input type="text" name="fname" className="form-control" id={`${formId}-fname`} placeholder="Введите имя *" autoComplete="given-name" required />
                     </div>
 
-                    <div className="form-group col-md-6 mb-4">
-                        <label>Фамилия</label>
-                        <input type="text" name="lname" className="form-control" id="lname" placeholder="Введите фамилию" />
-                    </div>
+                    {!compact && (
+                        <div className="form-group col-md-6 mb-4">
+                            <label htmlFor={`${formId}-lname`}>Фамилия</label>
+                            <input type="text" name="lname" className="form-control" id={`${formId}-lname`} placeholder="Введите фамилию" autoComplete="family-name" />
+                        </div>
+                    )}
 
                     <div className="form-group col-md-6 mb-4">
-                        <label>Номер телефона *</label>
-                        <input type="text" name="phone" className="form-control" id="phone" placeholder="Введите номер телефона *" required />
+                        <label htmlFor={`${formId}-phone`}>Номер телефона *</label>
+                        <input type="tel" name="phone" className="form-control" id={`${formId}-phone`} placeholder="Введите номер телефона *" autoComplete="tel" required />
                     </div>
 
-                    <div className="form-group col-md-6 mb-4">
-                        <label>Email</label>
-                        <input type="email" name="email" className="form-control" id="email" placeholder="Введите Email" />
-                    </div>
+                    {!compact && (
+                        <div className="form-group col-md-6 mb-4">
+                            <label htmlFor={`${formId}-email`}>Email</label>
+                            <input type="email" name="email" className="form-control" id={`${formId}-email`} placeholder="Введите Email" autoComplete="email" />
+                        </div>
+                    )}
 
                     <div className="form-group col-md-12 mb-5">
-                        <label>Сообщение</label>
-                        <textarea name="message" className="form-control" id="message" rows={5} placeholder="Ваше сообщение..."></textarea>
+                        <label htmlFor={`${formId}-message`}>{compact ? "Какая задача?" : "Сообщение"}</label>
+                        <textarea
+                            name="message"
+                            className="form-control"
+                            id={`${formId}-message`}
+                            ref={messageRef}
+                            rows={compact ? 3 : 5}
+                            placeholder={messagePlaceholder}
+                        ></textarea>
                     </div>
 
-                    <LegalConsent id="leadFormLegalConsent" />
+                    <LegalConsent id={`${formId}-legal`} />
 
                     <div className="col-md-12">
                         <button type="submit" className="btn-default" disabled={isLoading}>
@@ -66,14 +132,14 @@ export default function ContactForm({
 
                         {isSuccess && (
                             <div className="h4 text-success mt-3" role="status">
-                                Сообщение успешно отправлено!
+                                {homeOriginal ? "Заявка отправлена. Я свяжусь с вами." : "Заявка отправлена. Мы свяжемся с вами."}
                             </div>
                         )}
 
                         {isError && (
                             <div className="help-block with-errors" role="alert">
                                 <ul className="list-unstyled">
-                                    <li>{message || "Что-то пошло не так!"}</li>
+                                    <li>{message || "Не удалось отправить заявку. Попробуйте ещё раз."}</li>
                                 </ul>
                             </div>
                         )}

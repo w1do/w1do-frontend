@@ -5,96 +5,22 @@ interface FaqItemData {
 }
 
 interface Props {
+    homeOriginal?: boolean;
     subTitle?: string;
     title?: string;
     description?: string;
     customFaqs?: FaqItemData[];
-    counter1Value?: string;
-    counter1Title?: string;
-    counter1Desc?: string;
-    counter2Value?: string;
-    counter2Title?: string;
-    counter2Desc?: string;
-    counter3Value?: string;
-    counter3Title?: string;
-    counter3Desc?: string;
 }
 
 import FaqItem from "./shared/faq/FaqItem.astro";
-const { 
-    subTitle = "Часто задаваемые вопросы",
-    title = "Ответы на ключевые вопросы по внедрению ИИ",
-    description = "Узнайте больше о том, как искусственный интеллект может трансформировать ваш бизнес, оптимизировать процессы и создать новые возможности для роста.",
-    customFaqs,
-    counter1Value = "120",
-    counter1Title = "Успешных проектов",
-    counter1Desc = "Мы внедрили десятки ИИ-решений для бизнеса разного масштаба.",
-    counter2Value = "98",
-    counter2Title = "Довольных клиентов",
-    counter2Desc = "Наши клиенты отмечают значительный рост эффективности процессов.",
-    counter3Value = "15",
-    counter3Title = "ИИ-экспертов в команде",
-    counter3Desc = "Команда инженеров, специализирующихся на LLM и анализе данных."
+import { HOME_FAQS, HOME_ORIGINAL_FAQS } from "../lib/home-faqs";
+const {
+    homeOriginal = false,
+    subTitle = homeOriginal ? "Часто задаваемые вопросы" : "Вопросы перед началом",
+    title = homeOriginal ? "Ответы на ключевые вопросы по внедрению ИИ" : "Как подготовить проект по внедрению ИИ",
+    description = homeOriginal ? "Узнайте больше о том, как искусственный интеллект может трансформировать ваш бизнес, оптимизировать процессы и создать новые возможности для роста." : "Как выбрать процесс, подготовить данные и проверить работу ИИ-агента.",
+    customFaqs = homeOriginal ? HOME_ORIGINAL_FAQS : HOME_FAQS,
 } = Astro.props;
-
-// Обработка числовых значений для счетчиков
-const getCounterData = (val: string) => {
-    const match = val.toString().match(/^(\d+(?:\.\d+)?)(.*)$/);
-    return {
-        numericValue: match ? match[1] : val,
-        suffix: match ? match[2] : "",
-        isNumeric: match !== null
-    };
-};
-
-const c1 = getCounterData(counter1Value);
-const c2 = getCounterData(counter2Value);
-const c3 = getCounterData(counter3Value);
-
-const defaultFaqs = [
-    {
-        question: "Как происходит процесс заказа и старта разработки ИИ-решения?",
-        answer: "Процесс начинается с бесплатной консультации и заполнения брифа. Затем мы проводим аудит ваших процессов, формируем техническое задание (ТЗ) с четкими KPI и подписываем договор. После этого команда приступает к разработке MVP."
-    },
-    {
-        question: "Какие этапы включает в себя разработка кастомного ИИ-агента?",
-        answer: "Разработка включает 4 этапа: 1) Проектирование архитектуры и выбор разработчик_ии. 2) Подготовка и индексация данных (RAG). 3) Настройка логики агента и промпт-инжиниринг. 4) Тестирование на реальных кейсах и финальная отладка."
-    },
-    {
-        question: "Можно ли внедрить ИИ в уже существующую CRM или ERP систему?",
-        answer: "Да, большинство наших решений интегрируются через API. Мы имеем опыт внедрения ИИ-инструментов в Битрикс24, amoCRM, 1С и кастомные системы управления бизнесом, автоматизируя передачу данных между ними."
-    },
-    {
-        question: "Сколько времени занимает автоматизация одного бизнес-процесса?",
-        answer: "Первичная автоматизация несложного процесса (например, классификация входящих писем) занимает от 7 до 14 дней. Более сложные цепочки с многошаговой логикой требуют 3-5 недель разработки и тестирования."
-    },
-    {
-        question: "Предоставляете ли вы услуги по доработке и оптимизации сторонних ИИ-решений?",
-        answer: "Да, мы проводим аудит текущих решений, исправляем ошибки в промптах, оптимизируем затраты на токены и повышаем точность ответов существующих систем, которые работают некорректно."
-    },
-    {
-        question: "Какие данные необходимы для начала разработки и обучения системы?",
-        answer: "Для RAG-систем нужны ваши внутренние документы (PDF, DOCX, базы знаний). Для автоматизации задач — примеры выполненных работ и описание логики, по которой человек принимает решения в данном процессе."
-    },
-    {
-        question: "Как осуществляется техническая поддержка после внедрения?",
-        answer: "Мы предлагаем пакеты сопровождения, которые включают мониторинг работы системы, обновление версий разработчик_ии-моделей, доработку логики под меняющиеся задачи и оперативное устранение сбоев."
-    },
-    {
-        question: "Можно ли автоматизировать задачи, требующие сложного анализа и принятия решений?",
-        answer: "Да, современные агенты способны выполнять многошаговые задачи: от анализа юридических рисков в контрактах до оценки кредитоспособности. Мы выстраиваем цепочки проверок (chain-of-thought) для гарантии качества."
-    },
-    {
-        question: "Как оценивается стоимость разработки проекта?",
-        answer: "Стоимость зависит от сложности логики, количества интеграций и объема данных. Мы работаем по двум моделям: фиксированная цена за проект (Fixed Price) или оплата за часы разработки (Time & Materials)."
-    },
-    {
-        question: "Возможна ли масштабируемость и доработка системы в будущем?",
-        answer: "Наши решения строятся по модульному принципу. Вы можете начать с автоматизации одного отдела и постепенно добавлять новые функции, подключать дополнительные модели и расширять базу знаний без переписывания ядра системы."
-    }
-];
-
-const faqs = customFaqs || defaultFaqs;
 ---
 <!-- Our Faq Section Start -->
 <div class="our-faqs bg-section">
@@ -113,7 +39,7 @@ const faqs = customFaqs || defaultFaqs;
 
                     <!-- Contact Us Circle Start -->
                     <div class="contact-us-circle wow fadeInUp" data-wow-delay="0.4s">
-                        <a href="contact.html">
+                        <a href="/contact">
                             <img src="/images/contact-us-circle.svg" alt="Задать вопрос по ИИ">
                         </a>
                     </div>
@@ -125,10 +51,10 @@ const faqs = customFaqs || defaultFaqs;
             <div class="col-xl-6">
                 <!-- FAQ Accordion Start -->
                 <div class="faqs-accordion" id="accordion">
-                    {faqs.map((faq, index) => (
+                    {customFaqs.map((faq, index) => (
                         <FaqItem 
                             id={(index + 1).toString()}
-                            question={`${index + 1}. ${faq.question}`}
+                            question={homeOriginal ? `${index + 1}. ${faq.question}` : faq.question}
                             answer={faq.answer}
                             active={index === 0}
                             delay={`${index * 0.1}s`}
@@ -138,68 +64,7 @@ const faqs = customFaqs || defaultFaqs;
                 <!-- FAQ Accordion End -->
             </div>
 
-            <div class="col-lg-12">
-                <!-- Faq Counter Items List Start -->
-                <div class="faq-counter-items-list box-border-gradiant">
-                    <!-- Faq Counter Item Start -->
-                    <div class="faq-counter-item">
-                        <div class="faq-counter-item-header">
-                            <h2>
-                                {c1.isNumeric ? (
-                                    <span class="counter">{c1.numericValue}</span>
-                                ) : (
-                                    <span>{c1.numericValue}</span>
-                                )}
-                                {c1.suffix || "+"}
-                            </h2>
-                            <h3>{counter1Title}</h3>
-                        </div>
-                        <div class="faq-counter-item-body">
-                            <p>{counter1Desc}</p>
-                        </div>
-                    </div>
-                    <!-- Faq Counter Item End -->
 
-                    <!-- Faq Counter Item Start -->
-                    <div class="faq-counter-item">
-                        <div class="faq-counter-item-header">
-                            <h2>
-                                {c2.isNumeric ? (
-                                    <span class="counter">{c2.numericValue}</span>
-                                ) : (
-                                    <span>{c2.numericValue}</span>
-                                )}
-                                {c2.suffix || "%"}
-                            </h2>
-                            <h3>{counter2Title}</h3>
-                        </div>
-                        <div class="faq-counter-item-body">
-                            <p>{counter2Desc}</p>
-                        </div>
-                    </div>
-                    <!-- Faq Counter Item End -->
-
-                    <!-- Faq Counter Item Start -->
-                    <div class="faq-counter-item">
-                        <div class="faq-counter-item-header">
-                            <h2>
-                                {c3.isNumeric ? (
-                                    <span class="counter">{c3.numericValue}</span>
-                                ) : (
-                                    <span>{c3.numericValue}</span>
-                                )}
-                                {c3.suffix || "+"}
-                            </h2>
-                            <h3>{counter3Title}</h3>
-                        </div>
-                        <div class="faq-counter-item-body">
-                            <p>{counter3Desc}</p>
-                        </div>
-                    </div>
-                    <!-- Faq Counter Item End -->
-                </div>
-                <!-- Faq Counter Items List End -->
-            </div>
         </div>
     </div>
 </div>

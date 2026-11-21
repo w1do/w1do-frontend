@@ -3,6 +3,7 @@ import { getServiceHubs } from '../lib/server/w1do/services';
 import ServicesList from "./services/ServicesList.astro";
 
 interface Props {
+    homeOriginal?: boolean;
     subTitle?: string;
     title?: string;
     description?: string;
@@ -10,9 +11,10 @@ interface Props {
 }
 
 const {
-    subTitle = "Услуги по внедрению AI В бизнес, Claude, Junie",
-    title = "Услуги по разработке и автоматизации с помощью ИИ",
-    description = "От разработки стратегии до ее реализации я сосредоточен на достижении значимых результатов, которые способствуют расширению вашего бизнеса и его долгосрочному успеху.",
+    homeOriginal = false,
+    subTitle = homeOriginal ? "Услуги по внедрению AI В бизнес, Claude, Junie" : "Услуги AiCRAFT",
+    title = homeOriginal ? "Услуги по разработке и автоматизации с помощью ИИ" : "Разработка и внедрение ИИ",
+    description = homeOriginal ? "От разработки стратегии до ее реализации я сосредоточен на достижении значимых результатов, которые способствуют расширению вашего бизнеса и его долгосрочному успеху." : "Помогаем выбрать рабочий сценарий, подключить данные и запустить решение в ваших системах.",
     limit = 6
 } = Astro.props;
 
@@ -43,7 +45,7 @@ const featuredServices = services.slice(0, limit);
 
                     <!-- Our Service Button Start -->
                     <div class="our-service-btn wow fadeInUp" data-wow-delay="0.4s">
-                        <a href="/services" class="btn-default">Все услуги</a>
+                        <a href="/services" class="btn-default">{homeOriginal ? "Все услуги" : "Каталог услуг"}</a>
                     </div>
                     <!-- Our Service Button End -->
                 </div>

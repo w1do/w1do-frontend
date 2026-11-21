@@ -1,25 +1,25 @@
 ---
 const works = [
     {
-        name: "ChatGPT (GPT-4o / 5.5)",
+        name: "ChatGPT",
         description: "Универсальная модель для текста и кода.",
         icon: "/images/llm/openai.svg",
         year: "OpenAI"
     },
     {
-        name: "Claude 4.8 Sonnet",
+        name: "Claude Sonnet",
         description: "Лучшая модель для кодинга и сложных текстов.",
         icon: "/images/llm/claude-color.svg",
         year: "Anthropic"
     },
     {
-        name: "Gemini 3.1",
+        name: "Gemini",
         description: "Мультимодальная модель с огромным контекстом.",
         icon: "/images/llm/gemini-color.svg",
         year: "Google"
     },
     {
-        name: "DeepSeek V3",
+        name: "DeepSeek",
         description: "Быстрая открытая модель для математики и кода.",
         icon: "/images/llm/deepseek-color.svg",
         year: "DeepSeek"
@@ -61,8 +61,8 @@ const works = [
                     <!-- Section Title Start -->
                     <div class='section-title'>
                         <span class='section-sub-title wow fadeInUp'>Технологический стек</span>
-                        <h2 class='text-anime-style-3' data-cursor='-opaque'>наши автоматизации используют самые топовые LLM</h2>
-                        <p class='wow fadeInUp' data-wow-delay='0.2s'>Мы интегрируем передовые языковые модели для создания интеллектуальных агентов, автоматизации рутины и построения эффективных бизнес-процессов на базе AI.</p>
+                        <h2 class='text-anime-style-3' data-cursor='-opaque'>Какие модели я использую</h2>
+                        <p class='wow fadeInUp' data-wow-delay='0.2s'>Интегрирую передовые языковые модели для создания интеллектуальных агентов, автоматизации рутины и построения эффективных бизнес-процессов на базе AI.</p>
                     </div>
                     <!-- Section Title End -->
 
@@ -85,7 +85,7 @@ const works = [
                             <!-- Works Items Start -->
                             <div class='awards-item-body-prime'>
                                 <div class='icon-box'>
-                                    <img src={item.icon} alt={item.name} style='width: 80px; height: 80px; filter: brightness(0) invert(1);'>
+                                    <img loading="lazy" decoding="async" src={item.icon} alt={item.name} style='width: 80px; height: 80px; filter: brightness(0) invert(1);'>
                                 </div>
                                 <div class='awards-item-content-prime'>
                                     <h3>{item.name}</h3>

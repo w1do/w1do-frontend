@@ -8,7 +8,7 @@ const { categories } = Astro.props;
     <a class="category-card" href={`/blog/categories/${category.slug}`}>
       <div class="card-top">
         <span class="category-number">{String(index + 1).padStart(2, "0")}</span>
-        <span class="category-arrow" aria-hidden="true"><img src="/images/arrow-primary.svg" alt="" width="20" height="20" /></span>
+        <span class="category-arrow" aria-hidden="true"><img loading="lazy" decoding="async" src="/images/arrow-primary.svg" alt="" width="20" height="20" /></span>
       </div>
       <h2>{category.name}</h2>
       <p>{category.seoDescription}</p>

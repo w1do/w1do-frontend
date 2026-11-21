@@ -1,23 +1,29 @@
 ---
-import ChatWidget from "./chat/ChatWidget";
+import ContactForm from "./contact/ContactForm";
 
 interface Props {
+    homeOriginal?: boolean;
     subTitle?: string;
     title?: string;
     description?: string;
     formTitle?: string;
+    source?: string;
+    formId?: string;
     btnText?: string;
     btnLink?: string;
 }
 
 const {
-    subTitle = "Свяжитесь со мной",
-    title = "Воплотите ваши идеи в реальность с помощью ИИ",
-    description = "Я работаю в тесном контакте с вами, чтобы понять ваши цели и превратить ваши идеи в мощные цифровые решения на базе искусственного интеллекта.",
+    homeOriginal = false,
+    subTitle = homeOriginal ? "Свяжитесь со мной" : "Обсудить задачу",
+    title = homeOriginal ? "Воплотите ваши идеи в реальность с помощью ИИ" : "Расскажите, где вам нужен ИИ",
+    description = homeOriginal ? "Я работаю в тесном контакте с вами, чтобы понять ваши цели и превратить ваши идеи в мощные цифровые решения на базе искусственного интеллекта." : "Опишите процесс, системы и результат, который хотите получить. Подскажем, с какого сценария начать и что потребуется для проверки.",
     formTitle = "Оставить заявку",
-    btnText = "Узнать больше",
-    btnLink = "contact.html"
+    source = "cta-block",
+    formId,
 } = Astro.props;
+
+const contactFormProps = { variant: "compact" as const, source, formId, title: formTitle, homeOriginal };
 ---
 <!-- Cta Box Section Start -->
 <div class="cta-box bg-section">
@@ -33,12 +39,24 @@ const {
                         <p class="wow fadeInUp" data-wow-delay="0.2s">{description}</p>
                     </div>
                     <!-- Section Title End -->
+
+                    {homeOriginal && (
+                        <div class="cta-btn wow fadeInUp" data-wow-delay="0.4s">
+                            <a href={import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1DO_DIGITAL"} class="btn-default">Написать в Telegram</a>
+                        </div>
+                    )}
                 </div>
                 <!-- Cta Box Content End -->
             </div>
 
             <div class="col-xl-6">
-                <ChatWidget client:load title={formTitle} />
+                {homeOriginal ? (
+                    <div class="cta-form-box box-border-gradiant">
+                        <ContactForm client:idle {...contactFormProps} />
+                    </div>
+                ) : (
+                    <ContactForm client:idle {...contactFormProps} />
+                )}
             </div>
         </div>
     </div>

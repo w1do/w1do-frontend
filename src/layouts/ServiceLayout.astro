@@ -1,5 +1,7 @@
 ---
+import { brandName } from "../lib/brand";
 import { SITE_ORIGIN } from "../lib/regions";
+import { getStartingProjectOffer } from "../lib/service-pricing";
 import Layout from "./Layout.astro";
 import Header from "../components/shared/Header.astro";
 import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
@@ -11,13 +13,14 @@ import Pricing from "../components/Pricing.astro";
 import Process from "../components/Process.astro";
 import Works from "../components/Works.astro";
 import Spacer from "../components/shared/Spacer.astro";
+import ServicePriceNote from "../components/services/ServicePriceNote.astro";
 import ClusterSpokes from "../components/services/cluster/ClusterSpokes.astro";
 import { getServiceHubs } from "../lib/server/w1do/services";
 
 const { frontmatter, spokes } = Astro.props;
 
-const seoTitle = frontmatter.seo?.title || frontmatter.title;
-const seoDescription = frontmatter.seo?.description || frontmatter.description;
+const seoTitle = brandName(frontmatter.seo?.title || frontmatter.title);
+const seoDescription = brandName(frontmatter.seo?.description || frontmatter.description);
 
 const breadcrumbItems = [
     { label: "Главная", href: "/" },
@@ -31,6 +34,7 @@ const services = await getServiceHubs();
 const siteUrl = SITE_ORIGIN;
 const pageUrl = new URL(Astro.url.pathname, SITE_ORIGIN).href;
 const serviceImage = frontmatter.image ? new URL(frontmatter.image, SITE_ORIGIN).href : undefined;
+const startingOffer = getStartingProjectOffer(frontmatter.pricing, frontmatter.cluster);
 
 const serviceSchema = {
     "@context": "https://schema.org",
@@ -42,7 +46,16 @@ const serviceSchema = {
     "inLanguage": "ru-RU",
     ...(serviceImage ? { "image": serviceImage } : {}),
     "provider": { "@id": `${siteUrl}/#organization` },
-    "areaServed": { "@type": "Country", "name": "Россия" }
+    "areaServed": { "@type": "Country", "name": "Россия" },
+    ...(startingOffer ? {
+        "offers": {
+            "@type": "Offer",
+            "url": pageUrl,
+            "priceCurrency": "RUB",
+            "price": String(startingOffer.priceFrom),
+            "availability": "https://schema.org/InStock"
+        }
+    } : {})
 };
 
 const breadcrumbSchema = {
@@ -72,6 +85,7 @@ const schema = [serviceSchema, breadcrumbSchema, faqSchema].filter(Boolean);
 <Layout title={seoTitle} description={seoDescription} schema={schema} image={frontmatter.image}>
     <Header/>
     <Breadcrumbs title={frontmatter.title} breadcrumbItems={breadcrumbItems}/>
+    {startingOffer && <ServicePriceNote offer={startingOffer} cluster={frontmatter.cluster} />}
     
     <!-- Page Service Single Start -->
     <div class="page-service-single">

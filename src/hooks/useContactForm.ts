@@ -84,12 +84,18 @@ export function useContactForm({ source }: UseContactFormOptions) {
         }
 
         const payload = collectPayload();
+        const calculation = source === "calculator" ? read("calculation") : "";
+        const userMessage = messageText || `Имя: ${name}`;
+
+        if (calculation) {
+            payload.calculation = calculation;
+        }
 
         const body: Record<string, unknown> = {
             name,
             phone,
             subject: `Заявка с сайта${name ? `: ${name}` : ""}`,
-            message: messageText || `Имя: ${name}`,
+            message: calculation ? `${userMessage}\n\nПредварительный расчёт:\n${calculation}` : userMessage,
             source,
             payload,
             max: honeypot,

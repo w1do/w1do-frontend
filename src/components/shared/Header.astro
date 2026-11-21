@@ -2,10 +2,27 @@
 import { getServiceHubs } from '../../lib/server/w1do/services';
 import CitySelector from './CitySelector.astro';
 
+function shortDescription(description: string): string {
+    const normalized = description.replace(/\s+/g, ' ').trim();
+    const graphemes = Array.from(new Intl.Segmenter('ru', { granularity: 'grapheme' }).segment(normalized),
+        ({ segment }) => segment);
+
+    if (graphemes.length <= 50) return normalized;
+
+    const excerpt = graphemes.slice(0, 49).join('').trimEnd();
+    const lastWordBoundary = excerpt.lastIndexOf(' ');
+
+    return `${lastWordBoundary > 0 ? excerpt.slice(0, lastWordBoundary) : excerpt}…`;
+}
+
 const services = (await getServiceHubs()).map((service) => ({
     title: service.title,
     link: service.url,
+    image: service.image,
+    description: service.excerpt || service.description,
+    shortDescription: shortDescription(service.excerpt || service.description),
 }));
+const defaultService = services.find((service) => service.link === '/ai-agents') || services[0];
 ---
 <!-- Header Start -->
 <header class="main-header">
@@ -14,7 +31,7 @@ const services = (await getServiceHubs()).map((service) => ({
             <div class="container">
                 <!-- Logo Start -->
                 <a class="navbar-brand" href="/">
-                    <img src="/images/logo-aicraft.png" alt="AiCRAFT.AGENCY" width="240" height="80">
+                    <img src="/images/logo-aicraft-480.png" alt="AiCRAFT.AGENCY" width="240" height="80">
                 </a>
                 <!-- Logo End -->
 
@@ -22,40 +39,66 @@ const services = (await getServiceHubs()).map((service) => ({
                 <div class="collapse navbar-collapse main-menu">
                     <div class="nav-menu-wrapper">
                         <ul class="navbar-nav mr-auto" id="menu">
-                            <li class="nav-item"><a class="nav-link" href="/">Главная</a></li>
+                            <li class="nav-item nav-home"><a class="nav-link" href="/">Главная</a></li>
                             <li class="nav-item submenu has-mega-menu"><a class="nav-link" href="/services">Услуги</a>
                                 <ul class="services-mega-menu">
                                     {services.map((service) => (
-                                        <li class="nav-item"><a class="nav-link" href={service.link}>{service.title}</a></li>
+                                        <li class:list={['nav-item', { 'is-preview-active': service === defaultService }]}>
+                                            <a class="nav-link service-menu-link" href={service.link}>
+                                                <span class="service-menu-link__icon" aria-hidden="true">
+                                                    {service.image && <img src={service.image} alt="" loading="lazy" />}
+                                                </span>
+                                                <span class="service-menu-link__text">
+                                                    <span class="service-menu-link__title">{service.title}</span>
+                                                    {service.shortDescription && (
+                                                        <span class="service-menu-link__description">{service.shortDescription}</span>
+                                                    )}
+                                                </span>
+                                            </a>
+                                            <div class="service-menu-preview">
+                                                {service.image && (
+                                                    <div class="service-menu-preview__image">
+                                                        <img src={service.image} alt="" loading="lazy" />
+                                                    </div>
+                                                )}
+                                                <div class="service-menu-preview__content">
+                                                    <span class="service-menu-preview__title">{service.title}</span>
+                                                    {service.description && <p>{service.description}</p>}
+                                                </div>
+                                            </div>
+                                        </li>
                                     ))}
                                 </ul>
                             </li>
-                            <li class="nav-item submenu"><a class="nav-link" href="#">Разработка</a>
+                            <li class="nav-item submenu"><a class="nav-link" href="/ai-agents">ИИ-агенты</a>
                                 <ul>
-                                    <li class="nav-item"><a class="nav-link" href="/sozdanie-saita">Разработка сайтов</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="/ai-agents">AI agents</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="/ai-agents">Разработка ИИ-агентов</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="/services/ai-solution-architecture/ai-agent-development">Разработка agent harness</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="/consultation/claude-cursor-setup">Инфраструктура Claude Code</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="/ai-agents/ai-agent-implementation">Внедрение в процессы</a></li>
                                 </ul>
                             </li>
-                            <li class="nav-item submenu"><a class="nav-link" href="#">Страницы</a>
+                            <li class="nav-item submenu"><a class="nav-link" href="/about">Агентство</a>
                                 <ul>
-                                    <li class="nav-item"><a class="nav-link" href="/about">Обо мне</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="/about">Об AiCRAFT</a></li>
                                     <li class="nav-item"><a class="nav-link" href="/pricing">Цены</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="/calculator">Калькулятор</a></li>
                                     <li class="nav-item"><a class="nav-link" href="/consultation">Консультация по ИИ</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="/vibe-coding">Вайб кодер, MLOps</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="/ai-training">Обучение ИИ</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="/case">Проекты</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="/opensource">OpenSource</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="/vibe-coding">ИИ-инженерия</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="/ai-training">Обучение разработке с ИИ</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="/opensource">Открытые проекты</a></li>
                                     <li class="nav-item"><a class="nav-link" href="/knowledge">База знаний</a></li>
                                 </ul>
                             </li>
+                            <li class="nav-item"><a class="nav-link" href="/case">Кейсы</a></li>
                             <li class="nav-item"><a class="nav-link" href="/blog">Блог</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/contact">Контакты</a></li>
+                            <li class="nav-item nav-contact"><a class="nav-link" href="/contact">Контакты</a></li>
                         </ul>
                     </div>
 
                     <!-- Header Btn Start -->
                     <div class="header-btn">
-                        <a href="/chat" data-open-chat aria-haspopup="dialog" class="btn-default" data-cursor="-opaque">Связаться</a>
+                        <a href="/contact" class="btn-default" data-cursor="-opaque">Связаться</a>
                     </div>
                     <!-- Header Btn End -->
                 </div>
@@ -68,6 +111,34 @@ const services = (await getServiceHubs()).map((service) => ({
     </div>
 </header>
 <!-- Header End -->
+
+<script>
+    document.querySelectorAll<HTMLElement>('.main-menu .services-mega-menu').forEach((menu) => {
+        const items = Array.from(menu.querySelectorAll<HTMLElement>(':scope > li'));
+        const defaultItem = items.find((item) => item.classList.contains('is-preview-active')) || null;
+
+        function activatePreview(activeItem: HTMLElement | null) {
+            items.forEach((item) => item.classList.toggle('is-preview-active', item === activeItem));
+        }
+
+        items.forEach((item) => {
+            item.addEventListener('pointerenter', () => activatePreview(item));
+            item.addEventListener('focusin', () => activatePreview(item));
+        });
+
+        menu.addEventListener('pointerleave', () => {
+            activatePreview(items.find((item) => item.matches(':focus-within')) || defaultItem);
+        });
+        menu.addEventListener('focusout', (event) => {
+            if (event.relatedTarget instanceof Node && menu.contains(event.relatedTarget)) return;
+            activatePreview(items.find((item) => item.matches(':hover')) || defaultItem);
+        });
+        menu.addEventListener('scroll', () => {
+            menu.style.setProperty('--service-preview-scroll', `${menu.scrollTop}px`);
+        });
+        menu.classList.add('has-preview-control');
+    });
+</script>
 
 <style>
     .navbar-brand {
@@ -84,8 +155,26 @@ const services = (await getServiceHubs()).map((service) => ({
         width: 100%;
         height: auto;
     }
+    @media (min-width: 992px) {
+        #menu > .nav-item { margin-inline: 4px; }
+        #menu > .nav-item > .nav-link {
+            padding-inline: 8px !important;
+            white-space: nowrap;
+        }
+        #menu > .nav-contact { display: none; }
+        .header-btn { flex-shrink: 0; }
+        .header-btn > .btn-default { white-space: nowrap; }
+        .navbar > .container :global(.city-selector) {
+            flex-shrink: 0;
+            margin-inline: 8px 0;
+        }
+    }
     @media (max-width: 1199px) {
         .navbar-brand { flex-basis: 200px; width: 200px; height: 44px; }
+    }
+    @media (min-width: 992px) and (max-width: 1199px) {
+        #menu > .nav-home { display: none; }
+        .navbar-brand { flex-basis: 172px; width: 172px; }
     }
     @media (max-width: 767px) {
         .navbar-brand { flex-basis: 180px; width: 180px; height: 40px; }

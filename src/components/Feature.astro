@@ -2,15 +2,23 @@
 import { Image } from 'astro:assets';
 
 interface Props {
+    homeOriginal?: boolean;
     subTitle?: string;
     title?: string;
     description?: string;
+    buttonHref?: string;
+    buttonText?: string;
+    validationHref?: string;
 }
 
 const {
-    subTitle = "Технологии",
-    title = "Стек, который дает результат",
-    description = "Я использую связку <strong>Cursor + Claude</strong>, что позволяет мне писать код в 4 руки, минимизируя ошибки и ускоряя деплой ваших проектов в разы."
+    homeOriginal = false,
+    subTitle = "Архитектура и запуск",
+    title = "Как проектируем окружение для ИИ",
+    description = "Настраиваем доступ к данным, инструментам и проверкам, которые нужны для работы агента в вашей среде.",
+    buttonHref = homeOriginal ? import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1DO_DIGITAL" : "/contact",
+    buttonText = homeOriginal ? "Связаться" : "Обсудить инфраструктуру",
+    validationHref,
 } = Astro.props;
 ---
 <!-- Core Feature Section Start -->
@@ -37,7 +45,7 @@ const {
 
                     <!-- Section Button Start -->
                     <div class="section-btn wow fadeInUp" data-wow-delay="0.4s">
-                        <a href={import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1DO_DIGITAL"} class="btn-default" data-cursor="-opaque">Связаться</a>
+                        <a href={buttonHref} class="btn-default" data-cursor="-opaque">{buttonText}</a>
                     </div>
                     <!-- Section Button End -->
                 </div>
@@ -53,12 +61,21 @@ const {
                     <div class="core-feature-box box-1 box-border-gradiant wow fadeInUp">
                         <div class="core-feature-image">
                             <figure>
-                                <Image src="/images/core-feature-image-1.png" alt="Технологический стек AI инженера" width={250} height={250} loading="lazy" />
+                                <Image src="/images/core-feature-image-1.png" alt={homeOriginal ? "Технологический стек AI инженера" : ""} width={250} height={250} loading="lazy" />
                             </figure>
                         </div>
                         <div class="core-feature-body-content">
-                            <h2>Сложные интеграции</h2>
-                            <p>Чат-боты, ассистенты и любые системы на базе LLM для автоматизации вашего бизнеса.</p>
+                            {homeOriginal ? (
+                                <>
+                                    <h2>Сложные интеграции</h2>
+                                    <p>Чат-боты, ассистенты и любые системы на базе LLM для автоматизации вашего бизнеса.</p>
+                                </>
+                            ) : (
+                                <>
+                                    <h3>Инструменты и контекст</h3>
+                                    <p>Подключаем API и MCP-инструменты. Настраиваем, какие документы и данные доступны во время выполнения задачи.</p>
+                                </>
+                            )}
                         </div>
                     </div>
                     <!-- Core Feature Box End -->
@@ -68,7 +85,7 @@ const {
                         <!-- Core Feature Image Start -->
                         <div class="core-feature-image">
                             <figure>
-                                <Image src="/images/core-feature-image.jpg" alt="Инженер за работой над AI проектом" width={800} height={600} loading="lazy" />
+                                <Image src="/images/core-feature-image.webp" alt={homeOriginal ? "Инженер за работой над AI проектом" : ""} width={800} height={600} loading="lazy" />
                             </figure>
                         </div>
                         <!-- Core Feature Image End -->
@@ -78,67 +95,73 @@ const {
                     <!-- Core Feature Box Start -->
                     <div class="core-feature-box box-3 box-border-gradiant wow fadeInUp" data-wow-delay="0.4s">
                         <div class="icon-box">
-                            <img src="/images/icon-core-feature-1.svg" alt="Иконка опыта">
+                            <img loading="lazy" decoding="async" src="/images/icon-core-feature-1.svg" alt={homeOriginal ? "Иконка опыта" : ""}>
                         </div>
                         <div class="core-feature-body-content">
-                            <h2><span class="counter">12</span>+ лет опыта</h2>
-                            <p>Знаю, как подружить существующий код с новыми нейросетями и создавать стабильные высоконагруженные системы.</p>
-                            <ul>
-                                <li>Экспертиза в индустрии</li>
-                            </ul>
+                            {homeOriginal ? (
+                                <>
+                                    <h2><span class="counter">10</span>+ лет опыта</h2>
+                                    <p>Знаю, как подружить существующий код с новыми нейросетями и создавать стабильные высоконагруженные системы.</p>
+                                    <ul>
+                                        <li>Экспертиза в индустрии</li>
+                                    </ul>
+                                </>
+                            ) : (
+                                <>
+                                    <h3>Выполнение заданий</h3>
+                                    <p>Сохраняем состояние задания, задаём условия повторной попытки при сбоях и записываем результаты работы.</p>
+                                    <ul>
+                                        <li>Журнал вызовов инструментов</li>
+                                    </ul>
+                                </>
+                            )}
                         </div>
                     </div>
                     <!-- Core Feature Box End -->
 
                     <!-- Core Feature Box Start -->
                     <div class="core-feature-box box-4 wow fadeInUp" data-wow-delay="0.6s">
-                        <!-- Core Feature Cta Review Box Start -->
-                        <div class="core-feature-cta-review-box">
-                            <!-- Satisfy Client images Start -->
-                            <div class="satisfy-client-images">
-                                <div class="satisfy-client-image">
-                                    <figure class="image-anime">
-                                        <img src="/images/author-2.jpg" alt="Клиент AI инженера">
-                                    </figure>
-                                </div>
-                                <div class="satisfy-client-image">
-                                    <figure class="image-anime">
-                                        <img src="/images/author-1.jpg" alt="Клиент AI инженера">
-                                    </figure>
-                                </div>
-                                <div class="satisfy-client-image">
-                                    <figure class="image-anime">
-                                        <img src="/images/author-3.jpg" alt="Клиент AI инженера">
-                                    </figure>
-                                </div>
-                                <div class="satisfy-client-image">
-                                    <figure class="image-anime">
-                                        <img src="/images/author-4.jpg" alt="Клиент AI инженера">
-                                    </figure>
-                                </div>
-                            </div>
-                            <!-- Satisfy Client images End -->
-
-                            <!-- Google Rating Box Start -->
-                            <div class="google-rating-box">
-                                <div class="google-rating-logo">
-                                    <img src="/images/icon-google.svg" alt="Google Logo">
-                                </div>
-                                <div class="google-rating-info">
-                                    <div class="google-rating-info-header">
-                                        <h2><span class="counter">4.9</span>/5</h2>
-                                        <span class="google-rating-star"><i class="fa fa-solid fa-star"></i><i class="fa fa-solid fa-star"></i><i class="fa fa-solid fa-star"></i><i class="fa fa-solid fa-star"></i><i class="fa fa-solid fa-star"></i></span>
+                        {homeOriginal ? (
+                            <div class="core-feature-cta-review-box">
+                                <!-- Satisfy Client images Start -->
+                                <div class="satisfy-client-images">
+                                    <div class="satisfy-client-image">
+                                        <figure class="image-anime">
+                                            <img loading="lazy" decoding="async" src="/images/author-2.jpg" alt="Клиент AI инженера">
+                                        </figure>
                                     </div>
-                                    <p>Более 100+ отзывов на фрилансе</p>
+                                    <div class="satisfy-client-image">
+                                        <figure class="image-anime">
+                                            <img loading="lazy" decoding="async" src="/images/author-1.jpg" alt="Клиент AI инженера">
+                                        </figure>
+                                    </div>
+                                    <div class="satisfy-client-image">
+                                        <figure class="image-anime">
+                                            <img loading="lazy" decoding="async" src="/images/author-3.jpg" alt="Клиент AI инженера">
+                                        </figure>
+                                    </div>
+                                    <div class="satisfy-client-image">
+                                        <figure class="image-anime">
+                                            <img loading="lazy" decoding="async" src="/images/author-4.jpg" alt="Клиент AI инженера">
+                                        </figure>
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- Google Rating Box Start -->
-                        </div>
-                        <!-- Core Feature Cta Review Box End -->
+                                <!-- Satisfy Client images End -->
 
-                        <!-- Core Feature Review Content Start -->
+
+                                <!-- Google Rating Box Start -->
+                            </div>
+                        ) : validationHref && (
+                            <div class="core-feature-cta-review-box">
+                                <h3>Критерии приёмки</h3>
+                                <a href={validationHref} class="readmore-btn">Как проходит внедрение</a>
+                            </div>
+                        )}
                         <div class="core-feature-review-content">
-                            <p>“ Решения которые я создаю, помогают и облечают рутинные задачи, и освобождают время для более важдых дел ”</p>
+                            <p>{homeOriginal
+                                ? "«Решения, которые я создаю, облегчают рутинные задачи и освобождают время для более важных дел»"
+                                : "Для проверки агента собираем набор типовых задач и сравниваем ответы и действия с согласованным результатом."
+                            }</p>
                         </div>
                         <!-- Core Feature Review Content End -->
                     </div>
@@ -149,17 +172,24 @@ const {
                         <!-- Core Feature Contact Item Start -->
                         <div class="core-feature-contact-item">
                             <div class="icon-box">
-                                <img src="/images/icon-headphone-white.svg" alt="Связь со мной">
+                                <img loading="lazy" decoding="async" src="/images/icon-headphone-white.svg" alt={homeOriginal ? "Связь со мной" : ""}>
                             </div>
                             <div class="core-feature-title">
-                                <h2>Нужна помощь?</h2>
+                                {homeOriginal ? <h2>Нужна помощь?</h2> : <h3>Claude Code для команды</h3>}
                             </div>
                         </div>
                         <!-- Core Feature Contact Item End -->
 
                         <!-- Core Feature Contact Content Start -->
                         <div class="core-feature-contact-content">
-                            <p>У вас есть проект или вам нужна консультация эксперта ?</p>
+                            {homeOriginal ? (
+                                <p>У вас есть проект или вам нужна консультация эксперта ?</p>
+                            ) : (
+                                <>
+                                    <p>Готовим общие правила репозиториев, тестовый запуск и проверку изменений в CI.</p>
+                                    <a href="/consultation/claude-cursor-setup">Подробнее о настройке Claude Code</a>
+                                </>
+                            )}
                         </div>
                         <!-- Core Feature Contact Content End -->
                     </div>
@@ -171,3 +201,10 @@ const {
     </div>
 </div>
 <!-- Core Feature Section End -->
+
+<style>
+    .core-feature-cta-review-box h3 {
+        font-size: 22px;
+        margin-bottom: 12px;
+    }
+</style>

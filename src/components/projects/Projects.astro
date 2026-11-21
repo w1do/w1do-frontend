@@ -3,6 +3,7 @@ import ProjectCard from "./ProjectCard.astro";
 import { getCases } from "../../lib/server/w1do/cases";
 
 interface Props {
+    homeOriginal?: boolean;
     subTitle?: string;
     title?: string;
     filterAll?: string;
@@ -14,19 +15,37 @@ interface Props {
 }
 
 const {
-    subTitle = "Мои проекты",
-    title = "Воплощаю идеи в мощные цифровые решения",
+    homeOriginal = false,
+    subTitle = homeOriginal ? "Мои проекты" : "Кейсы AiCRAFT",
+    title = homeOriginal ? "Воплощаю идеи в мощные цифровые решения" : "Выполненные проекты",
     filterAll = "Все проекты",
     filterSeo = "SEO & Content",
     filterAi = "AI Решения",
     filterAutomation = "AI Автоматизация",
-    footerText = "Давайте создадим что-то великое вместе.",
-    footerLinkText = "Посмотреть все проекты."
+    footerText = homeOriginal ? "Давайте создадим что-то великое вместе." : "Задачи, ход работы и решения в кейсах AiCRAFT.",
+    footerLinkText = homeOriginal ? "Посмотреть все проекты." : "Смотреть все кейсы"
 } = Astro.props;
 
-const projects = await getCases();
+const projects = await getCases().catch(() => {
+    console.warn("Не удалось загрузить кейсы из W1DO.");
+    return null;
+});
 
-const featuredProjects = projects.slice(0, 3);
+const featuredProjects = projects?.slice(0, 3) ?? [];
+const categories = new Map<string, { label: string; slugs: Set<string> }>();
+
+for (const { categorySlug, category } of homeOriginal ? [] : featuredProjects) {
+    const label = category.trim().replace(/\s+/g, " ");
+    if (!label || !/^[a-z][a-z0-9_-]*$/i.test(categorySlug)) continue;
+
+    const categoryKey = label.toLowerCase();
+    const group = categories.get(categoryKey);
+    if (group) {
+        group.slugs.add(categorySlug);
+    } else {
+        categories.set(categoryKey, { label, slugs: new Set([categorySlug]) });
+    }
+}
 ---
 
 <!-- Our Project Section Start -->
@@ -43,16 +62,33 @@ const featuredProjects = projects.slice(0, 3);
                     </div>
                     <!-- Section Title End -->
 
-                    <!-- Our Project Nav start -->
-                    <div class="our-project-filter-nav wow fadeInUp" data-wow-delay="0.2s">
-                        <ul>
-                            <li><a href="#" class="active-btn" data-filter="*"><img src="/images/icon-our-feature-tab-1.svg" alt={filterAll}> {filterAll}</a></li>
-                            <li><a href="#" data-filter=".seo"><img src="/images/icon-our-feature-tab-1.svg" alt={filterSeo}> {filterSeo}</a></li>
-                            <li><a href="#" data-filter=".uiux"><img src="/images/icon-our-feature-tab-1.svg" alt={filterAi}> {filterAi}</a></li>
-                            <li><a href="#" data-filter=".web"><img src="/images/icon-our-feature-tab-1.svg" alt={filterAutomation}> {filterAutomation}</a></li>
-                        </ul>
-                    </div>
-                    <!-- Our Project Nav End -->
+                    {homeOriginal ? (
+                        <div class="our-project-filter-nav wow fadeInUp" data-wow-delay="0.2s">
+                            <ul>
+                                <li><a href="#" class="active-btn" data-filter="*"><img loading="lazy" decoding="async" src="/images/icon-our-feature-tab-1.svg" alt={filterAll}> {filterAll}</a></li>
+                                <li><a href="#" data-filter=".seo"><img loading="lazy" decoding="async" src="/images/icon-our-feature-tab-1.svg" alt={filterSeo}> {filterSeo}</a></li>
+                                <li><a href="#" data-filter=".uiux"><img loading="lazy" decoding="async" src="/images/icon-our-feature-tab-1.svg" alt={filterAi}> {filterAi}</a></li>
+                                <li><a href="#" data-filter=".web"><img loading="lazy" decoding="async" src="/images/icon-our-feature-tab-1.svg" alt={filterAutomation}> {filterAutomation}</a></li>
+                            </ul>
+                        </div>
+                    ) : categories.size > 0 && (
+                        <div class="our-project-filter-nav wow fadeInUp" data-wow-delay="0.2s">
+                            <ul>
+                                <li>
+                                    <a href="#" class="active-btn" data-filter="*">
+                                        <img loading="lazy" decoding="async" src="/images/icon-our-feature-tab-1.svg" alt=""> {filterAll}
+                                    </a>
+                                </li>
+                                {[...categories.values()].map(({ label, slugs }) => (
+                                    <li>
+                                        <a href="#" data-filter={Array.from(slugs, (slug) => "." + slug).join(", ")}>
+                                            <img loading="lazy" decoding="async" src="/images/icon-our-feature-tab-1.svg" alt=""> {label}
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
                 </div>
                 <!-- Project Filter Box Header End -->
             </div>
@@ -60,32 +96,40 @@ const featuredProjects = projects.slice(0, 3);
         </div>
         <!-- Our Project Tab Box End -->
 
-        <div class="row project-item-list">
-            {featuredProjects.map((project: any, index: number) => (
-                <ProjectCard 
-                    project={project} 
-                    delay={`${index * 0.2}s`}
-                />
-            ))}
-        </div>
+        {homeOriginal || featuredProjects.length > 0 ? (
+            <div class="row project-item-list">
+                {featuredProjects.map((project, index) => (
+                    <ProjectCard project={project} delay={`${index * 0.2}s`} />
+                ))}
+            </div>
+        ) : <p>{projects === null ? "Кейсы временно недоступны." : "Кейсы пока не опубликованы."}</p>}
 
         <div class="row">
             <div class="col-lg-12">
                 <!-- Section Footer Text Start -->
                 <div class="section-footer-text section-satisfy-img wow fadeInUp" data-wow-delay="0.4s">
-                    <!-- Satisfy Client Images Start -->
-                    <div class="satisfy-client-images">
-                        <div class="satisfy-client-image">
-                            <figure class="image-anime">
-                                <img src="/images/author-1.jpg" alt="Довольный клиент">
-                            </figure>
-                        </div>
-                        <div class="satisfy-client-image add-more">
-                            <img src="/images/icon-phone-black.svg" alt="Телефон">
-                        </div>
-                    </div>
-                    <!-- Satisfy Client Images End -->
-                    <p>{footerText} <a href="/case">{footerLinkText}</a></p>
+                    {homeOriginal ? (
+                        <>
+                            <!-- Satisfy Client Images Start -->
+                            <div class="satisfy-client-images">
+                                <div class="satisfy-client-image">
+                                    <figure class="image-anime">
+                                        <img loading="lazy" decoding="async" src="/images/author-1.jpg" alt="Довольный клиент">
+                                    </figure>
+                                </div>
+                                <div class="satisfy-client-image add-more">
+                                    <img loading="lazy" decoding="async" src="/images/icon-phone-black.svg" alt="Телефон">
+                                </div>
+                            </div>
+                            <!-- Satisfy Client Images End -->
+                            <p>{footerText} <a href="/case">{footerLinkText}</a></p>
+                        </>
+                    ) : (
+                        <>
+                            <p>{footerText}</p>
+                            <a class="btn-default" href="/case">{footerLinkText}</a>
+                        </>
+                    )}
                 </div>
                 <!-- Section Footer Text End -->
             </div>
@@ -93,3 +137,9 @@ const featuredProjects = projects.slice(0, 3);
     </div>
 </div>
 <!-- Our Project Section End -->
+
+<style>
+    .project-filter-box-header .section-title:only-child {
+        width: 100%;
+    }
+</style>

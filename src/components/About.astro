@@ -1,5 +1,6 @@
 ---
 interface Props {
+    homeOriginal?: boolean;
     subTitle?: string;
     title?: string;
     description?: string;
@@ -9,19 +10,18 @@ interface Props {
 }
 
 const {
-    subTitle = "О разработчике",
-    title = "Разработка ИИ",
-    description = "Я создаю ИИ-решения, которые автоматизируют ваш бизнес. Использую стек: <strong>Python</strong>, <strong>Claude</strong>, <strong>Cursor</strong> и <strong>Junie</strong> для ускорения разработки в 5 раз. Мой опыт позволяет внедрять системы, которые реально работают на ваш доход.",
-    counterValue = "100",
-    counterTag = "ИИ-проектов",
-    counterDescription = "автоматизация процессов и внедрение LLM"
+    homeOriginal = false,
+    subTitle = "Об агентстве AiCRAFT",
+    title = "Помогаем встроить ИИ в работу компании",
+    description = "Разбираем процесс, договариваемся о критериях приёмки и проверяем решение на ваших примерах перед запуском.",
+    counterValue,
+    counterTag,
+    counterDescription,
 } = Astro.props;
 
-// Обработка числового значения для счетчика
-const match = counterValue.toString().match(/^(\d+(?:\.\d+)?)(.*)$/);
-const numericValue = match ? match[1] : counterValue;
-const suffix = match ? match[2] : "";
-const isNumeric = match !== null;
+const counterText = counterValue?.trim();
+const numericCounter = counterText?.match(/^(\d+(?:\.\d+)?)\s*([+%]?)$/);
+const counterSuffix = numericCounter?.[2] || (homeOriginal ? "+" : "");
 ---
 <!-- About Us Section Start -->
 <div class="about-us">
@@ -50,88 +50,89 @@ const isNumeric = match !== null;
 
                     <!-- About Us Body Start -->
                     <div class="about-us-body">
-                        <!-- About Counter Box start -->
-                        <div class="about-counter-box wow fadeInUp">
-                            <div class="about-counter-box-header">
-                                <h2>
-                                    {isNumeric ? (
-                                        <span class="counter">{numericValue}</span>
-                                    ) : (
-                                        <span>{numericValue}</span>
-                                    )}
-                                    {suffix || "+"}
-                                </h2>
-                                <span class="about-counter-tag">{counterTag}</span>
+                        {counterText && (
+                            <div class="about-counter-box wow fadeInUp">
+                                <div class="about-counter-box-header">
+                                    {numericCounter ? (
+                                        <h2 class="about-counter-number" style={{ "--counter-characters": numericCounter[1].length + counterSuffix.length }}>
+                                            <span class="counter">{numericCounter[1]}</span>{counterSuffix}
+                                        </h2>
+                                    ) : <p class="about-counter-label">{counterText}</p>}
+                                    {counterTag && <span class="about-counter-tag">{counterTag}</span>}
+                                </div>
+                                {counterDescription && (
+                                    <div class="about-counter-box-body">
+                                        <p>{counterDescription}</p>
+                                    </div>
+                                )}
                             </div>
-                            <div class="about-counter-box-body">
-                                <p>{counterDescription}</p>
-                            </div>
-                        </div>
-                        <!-- About Counter Box End -->
+                        )}
 
                         <!-- About Body Content Start -->
-                        <div class="about-body-content-box wow fadeInUp" data-wow-delay="0.2s">
+                        <div class:list={["about-body-content-box", "wow", "fadeInUp", { "about-body-content-box--full": !counterText }]} data-wow-delay="0.2s">
                             <!-- About Body Content Start -->
                             <div class="about-body-content">
                                 <p set:html={description}></p>
                             </div>
                             <!-- About Body Content End -->
 
-                            <!-- About Body Review Box Start -->
-                            <div class="about-body-review-box">
-                                <!-- Contact Us Circle Start -->
-                                <div class="contact-us-circle">
-                                    <a href={import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1DO_DIGITAL"} data-cursor="-opaque">
-                                        <img src="/images/contact-us-circle-transparent.svg" alt="Связаться со мной">
-                                    </a>
-                                </div>
-                                <!-- Contact Us Circle End -->
-
-                                <!-- About Client Box Start -->
-                                <div class="about-client-box">
-                                    <!-- Satisfy Client Images Start -->
-                                    <div class="satisfy-client-images">
-                                        <div class="satisfy-client-image">
-                                            <figure class="image-anime">
-                                                <img src="/images/author-1.jpg" alt="Разработчик ИИ проверяет работу нейросети" loading="lazy">
-                                            </figure>
-                                        </div>
-                                        <div class="satisfy-client-image">
-                                            <figure class="image-anime">
-                                                <img src="/images/author-2.jpg" alt="Пример внедрения ИИ в бизнес" loading="lazy">
-                                            </figure>
-                                        </div>
-                                        <div class="satisfy-client-image">
-                                            <figure class="image-anime">
-                                                <img src="/images/author-3.jpg" alt="Автоматизация с помощью ИИ-агентов" loading="lazy">
-                                            </figure>
-                                        </div>
-                                        <div class="satisfy-client-image">
-                                            <figure class="image-anime">
-                                                <img src="/images/author-4.jpg" alt="Интеграция LLM моделей в CRM" loading="lazy">
-                                            </figure>
-                                        </div>
+                            {homeOriginal ? (
+                                <div class="about-body-review-box">
+                                    <!-- Contact Us Circle Start -->
+                                    <div class="contact-us-circle">
+                                        <a href={import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1DO_DIGITAL"} data-cursor="-opaque">
+                                            <img loading="lazy" decoding="async" src="/images/contact-us-circle-transparent.svg" alt="Связаться со мной">
+                                        </a>
                                     </div>
-                                    <!-- Satisfy Client Images End -->
+                                    <!-- Contact Us Circle End -->
 
-                                    <!-- Google Rating Box Start -->
-                                    <div class="google-rating-box">
-                                        <div class="google-rating-logo">
-                                            <img src="/images/icon-google.svg" alt="Отзывы W1DO DIGITAL">
-                                        </div>
-                                        <div class="google-rating-info">
-                                            <div class="google-rating-info-header">
-                                                <h2><span class="counter">4.9</span>/5</h2>
-                                                <span class="google-rating-star"><i class="fa fa-solid fa-star"></i><i class="fa fa-solid fa-star"></i><i class="fa fa-solid fa-star"></i><i class="fa fa-solid fa-star"></i><i class="fa fa-solid fa-star"></i></span>
+                                    <!-- About Client Box Start -->
+                                    <div class="about-client-box">
+                                        <!-- Satisfy Client Images Start -->
+                                        <div class="satisfy-client-images">
+                                            <div class="satisfy-client-image">
+                                                <figure class="image-anime">
+                                                    <img src="/images/author-1.jpg" alt="Разработчик ИИ проверяет работу нейросети" loading="lazy">
+                                                </figure>
                                             </div>
-                                            <p>Более 100 отзывов на фриланс площадках</p>
+                                            <div class="satisfy-client-image">
+                                                <figure class="image-anime">
+                                                    <img src="/images/author-2.jpg" alt="Пример внедрения ИИ в бизнес" loading="lazy">
+                                                </figure>
+                                            </div>
+                                            <div class="satisfy-client-image">
+                                                <figure class="image-anime">
+                                                    <img src="/images/author-3.jpg" alt="Автоматизация с помощью ИИ-агентов" loading="lazy">
+                                                </figure>
+                                            </div>
+                                            <div class="satisfy-client-image">
+                                                <figure class="image-anime">
+                                                    <img src="/images/author-4.jpg" alt="Интеграция LLM моделей в CRM" loading="lazy">
+                                                </figure>
+                                            </div>
                                         </div>
+                                        <!-- Satisfy Client Images End -->
+
+                                        <!-- Google Rating Box Start -->
+                                        <div class="google-rating-box">
+                                        
+                                            <div class="google-rating-info">
+                                                <div class="google-rating-info-header">
+                                                    <h2><span class="counter">4.9</span>/5</h2>
+                                                    <span class="google-rating-star"><i class="fa fa-solid fa-star"></i><i class="fa fa-solid fa-star"></i><i class="fa fa-solid fa-star"></i><i class="fa fa-solid fa-star"></i><i class="fa fa-solid fa-star"></i></span>
+                                                </div>
+                                                <p>Более 100 отзывов на фриланс-площадках</p>
+                                            </div>
+                                        </div>
+                                        <!-- Google Rating Box Start -->
                                     </div>
-                                    <!-- Google Rating Box Start -->
+                                    <!-- About Client Box End -->
                                 </div>
-                                <!-- About Client Box End -->
-                            </div>
-                            <!-- About Body Review Box End -->
+                            ) : (
+                                <div class="section-btn">
+                                    <a href="/about" class="btn-default" data-cursor="-opaque">Об агентстве</a>
+                                </div>
+                            )}
                         </div>
                         <!-- About Body Content End -->
                     </div>
@@ -146,7 +147,7 @@ const isNumeric = match !== null;
                     <!-- Company Supports Content Start -->
                     <div class="company-supports-content">
                         <hr>
-                        <p>Инструменты с которыми я работаю</p>
+                        <p>{homeOriginal ? "Инструменты с которыми я работаю" : "Модели и инструменты для проектов"}</p>
                         <hr>
                     </div>
                     <!-- Company Supports Content End -->
@@ -158,7 +159,7 @@ const isNumeric = match !== null;
                                 <!-- Company Support Logo Start -->
                                 <div class="swiper-slide">
                                     <div class="company-supports-logo">
-                                        <img src="/images/llm/claude-color.svg" alt="Claude AI">
+                                        <img loading="lazy" decoding="async" src="/images/llm/claude-color.svg" alt="Claude AI">
                                     </div>
                                 </div>
                                 <!-- Comapany Support Logo End -->
@@ -166,7 +167,7 @@ const isNumeric = match !== null;
                                 <!-- Company Support Logo Start -->
                                 <div class="swiper-slide">
                                     <div class="company-supports-logo">
-                                        <img src="/images/llm/gemini-color.svg" alt="Google Gemini">
+                                        <img loading="lazy" decoding="async" src="/images/llm/gemini-color.svg" alt="Google Gemini">
                                     </div>
                                 </div>
                                 <!-- Comapany Support Logo End -->
@@ -174,7 +175,7 @@ const isNumeric = match !== null;
                                 <!-- Company Support Logo Start -->
                                 <div class="swiper-slide">
                                     <div class="company-supports-logo">
-                                        <img src="/images/llm/openai.svg" alt="OpenAI">
+                                        <img loading="lazy" decoding="async" src="/images/llm/openai.svg" alt="OpenAI">
                                     </div>
                                 </div>
                                 <!-- Comapany Support Logo End -->
@@ -182,7 +183,7 @@ const isNumeric = match !== null;
                                 <!-- Company Support Logo Start -->
                                 <div class="swiper-slide">
                                     <div class="company-supports-logo">
-                                        <img src="/images/llm/cursor.svg" alt="Cursor AI">
+                                        <img loading="lazy" decoding="async" src="/images/llm/cursor.svg" alt="Cursor AI">
                                     </div>
                                 </div>
                                 <!-- Comapany Support Logo End -->
@@ -190,7 +191,7 @@ const isNumeric = match !== null;
                                 <!-- Company Support Logo Start -->
                                 <div class="swiper-slide">
                                     <div class="company-supports-logo">
-                                        <img src="/images/llm/deepseek-color.svg" alt="DeepSeek">
+                                        <img loading="lazy" decoding="async" src="/images/llm/deepseek-color.svg" alt="DeepSeek">
                                     </div>
                                 </div>
                                 <!-- Comapany Support Logo End -->
@@ -198,7 +199,7 @@ const isNumeric = match !== null;
                                 <!-- Company Support Logo Start -->
                                 <div class="swiper-slide">
                                     <div class="company-supports-logo">
-                                        <img src="/images/llm/mistral-color.svg" alt="Mistral AI">
+                                        <img loading="lazy" decoding="async" src="/images/llm/mistral-color.svg" alt="Mistral AI">
                                     </div>
                                 </div>
                                 <!-- Comapany Support Logo End -->
@@ -206,7 +207,7 @@ const isNumeric = match !== null;
                                 <!-- Company Support Logo Start -->
                                 <div class="swiper-slide">
                                     <div class="company-supports-logo">
-                                        <img src="/images/llm/n8n-color.svg" alt="n8n Automation">
+                                        <img loading="lazy" decoding="async" src="/images/llm/n8n-color.svg" alt="n8n Automation">
                                     </div>
                                 </div>
                                 <!-- Comapany Support Logo End -->
@@ -214,7 +215,7 @@ const isNumeric = match !== null;
                                 <!-- Company Support Logo Start -->
                                 <div class="swiper-slide">
                                     <div class="company-supports-logo">
-                                        <img src="/images/llm/huggingface-color.svg" alt="Hugging Face">
+                                        <img loading="lazy" decoding="async" src="/images/llm/huggingface-color.svg" alt="Hugging Face">
                                     </div>
                                 </div>
                                 <!-- Comapany Support Logo End -->
@@ -222,7 +223,7 @@ const isNumeric = match !== null;
                                 <!-- Company Support Logo Start -->
                                 <div class="swiper-slide">
                                     <div class="company-supports-logo">
-                                        <img src="/images/llm/ollama.svg" alt="Ollama">
+                                        <img loading="lazy" decoding="async" src="/images/llm/ollama.svg" alt="Ollama">
                                     </div>
                                 </div>
                                 <!-- Comapany Support Logo End -->
@@ -230,7 +231,7 @@ const isNumeric = match !== null;
                                 <!-- Company Support Logo Start -->
                                 <div class="swiper-slide">
                                     <div class="company-supports-logo">
-                                        <img src="/images/llm/aistudio.svg" alt="Google AI Studio">
+                                        <img loading="lazy" decoding="async" src="/images/llm/aistudio.svg" alt="Google AI Studio">
                                     </div>
                                 </div>
                                 <!-- Comapany Support Logo End -->
@@ -238,7 +239,7 @@ const isNumeric = match !== null;
                                 <!-- Company Support Logo Start -->
                                 <div class="swiper-slide">
                                     <div class="company-supports-logo">
-                                        <img src="/images/llm/anthropic.svg" alt="Anthropic">
+                                        <img loading="lazy" decoding="async" src="/images/llm/anthropic.svg" alt="Anthropic">
                                     </div>
                                 </div>
                                 <!-- Comapany Support Logo End -->
@@ -246,7 +247,7 @@ const isNumeric = match !== null;
                                 <!-- Company Support Logo Start -->
                                 <div class="swiper-slide">
                                     <div class="company-supports-logo">
-                                        <img src="/images/llm/openrouter.svg" alt="OpenRouter">
+                                        <img loading="lazy" decoding="async" src="/images/llm/openrouter.svg" alt="OpenRouter">
                                     </div>
                                 </div>
                                 <!-- Comapany Support Logo End -->
@@ -254,7 +255,7 @@ const isNumeric = match !== null;
                                 <!-- Company Support Logo Start -->
                                 <div class="swiper-slide">
                                     <div class="company-supports-logo">
-                                        <img src="/images/llm/qwen-color.svg" alt="Qwen">
+                                        <img loading="lazy" decoding="async" src="/images/llm/qwen-color.svg" alt="Qwen">
                                     </div>
                                 </div>
                                 <!-- Comapany Support Logo End -->
@@ -262,7 +263,7 @@ const isNumeric = match !== null;
                                 <!-- Company Support Logo Start -->
                                 <div class="swiper-slide">
                                     <div class="company-supports-logo">
-                                        <img src="/images/llm/grok.svg" alt="Grok">
+                                        <img loading="lazy" decoding="async" src="/images/llm/grok.svg" alt="Grok">
                                     </div>
                                 </div>
                                 <!-- Comapany Support Logo End -->
@@ -286,5 +287,48 @@ const isNumeric = match !== null;
     }
     .company-supports-logo img:hover {
         opacity: 1;
+    }
+</style>
+<style>
+    .about-counter-box-header {
+        container-type: inline-size;
+        display: grid;
+        justify-items: start;
+        gap: 16px;
+    }
+
+    .about-counter-box-header .about-counter-number {
+        min-inline-size: 0;
+        margin: 0;
+        padding: 0;
+        font-size: clamp(2rem, 8vw, 5rem);
+        font-size: min(clamp(96px, 16vw, 200px), calc(110cqi / var(--counter-characters)));
+        font-variant-numeric: tabular-nums;
+        line-height: 1.1;
+    }
+
+    .about-counter-label {
+        min-inline-size: 0;
+        margin: 0;
+        font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+        font-weight: 600;
+        line-height: 1.3;
+        overflow-wrap: anywhere;
+    }
+
+    .about-counter-tag {
+        position: relative;
+        inset: auto;
+        margin-inline-start: 12px;
+        max-inline-size: calc(100% - 12px);
+        overflow-wrap: anywhere;
+    }
+
+    .about-counter-box-body {
+        overflow-wrap: anywhere;
+    }
+
+    .about-body-content-box--full {
+        width: 100%;
     }
 </style>

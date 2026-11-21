@@ -3,10 +3,11 @@ interface AwardItem {
     icon: string;
     title: string;
     description: string;
-    year: string;
+    year?: string;
 }
 
 interface Props {
+    homeOriginal?: boolean;
     subTitle?: string;
     title?: string;
     description?: string;
@@ -18,40 +19,34 @@ interface Props {
 }
 
 const {
-    subTitle = "Опыт и практика",
-    title = "Как я использовал LLM в своих задачах",
-    description = "Каждая модель была подобрана под конкретную бизнес-задачу для достижения максимальной эффективности.",
-    counterValue = "500",
-    counterDesc = "Часов проектирования промптов и интеграций.",
+    homeOriginal = false,
+    subTitle = "Подбор модели",
+    title = "Как выбираем модель для проекта",
+    description = "Сравниваем модели на ваших примерах и проверяем качество ответа, скорость и стоимость обработки.",
+    counterValue,
+    counterDesc,
     awards = [
         {
-            icon: '/images/llm/gemini-color.svg',
-            title: 'Gemini Nano',
-            description: 'Создал сервис для автоподбора дизайна ногтей на базе генерации изображений.',
-            year: '2025'
+            icon: "/images/llm/gemini-color.svg",
+            title: "Gemini",
+            description: "Оцениваем на задачах, где агенту нужно разбирать тексты и изображения.",
         },
         {
-            icon: '/images/llm/claude-color.svg',
-            title: 'Claude 4.7/4.8 Sonnet',
-            description: 'Автономный агент для e-commerce: обработка возвратов и поддержка клиентов.',
-            year: '2025'
+            icon: "/images/llm/claude-color.svg",
+            title: "Claude",
+            description: "Проверяем на многошаговых задачах с инструментами и длинными документами.",
         },
         {
-            icon: '/images/llm/deepseek-color.svg',
-            title: 'DeepSeek V3',
-            description: 'AI-анализ юр. документов: поиск коллизий и автоматическое составление протоколов.',
-            year: '2026'
-        }
+            icon: "/images/llm/deepseek-color.svg",
+            title: "DeepSeek",
+            description: "Учитываем требования к развёртыванию и стоимость обработки запросов.",
+        },
     ],
-    sliderText = "Использую лучшие технологии индустрии",
-    showSocialLinks = false
+    sliderText = homeOriginal ? "Использую лучшие технологии индустрии" : "Модели и инструменты для внедрения ИИ",
+    showSocialLinks = false,
 } = Astro.props;
 
-// Обработка числового значения для счетчика
-const match = counterValue.toString().match(/^(\d+(?:\.\d+)?)(.*)$/);
-const numericValue = match ? match[1] : counterValue;
-const suffix = match ? match[2] : "";
-const isNumeric = match !== null;
+const numericCounter = counterValue?.match(/^(\d+(?:\.\d+)?)(.*)$/);
 ---
 <!-- Our Awards Section Start -->
 <div class='our-awards-prime bg-section'>
@@ -69,18 +64,16 @@ const isNumeric = match !== null;
                     <!-- Section Title End -->
 
                     <!-- Awards Item Counter Box Start -->
-                    <div class='awards-counter-box-prime wow fadeInUp'>
-                        <h2>
-                            {isNumeric ? (
-                                <span class='counter'>{numericValue}</span>
-                            ) : (
-                                <span>{numericValue}</span>
-                            )}
-                            {suffix || "+"}
-                        </h2>
-                        <p>{counterDesc}</p>
-                    </div>
-                    <!-- Awards Item Counter Box End -->
+                    {counterValue && (
+                        <div class="awards-counter-box-prime wow fadeInUp">
+                            <h2>
+                                {numericCounter ? (
+                                    <><span class="counter">{numericCounter[1]}</span>{homeOriginal ? " " : ""}{numericCounter[2] || "+"}</>
+                                ) : counterValue}
+                            </h2>
+                            {counterDesc && <p>{counterDesc}</p>}
+                        </div>
+                    )}
 
                     {showSocialLinks && (
                         <div class="section-btn wow fadeInUp" data-wow-delay="0.4s" style="margin-top: 30px; text-align: left;">
@@ -99,16 +92,14 @@ const isNumeric = match !== null;
                         <div class='awards-item-prime wow fadeInUp' data-wow-delay={index > 0 ? `${index * 0.2}s` : undefined}>
                             <div class='awards-item-body-prime'>
                                 <div class='icon-box'>
-                                    <img src={award.icon} alt={award.title} style='width: 80px; height: 80px; filter: brightness(0) invert(1);'>
+                                    <img loading="lazy" decoding="async" src={award.icon} alt={homeOriginal ? award.title : ""} style='width: 80px; height: 80px; filter: brightness(0) invert(1);'>
                                 </div>
                                 <div class='awards-item-content-prime'>
                                     <h3>{award.title}</h3>
                                     <p>{award.description}</p>
                                 </div>
                             </div>
-                            <div class='awards-item-year-prime'>
-                                <h3>{award.year}</h3>
-                            </div>
+                            {award.year && <div class='awards-item-year-prime'><h3>{award.year}</h3></div>}
                         </div>
                     ))}
                 </div>
@@ -198,6 +189,10 @@ const isNumeric = match !== null;
 <!-- Our Awards Section End -->
 
 <style>
+    .awards-item-body-prime:only-child {
+        width: 100%;
+    }
+
     .awards-item-year-prime h3 {
         font-size: 32px !important;
     }

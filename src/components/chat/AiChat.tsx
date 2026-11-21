@@ -11,18 +11,15 @@ interface AiChatProps {
     source?: ChatSource;
 }
 
-const GREETINGS = {
-    page: "Добрый день! 👋 Я ИИ-помощник W1DO DIGITAL. Помогу разобраться в услугах, сроках и ценах и подскажу, с чего лучше начать. Какая задача перед вами стоит? 🙂",
-    widget: "Добрый день! 😊 Расскажите о задаче — подскажу решение, сориентирую по ценам и помогу оставить заявку прямо здесь 🚀",
-    popup: "Добрый день! 👋 Рад помочь решить вашу задачу: подберу подходящую услугу и сориентирую по ценам. Расскажите, что планируете? 😊",
-};
-const SUGGESTIONS = {
-    page: ["Как заказать ваши услуги?", "Какие услуги вы оказываете?", "Сколько стоит разработка ИИ-агента?"],
-    widget: ["Хочу оставить заявку", "Какие услуги вы оказываете?", "Сколько стоит разработка ИИ-агента?"],
-    popup: ["Какие услуги вы оказываете?", "Сколько стоит разработка ИИ-агента?", "Хочу оставить заявку"],
-};
+const GREETING = "Здравствуйте! Я ИИ-помощник агентства AiCRAFT. Расскажите, какую задачу вы хотите решить с помощью ИИ.";
+const SUGGESTIONS = [
+    "Как внедрить ИИ-агента в бизнес?",
+    "Что входит в настройку agent harness?",
+    "Как внедрить Claude Code в команде?",
+    "Хочу оставить заявку",
+];
 
-// Plain text only: React escapes everything, and only w1do.ru URLs become links.
+// Plain text only: React escapes everything, and only site URLs become links.
 function renderText(text: string): ReactNode[] {
     return text.split(LINK_PATTERN).map((part, index) => {
         if (index % 2 === 0) return part;
@@ -103,7 +100,7 @@ export default function AiChat({ variant = "page", source = "chat-page" }: AiCha
     return (
         <div className={`ai-chat ai-chat--${variant}`}>
             <div className="ai-chat__messages" ref={listRef} aria-live="polite">
-                <div className="ai-chat__message ai-chat__message--assistant">{renderMarkdown(GREETINGS[variant])}</div>
+                <div className="ai-chat__message ai-chat__message--assistant">{renderMarkdown(GREETING)}</div>
                 {messages.map((message, index) => (
                     <div key={index} className={`ai-chat__message ai-chat__message--${message.role}`}>
                         {message.role === "assistant" ? renderMarkdown(message.content) : renderText(message.content)}
@@ -133,7 +130,7 @@ export default function AiChat({ variant = "page", source = "chat-page" }: AiCha
             )}
             {messages.length === 0 && (
                 <div className="ai-chat__suggestions">
-                    {SUGGESTIONS[variant].map((question) => (
+                    {SUGGESTIONS.map((question) => (
                         <button key={question} type="button" className="ai-chat__suggestion" disabled={loading} onClick={() => void send(question)}>{question}</button>
                     ))}
                 </div>
@@ -145,7 +142,7 @@ export default function AiChat({ variant = "page", source = "chat-page" }: AiCha
                 </div>
                 <div className="ai-chat__field">
                     <textarea id={inputId} ref={inputRef} name="message" aria-label="Ваш вопрос" rows={1} maxLength={CHAT_MAX_USER_CHARS}
-                        placeholder="Например: как заказать ваши услуги?" value={draft}
+                        placeholder="Опишите задачу или задайте вопрос" value={draft}
                         onChange={(event) => setDraft(event.target.value)} onKeyDown={onKeyDown} />
                     <button type="submit" className="ai-chat__send" aria-label="Отправить" disabled={loading || !draft.trim()}>
                         <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">

@@ -1,4 +1,4 @@
-import { cityPath } from "../regions";
+import { cityPath, isIndexableCityHome } from "../regions";
 import { defaultCity, getCities } from "./w1do/cities";
 
 export interface SitemapPage {
@@ -21,7 +21,7 @@ export function xmlResponse(xml: string): Response {
 export async function regionalSitemap(pages: SitemapPage[], baseUrl: string, includeCityHomes = false): Promise<Response> {
   const allCities = includeCityHomes ? await getCities() : [];
   const defaultCitySlug = includeCityHomes ? defaultCity(allCities).slug : "";
-  const cities = allCities.filter(city => !city.seo?.robots?.includes("noindex"));
+  const cities = allCities.filter(city => isIndexableCityHome(city, defaultCitySlug));
   const unique = [...new Map(pages.map(page => [page.path, page])).values()];
   const entries: SitemapPage[] = [...new Map([...unique.filter(page => page.path !== "/"),
     ...cities.map(city => ({ ...unique.find(page => page.path === cityPath(city.slug, defaultCitySlug)),

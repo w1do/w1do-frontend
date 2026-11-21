@@ -29,17 +29,13 @@ export default function ChatPopup() {
         saveState("closed");
     };
 
+    // Чат открывается только по явному действию посетителя: автопопап
+    // перекрывал первый экран на мобильных и мешал читать оффер.
     useEffect(() => {
-        let stored: string | null = null;
         try {
-            stored = sessionStorage.getItem(STORAGE_KEY);
+            sessionStorage.getItem(STORAGE_KEY);
         } catch {
-            show();
-            return;
-        }
-        if (stored === null) {
-            show();
-            saveState("opened");
+            // sessionStorage может быть недоступен — это не повод открывать чат.
         }
     }, []);
 
@@ -76,9 +72,9 @@ export default function ChatPopup() {
     return (
         <div className="ai-chat-popup">
             {mounted && (
-                <div id={panelId} ref={panelRef} className="ai-chat-popup__panel" role="dialog" aria-label="ИИ-помощник W1DO DIGITAL" hidden={!open}>
+                <div id={panelId} ref={panelRef} className="ai-chat-popup__panel" role="dialog" aria-label="ИИ-помощник AiCRAFT" hidden={!open}>
                     <div className="ai-chat-popup__header">
-                        <span className="ai-chat-popup__title">ИИ-помощник W1DO DIGITAL</span>
+                        <span className="ai-chat-popup__title">ИИ-помощник AiCRAFT</span>
                         <button type="button" className="ai-chat-popup__close" aria-label="Свернуть чат" onClick={hide}>×</button>
                     </div>
                     <AiChat variant="popup" source="chat-popup" />

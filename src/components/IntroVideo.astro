@@ -1,14 +1,16 @@
 ---
 interface Props {
+    homeOriginal?: boolean;
     subTitle?: string;
     title?: string;
     tickerItems?: string[];
 }
 
 const {
-    subTitle = "Принцип работы",
-    title = "Какие процессы я закрываю в работе с AI",
-    tickerItems = ["Web-разработка", "Внедрение AI", "Low-code", "No-code"]
+    homeOriginal = false,
+    subTitle = "Видео",
+    title = "Разработка и внедрение ИИ на практике",
+    tickerItems = ["ИИ-агенты", "Интеграции", "Проверка качества", "Запуск"]
 } = Astro.props;
 ---
 <!-- Intro Video Section Start -->
@@ -30,7 +32,7 @@ const {
                         <!-- Intro Video Circle Start -->
                         <div class="intro-video-circle wow fadeInUp" data-wow-delay="0.2s">
                             <a href="https://www.youtube.com/watch?v=Y-x0efG1seA" class="popup-video">
-                                <img src="/images/watch-video-circle.svg" alt="Смотреть видео о процессе">
+                                <img src="/images/watch-video-circle.svg" alt={homeOriginal ? "Смотреть видео о процессе" : "Смотреть видео"}>
                             </a>
                         </div>
                         <!-- Intro Video Circle End -->
@@ -48,7 +50,7 @@ const {
         <div class="scrolling-ticker-box">
             <div class="scrolling-content">
                 {tickerItems.map((item) => (
-                    <span><img src="/images/icon-asterisk-white.svg" alt="*">{item}</span>
+                    <span><img src="/images/icon-asterisk-white.svg" alt={homeOriginal ? "*" : ""}>{item}</span>
                 ))}
             </div>
 

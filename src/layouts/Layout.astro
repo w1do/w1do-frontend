@@ -1,5 +1,6 @@
 ---
 interface Props {
+	bodyClass?: string;
 	title?: string;
 	description?: string;
 	keywords?: string;
@@ -11,7 +12,9 @@ interface Props {
 }
 
 import { DEFAULT_OG_IMAGE, pageSeo } from "../lib/seo";
-import { SITE_ORIGIN, cityPath, regionalSchema } from "../lib/regions";
+import { brandName } from "../lib/brand";
+import { REQUISITES } from "../lib/requisites";
+import { SITE_ORIGIN, cityPath, isIndexableCityHome, regionalSchema } from "../lib/regions";
 import CookieNotice from "../components/shared/CookieNotice.astro";
 import JsonLd from "../components/shared/JsonLd.astro";
 import ChatPopup from "../components/chat/ChatPopup";
@@ -26,10 +29,13 @@ import "../styles/mousecursor.css";
 import "../styles/custom.css";
 
 const region = Astro.locals.region;
-const pagePath = region?.path || Astro.url.pathname;
+const pagePath = region?.path || Astro.url.pathname.replace(/\/$/, "") || "/";
 const citySeo = region?.city.seo;
 const isCityHome = Boolean(region && pagePath === "/");
-const currentSeo = pageSeo[pagePath.replace(/\/$/, "") || "/"];
+const isDefaultCityHome = region && isCityHome && region.city.slug === region.defaultCitySlug;
+const metadataCity = isDefaultCityHome ? undefined : region?.city;
+const metadataCitySeo = metadataCity?.seo;
+const currentSeo = pageSeo[pagePath];
 const {
     title: suppliedTitle,
     description: suppliedDescription,
@@ -42,17 +48,20 @@ const {
 } = Astro.props;
 const pageTitle = currentSeo?.title || suppliedTitle || pageSeo["/"].title;
 const pageDescription = currentSeo?.description || suppliedDescription || pageSeo["/"].description;
-const title = isCityHome && citySeo?.title ? citySeo.title : region ? `${pageTitle} | ${region.city.name}` : pageTitle;
-const description = isCityHome && citySeo?.description ? citySeo.description
-    : region && citySeo?.description ? `${pageDescription} ${citySeo.description}` : pageDescription;
-const keywords = [currentSeo?.keywords || suppliedKeywords, citySeo?.keywords].filter(Boolean).join(", ").replace(/разработчик_ии/g, "разработчик ИИ");
-const robots = suppliedRobots?.includes("noindex") ? suppliedRobots
-    : citySeo?.robots?.includes("noindex") ? citySeo.robots : suppliedRobots || citySeo?.robots;
+const title = brandName(isCityHome && metadataCitySeo?.title ? metadataCitySeo.title
+    : metadataCity ? `${pageTitle} | ${metadataCity.name}` : pageTitle);
+const description = brandName(isCityHome && metadataCitySeo?.description ? metadataCitySeo.description
+    : metadataCitySeo?.description ? `${pageDescription} ${metadataCitySeo.description}` : pageDescription);
+const keywords = [currentSeo?.keywords || suppliedKeywords, metadataCitySeo?.keywords].filter(Boolean).join(", ").replace(/разработчик_ии/g, "разработчик ИИ");
+const robots = /\bnoindex\b/i.test(suppliedRobots || "") ? suppliedRobots
+    : /\bnoindex\b/i.test(citySeo?.robots || "") ? citySeo?.robots
+    : region && isCityHome && !isIndexableCityHome(region.city, region.defaultCitySlug) ? "noindex,follow"
+    : suppliedRobots || citySeo?.robots;
 const canonical = region ? new URL(cityPath(region.city.slug, region.defaultCitySlug), SITE_ORIGIN).href
-    : suppliedCanonical || new URL(Astro.url.pathname, SITE_ORIGIN).href;
-const ogTitle = isCityHome ? citySeo?.og_title || title : title;
-const ogDescription = isCityHome ? citySeo?.og_description || description : description;
-let image = (isCityHome ? citySeo?.og_image : undefined) || suppliedImage || DEFAULT_OG_IMAGE;
+    : suppliedCanonical || new URL(pagePath, SITE_ORIGIN).href;
+const ogTitle = brandName((isCityHome && metadataCitySeo?.og_title) || title);
+const ogDescription = brandName((isCityHome && metadataCitySeo?.og_description) || description);
+let image = (isCityHome ? metadataCitySeo?.og_image : undefined) || suppliedImage || DEFAULT_OG_IMAGE;
 if (image.startsWith("/images/og-")) image = DEFAULT_OG_IMAGE;
 if (image.startsWith("/images/blog/") && image.endsWith(".svg")) {
     image = image.replace("/images/blog/", "/images/og/").replace(/\.svg$/, ".jpg");
@@ -62,22 +71,29 @@ if (image.startsWith("/images/blog/") && image.endsWith(".svg")) {
 const socialImage = new URL(image, SITE_ORIGIN).href;
 
 const siteUrl = SITE_ORIGIN;
-const logoUrl = new URL("/images/favicon.png", SITE_ORIGIN).href;
+const logoUrl = new URL("/images/logo-aicraft.png", SITE_ORIGIN).href;
 
 // Базовые структурированные данные (Schema.org) для всех страниц
 const organizationSchema = {
 	"@context": "https://schema.org",
 	"@type": "Organization",
 	"@id": `${siteUrl}/#organization`,
-	"name": "W1DO DIGITAL",
+	"name": "AiCRAFT.AGENCY",
 	"url": siteUrl,
 	"logo": {
 		"@type": "ImageObject",
-		"url": logoUrl
+		"url": logoUrl,
+		"width": 2172,
+		"height": 724
 	},
 	"description": pageSeo["/"].description,
+	"legalName": REQUISITES.legalName,
+	"taxID": REQUISITES.inn,
+	"email": REQUISITES.email,
+	"founder": { "@type": "Person", "name": "Денис Митрофанов" },
 	"sameAs": [
-		"https://t.me/W1DO_DIGITAL"
+		"https://t.me/W1DO_DIGITAL",
+		"https://www.youtube.com/@w1do_digital"
 	]
 };
 
@@ -86,7 +102,7 @@ const websiteSchema = {
 	"@type": "WebSite",
 	"@id": `${siteUrl}/#website`,
 	"url": siteUrl,
-	"name": "W1DO DIGITAL",
+	"name": "AiCRAFT.AGENCY",
 	"inLanguage": "ru-RU",
 	"publisher": { "@id": `${siteUrl}/#organization` }
 };
@@ -106,6 +122,7 @@ const webPageSchema = {
 };
 const schemas = [organizationSchema, websiteSchema, webPageSchema, ...extraSchemas];
 const showChatPopup = pagePath.replace(/\/+$/, "") !== "/chat";
+const quickTelegramUrl = import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1DO_DIGITAL";
 ---
 
 <!doctype html>
@@ -113,26 +130,30 @@ const showChatPopup = pagePath.replace(/\/+$/, "") !== "/chat";
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content={description}>
     {keywords && <meta name="keywords" content={keywords}>}
     {robots && <meta name="robots" content={robots}>}
-    <meta name="author" content="Денис Митрофанов">
+    <meta name="author" content="AiCRAFT">
+    <meta name="theme-color" content="#0a0a0a">
     <meta name="generator" content={Astro.generator}/>
 
     <!-- Canonical URL -->
     <link rel="canonical" href={canonical}>
+    <link rel="preconnect" href="https://mc.yandex.ru" crossorigin>
+    {pagePath === "/" && <link rel="preload" as="image" href="/images/hero-service-infrastructure.webp" fetchpriority="high" />}
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content={type}>
     <meta property="og:url" content={canonical}>
     <meta property="og:locale" content="ru_RU">
+    <meta property="og:site_name" content="AiCRAFT.AGENCY">
     <meta property="og:title" content={ogTitle}>
     <meta property="og:description" content={ogDescription}>
     <meta property="og:image" content={socialImage}>
 
     <!-- Twitter -->
-    <meta name="twitter:card" content={isCityHome ? citySeo?.twitter_card || "summary_large_image" : "summary_large_image"}>
+    <meta name="twitter:card" content={(isCityHome && metadataCitySeo?.twitter_card) || "summary_large_image"}>
     <meta name="twitter:url" content={canonical}>
     <meta name="twitter:title" content={title}>
     <meta name="twitter:description" content={description}>
@@ -147,6 +168,50 @@ const showChatPopup = pagePath.replace(/\/+$/, "") !== "/chat";
     <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png">
 
     <style is:global>
+        a:focus-visible,
+        button:focus-visible,
+        input:focus-visible,
+        textarea:focus-visible,
+        select:focus-visible,
+        summary:focus-visible {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 3px;
+        }
+        .mobile-cta { display: none; }
+        @media (max-width: 767px) {
+            body { padding-bottom: 84px; }
+            .mobile-cta {
+                position: fixed;
+                left: 12px;
+                right: 12px;
+                bottom: calc(12px + env(safe-area-inset-bottom));
+                z-index: 1000;
+                display: flex;
+                gap: 8px;
+                padding: 8px;
+                border: 1px solid var(--divider-color);
+                border-radius: 18px;
+                background: rgba(10, 10, 10, 0.92);
+                backdrop-filter: blur(16px);
+            }
+            .mobile-cta a {
+                display: flex;
+                flex: 1;
+                align-items: center;
+                justify-content: center;
+                min-height: 48px;
+                padding: 0 16px;
+                border-radius: 12px;
+                font-size: 15px;
+                font-weight: 600;
+            }
+            .mobile-cta__primary { background: var(--accent-color); color: #0a0a0a; }
+            .mobile-cta__secondary { border: 1px solid var(--divider-color); color: var(--primary-color); }
+            .ai-chat-popup__toggle { bottom: calc(86px + env(safe-area-inset-bottom)); }
+            /* Пока открыт cookie-баннер, быстрые действия не перекрывают его. */
+            body:has(.cookie-notice.is-visible) .mobile-cta,
+            body:has(.cookie-notice.is-visible) .ai-chat-popup__toggle { display: none; }
+        }
         @font-face {
             font-family: 'Font Awesome 7 Free';
             font-display: swap !important;
@@ -161,13 +226,17 @@ const showChatPopup = pagePath.replace(/\/+$/, "") !== "/chat";
         }
     </style>
 </head>
-<body>
+<body class={Astro.props.bodyClass}>
 <slot/>
 <CookieNotice/>
-{showChatPopup && <ChatPopup client:load />}
+<div class="mobile-cta" aria-label="Быстрые действия">
+    <a class="mobile-cta__primary" href="/contact">Оставить заявку</a>
+    <a class="mobile-cta__secondary" href={quickTelegramUrl} rel="noopener">Telegram</a>
+</div>
+{showChatPopup && <ChatPopup client:idle />}
 
 <!-- Jquery Library File -->
-<script src="/js/jquery-3.7.1.min.js" is:inline></script>
+<script src="/js/jquery-3.7.1.min.js" is:inline defer></script>
 <!-- Circle Progress Js File -->
 <script src="/js/circle-progress.min.js" is:inline defer></script>
 <!-- Bootstrap js file -->
@@ -182,8 +251,6 @@ const showChatPopup = pagePath.replace(/\/+$/, "") !== "/chat";
 <script src="/js/jquery.counterup.min.js" is:inline defer></script>
 <!-- Magnific js file -->
 <script src="/js/jquery.magnific-popup.min.js" is:inline defer></script>
-<!-- SmoothScroll -->
-<script src="/js/SmoothScroll.js" is:inline defer></script>
 <!-- Isotop js file -->
 <script src="/js/isotope.min.js" is:inline defer></script>
 <!-- Parallax js -->
@@ -194,10 +261,6 @@ const showChatPopup = pagePath.replace(/\/+$/, "") !== "/chat";
 <!-- Text Effect js file -->
 <script src="/js/SplitText.min.js" is:inline defer></script>
 <script src="/js/ScrollTrigger.min.js" is:inline defer></script>
-<!-- YTPlayer js File -->
-<script src="/js/jquery.mb.YTPlayer.min.js" is:inline defer></script>
-<!-- Typed js file -->
-<script src="/js/typed.js" is:inline defer></script>
 <!-- Wow js file -->
 <script src="/js/wow.min.js" is:inline defer></script>
 <!-- Main Custom js file -->

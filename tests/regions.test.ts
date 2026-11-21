@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { assetHref, cityPath, regionalHref, regionalSchema, type RegionContext } from "../src/lib/regions.ts";
-import { regionalHtml } from "../src/lib/server/regional-html.ts";
+import { assetHref, cityPath, isIndexableCityHome, regionalHref, regionalSchema, SITE_ORIGIN, type RegionContext } from "../src/lib/regions.ts";
+import { canonicalCmsHtml, regionalHtml } from "../src/lib/server/regional-html.ts";
 import { parseSitemap } from "../src/lib/server/sitemap-parser.js";
 
 const region: RegionContext = {
@@ -17,6 +17,8 @@ test("only home links keep a city; inner pages remain shared", () => {
   assert.equal(regionalHref("/moscow", region), "/");
   assert.equal(regionalHref("/contact?from=services#form", region), "/contact?from=services#form");
   assert.equal(regionalHref("https://w1do.ru/blog/article", region), "/blog/article");
+  assert.equal(regionalHref(`${SITE_ORIGIN}/services/ai-agent-development/ai-development?utm_source=x#demo`, region), "/ai-agents/ai-agent-implementation?utm_source=x#demo");
+  assert.equal(regionalHref("https://www.w1do.ru/categories/ai-agents", region), "/blog/categories/ai-agents");
   assert.equal(regionalHref("/moscow/contact", region), "/contact");
   assert.equal(regionalHref("/cities/moscow", region), "/");
 });
@@ -48,11 +50,33 @@ test("HTML parsing changes links while preserving code examples, scripts and for
   assert.match(html, /const text = '<a href="\/contact">'/);
 });
 
+test("CMS HTML uses canonical internal article, category and service links", () => {
+  const html = [
+    '<a href="https://w1do.ru/blog/old-article?x=1&amp;y=2#section">Article</a>',
+    '<a href="https://w1do.ru/categories/ai-agents">Category</a>',
+    '<a href="/blog/business-automation/ai-news-october-2026-business">October</a>',
+    '<a href="/services/ai-integration/ai-process-audit">Service</a>',
+    '<a href="contact.html">Contact</a><a href="#faq">FAQ</a>',
+    '<a href="https://example.com/blog/old-article">External</a>',
+    '<script>const text = \'<a href="https://w1do.ru/categories/ai-agents">\';</script>',
+  ].join("");
+  const rendered = canonicalCmsHtml(html, "/services/cluster/service", new Map([["/blog/old-article", "/blog/ai-agents/old-article"]]));
+  assert.match(rendered, /href="\/blog\/ai-agents\/old-article\?x=1&amp;y=2#section"/);
+  assert.match(rendered, /href="\/blog\/categories\/ai-agents"/);
+  assert.match(rendered, /href="\/blog\/business-automation\/ai-agents-business-news-october-2026"/);
+  assert.match(rendered, /href="\/services\/ai-roadmap-consulting\/ai-process-audit"/);
+  assert.match(rendered, /href="\/contact"/);
+  assert.match(rendered, /href="#faq"/);
+  assert.match(rendered, /href="https:\/\/example.com\/blog\/old-article"/);
+  assert.match(rendered, /const text = '<a href="https:\/\/w1do.ru\/categories\/ai-agents">'/);
+});
+
 test("JSON-LD keeps organization identity and external images; regionalises page URLs and service area", () => {
-  const schema = regionalSchema({ "@type": "Service", url: "https://w1do.ru/services/ai-integration", provider: { "@id": "https://w1do.ru/#organization" }, image: "https://w1do.ru/images/a.svg", areaServed: "Россия" }, region) as Record<string, unknown>;
-  assert.equal(schema.url, "https://w1do.ru/services/ai-integration");
-  assert.deepEqual(schema.provider, { "@id": "https://w1do.ru/#organization" });
-  assert.equal(schema.image, "https://w1do.ru/images/a.svg");
+  const organizationId = `${SITE_ORIGIN}/#organization`;
+  const schema = regionalSchema({ "@type": "Service", url: "https://w1do.ru/services/ai-integration", provider: { "@id": organizationId }, image: "https://example.com/images/a.svg", areaServed: "Россия" }, region) as Record<string, unknown>;
+  assert.equal(schema.url, `${SITE_ORIGIN}/services/ai-integration`);
+  assert.deepEqual(schema.provider, { "@id": organizationId });
+  assert.equal(schema.image, "https://example.com/images/a.svg");
   assert.deepEqual(schema.areaServed, { "@type": "City", name: "Иркутск" });
 });
 
@@ -68,9 +92,16 @@ test("CMS XML is parsed with escaped URLs and publication metadata", () => {
   assert.equal(regionalHref("/", moscow), "/");
   assert.equal(regionalHref("/irkutsk", moscow), "/irkutsk");
   assert.equal(regionalHref("/moscow?x=1#faq", moscow), "/?x=1#faq");
-  assert.deepEqual(regionalSchema({ url: "https://w1do.ru/" }, moscow), { url: "https://w1do.ru/" });
+  assert.deepEqual(regionalSchema({ url: "https://w1do.ru/" }, moscow), { url: `${SITE_ORIGIN}/` });
 });
 
 test("city selector keeps default city root when rendered from another region", () => {
   assert.match(regionalHtml('<a data-city-link href="/">Москва</a><a href="/">Главная</a>', region), /data-city-link="" href="\/">Москва/);
+});
+
+test("only the original homepage is indexed while the city pages share its content", () => {
+  const [irkutsk, moscow] = region.cities;
+  assert.equal(isIndexableCityHome(irkutsk, region.defaultCitySlug), false);
+  assert.equal(isIndexableCityHome(moscow, region.defaultCitySlug), true);
+  assert.equal(isIndexableCityHome({ ...moscow, seo: { robots: "NOINDEX, follow" } }, region.defaultCitySlug), false);
 });
