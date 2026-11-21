@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { HOME_FAQS } from "../lib/home-faqs";
+import { HOME_ORIGINAL_FAQS } from "../lib/home-faqs";
 import Header from "../components/shared/Header.astro";
 import Hero from "../components/Hero.astro";
 import Segments from "../components/Segments.astro";
@@ -19,13 +19,14 @@ import Process from "../components/Process.astro";
 import Projects from "../components/projects/Projects.astro";
 import Awards from "../components/Awards.astro";
 import Pricing from "../components/Pricing.astro";
+import { formatRubleAmount, STARTING_PROJECT_PRICE } from "../lib/pricing";
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 const homeFaqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "mainEntity": HOME_FAQS.map((faq) => ({
+    "mainEntity": HOME_ORIGINAL_FAQS.map((faq) => ({
         "@type": "Question",
         "name": faq.question,
         "acceptedAnswer": { "@type": "Answer", "text": faq.answer }
@@ -38,6 +39,7 @@ const homeFaqSchema = {
 	description="Проектируем и внедряем ИИ-агентов для поддержки, продаж и документов. Интеграции с CRM, 1С и мессенджерами, пилот за 2–3 недели."
 	keywords="внедрение ии агентов, ии агент для бизнеса, автоматизация поддержки, ии для продаж, разработка ии"
 	image="/images/og-main.jpg"
+	bodyClass="home-page"
 	schema={homeFaqSchema}
 >
 	<Header/>
@@ -46,23 +48,25 @@ const homeFaqSchema = {
 		description="Агент берёт на себя заявки, звонки и документы, а результат виден в CRM. Интеграции с 1С, мессенджерами и вашими данными."
 	/>
 	<Segments />
-	<About 
+	<About homeOriginal
 		subTitle="О разработчике" 
 		title="Разработка ИИ"
 		description="Как опытный <strong>разработчик ИИ</strong>, я создаю интеллектуальные системы, которые решают реальные задачи бизнеса. Использую передовой стек: <strong>Python</strong>, <strong>TensorFlow</strong>, <strong>PyTorch</strong> и интеграции с <strong>LLM (Claude, GPT)</strong> через <strong>Cursor</strong> и <strong>Junie</strong>. Мои решения помогают автоматизировать сложные процессы и извлекать максимум пользы из данных."
+		counterValue="100"
 		counterTag="Разработанных ИИ-систем"
+		counterDescription="автоматизация процессов и внедрение LLM"
 	/>
 	<MediaResources/>
-	<Services 
+	<Services homeOriginal
 		subTitle="Разработка и внедрение ИИ"
 		title="Услуги разработчика ИИ"
 	/>
-	<Pricing 
+	<Pricing homeOriginal
 		subTitle="Цены на разработку"
 		title="Стоимость разработки ИИ"
 		description="Прозрачное ценообразование, ориентированное на результат. Вы платите за экспертизу и автоматизацию, которая окупается."
 	/>
-	<Awards 
+	<Awards homeOriginal
 		subTitle="Экспертиза и практика"
 		title="Практика разработки систем искусственного интеллекта"
 		description="Мой опыт охватывает работу с ведущими языковыми моделями для решения сложных архитектурных и прикладных задач."
@@ -89,7 +93,7 @@ const homeFaqSchema = {
 			}
 		]}
 	/>
-	<Choose 
+	<Choose homeOriginal
 		subTitle="Почему я"
 		title="Выгоды внедрения ИИ в бизнес"
 		description="Я не просто внедряю инструменты, я проектирую системы, которые становятся частью вашей инфраструктуры."
@@ -99,25 +103,25 @@ const homeFaqSchema = {
 		benefit2Desc="Связка Cursor + Junie ускоряет разработку: меньше рутины, больше времени на архитектуру и проверку результата."
 		priceTitle="Гибкий бюджет"
 		priceDesc="Всегда предлагаю варианты реализации под ваш бюджет, фокусируясь на самом важном функционале."
-		priceValue="3 000"
+		priceValue={formatRubleAmount(STARTING_PROJECT_PRICE)}
 	/>
-	<IntroVideo 
+	<IntroVideo homeOriginal
 		subTitle="Ценность ИИ"
 		title="Как разработка ИИ создает ценность для бизнеса"
 		tickerItems={["LLM Integration", "AI Agents", "Python", "RAG Systems", "Automation"]}
 	/>
-	<Feature 
+	<Feature homeOriginal
 		subTitle="Технологии разработки"
 		title="Стек технологий для разработки ИИ-решений"
 		description="Я объединяю классическое программирование с мощью современных нейросетей. Связка <strong>Cursor + Claude + Junie</strong> позволяет мне как <strong>разработчику ИИ</strong> создавать и развертывать решения в рекордные сроки."
 	/>
-	<Projects 
+	<Projects homeOriginal
 		subTitle="Кейсы"
 		title="Проекты ИИ"
 		filterAi="Нейросети"
 		filterAutomation="AI Агенты"
 	/>
-	<Process 
+	<Process homeOriginal
 		subTitle="Этапы разработки"
 		title="Процесс разработки"
 		description="Прозрачный процесс разработки с еженедельными демо и фокусом на конечный результат."
@@ -131,7 +135,7 @@ const homeFaqSchema = {
 		step4Desc="Деплой, обучение сотрудников и поддержка"
 	/>
 
-	<Testimonials 
+	<Testimonials homeOriginal
 		subTitle="Кейсы и результаты"
 		title="Что говорят клиенты о внедрении ИИ"
 		description="Реальные отзывы о том, как мои решения на базе искусственного интеллекта помогают бизнесу расти, экономить время и автоматизировать сложные процессы."
@@ -159,17 +163,42 @@ const homeFaqSchema = {
 			}
 		]}
 	/>
-	<Faqs 
+	<Faqs homeOriginal
 		subTitle="FAQ"
 		title="Что важно знать о разработке с ИИ"
 		description="Здесь собраны ответы на ключевые вопросы о том, как строится работа с искусственным интеллектом, какие задачи он решает и чего ожидать от внедрения."
-		customFaqs={HOME_FAQS}
+		customFaqs={HOME_ORIGINAL_FAQS}
 	/>
 	<Blog/>
-	<Cta 
+	<Cta homeOriginal
 		subTitle="Начните сейчас"
 		title="Нужен опытный разработчик ИИ?"
 		description="Обсудите ваш проект напрямую со специалистом. Я помогу составить ТЗ и оценю сроки реализации."
 	/>
 	<Footer/>
 </Layout>
+
+<style is:global>
+    @media (width > 991px) {
+        .home-page {
+            --home-section-width: min(1820px, calc(100% - 30px));
+        }
+
+        .home-page > .bg-section:not(.main-footer-prime) {
+            width: var(--home-section-width);
+            margin-inline: auto;
+        }
+
+        .home-page > :not(.bg-section, .hero-prime) > .container {
+            width: var(--home-section-width);
+            max-width: none;
+            padding-inline: 0;
+        }
+    }
+
+    @media (768px <= width < 1200px) {
+        .home-page .post-item-list > :last-child:nth-child(odd) {
+            width: 100%;
+        }
+    }
+</style>

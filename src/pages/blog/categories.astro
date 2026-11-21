@@ -9,9 +9,9 @@ import { getBlogCategories } from "../../lib/server/w1do/blog-categories";
 export const prerender = false;
 const categories = await getBlogCategories();
 ---
-<Layout>
+<Layout title="Темы блога AiCRAFT | ИИ-агенты и автоматизация" description="Подборки статей AiCRAFT об ИИ-агентах, внедрении в бизнес, инженерных инструментах и автоматизации.">
   <Header />
-  <Breadcrumbs title="Темы блога" breadcrumbItems={[
+  <Breadcrumbs withSchema title="Темы блога" breadcrumbItems={[
     { label: "Главная", href: "/" }, { label: "Блог", href: "/blog" }, { label: "Темы", active: true },
   ]} />
   <main class="container category-list">

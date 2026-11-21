@@ -1,5 +1,5 @@
 import { defineMiddleware } from "astro:middleware";
-import { cityPath, isSharedPath, regionalHref } from "./lib/regions";
+import { canonicalSitePath, cityPath, isSharedPath, regionalHref } from "./lib/regions";
 import { defaultCity, getCities } from "./lib/server/w1do/cities";
 import { regionalHtml } from "./lib/server/regional-html";
 import { legacyContentPath } from "./lib/server/w1do/sitemap";
@@ -15,22 +15,29 @@ const LEGACY_REDIRECTS: Record<string, string> = {
   "/faqs.html": "/knowledge",
   "/services.html": "/services",
   "/about.html": "/about",
-  "/contact.html": "/contact",
   "/pricing.html": "/pricing",
   "/blog.html": "/blog",
   "/testimonials.html": "/testimonials",
-  "/services/ai-agent-development": "/ai-agents",
-  "/services/ai-agent-development/ai-agent-for-business": "/ai-agents/ai-agent-for-business",
-  "/services/ai-agent-development/ai-automation-services": "/ai-agents/ai-agent-automation",
-  "/services/ai-agent-development/ai-development": "/ai-agents/ai-agent-implementation",
-  "/services/ai-agent-development/ai-solutions-development": "/ai-agents",
 };
 
+function legacyPagePath(path: string): string {
+  return LEGACY_REDIRECTS[path] || canonicalSitePath(path);
+}
+
 export const onRequest = defineMiddleware(async (context, next) => {
-  const legacyTarget = LEGACY_REDIRECTS[context.url.pathname.replace(/\/$/, "")];
-  if (legacyTarget) return context.redirect(legacyTarget + context.url.search, 301);
+  const currentPath = context.url.pathname.replace(/\/$/, "") || "/";
+  const legacyTarget = legacyPagePath(currentPath);
+  if (legacyTarget !== currentPath) return context.redirect(legacyTarget + context.url.search, 301);
+  const hasTrailingSlash = context.url.pathname !== currentPath;
+  const isReadRequest = context.request.method === "GET" || context.request.method === "HEAD";
   // Rewrites run middleware again. Only the outer request regionalises the response.
-  if (context.locals.region || isSharedPath(context.url.pathname)) return next();
+  if (context.locals.region) return next();
+  if (isSharedPath(currentPath)) {
+    if (hasTrailingSlash && currentPath.startsWith("/api/")) {
+      return context.redirect(currentPath + context.url.search, isReadRequest ? 301 : 308);
+    }
+    return next();
+  }
   let cities;
   try { cities = await getCities(); }
   catch {
@@ -45,16 +52,19 @@ export const onRequest = defineMiddleware(async (context, next) => {
     const cmsCity = segments[0] === "cities" && segments.length === 2
       ? cities.find(city => city.slug === segments[1]) : undefined;
     if (cmsCity) return context.redirect(`${cityPath(cmsCity.slug, defaultCitySlug)}${context.url.search}`, 301);
-    const path = context.url.pathname.replace(/\/$/, "");
-    const legacyPath = await legacyContentPath(path);
-    if (legacyPath !== path) return context.redirect(`${legacyPath}${context.url.search}`, 301);
-    return next();
+    const legacyPath = await legacyContentPath(currentPath);
+    if (legacyPath !== currentPath) return context.redirect(`${legacyPath}${context.url.search}`, 301);
+    const response = await next();
+    if (hasTrailingSlash && isReadRequest && response.ok && response.headers.get("Content-Type")?.includes("text/html")) {
+      return context.redirect(currentPath + context.url.search, 301);
+    }
+    return response;
   }
   const requestedPath = `/${segments.slice(1).join("/")}`;
   if (isSharedPath(requestedPath)) return new Response("Страница не найдена", { status: 404 });
   if (requestedPath !== "/") {
     // Previously generated regional inner pages now redirect to the shared page.
-    const path = await legacyContentPath(requestedPath);
+    const path = await legacyContentPath(legacyPagePath(requestedPath));
     return context.redirect(`${path}${context.url.search}`, 301);
   }
   if (context.url.pathname !== cityPath(city.slug, defaultCitySlug)) return context.redirect(`${cityPath(city.slug, defaultCitySlug)}${context.url.search}`, 301);

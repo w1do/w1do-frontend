@@ -1,0 +1,1746 @@
+[
+  {
+    "relativePath": "AGENTS.md",
+    "summary": "Корень: правила работы агентов над этим проектом: контракты, чеки, запреты, ссылки на SUMMARY и docs. Читать перед любыми изменениями.",
+    "role": "doc",
+    "contentHash": "31a4fd5c5023e772455b6bad5368fc98ab4ac58a8e2887a01b3a3ab5607ae8ac",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:00:57.156Z"
+  },
+  {
+    "relativePath": "CLAUDE.md",
+    "summary": "Инструкция для Claude по работе с проектом: сначала изучить package.json, конфиги и структуру src.",
+    "role": "doc",
+    "contentHash": "eb323c9f22b5580f96d8af3b9e91ad8624f6fd42ddde329614af3f53c1d23a98",
+    "author": "agent",
+    "updatedAt": "2026-10-14T11:53:48.932Z"
+  },
+  {
+    "relativePath": "Dockerfile",
+    "summary": "Сборка образа сайта; запуск через dist/server/entry.mjs.",
+    "role": "config",
+    "contentHash": "ee66e8202884af0cd8c169a2d4a87e5ef9c84aed5626091e6c19b0cd3b32ce6d",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:00:57.224Z"
+  },
+  {
+    "relativePath": "README.md",
+    "summary": "Корень: сайт AICRAFT (w1do.ru) — Astro 6 SSR + React 19 + Redis. README описывает стек, /api/lead, чат, деплой, мультирегиональность и CMS W1DO.",
+    "role": "doc",
+    "contentHash": "9cf5c9de68a62b989c39452ab002b0b5273bc404cff360eb53d83de7206fb39b",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:00:57.143Z"
+  },
+  {
+    "relativePath": "SUMMARY.md",
+    "summary": "Корень: история и статус всех работ — кластеры услуг, кластеры-лендинги, блог, кейсы и юрдокументы CMS, llms.txt, cookie; чек-лист реальностей проекта.",
+    "role": "doc",
+    "contentHash": "6bff06c49e849464737cf5f8d20c23806e145c72146622961dd46309bc1f3057",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:00:57.167Z"
+  },
+  {
+    "relativePath": "astro.config.mjs",
+    "summary": "Конфиг Astro: output server + node adapter, SITE_URL проверка, env schema (LEADS_API_KEY, POLZA_AI, RAG_API, REDIS, TRUSTED_PROXY_HOPS), trailingSlash never, terser drop_console.",
+    "role": "config",
+    "contentHash": "caae8b059b59a4c540da34d15f9b80bc6a5971b48f5e6534ebd6ba9f5e234517",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:00:57.204Z"
+  },
+  {
+    "relativePath": "docker-compose.yml",
+    "summary": "Compose: web (node entry.mjs) + redis (noeviction); секреты только через env-файл, не в репозиторий.",
+    "role": "config",
+    "contentHash": "586cdc6868297d3b1c2c60ecc7463c04db5bd66054733d9dd2fee10424f8b0d0",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:00:57.212Z"
+  },
+  {
+    "relativePath": "docs/cases-copy-review.md",
+    "summary": "Черновик и статус обновления текстов кейсов W1DO, применённых к опубликованным записям.",
+    "role": "doc",
+    "contentHash": "9e6a4fa6ab7ea55bfb56c198fc5ac60f59af6d35740f2b8b624d9a65f2ead4f1",
+    "author": "agent",
+    "updatedAt": "2026-10-14T11:53:56.044Z"
+  },
+  {
+    "relativePath": "docs/legal-documents.md",
+    "summary": "Юридические документы W1DO в CMS: назначение, границы и карточка переменных для текстов сайта.",
+    "role": "doc",
+    "contentHash": "dfb1821a60e7630126993433d7269be80ab482717d3f3a00ba4dfc1ac9293e03",
+    "author": "agent",
+    "updatedAt": "2026-10-14T11:53:59.972Z"
+  },
+  {
+    "relativePath": "docs/rebuild-about.md",
+    "summary": "Лог пересборки страницы «Обо мне» под SEO-запрос «Разработчик LLM» с биографией автора.",
+    "role": "doc",
+    "contentHash": "b4761a138ff1ace00d48462475fd911889d664b69d552c0df643effc3180cc83",
+    "author": "agent",
+    "updatedAt": "2026-10-14T11:54:02.105Z"
+  },
+  {
+    "relativePath": "docs/rebuild-ai-training-and-dev.md",
+    "summary": "Отчёт о пересборке страниц «Обучение ИИ» и «AI Developer»: выполненные задачи и результат.",
+    "role": "doc",
+    "contentHash": "d4aea4ffe128c3260473442c6ce90a680bf919632b4653213c9a3c9e6a52015b",
+    "author": "agent",
+    "updatedAt": "2026-10-14T11:54:05.143Z"
+  },
+  {
+    "relativePath": "docs/rebuild-consultation.md",
+    "summary": "Лог создания посадочной страницы «Консультация по внедрению ИИ» под SEO-запрос и авторский стиль.",
+    "role": "doc",
+    "contentHash": "2a87def98ac1a4293c04ca203ea6aa7cbabd8e50f4ff5c5036b910c558112479",
+    "author": "agent",
+    "updatedAt": "2026-10-14T11:54:07.320Z"
+  },
+  {
+    "relativePath": "docs/seo-rebuild-ai-developer.md",
+    "summary": "Пересборка главной страницы под запрос «Разработчик ИИ»: SEO-переориентация и выполненные изменения.",
+    "role": "doc",
+    "contentHash": "6c63d042aaf4f80a2d80932e6ebe31c55c254341be2865a9840130713e130b3a",
+    "author": "agent",
+    "updatedAt": "2026-10-14T11:54:09.438Z"
+  },
+  {
+    "relativePath": "docs/ui-components.md",
+    "summary": "docs/ — документация: логи пересборки SEO-страниц (about, consultation, training, ai-developer), ui-компоненты, кейсы W1DO, юридические документы.",
+    "role": "doc",
+    "contentHash": "7c899510ef85616c7f7d40208c12992156ce588a3b69a7e167436ec04d9656cc",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:01:13.235Z"
+  },
+  {
+    "relativePath": "docs/w1do-cases.md",
+    "summary": "Коллекция кейсов W1DO: единственный источник карточек и страниц кейсов через адаптер cases.ts.",
+    "role": "doc",
+    "contentHash": "9cc46ed1badbc9a2238b2aa85d0724e70f6679b26ae17865108c025455e73a57",
+    "author": "agent",
+    "updatedAt": "2026-10-14T11:54:15.232Z"
+  },
+  {
+    "relativePath": "idea.md",
+    "summary": "Концепция и план контента проекта.",
+    "role": "doc",
+    "contentHash": "5eb9b7eb6c9d310a4505bba1d54897e32cb18dc4850fc4b777142a3018fb94a8",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:00:57.174Z"
+  },
+  {
+    "relativePath": "openspec/changes/add-ai-chat-page/design.md",
+    "summary": "Решения ИИ-чата: без стриминга, бюджет промпта, rate limit в памяти, заказ через /contact, индексация, модель из env (пустая = default).",
+    "role": "doc",
+    "contentHash": "4ba03b016ddaf1e68dc2c78ee8c275dca1bc4373bbb57d2d3a41b9dac735768b",
+    "author": "agent",
+    "updatedAt": "2026-10-14T13:24:44.403Z"
+  },
+  {
+    "relativePath": "openspec/changes/add-ai-chat-page/proposal.md",
+    "summary": "Изменение add-ai-chat-page: страница /chat с ИИ-консультантом (AiChat.tsx), ответы из каталога услуг, индексируемая страница со своими SEO.",
+    "role": "doc",
+    "contentHash": "6b3a011f18be0e48d669e0e43efa6961a6a10c51952518075540804b78d7cb43",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:01:13.268Z"
+  },
+  {
+    "relativePath": "openspec/changes/add-ai-chat-page/specs/ai-chat/spec.md",
+    "summary": "Требования ИИ-консультанта: серверный PolzaAI, 500 только без ключа, каталог W1DO, заказ через форму, лимиты, индексация, модель из env.",
+    "role": "doc",
+    "contentHash": "a54a42c40783e506a97a01054b5a5bd9bd9300567254fd4ce6ed0c542e91b54f",
+    "author": "agent",
+    "updatedAt": "2026-10-14T13:24:44.422Z"
+  },
+  {
+    "relativePath": "openspec/changes/add-ai-chat-page/tasks.md",
+    "summary": "Статус задач ИИ-чата /chat: код и сборка готовы; T1, T9, браузер не прогнаны; исправление 7.x после эскалации; чек-лист выкладки.",
+    "role": "doc",
+    "contentHash": "e3bda6dc0e7dbc233b349047259420508b16a5d89d6e49330aff8a145545a570",
+    "author": "agent",
+    "updatedAt": "2026-10-14T13:24:44.413Z"
+  },
+  {
+    "relativePath": "openspec/changes/add-chat-lead-widget/design.md",
+    "summary": "Решения виджета заявок, включая security review: согласие по запросу сервера, абсолютный срок 24 ч, TRUSTED_PROXY_HOPS, блокировка chatId.",
+    "role": "doc",
+    "contentHash": "fab8b9dcc9eb580e1e29f7eb2855ea96edc48895abe2c7a33ba22b00a12b0771",
+    "author": "agent",
+    "updatedAt": "2026-10-14T14:21:27.446Z"
+  },
+  {
+    "relativePath": "openspec/changes/add-chat-lead-widget/proposal.md",
+    "summary": "Изменение add-chat-lead-widget: сбор заявки в чате — согласие, карточка контактов, POST /api/chat-lead, Redis, лимиты.",
+    "role": "doc",
+    "contentHash": "835336d0c199daa6833e8cee93437b5b12ab00d2729120109dd3539813b8c8e4",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:01:13.278Z"
+  },
+  {
+    "relativePath": "openspec/changes/add-chat-lead-widget/specs/chat-lead/spec.md",
+    "summary": "Требования заявки из чата: согласие по запросу сервера, абсолютный срок Redis, блокировка chatId, привязка контактов, лимиты, ключ клиента.",
+    "role": "doc",
+    "contentHash": "331ed92bd7179d032262ebaf73511e1d7afc1c22234dd2760e2d3ac59744c98f",
+    "author": "agent",
+    "updatedAt": "2026-10-14T14:21:27.464Z"
+  },
+  {
+    "relativePath": "openspec/changes/add-chat-lead-widget/tasks.md",
+    "summary": "Чек-лист виджета заявок: реализация, Redis, проверки, выкладка и раздел 11 с исправлениями после security review.",
+    "role": "doc",
+    "contentHash": "5f6098e593d8f14ee43579af2902a0d45c1d9559a5db1a2accb78aad06f67077",
+    "author": "agent",
+    "updatedAt": "2026-10-14T14:21:27.455Z"
+  },
+  {
+    "relativePath": "openspec/changes/add-home-media-resources/proposal.md",
+    "summary": "Изменение add-home-media-resources: блок MediaResources на главной (TG-чат, YouTube и др.), контент в src/lib/media-resources.ts.",
+    "role": "doc",
+    "contentHash": "4236af3b71f98da0cad35e0993fa85ee3d94a862b8ef05bde18d9f69ae4b7c29",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:01:13.289Z"
+  },
+  {
+    "relativePath": "openspec/changes/add-platform-leads-api/design.md",
+    "summary": "Дизайн API заявок: серверный роут /api/lead вместо вебхука n8n, ключ API только на сервере.",
+    "role": "doc",
+    "contentHash": "9098a684f511418c29b6bc339d256382e536fb15d7321ee07e6ab980ad94ad16",
+    "author": "agent",
+    "updatedAt": "2026-10-14T11:54:50.663Z"
+  },
+  {
+    "relativePath": "openspec/changes/add-platform-leads-api/proposal.md",
+    "summary": "Изменение add-platform-leads-api: POST /api/lead проксирует заявку в W1DO /api/v1/leads с серверным X-Api-Key и legalConsent.",
+    "role": "doc",
+    "contentHash": "b224506ca6ef23f991760fd0c9da1c230333b9979570dc21ac6ab6161c407f41",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:01:13.300Z"
+  },
+  {
+    "relativePath": "openspec/changes/add-platform-leads-api/specs/lead-submission/spec.md",
+    "summary": "Спецификация приёма заявок с форм сайта: проверка данных, защита от ботов и доставка в платформу.",
+    "role": "doc",
+    "contentHash": "9b59402cc6cb5d55732fe8a4a3925a3ca5a2e68dd9fae980c8fa1c413d77f020",
+    "author": "agent",
+    "updatedAt": "2026-10-14T11:54:55.158Z"
+  },
+  {
+    "relativePath": "openspec/changes/add-platform-leads-api/tasks.md",
+    "summary": "Чек-лист задач перевода заявок на платформу: ключи окружения, эндпоинт /api/lead и проверки.",
+    "role": "doc",
+    "contentHash": "f7df2ac7eef36785df70ba9f14b058eea1ca1977d9c9e99c10ed488166180c88",
+    "author": "agent",
+    "updatedAt": "2026-10-14T11:55:02.511Z"
+  },
+  {
+    "relativePath": "openspec/changes/switch-chat-to-rag/design.md",
+    "summary": "Изменение switch-chat-to-rag: ассистент переведён на RAG-сервис Vector (rag.w1do.ru); при недоступности RAG диалог сохраняется и собирает заявку.",
+    "role": "doc",
+    "contentHash": "f8a4833c249f87ad82e16c26a51d5a1f82d7d6472e8bf84e561aef8f438f6785",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:01:13.257Z"
+  },
+  {
+    "relativePath": "openspec/config.yaml",
+    "summary": "openspec/ — OpenSpec-изменения проекта: конфиг + 5 папок changes/* (чат /chat, lead-виджет, медиа-ресурсы, leads API, RAG), в каждой proposal/design/tasks/spec.",
+    "role": "config",
+    "contentHash": "2a791b0ccc50e2c2ebbb3ba28692a4ad0e4b6ab94ed2151375ac404d7056e89a",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:01:13.246Z"
+  },
+  {
+    "relativePath": "package.json",
+    "summary": "Зависимости: astro 6, @astrojs/node (standalone), react 19, redis, parse5/sax, terser; node >=22.12; скрипты dev/build/preview.",
+    "role": "config",
+    "contentHash": "ebc51fdd840fd5fdcdd922a660d77b2e3a5e31d062100eb66df15885c8664ab1",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:00:57.195Z"
+  },
+  {
+    "relativePath": "plan.md",
+    "summary": "Текущий план работ проекта.",
+    "role": "doc",
+    "contentHash": "7a4355840e1910036c5aec23472b581ce0d1c921630062d9e909d5bf6d602a62",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:00:57.185Z"
+  },
+  {
+    "relativePath": "public/js/SmoothScroll.js",
+    "summary": "Библиотека SmoothScroll v1.5.1: плавная прокрутка страницы колесом мыши (MIT).",
+    "role": "module",
+    "contentHash": "78886829b1cdb0b9bdc5c0e62c65270d2c1314a6db902c2b1849235199a77e62",
+    "author": "agent",
+    "updatedAt": "2026-10-14T11:55:39.786Z"
+  },
+  {
+    "relativePath": "public/js/function.js",
+    "summary": "public/js — статические скрипты шаблона (function.js, SmoothScroll, typed, parallaxie, slicknav, magiccursor) — копируются в сборку без изменений.",
+    "role": "module",
+    "contentHash": "a745fbd2d5715089851fe84f00cef284ce03cb4d827ab9c446906cb223320c06",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:01:13.312Z"
+  },
+  {
+    "relativePath": "public/js/jquery.slicknav.js",
+    "summary": "Плагин jQuery SlickNav: превращает меню сайта в мобильное выдвижное меню.",
+    "role": "module",
+    "contentHash": "9cb4b1ab50ded310b20448c890caa7391c254a5d8d24c58b9a3d3ca19c8d5c9d",
+    "author": "agent",
+    "updatedAt": "2026-10-14T11:55:30.084Z"
+  },
+  {
+    "relativePath": "public/js/magiccursor.js",
+    "summary": "Скрипт кастомного курсора мыши с эффектом при наведении на интерактивные элементы.",
+    "role": "module",
+    "contentHash": "cd76a7ea0aa23b06ee4bedd39f1e1bae535cc1e061fee4ed9721d91682ed4755",
+    "author": "agent",
+    "updatedAt": "2026-10-14T11:55:32.396Z"
+  },
+  {
+    "relativePath": "public/js/parallaxie.js",
+    "summary": "Плагин параллакс-эффекта фоновых изображений при прокрутке страницы.",
+    "role": "module",
+    "contentHash": "179e8b0944bade9d818446261baace82cf2105278b0427ae71297445cccfb421",
+    "author": "agent",
+    "updatedAt": "2026-10-14T11:55:35.065Z"
+  },
+  {
+    "relativePath": "public/js/typed.js",
+    "summary": "Библиотека Typed.js: анимация печатания и стирания текстовых строк в заголовках.",
+    "role": "module",
+    "contentHash": "b083b5b4e8a25e097d20ed910b5cf6d4d7950f1337d85529d39a9ed31632f1b1",
+    "author": "agent",
+    "updatedAt": "2026-10-14T11:55:37.355Z"
+  },
+  {
+    "relativePath": "seo/ai-agents/cluster.md",
+    "summary": "seo/ — семантика и кластерные карты; cluster.md — карта SERP-интентов кластера 'ИИ-агенты' и приоритетные под-кластеры для посадочных.",
+    "role": "doc",
+    "contentHash": "517d486530913fea59b7096c2d9d8d64c80227d29806d4f0709da0eabfeaf7cb",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:01:13.325Z"
+  },
+  {
+    "relativePath": "source/css/animate.css",
+    "summary": "Библиотека CSS-анимаций animate.css для появления и движения элементов страниц.",
+    "role": "module",
+    "contentHash": "95d075e7d78a079f8a4383dfb65a946da278a1bc97024e93b909f83243b58c05",
+    "author": "agent",
+    "updatedAt": "2026-10-14T11:55:59.521Z"
+  },
+  {
+    "relativePath": "source/css/custom.css",
+    "summary": "source/ — исходная HTML-вёрстка шаблона до Astro и её css/js; не подключается к сборке, только как источник стилей.",
+    "role": "module",
+    "contentHash": "e1c05986f2f89852cf4964e1a0ac4580bcd6109cd0f310ba07bba150e7e8844d",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:01:13.338Z"
+  },
+  {
+    "relativePath": "source/css/fonts.css",
+    "summary": "Подключение веб-шрифтов сайта через @font-face из папки fonts.",
+    "role": "module",
+    "contentHash": "d87e65506a77919fcbc4730f17db6da2c0dab62815ef85d8b6fabd9d953ee4ea",
+    "author": "agent",
+    "updatedAt": "2026-10-14T11:56:04.441Z"
+  },
+  {
+    "relativePath": "source/css/magnific-popup.css",
+    "summary": "Стили плагина Magnific Popup: модальные окна и лайтбокс для изображений и видео.",
+    "role": "module",
+    "contentHash": "45d1f5f6cf913746c45dd697b1a8f3b719c02d8b3f678dc7fc2766d54e1aaf6e",
+    "author": "agent",
+    "updatedAt": "2026-10-14T11:56:06.925Z"
+  },
+  {
+    "relativePath": "source/css/mousecursor.css",
+    "summary": "Стили кастомного курсора мыши: вид курсора и состояния при наведении.",
+    "role": "module",
+    "contentHash": "ae95e6a6465156785491da65111f25063d72c5e7268dfb800c15f8701c5495b9",
+    "author": "agent",
+    "updatedAt": "2026-10-14T11:56:10.830Z"
+  },
+  {
+    "relativePath": "source/js/SmoothScroll.js",
+    "summary": "Библиотека SmoothScroll v1.5.1: плавная прокрутка страницы колесом мыши (MIT), копия из public/js.",
+    "role": "module",
+    "contentHash": "78886829b1cdb0b9bdc5c0e62c65270d2c1314a6db902c2b1849235199a77e62",
+    "author": "agent",
+    "updatedAt": "2026-10-14T11:55:43.685Z"
+  },
+  {
+    "relativePath": "source/js/function.js",
+    "summary": "Исходный основной клиентский скрипт сайта на jQuery: прелоадер, меню и инициализация плагинов.",
+    "role": "module",
+    "contentHash": "4e17927c85fb32142610c4854db2bf91e86b9662308a0f04dad92eac0a1d2ba6",
+    "author": "agent",
+    "updatedAt": "2026-10-14T11:55:57.115Z"
+  },
+  {
+    "relativePath": "source/js/jquery.slicknav.js",
+    "summary": "Плагин jQuery SlickNav: мобильное выдвижное меню сайта, копия из public/js.",
+    "role": "module",
+    "contentHash": "9cb4b1ab50ded310b20448c890caa7391c254a5d8d24c58b9a3d3ca19c8d5c9d",
+    "author": "agent",
+    "updatedAt": "2026-10-14T11:55:45.913Z"
+  },
+  {
+    "relativePath": "source/js/magiccursor.js",
+    "summary": "Кастомный курсор мыши с эффектом наведения, копия из public/js.",
+    "role": "module",
+    "contentHash": "cd76a7ea0aa23b06ee4bedd39f1e1bae535cc1e061fee4ed9721d91682ed4755",
+    "author": "agent",
+    "updatedAt": "2026-10-14T11:55:48.163Z"
+  },
+  {
+    "relativePath": "source/js/parallaxie.js",
+    "summary": "Плагин параллакс-эффекта фона при прокрутке, копия из public/js.",
+    "role": "module",
+    "contentHash": "179e8b0944bade9d818446261baace82cf2105278b0427ae71297445cccfb421",
+    "author": "agent",
+    "updatedAt": "2026-10-14T11:55:50.346Z"
+  },
+  {
+    "relativePath": "source/js/typed.js",
+    "summary": "Библиотека Typed.js для эффекта печатания текста, копия из public/js.",
+    "role": "module",
+    "contentHash": "b083b5b4e8a25e097d20ed910b5cf6d4d7950f1337d85529d39a9ed31632f1b1",
+    "author": "agent",
+    "updatedAt": "2026-10-14T11:55:52.837Z"
+  },
+  {
+    "relativePath": "src/components/About.astro",
+    "summary": "Секция «О разработчике» на главной: заголовок, описание стека и счётчик реализованных ИИ-систем, принимает props subTitle, title, description, counterTag.",
+    "role": "module",
+    "contentHash": "9ab0cb4f27d1caac0d3f3141014c7a663a8e00087a746f88df864277248b71ca",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:36:21.355Z"
+  },
+  {
+    "relativePath": "src/components/Awards.astro",
+    "summary": "Блок «Экспертиза и практика»: счётчик реализованных ИИ-сценариев и список карточек с иконками LLM, годом и описанием (props awards, counterValue, counterDesc).",
+    "role": "module",
+    "contentHash": "2e13b20fc0d7464ad070496e3e70eb0ef3647e74cc2e6d4fe724ad4c7f2313d2",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:36:21.367Z"
+  },
+  {
+    "relativePath": "src/components/Choose.astro",
+    "summary": "Блок «Почему я»: два преимущества (стек, скорость и качество), блок гибкого бюджета с ценой; заголовки и тексты берутся из props.",
+    "role": "module",
+    "contentHash": "2d936471cd3e6ed3ed52499d520a25be2faaa901fd514597748ebd258040d1c0",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:36:21.376Z"
+  },
+  {
+    "relativePath": "src/components/Cta.astro",
+    "summary": "Блок призыва к действию с заголовком, описанием и формой обратной связи; принимает props subTitle, title, description.",
+    "role": "module",
+    "contentHash": "0c52e011c980e7dd183ea8b266049c8787043647791bca94b69d968774b93e02",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:36:21.386Z"
+  },
+  {
+    "relativePath": "src/components/Faqs.astro",
+    "summary": "Блок FAQ с аккордеоном: принимает props subTitle, title, description и customFaqs, выводит вопросы через FaqItem.",
+    "role": "module",
+    "contentHash": "f8cac2ec6bcd8e05ae24bdb49d2031bf64fcaf512844874b2756903d4e570187",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:36:21.395Z"
+  },
+  {
+    "relativePath": "src/components/Feature.astro",
+    "summary": "Секция «Стек технологий» с описанием связки Cursor, Claude и Junie; props subTitle, title, description, выводит блок core-feature.",
+    "role": "module",
+    "contentHash": "730293f01e045018e0ea9222f00f6bd71fb82967929f51f2f8756eea42683370",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:36:21.405Z"
+  },
+  {
+    "relativePath": "src/components/Hero.astro",
+    "summary": "Первый экран главной с ИИ-агентами для бизнеса, прямыми ссылками на четыре направления и переходом к форме. Фоновое видео с затемнением.",
+    "role": "module",
+    "contentHash": "3258e7fa50ed77f31911897a940a41afc95ff9266b42b2750663430af14f6751",
+    "author": "agent",
+    "updatedAt": "2026-11-20T17:31:11.342Z"
+  },
+  {
+    "relativePath": "src/components/IntroVideo.astro",
+    "summary": "Секция с видео и бегущей строкой тегов (tickerItems), заголовок и подзаголовок из props.",
+    "role": "module",
+    "contentHash": "f78704da1f2fd2c994ad136c541f9b4c3c621e7a00c3b615cc3d0365a0f9a5b8",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:36:21.414Z"
+  },
+  {
+    "relativePath": "src/components/Pricing.astro",
+    "summary": "Блок тарифов: принимает pricingItems (title, price, description, features, icon) и выводит карточки с ценами и списком возможностей.",
+    "role": "module",
+    "contentHash": "ebf9f5a84b4ccb7d4dcbdf2d8e60b53501beda1f5a0cdb20e5caef025ebebca5",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:36:21.431Z"
+  },
+  {
+    "relativePath": "src/components/Process.astro",
+    "summary": "Блок «Процесс разработки» из четырёх шагов (step1–step4 Title и Desc в props) с заголовком и описанием.",
+    "role": "module",
+    "contentHash": "2cfab6a50196bdd0a6f87a988562d23a9fd107d482626a3544ba3762b1a34d5b",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:36:21.439Z"
+  },
+  {
+    "relativePath": "src/components/Services.astro",
+    "summary": "Блок услуг с заголовком и подзаголовком из props; список услуг выводится через ServiceCard.",
+    "role": "module",
+    "contentHash": "02b6d7566cfa5ffd4ff4edf06ca609effbcc29fdc13392ef3d33c3081ad73ab9",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:36:21.448Z"
+  },
+  {
+    "relativePath": "src/components/Testimonials.astro",
+    "summary": "Блок отзывов клиентов: массив testimonials (rating, text, author name, role, image) с заголовком и описанием из props.",
+    "role": "module",
+    "contentHash": "6dd3441bfa93d64f4991a84aa71a5545949902dbb97f0e2a9e1072b89642c5de",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:36:21.456Z"
+  },
+  {
+    "relativePath": "src/components/Works.astro",
+    "summary": "Список ИИ-инструментов и моделей (ChatGPT и другие) с иконками, производителем и годом; данные в массиве works во frontmatter.",
+    "role": "module",
+    "contentHash": "03eb69282587ea634ba18a75e671d488618ff60d0b45106aab31bd507cc99fac",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:48:54.194Z"
+  },
+  {
+    "relativePath": "src/components/blog/Blog.astro",
+    "summary": "Блок последних трёх постов блога на главной: getBlogPosts, сортировка по дате публикации, вывод дат в часовом поясе Asia/Irkutsk.",
+    "role": "module",
+    "contentHash": "ce0754fc986bb4a6efd040757a2ccabe5b684342320a9740c8e61cbf8b5f437c",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:36:48.950Z"
+  },
+  {
+    "relativePath": "src/components/blog/BlogBreadcrumbs.astro",
+    "summary": "Хлебные крошки раздела блога: вывод цепочки ссылок для страниц блога, категорий и постов.",
+    "role": "module",
+    "contentHash": "3e2004b41f05844ec05d17d4c12833dbb626ef27e65e70d3ec11b807782a97d4",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:36:48.967Z"
+  },
+  {
+    "relativePath": "src/components/blog/BlogList.astro",
+    "summary": "components/blog — список статей с пагинацией (10/страница, active state), BlogBreadcrumbs, BlogTopics, CategoryCards.",
+    "role": "module",
+    "contentHash": "12f6f9213e686202af5b5d480f75651d2ed835f0e2e9c6352b6153de5661a521",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:01:31.063Z"
+  },
+  {
+    "relativePath": "src/components/blog/BlogTopics.astro",
+    "summary": "Навигация «Темы блога»: ссылки на категории из props categories (BlogCategory), скрыта при пустом списке.",
+    "role": "module",
+    "contentHash": "fc5734ac6c25a9ebca062cad33e3fb0eff3cbd6ea80ab92651e30e591f6ece9a",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:36:48.988Z"
+  },
+  {
+    "relativePath": "src/components/blog/CategoryCards.astro",
+    "summary": "Карточки категорий блога: список категорий со ссылками на /blog/categories/{slug}.",
+    "role": "module",
+    "contentHash": "dc33b45915544906b5d1c58486392147075ad3a0a605d1ce4e5c49edb9ffc70b",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:36:48.997Z"
+  },
+  {
+    "relativePath": "src/components/chat/AiChat.tsx",
+    "summary": "Основной React-интерфейс ИИ-чата с рендерингом безопасной разметки и формой сообщения.",
+    "role": "module",
+    "contentHash": "918550fd34df519d376a38b6eed77ca0860ffdc1008435341d270c3ed05efd67",
+    "author": "agent",
+    "updatedAt": "2026-10-23T06:20:37.659Z"
+  },
+  {
+    "relativePath": "src/components/chat/ChatConsent.tsx",
+    "summary": "Компонент явного согласия на обработку данных перед передачей заявки из чата.",
+    "role": "module",
+    "contentHash": "0bf244374ac6d799b815568f0db8fc37cf91abdee87f3513c4356909252a1a26",
+    "author": "agent",
+    "updatedAt": "2026-10-23T06:20:37.673Z"
+  },
+  {
+    "relativePath": "src/components/chat/ChatLeadCard.tsx",
+    "summary": "Карточка проверки и редактирования сформированной ИИ-заявки перед отправкой.",
+    "role": "module",
+    "contentHash": "add81ed2fe9842b32211ef5ca2ce1a6656b9a18aa8dc79094633f69e22daeddd",
+    "author": "agent",
+    "updatedAt": "2026-10-23T06:20:37.687Z"
+  },
+  {
+    "relativePath": "src/components/chat/ChatPopup.tsx",
+    "summary": "components/chat — ИИ-консультант: плавающий ChatPopup (на всех страницах кроме /chat), встроенный AiChat, ChatWidget, ChatLeadCard, согласие, chat-markdown.ts.",
+    "role": "module",
+    "contentHash": "4829cee7d97c288f8b9a56889f244e63bef138989c26f62b511eefe102d42b42",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:01:31.075Z"
+  },
+  {
+    "relativePath": "src/components/chat/chat-markdown.ts",
+    "summary": "Безопасный зависимостенезависимый парсер ограниченного Markdown для ответов ИИ-чата.",
+    "role": "module",
+    "contentHash": "7efc974061ff65015f59b29a0f47c3799febfb87ed4e9f86902222f4cf722a39",
+    "author": "agent",
+    "updatedAt": "2026-10-23T06:20:37.729Z"
+  },
+  {
+    "relativePath": "src/components/consultation/ConsultationFaqs.astro",
+    "summary": "FAQ страницы консультации: набор вопросов и ответов для раздела консультаций, вывод через FaqSection и FaqItem.",
+    "role": "module",
+    "contentHash": "9afe1d3708700cd3963afcd271bc82287e53ce72fa2a6aa0fb5e97d7b849753c",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:36:49.005Z"
+  },
+  {
+    "relativePath": "src/components/consultation/ConsultationPricing.astro",
+    "summary": "components/consultation — тарифный блок кластера /consultation (вариант pricing «consultation»); рядом ConsultationFaqs.",
+    "role": "module",
+    "contentHash": "2e10282654989e700d523af1e08b1a4b2918a92cf9bd90270fe0ca88ad1d7286",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:02:47.883Z"
+  },
+  {
+    "relativePath": "src/components/contact/ContactForm.tsx",
+    "summary": "components/contact — форма контакта с legalConsent, отправка на клиентский роут /api/lead.",
+    "role": "module",
+    "contentHash": "de0e0cabfa99fe9a49c067b72e3ed276844a5133c3fabc3684b1f70a6dbaf1ff",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:01:31.097Z"
+  },
+  {
+    "relativePath": "src/components/hire/HireFaqs.astro",
+    "summary": "FAQ страницы найма разработчика: вопросы и ответы для раздела найма, вывод через FaqSection и FaqItem.",
+    "role": "module",
+    "contentHash": "febe1354ef5d2727b1596ae29e4dcf99480137296f875a70731be10efe86184d",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:36:49.042Z"
+  },
+  {
+    "relativePath": "src/components/hire/HirePricing.astro",
+    "summary": "components/hire — тарифный блок формата «наём» (вариант «hire») + HireFaqs для кластеров-лендингов.",
+    "role": "module",
+    "contentHash": "c9d7bb14e2f09191ff3195a924fbcfd231e8f125601f95c705052fcd2aed1b83",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:02:47.897Z"
+  },
+  {
+    "relativePath": "src/components/legal/LegalConsent.tsx",
+    "summary": "components/legal — LegalConsent: обязательная галочка согласия на обработку персональных данных, ссылки на документы /docs/*.",
+    "role": "module",
+    "contentHash": "d36c38ffb62fae6c5492b3f1b3e63779824b157012901922fcb956225b71fdf4",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:02:47.875Z"
+  },
+  {
+    "relativePath": "src/components/media/MediaResources.astro",
+    "summary": "components/media — блок медиа-ресурсов каналов (Telegram-чат, YouTube) на главной из src/lib/media-resources.ts.",
+    "role": "module",
+    "contentHash": "0c79c0c037b4613c5dc7cb0ab64d5f762b0106d36c05db25f0a021c56538df49",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:02:47.933Z"
+  },
+  {
+    "relativePath": "src/components/pricing/DevPricing.astro",
+    "summary": "components/pricing — тарифы разработки на /pricing.",
+    "role": "module",
+    "contentHash": "706117fe906fc749744b2bdc4164cb54a86a6a69689c6dbfc90b8f5e747c0cc2",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:01:31.142Z"
+  },
+  {
+    "relativePath": "src/components/projects/ProjectCard.astro",
+    "summary": "Карточка проекта или кейса: принимает project и delay, используется в Projects, ProjectsList и на страницах кейсов.",
+    "role": "module",
+    "contentHash": "8580bc43106a4770381a348b1b56822d934e37b7ad8e7419deed794eb24fc145",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:36:49.102Z"
+  },
+  {
+    "relativePath": "src/components/projects/Projects.astro",
+    "summary": "Показывает до трёх кейсов W1DO в исходном оформлении и оставляет секцию доступной при сбое CMS.",
+    "role": "module",
+    "contentHash": "3b30a1e32fae19aad223de6e35fc618c2af65ee3e82020477fe0cba447f89034",
+    "author": "agent",
+    "updatedAt": "2026-11-20T17:02:20.328Z"
+  },
+  {
+    "relativePath": "src/components/projects/ProjectsList.astro",
+    "summary": "Список проектов: принимает projects, basePath (по умолчанию /case) и actionText, выводит ProjectCard в сетке.",
+    "role": "module",
+    "contentHash": "82440002814a6798b916aa5d37c5d4856946d9e4cd7c74d638f63939cd830bbd",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:36:49.127Z"
+  },
+  {
+    "relativePath": "src/components/services/ServiceCard.astro",
+    "summary": "components/services — карточка/списки услуг для /services и шаблонов услуги.",
+    "role": "module",
+    "contentHash": "3cd672971562a4e92a153174da8bb20fa080a60c17b650306f974fd1a2518774",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:01:31.164Z"
+  },
+  {
+    "relativePath": "src/components/services/ServiceShowDetail.astro",
+    "summary": "Детальный блок услуги на странице услуги: развёрнутое описание и секции услуги, большой компонент (272 строки).",
+    "role": "module",
+    "contentHash": "2c32c7dfdfa63f06a8911f52ae7d9c4062ab7857c3c62a3f70407ef936c0cf0f",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:37:10.212Z"
+  },
+  {
+    "relativePath": "src/components/services/ServicesList.astro",
+    "summary": "Список услуг: выводит карточки ServiceCard для каталога услуг.",
+    "role": "module",
+    "contentHash": "9eeb391595aa037c31d9cb5270dd6a90314c4145c7b1931f52dae5db9042aed0",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:37:10.236Z"
+  },
+  {
+    "relativePath": "src/components/services/cluster/ClusterSpokes.astro",
+    "summary": "components/services/cluster — блок перелинковки хаб→spokes (ClusterSpokes + SpokeCard) в стиле service-offer-item-list; спokesTitle/Details из frontmatter.",
+    "role": "module",
+    "contentHash": "8c6c7f4bd5caaa35f70f629b14ce2e91001e2de33e7cf87953a5e167797cc1d1",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:01:31.177Z"
+  },
+  {
+    "relativePath": "src/components/services/cluster/SpokeCard.astro",
+    "summary": "Карточка дочерней услуги кластера: props title, description, icon, link и delay; ссылка на страницу услуги.",
+    "role": "module",
+    "contentHash": "174c8c9ed0738322d9abafede7e48a1c8b2aa3c08a37a28449eeb61a02296869",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:37:10.283Z"
+  },
+  {
+    "relativePath": "src/components/shared/Breadcrumbs.astro",
+    "summary": "Рендерит видимый навигационный путь; withSchema добавляет BreadcrumbList из тех же элементов для шаблонов без собственной схемы.",
+    "role": "module",
+    "contentHash": "281e3dce9d8537a27b921752e09f5168a73898f038dbf3f25c403b506a2e2a88",
+    "author": "agent",
+    "updatedAt": "2026-11-20T17:38:03.152Z"
+  },
+  {
+    "relativePath": "src/components/shared/CitySelector.astro",
+    "summary": "Выбор города в шапке: список городов для региональных страниц, используется в Header.astro.",
+    "role": "module",
+    "contentHash": "d1c71be6a8107ec95653b3ca8836d06365a6d6ce78c89b6d1fa1c2a584af8ab5",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:37:10.330Z"
+  },
+  {
+    "relativePath": "src/components/shared/CookieNotice.astro",
+    "summary": "Уведомление о cookies с согласием и ссылкой на страницу cookies; подключается в Layout (по документации legal-documents.md).",
+    "role": "module",
+    "contentHash": "295f42f37a91f17d795bf3b5757480fa4817a8ebff9b5cd012c1341308a5234b",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:37:10.354Z"
+  },
+  {
+    "relativePath": "src/components/shared/Footer.astro",
+    "summary": "components/shared — общий каркас: Header, Footer, Breadcrumbs, CitySelector, CookieNotice, JsonLd; данные юр.ссылок из lib/legal.ts.",
+    "role": "module",
+    "contentHash": "4018345f2713405d27763504ac2b1b576526d89f4446d0df1ffdbcb525dd1967",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:01:31.204Z"
+  },
+  {
+    "relativePath": "src/components/shared/Header.astro",
+    "summary": "Навигация AiCRAFT для разработки ИИ-агентов, agent harness и Claude Code с проверкой отображения от мобильной до desktop ширины.",
+    "role": "module",
+    "contentHash": "d06d4f54c37b6e226b0bc332e9d1d4943cbb69944f1573b19068b23da9311074",
+    "author": "agent",
+    "updatedAt": "2026-11-20T17:37:23.553Z"
+  },
+  {
+    "relativePath": "src/components/shared/JsonLd.astro",
+    "summary": "Вставка JSON-LD разметки в страницу: принимает объект схемы и выводит script type application/ld+json.",
+    "role": "module",
+    "contentHash": "18a945c9d30b4eb9e769d485ad7baafdbfdcd0a0fc4142ca1bc29c17a2fbff32",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:37:10.378Z"
+  },
+  {
+    "relativePath": "src/components/shared/Spacer.astro",
+    "summary": "Вертикальный отступ с настраиваемой высотой (props height, className) и адаптивным уменьшением на мобильных.",
+    "role": "module",
+    "contentHash": "102cf1c3eb539907709c373c4e830b8e77c9998eede17e250172eeeae370f0b7",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:39:24.487Z"
+  },
+  {
+    "relativePath": "src/components/shared/faq/FaqItem.astro",
+    "summary": "Один пункт аккордеона FAQ: props id, question, answer, parentId, active и delay.",
+    "role": "module",
+    "contentHash": "ad618ffaba16184923c2dad00c1fd6df666a66f24eb9a0bb32da760056c092da",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:37:10.402Z"
+  },
+  {
+    "relativePath": "src/components/shared/faq/FaqPageContent.astro",
+    "summary": "Разметка страницы FAQ с боковым меню категорий и контактным email (props categories, email).",
+    "role": "module",
+    "contentHash": "b6d7ed22e5be00b9f4ff5a94d84afb7f4e725128454417d596d15de080819e29",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:37:10.439Z"
+  },
+  {
+    "relativePath": "src/components/shared/faq/FaqSection.astro",
+    "summary": "Секция FAQ с id и заголовком; контейнер для списка FaqItem.",
+    "role": "module",
+    "contentHash": "f3f6b1d370b462a35cf64d1420b222c5b35573aa63d5647a0b5a1cea196cf11e",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:37:10.466Z"
+  },
+  {
+    "relativePath": "src/components/shared/faq/FaqSidebar.astro",
+    "summary": "Боковое меню FAQ: навигация по категориям вопросов для страниц FAQ.",
+    "role": "module",
+    "contentHash": "4054d508a85594d98953a44404b27806c4831d39213f640b7d4633ec0ec309c7",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:37:10.490Z"
+  },
+  {
+    "relativePath": "src/components/training/TrainingPricing.astro",
+    "summary": "components/training — тарифы обучения (кластер /ai-training, variant 'training').",
+    "role": "module",
+    "contentHash": "ed71a8716f5d26bee1e647780da86e2ef62d5e5e0b9903954cbe5ab3c5114246",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:01:31.189Z"
+  },
+  {
+    "relativePath": "src/content.config.ts",
+    "summary": "src/ — весь код сайта на Astro. content.config.ts — схемы коллекций: services (pillar+spokes), landingCluster/landingSpoke, схемы блоков landingBlocksSchema, variants pricing/FAQ.",
+    "role": "module",
+    "contentHash": "d841528cd35f28dc93eba237decf8b2a84ffab5b42f45e2fc76bb1f39c378e6b",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:01:31.041Z"
+  },
+  {
+    "relativePath": "src/content/landings/ai-agents/ai-agent-automation.md",
+    "summary": "Spoke-страница кластера ИИ-агентов: автоматизация через агентов; коллекция landingSpoke, frontmatter с блоками лендинга.",
+    "role": "doc",
+    "contentHash": "9a91c523fd27e7f52283729b8904819a28cd6502383aa3be2481a782cb5fd596",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:39:52.307Z"
+  },
+  {
+    "relativePath": "src/content/landings/ai-agents/ai-agent-for-business.md",
+    "summary": "Spoke-страница кластера ИИ-агентов: ИИ-агент для бизнеса; коллекция landingSpoke, frontmatter с блоками лендинга.",
+    "role": "doc",
+    "contentHash": "0b6dbb1e420c49895a6b74309bbbef6a9af4effec977d26a48ce29e3f7d68097",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:39:52.327Z"
+  },
+  {
+    "relativePath": "src/content/landings/ai-agents/ai-agent-implementation.md",
+    "summary": "Spoke-страница кластера ИИ-агентов: внедрение ИИ-агентов; коллекция landingSpoke, frontmatter с блоками лендинга.",
+    "role": "doc",
+    "contentHash": "f42ebb2694374b4d202f4b7fecd11061db679cf730976fce3c42259ad60ccad0",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:39:52.339Z"
+  },
+  {
+    "relativePath": "src/content/landings/ai-agents/index.md",
+    "summary": "Коммерческая посадочная разработки ИИ-агентов, этапы от пилота до запуска, ссылки на agent harness и Claude Code.",
+    "role": "entry",
+    "contentHash": "4509ab92dc476e06c024d508bbf2ef594f75f19c429876cc28d8df2def87dabc",
+    "author": "agent",
+    "updatedAt": "2026-11-20T17:36:05.475Z"
+  },
+  {
+    "relativePath": "src/content/landings/ai-training/ai-engineer-course.md",
+    "summary": "Spoke-страница кластера обучения ИИ: курс для ИИ-инженеров; коллекция landingSpoke.",
+    "role": "doc",
+    "contentHash": "2bb46766e6c203ebeb18881e041a0477a0d4af03a6fe24ac8dfaa873d1346400",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:39:52.359Z"
+  },
+  {
+    "relativePath": "src/content/landings/ai-training/index.md",
+    "summary": "Хаб кластера обучения ИИ (hub: true) в коллекции landingCluster; ссылки на курсы и тренинги кластера.",
+    "role": "doc",
+    "contentHash": "11d178fdb177e1dfd431eeb9f346c253c8c826d8690b07c6ad909411ea02bec0",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:39:52.373Z"
+  },
+  {
+    "relativePath": "src/content/landings/ai-training/mcp-servers-training.md",
+    "summary": "Spoke-страница кластера обучения ИИ: обучение по MCP-серверам; коллекция landingSpoke.",
+    "role": "doc",
+    "contentHash": "2c1541ac93203011f812fe4bff2ee33e1626934f8fb25664963df7f88bfa2e2f",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:39:52.387Z"
+  },
+  {
+    "relativePath": "src/content/landings/ai-training/rag-agents-training.md",
+    "summary": "Spoke-страница кластера обучения ИИ: обучение RAG-агентам; коллекция landingSpoke.",
+    "role": "doc",
+    "contentHash": "10aee6c869fcfc99313f96133721e99f66d65c299daadd53f57f56278be61191",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:39:52.399Z"
+  },
+  {
+    "relativePath": "src/content/landings/consultation/business-automation-consultation.md",
+    "summary": "Spoke-страница кластера консультаций: консультация по автоматизации бизнеса; коллекция landingSpoke.",
+    "role": "doc",
+    "contentHash": "8b9db2d69dca370a8cd4fb238c25e19d13a8d62e35b2de4616ffbc0f7e26a7b3",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:39:52.412Z"
+  },
+  {
+    "relativePath": "src/content/landings/consultation/claude-cursor-setup.md",
+    "summary": "Посадочная инфраструктуры Claude Code для команд: инструкции, MCP, права, hooks, CI, проверки и передача разработчикам.",
+    "role": "entry",
+    "contentHash": "33ed807c50ba2bb32bedc182e135921a701c90f4af0427eb0ac5767854b756a6",
+    "author": "agent",
+    "updatedAt": "2026-11-20T17:36:05.491Z"
+  },
+  {
+    "relativePath": "src/content/landings/consultation/index.md",
+    "summary": "Хаб кластера консультаций (hub: true) в коллекции landingCluster; ссылки на spoke-страницы консультаций.",
+    "role": "doc",
+    "contentHash": "4ce5f6af8ee98c8d6c880b77e18f75e353f465ce5ce152d09cf56468ee653275",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:39:52.432Z"
+  },
+  {
+    "relativePath": "src/content/landings/consultation/online-ai-consultation.md",
+    "summary": "Spoke-страница кластера консультаций: онлайн-консультация по ИИ; коллекция landingSpoke.",
+    "role": "doc",
+    "contentHash": "0a26e87f1e9d93e83fa62ef7c280ce73452a8f5ea72aa75e158ce95f53a2ac4e",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:39:52.443Z"
+  },
+  {
+    "relativePath": "src/content/landings/sozdanie-saita/index.md",
+    "summary": "Хаб кластера создания сайтов (hub: true) в коллекции landingCluster; ссылки на spoke-страницы кластера.",
+    "role": "doc",
+    "contentHash": "5b7d06c401e4c6d5a23b9bea95765408927363f858b90cddf06c8c6454e1f4ce",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:39:52.453Z"
+  },
+  {
+    "relativePath": "src/content/landings/sozdanie-saita/internet-magazin/index.md",
+    "summary": "Вложенный хаб «Интернет-магазин» в кластере создания сайтов (hub: true, glob */index.md); ссылки на spoke-страницы магазинов.",
+    "role": "doc",
+    "contentHash": "14be52ebc90220f704c14bec75ed0b8c1eaeb5841a492ce4b351fd18658f0168",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:39:52.474Z"
+  },
+  {
+    "relativePath": "src/content/landings/sozdanie-saita/internet-magazin/internet-magazin-dlya-sellerov.md",
+    "summary": "Spoke-страница раздела интернет-магазинов: интернет-магазин для продавцов; коллекция landingSpoke.",
+    "role": "doc",
+    "contentHash": "298521d96a4279cea852dd74ed6da0a0da9facd46c77aad1c9b2f2ade162772a",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:39:52.485Z"
+  },
+  {
+    "relativePath": "src/content/landings/sozdanie-saita/landing-page.md",
+    "summary": "Spoke-страница кластера создания сайтов: разработка посадочной страницы; коллекция landingSpoke.",
+    "role": "doc",
+    "contentHash": "8a4038f1f50398cd26362f712c5b49cc945d183bc0754a2c3ec803321211e901",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:39:52.464Z"
+  },
+  {
+    "relativePath": "src/content/landings/vibe-coding/ai-agents-rag-development.md",
+    "summary": "Spoke-страница кластера vibe-coding: разработка ИИ-агентов и RAG; коллекция landingSpoke.",
+    "role": "doc",
+    "contentHash": "b8599f155d82297daa31866b16c59041fd26ab7118b599bd4db2f06a9023e104",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:39:52.495Z"
+  },
+  {
+    "relativePath": "src/content/landings/vibe-coding/index.md",
+    "summary": "Хаб кластера vibe-coding (hub: true) в коллекции landingCluster; ссылки на spoke-страницы кластера.",
+    "role": "doc",
+    "contentHash": "6948c6cecd389643915567a84e431e3c18524e7d0e3265632db0c31c06bb953f",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:39:52.506Z"
+  },
+  {
+    "relativePath": "src/content/landings/vibe-coding/mlops-engineer.md",
+    "summary": "Spoke-страница кластера vibe-coding: MLOps-инженер; коллекция landingSpoke.",
+    "role": "doc",
+    "contentHash": "643d507f4a07f46aff378de33e75ee2caa33e91dd365262aa7ac43cda9a21012",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:39:52.517Z"
+  },
+  {
+    "relativePath": "src/content/landings/vibe-coding/vibe-coding-development.md",
+    "summary": "Spoke-страница кластера vibe-coding: разработка методом vibe coding; коллекция landingSpoke.",
+    "role": "doc",
+    "contentHash": "d06ce58af25158fd2fe2a86caaf789bb97e26d5a1a8db582bb29097889ee2dd2",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:39:52.528Z"
+  },
+  {
+    "relativePath": "src/env.d.ts",
+    "summary": "Типы окружения Astro: подключает RegionContext из lib/regions.ts для Astro.locals.region.",
+    "role": "config",
+    "contentHash": "5c521add5ea8d79c7f0f191255b72835ecc26025d5e9c2ac70b1782a97068705",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:39:24.413Z"
+  },
+  {
+    "relativePath": "src/hooks/useAiChat.ts",
+    "summary": "hooks/ — React-хуки: useAiChat (история, /api/chat, лимиты), useContactForm.",
+    "role": "module",
+    "contentHash": "3f6f9581c2e8b716bdf95f904ada0e35ff02d4fca38c95f0e3129b953889c340",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:01:48.070Z"
+  },
+  {
+    "relativePath": "src/hooks/useContactForm.ts",
+    "summary": "React-хук контактной формы: валидация, антиспам, UTM-метки и отправка заявки.",
+    "role": "module",
+    "contentHash": "322e1599591dd1ab4a11c9f43bb5e48ed93038df1ce5862a8e7279a1cb21d922",
+    "author": "agent",
+    "updatedAt": "2026-10-23T06:20:37.596Z"
+  },
+  {
+    "relativePath": "src/layouts/BlogLayout.astro",
+    "summary": "Layout статьи блога с SEO-метаданными и абсолютными ссылками на основе SITE_ORIGIN.",
+    "role": "module",
+    "contentHash": "4dc4d171452a4831419acb731cd68786c5d6ae1f6ba1313a1d9c71870ce58e94",
+    "author": "agent",
+    "updatedAt": "2026-10-23T06:20:38.458Z"
+  },
+  {
+    "relativePath": "src/layouts/LandingClusterLayout.astro",
+    "summary": "Макет страниц landing-кластеров (hub и spoke): блоки коллекций landingCluster и landingSpoke, используется страницей [...cluster].astro.",
+    "role": "module",
+    "contentHash": "e8a98aefa90e4ee29ae5299ada445c4b299f217e7832975e3050b490223c09cc",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:39:24.318Z"
+  },
+  {
+    "relativePath": "src/layouts/Layout.astro",
+    "summary": "layouts/ — глобальный Layout: canonical, OG, Twitter, JSON-LD Organization/WebSite/WebPage (+городские схемы); Service/ServiceLanding добавляют Service+Breadcrumb+FAQ; Project — кейсы; Blog — article.",
+    "role": "module",
+    "contentHash": "6a722e117277b830f2e7857b02dc98c077d0c1d622b4981fb066f573a0f1b2a7",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:01:48.085Z"
+  },
+  {
+    "relativePath": "src/layouts/ProjectLayout.astro",
+    "summary": "Layout кейса с метаданными Open Graph и каноническими URL, строящимися от SITE_ORIGIN.",
+    "role": "module",
+    "contentHash": "104561515ff3030fa69d1f7c036ee8005279d3b7b9036c8e3eb9e4ad5b3f905a",
+    "author": "agent",
+    "updatedAt": "2026-10-23T06:20:38.472Z"
+  },
+  {
+    "relativePath": "src/layouts/ServiceLandingLayout.astro",
+    "summary": "Layout посадочной страницы услуги: SEO-метаданные и канонические URL от SITE_ORIGIN.",
+    "role": "module",
+    "contentHash": "edd27b457c3484076b2180a12b463993827e49291507766dc6022d2c2b307ec8",
+    "author": "agent",
+    "updatedAt": "2026-10-23T06:20:38.500Z"
+  },
+  {
+    "relativePath": "src/layouts/ServiceLayout.astro",
+    "summary": "Layout страницы услуги с SEO-разметкой и ссылками, использующими SITE_ORIGIN.",
+    "role": "module",
+    "contentHash": "421e689a2f240de54be2da8dd30ea899de41ae6a8522c30c3b052d48273434d0",
+    "author": "agent",
+    "updatedAt": "2026-10-23T06:20:38.486Z"
+  },
+  {
+    "relativePath": "src/lib/ai-agents-canonical.ts",
+    "summary": "Карта прежних адресов услуг к единственным каноническим страницам, общая для ссылок CMS, sitemap и постоянных редиректов.",
+    "role": "module",
+    "contentHash": "8603173afe85b6b6fb9aab3eacf74d628e539acadb5c4a8d62463f90bf60f365",
+    "author": "agent",
+    "updatedAt": "2026-11-20T17:38:03.182Z"
+  },
+  {
+    "relativePath": "src/lib/chat.ts",
+    "summary": "Общие типы, лимиты, API-маршруты и пользовательские сообщения ИИ-чата.",
+    "role": "module",
+    "contentHash": "5aa42c72f379a31f6aae5c1b125f237a1068f8917b618bcd9360641af30804ce",
+    "author": "agent",
+    "updatedAt": "2026-10-23T06:20:37.614Z"
+  },
+  {
+    "relativePath": "src/lib/contact-emails.ts",
+    "summary": "Справочник публичных контактных email-адресов по типам обращения.",
+    "role": "module",
+    "contentHash": "2587402cb7b3120b14cc94e106f68187f8356003d5ad4181564ebd23dfa6dc76",
+    "author": "agent",
+    "updatedAt": "2026-10-23T06:20:37.629Z"
+  },
+  {
+    "relativePath": "src/lib/legal.ts",
+    "summary": "Единый справочник юридических документов, ссылок футера и значения согласия.",
+    "role": "module",
+    "contentHash": "c5a0ea48182e29926da07531c9c88c4f888f7895a2c1fed08e3b6a896eb608f0",
+    "author": "agent",
+    "updatedAt": "2026-10-23T06:20:37.645Z"
+  },
+  {
+    "relativePath": "src/lib/media-resources.ts",
+    "summary": "Интерфейс MediaResource и список медиа-ресурсов для блока MediaResources на главной.",
+    "role": "module",
+    "contentHash": "d68e9578f1fd98c078a5703be2654313a2fb1b881498684a844f774972b7e96c",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:38:04.067Z"
+  },
+  {
+    "relativePath": "src/lib/regions.ts",
+    "summary": "Определяет основной индексируемый URL сайта, обработку старого домена и общих путь-алиасов; городские копии общей главной доступны с noindex.",
+    "role": "module",
+    "contentHash": "b111ba7d45f2a247414bdb342ddb38c7dba608de1721b2bbb9cc85c90964ee4f",
+    "author": "agent",
+    "updatedAt": "2026-11-20T17:38:03.135Z"
+  },
+  {
+    "relativePath": "src/lib/seo.ts",
+    "summary": "lib/ — client-side константы: pageSeo уникальных метаданных 12 страниц, legal.ts (5 юрдокументов), regions.ts (города), media-resources.ts, chat.ts, contact-emails.ts.",
+    "role": "module",
+    "contentHash": "7a91a685158ed92d6ee08ccbafbd1f6b240fbecb2bd91b11d289869f91e8a69d",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:01:48.098Z"
+  },
+  {
+    "relativePath": "src/lib/server/chat/chat-lead.ts",
+    "summary": "Sends a confirmed chat draft as one lead via submitLead: honeypot, contact grounding, lead limit, 30-min phone duplicate marker, release on failure.",
+    "role": "module",
+    "contentHash": "28922d4a606ace0dff7d3ce5506f4af8189c43bf72ca70f637e3047a78ca3cea",
+    "author": "agent",
+    "updatedAt": "2026-10-14T14:13:05.535Z"
+  },
+  {
+    "relativePath": "src/lib/server/chat/chat-request.ts",
+    "summary": "Request helpers for chat routes: bounded body read (byte cap), chatId and message validation, lead context and attribution, consent age check.",
+    "role": "module",
+    "contentHash": "63f0e69cce4262371d8f1a52e6b0f211008e9437ce091695304b4ad5ee9b3e2f",
+    "author": "agent",
+    "updatedAt": "2026-10-14T14:13:05.525Z"
+  },
+  {
+    "relativePath": "src/lib/server/chat/chat-state.ts",
+    "summary": "Pure chat state logic: absolute 24 h expiry, consent request window and text version, per-chat lock port (ChatKv), redaction after a sent lead. No Redis or astro:env imports.",
+    "role": "module",
+    "contentHash": "5fb451723aa93d3c5a27f86bcd6f8f977f94783373ac118d189e7cee407a8bc0",
+    "author": "agent",
+    "updatedAt": "2026-10-14T14:29:57.479Z"
+  },
+  {
+    "relativePath": "src/lib/server/chat/chat-store.ts",
+    "summary": "Chat context in Redis under chat:ctx:<id> with 24 h TTL (history, consent time, lead draft, leadSent) and phone duplicate marker chat:lead-phone:<sha256>.",
+    "role": "module",
+    "contentHash": "a738730c636f672188904d72fd7073dbf95ef2ae9c7303217a495c332dc557fe",
+    "author": "agent",
+    "updatedAt": "2026-10-14T14:13:05.491Z"
+  },
+  {
+    "relativePath": "src/lib/server/chat/lead-directives.ts",
+    "summary": "Parses and validates <lead> and <consent-request/> markers from model replies; checks draft contacts appear in visitor messages.",
+    "role": "module",
+    "contentHash": "a75822e70646034be5aa08864309f6dbdfadf94939a4c91a8e337832ba225a1a",
+    "author": "agent",
+    "updatedAt": "2026-10-14T14:13:05.513Z"
+  },
+  {
+    "relativePath": "src/lib/server/chat/rate-limit.ts",
+    "summary": "In-memory chat rate limits; client key is the socket address, X-Forwarded-For only behind trusted hops, otherwise one shared key. Limiter factory for chat and lead limits.",
+    "role": "module",
+    "contentHash": "01d857949f74743ffa4763e336ea3e9d6c88db3f3528dd1e71b95cacc276d993",
+    "author": "agent",
+    "updatedAt": "2026-10-14T14:36:09.730Z"
+  },
+  {
+    "relativePath": "src/lib/server/chat/system-prompt.ts",
+    "summary": "lib/server/chat — системный промпт ассистента: тон, <consent-request/>, сбор заявки, только ссылки из RAG-фрагментов; тест tests/system-prompt.",
+    "role": "module",
+    "contentHash": "f1c5d94e8e4e72b089fce7fb2d66cb4a9807f41af444d8bf689a0a612a134a72",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:02:47.927Z"
+  },
+  {
+    "relativePath": "src/lib/server/full-sitemap.ts",
+    "summary": "lib/server — слияние sitemap (CMS + Astro); папки: w1do/ (CMS API), rag/ (Vector), polza/ (модель), chat/ (промпт, store), leads/, redis.ts (лимиты), llms.ts, markdown.ts.",
+    "role": "module",
+    "contentHash": "93273c40f4a5a9410c118f1fe1a0ae1eed65aff8d2ec816ed3f96b37461264df",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:01:53.895Z"
+  },
+  {
+    "relativePath": "src/lib/server/leads/submit-lead.ts",
+    "summary": "Shared lead submission used by /api/lead and the chat: validation, LEADS_API_KEY check and platform POST with logTag-prefixed logs.",
+    "role": "module",
+    "contentHash": "e508fdc3a3f2b664ba1c2b3d6e503008614be613291b9414a80f84c91ed3bd02",
+    "author": "agent",
+    "updatedAt": "2026-10-14T14:13:05.603Z"
+  },
+  {
+    "relativePath": "src/lib/server/llms.ts",
+    "summary": "Формирование llms.txt из коллекций Astro (getCollection): список разделов сайта для ИИ-агентов.",
+    "role": "module",
+    "contentHash": "3ea890687fcc58162bd6d8b117a3b55241c89ab8dcf7db739b0a91ec3051e043",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:38:04.117Z"
+  },
+  {
+    "relativePath": "src/lib/server/markdown.ts",
+    "summary": "markdownToHtml и escapeHtml: серверный перевод Markdown страниц CMS в HTML с экранированием.",
+    "role": "module",
+    "contentHash": "84a7a49b4527372cc185afe48d72e8d94b905edfbac167e6b7bb38c36873c6e0",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:38:04.128Z"
+  },
+  {
+    "relativePath": "src/lib/server/polza/chat.ts",
+    "summary": "lib/server/polza — клиент PolzaAI (модель openai/gpt-4o-mini по умолчанию), PolzaFailure; дополняет /api/chat.",
+    "role": "module",
+    "contentHash": "214baa5f7f58c05d0233e4981e8324426873f9d1191111fed67a6cd504ee8cce",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:01:48.140Z"
+  },
+  {
+    "relativePath": "src/lib/server/rag/context.ts",
+    "summary": "lib/server/rag — fetchRagContext() с причинами недоступности (config/auth/timeout/network/upstream); диалог не роняется, при отказе — предложение заявки.",
+    "role": "module",
+    "contentHash": "54be976ef87e5d28112e59cd32cfa3c9ad3018e7893d6f28cf058a8399b22bbb",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:01:48.126Z"
+  },
+  {
+    "relativePath": "src/lib/server/redis.ts",
+    "summary": "Lazy node-redis client: REDIS_URL, offline queue off, 2 s connect/command timeouts, RedisUnavailableError, fixed log line without URL.",
+    "role": "module",
+    "contentHash": "70cc9674d519800f4eba78924adc761c30be7a371a589efff73db0241e718491",
+    "author": "agent",
+    "updatedAt": "2026-10-14T14:13:05.480Z"
+  },
+  {
+    "relativePath": "src/lib/server/regional-html.ts",
+    "summary": "Переписывает href из отрендеренного CMS-контента на канонические пути; сохраняет внешние ссылки, фрагменты, параметры URL и код.",
+    "role": "module",
+    "contentHash": "1085c29624881be9c8a192ea15e20bbbc2c08628385b5be69a28bd398a22cc75",
+    "author": "agent",
+    "updatedAt": "2026-11-20T17:38:03.167Z"
+  },
+  {
+    "relativePath": "src/lib/server/regional-sitemap.ts",
+    "summary": "Интерфейс SitemapPage, функции xmlEscape, xmlResponse и regionalSitemap: сборка XML карты сайта с региональными вариантами через cityPath.",
+    "role": "module",
+    "contentHash": "8e181439738c07f6e5dd6d58bfb5720dab3fcf584e93e0e539c286897f179973",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:38:04.148Z"
+  },
+  {
+    "relativePath": "src/lib/server/sitemap-merge.ts",
+    "summary": "mergeSitemapPages: объединение списков страниц карты сайта из разных источников без дублей.",
+    "role": "module",
+    "contentHash": "4e0af84a611f6f33f72d63fa74bd9197b258e0512cc178a44db348c856ba48ff",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:38:04.159Z"
+  },
+  {
+    "relativePath": "src/lib/server/sitemap-parser.js",
+    "summary": "parseSitemap на библиотеке sax: разбор XML карты сайта (URL, lastmod) в список страниц.",
+    "role": "module",
+    "contentHash": "81228e954605d8cb298e323efa3ed5dd2a034742cee5e67b0afb5dc6cb1c3c86",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:38:04.169Z"
+  },
+  {
+    "relativePath": "src/lib/server/w1do/blog-categories.ts",
+    "summary": "Интерфейс BlogCategory и getBlogCategories: категории блога из W1DO API с серверным ключом и локалью ru.",
+    "role": "module",
+    "contentHash": "85193aea7ce689ce6662e7586919f610ef17e248d8d9b1c5f54e16e7a2a0ff06",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:38:04.179Z"
+  },
+  {
+    "relativePath": "src/lib/server/w1do/blog-covers.json",
+    "summary": "Локальный JSON с обложками постов блога, используется адаптером blog.ts как запасной источник изображений.",
+    "role": "config",
+    "contentHash": "5a5eb2794b680f1728385c5a58ea91adfed058baa371595851e590af71d2eef9",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:38:04.199Z"
+  },
+  {
+    "relativePath": "src/lib/server/w1do/blog.ts",
+    "summary": "Серверный адаптер постов CMS: проверяет URL публикаций на текущий SITE_ORIGIN и возвращает локальные пути блога.",
+    "role": "module",
+    "contentHash": "ece32c4710d2c4025c2fcd7fa403d16c46527c408be6321a400e63a3321644bd",
+    "author": "agent",
+    "updatedAt": "2026-10-23T06:20:38.401Z"
+  },
+  {
+    "relativePath": "src/lib/server/w1do/cases.ts",
+    "summary": "Серверный адаптер коллекции cases из CMS W1DO: список и карточки кейсов для страниц сайта.",
+    "role": "module",
+    "contentHash": "bbdbd3df779202968fe7dbbec5e61eef77f4c02cc5d1949dcc5844f2bf9394cf",
+    "author": "agent",
+    "updatedAt": "2026-10-14T11:57:13.308Z"
+  },
+  {
+    "relativePath": "src/lib/server/w1do/cities.ts",
+    "summary": "Загрузка городов из CMS W1DO с кэшем и городом по умолчанию для региональных страниц.",
+    "role": "module",
+    "contentHash": "099dfc042e968e0c177a7fbf83758d361545b4c7e32316e56643ff9663ac9e85",
+    "author": "agent",
+    "updatedAt": "2026-10-14T11:58:01.207Z"
+  },
+  {
+    "relativePath": "src/lib/server/w1do/opensource.ts",
+    "summary": "Серверный адаптер коллекции opensource W1DO: постраничный fetch /api/v1/content/collections/.../entries с locale=ru и серверным X-Api-Key, без вызова из браузера.",
+    "role": "module",
+    "contentHash": "4718a8cd4d857842a2a024dfc3fb72ac2ad45dea3bfbf2fdc085e3203b5e1c12",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:31:18.356Z"
+  },
+  {
+    "relativePath": "src/lib/server/w1do/pages.ts",
+    "summary": "Интерфейсы W1doPage и PageSeo и getPublishedPageBySlug: опубликованные страницы W1DO (документы, статические страницы) с SEO-полями.",
+    "role": "module",
+    "contentHash": "3baccff6978d8af3a3d0fedced4f66d76bd963ec3b987629553cddafc738fb1d",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:38:04.190Z"
+  },
+  {
+    "relativePath": "src/lib/server/w1do/services-api.ts",
+    "summary": "Низкоуровневый клиент коллекции services в CMS W1DO: постраничная выборка записей с ключом API.",
+    "role": "module",
+    "contentHash": "55c59fed99084b78d9db7ddad782e98beb885824e28673315d4122ba5f7c3392",
+    "author": "agent",
+    "updatedAt": "2026-10-14T11:57:23.895Z"
+  },
+  {
+    "relativePath": "src/lib/server/w1do/services.ts",
+    "summary": "Серверный адаптер услуг W1DO: карта изображений кластеров и общий fallback-образ, функции getServiceHubs, getServiceByPath, getServiceSpokes; данные через services-api.ts.",
+    "role": "module",
+    "contentHash": "df63e64cfd224e1dc7711bb0ebaa5e79a19376e1dabf16aa44ebe5bbc840a853",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:31:18.343Z"
+  },
+  {
+    "relativePath": "src/lib/server/w1do/sitemap.ts",
+    "summary": "lib/server/w1do — адаптеры W1DO CMS, серверные вызовы: fetchPages (sitemap.xml), services, blog, cases, cities, categories; кеш 60 сек; ключ только на сервере.",
+    "role": "module",
+    "contentHash": "71de0f74229bdbfe2bb363481149d2d0e03de883f03de882d568c611ffbba205",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:01:48.153Z"
+  },
+  {
+    "relativePath": "src/middleware.ts",
+    "summary": "Astro middleware: региональные URL, редиректы legacy-маршрутов и подстановка регионального HTML.",
+    "role": "entry",
+    "contentHash": "50cb614d8b4aef19cf8013c57712a97e02e758aede34efab1f1d21f69bb31066",
+    "author": "agent",
+    "updatedAt": "2026-10-23T06:20:37.556Z"
+  },
+  {
+    "relativePath": "src/mocks/services.ts",
+    "summary": "mocks/ — Mock-услуги для работы без CMS в dev-режиме.",
+    "role": "module",
+    "contentHash": "8b85dd7ea44a29a255ffeaab6e2ac291e066a984eb4be0dfaa393aa3e6d19586",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:01:48.168Z"
+  },
+  {
+    "relativePath": "src/pages/404.astro",
+    "summary": "Страница 404 со статусом 404: ссылки на главную, каталог услуг и блог W1DO, внутри Layout.",
+    "role": "entry",
+    "contentHash": "4b43637fb8174a7f8820f2ff45b56e685663285f633f7dd112ec202f51ceb52c",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:32:48.879Z"
+  },
+  {
+    "relativePath": "src/pages/[...cluster].astro",
+    "summary": "Страницы landing-кластеров: пути из коллекций landingCluster (hub) и landingSpoke, вывод через LandingClusterLayout.",
+    "role": "entry",
+    "contentHash": "1204653ca97f396fa47c039c87abc267dd0ed5a40343f2fac13f2eb53835b07d",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:34:26.006Z"
+  },
+  {
+    "relativePath": "src/pages/about.astro",
+    "summary": "Страница «О разработчике»: About, Awards, Process, Faqs, Testimonials, Cta, Breadcrumbs и Footer внутри Layout.",
+    "role": "entry",
+    "contentHash": "5efb213ed84c4660c19557c3167049e8eeddfbbc4cc582c6e053db4608b5591f",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:40:58.145Z"
+  },
+  {
+    "relativePath": "src/pages/api/chat-lead.ts",
+    "summary": "POST /api/chat-lead: rate limit, chatId, edited summary, consent and draft from Redis under a chat lock, submitChatLead; deletes stored state best-effort if the post-send save fails.",
+    "role": "entry",
+    "contentHash": "1768aa7864951cb01fd115aa3f8928c0c1a195867f69c115c501391fd26ed838",
+    "author": "agent",
+    "updatedAt": "2026-10-14T14:36:09.741Z"
+  },
+  {
+    "relativePath": "src/pages/api/chat.ts",
+    "summary": "api/ — POST /api/chat (лимиты 20/10мин на IP, 300/час на сайт), /api/chat-lead (заявка из чата: Redis, HMAC телефона), /api/lead (прокси в W1DO с legalConsent).",
+    "role": "entry",
+    "contentHash": "5547565a3294da85ee2bc558b4fc350abbb6be9b772abdab374eb45f1f678774",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:02:29.964Z"
+  },
+  {
+    "relativePath": "src/pages/api/lead.ts",
+    "summary": "API заявок POST: проверяет email и legalConsent, добавляет accepted_at и адреса документов, отправляет лид в W1DO API с таймаутом 10 с.",
+    "role": "entry",
+    "contentHash": "3644fb9318eabaf8c509feaa561b331b45bfb7b8fc929e66f2969d84feff4b52",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:35:45.185Z"
+  },
+  {
+    "relativePath": "src/pages/blog-sitemap.xml.ts",
+    "summary": "Endpoint XML-карты публикаций блога, использующий SITE_ORIGIN для абсолютных ссылок.",
+    "role": "entry",
+    "contentHash": "4b901f249ae9e7eb8f9af6e5df9985732e86227067b553a07689de67fcc3fc2d",
+    "author": "agent",
+    "updatedAt": "2026-10-23T06:20:53.536Z"
+  },
+  {
+    "relativePath": "src/pages/blog/[...slug].astro",
+    "summary": "pages/blog/article — маршрут статьи блога из CMS; article schema; isIndex=false отдаёт noindex,follow.",
+    "role": "entry",
+    "contentHash": "59b22d24fcdefb48dfa80eead8a2649b58f654898c664001e5a15bffe7d9b255",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:02:47.920Z"
+  },
+  {
+    "relativePath": "src/pages/blog/categories.astro",
+    "summary": "Страница категорий блога: список из getBlogCategories внутри Layout с Header.",
+    "role": "entry",
+    "contentHash": "d71d52fdbeff58885d01092d042152f1077c23aea1a773079dd94c231c8de289",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:32:48.892Z"
+  },
+  {
+    "relativePath": "src/pages/blog/categories/[...slug].astro",
+    "summary": "Страница категории блога: getBlogCategories и getBlogPosts по id категории, CollectionPage schema, 404 через rewrite если категория не найдена.",
+    "role": "entry",
+    "contentHash": "f7a6815590bb2d3b91427960d3ea8c861d81301827e7cd24f9d88e1786b015af",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:34:26.034Z"
+  },
+  {
+    "relativePath": "src/pages/blog/index.astro",
+    "summary": "pages/blog — блог из CMS: список 10 на страницу, blog/[...slug], категории с ItemList; данные и sitemap обновляются при запросе.",
+    "role": "entry",
+    "contentHash": "016d3a2e714c813fdcae08f0c0e5195372636fa6cb9e268ed75c5c02dcd9dea9",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:02:29.981Z"
+  },
+  {
+    "relativePath": "src/pages/blog/page/[page].astro",
+    "summary": "pages/blog/page — пагинация /blog/page/N (2..totalPages), уникальные titles «страница N».",
+    "role": "entry",
+    "contentHash": "1ee11637c0c2cb8e5141408e0c1c89cc859d2887a0985f99fa963ceceb7c74cf",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:02:29.994Z"
+  },
+  {
+    "relativePath": "src/pages/case-sitemap.xml.ts",
+    "summary": "Endpoint XML-карты кейсов; строит абсолютные ссылки от SITE_ORIGIN.",
+    "role": "entry",
+    "contentHash": "6d3da93fc9264d395850de4620f89145e74e11c6e46beb3fa9420df653f2648d",
+    "author": "agent",
+    "updatedAt": "2026-10-23T06:20:53.551Z"
+  },
+  {
+    "relativePath": "src/pages/case.astro",
+    "summary": "Раздел кейсов: список ProjectsList, Breadcrumbs, Faqs и Testimonials внутри Layout.",
+    "role": "entry",
+    "contentHash": "b4f8d88c3d7a0fbc8bce27be5ebb9091348a22a7b9acd110f4862b1a088f56d8",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:32:48.918Z"
+  },
+  {
+    "relativePath": "src/pages/case/[...slug].astro",
+    "summary": "pages/case — кейсы из CMS-коллекции cases: архив /case и страница /case/<slug>; запрос при каждом обращении, отдельный case-sitemap.xml.",
+    "role": "entry",
+    "contentHash": "b100e515b0b6cb026ef99414912b66889d1561a1432d21eb3ca944d133d94701",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:02:30.022Z"
+  },
+  {
+    "relativePath": "src/pages/categories/[...slug].astro",
+    "summary": "Старый адрес категории блога: 301-редирект на /blog/categories/{slug} с сохранением query-строки.",
+    "role": "entry",
+    "contentHash": "e5334c22a34506c1c2153ffdf6d82e1311e3b4fe9fdf8c6aab67a4c40c8cc28e",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:34:26.047Z"
+  },
+  {
+    "relativePath": "src/pages/categories/index.astro",
+    "summary": "pages/categories — категории блога: index и [...slug] со схемой ItemList.",
+    "role": "entry",
+    "contentHash": "7882ca8acf8200881f7881186838192cc712bc15009e22544efe0b82584768cd",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:02:47.890Z"
+  },
+  {
+    "relativePath": "src/pages/chat.astro",
+    "summary": "Public /chat page: Layout with robots index,follow, Header, breadcrumbs, AiChat island (client:load), Footer, full-width ai-chat styles.",
+    "role": "entry",
+    "contentHash": "683f733f98add1ae395d7b66decdd5b95ebef8e7459fd198c2932b6a669a1dcc",
+    "author": "agent",
+    "updatedAt": "2026-10-14T13:37:21.377Z"
+  },
+  {
+    "relativePath": "src/pages/cms-sitemap.xml.ts",
+    "summary": "Endpoint XML-карты данных CMS с базовым доменом из SITE_ORIGIN.",
+    "role": "entry",
+    "contentHash": "754fb58546697d98c35b357297983adef7af69bf49b6a40a0aec20f2bcddea01",
+    "author": "agent",
+    "updatedAt": "2026-10-23T06:20:53.565Z"
+  },
+  {
+    "relativePath": "src/pages/contact.astro",
+    "summary": "Страница контактов: ContactForm (React) с Breadcrumbs, Header, Footer и контактными email из contact-emails.ts внутри Layout.",
+    "role": "entry",
+    "contentHash": "e5270170f9aad35072ae9a7b575cb8d47f07d927e60723ddebda0ed01aaa275f",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:35:45.167Z"
+  },
+  {
+    "relativePath": "src/pages/content-sitemap.xml.ts",
+    "summary": "Endpoint XML-карты локального контента с абсолютными URL от SITE_ORIGIN.",
+    "role": "entry",
+    "contentHash": "54483b9dd1ad18578996552ba9bd80f20eea078753162988b1c17e6409f3c2e6",
+    "author": "agent",
+    "updatedAt": "2026-10-23T06:20:53.578Z"
+  },
+  {
+    "relativePath": "src/pages/cookies.astro",
+    "summary": "Старый адрес страницы cookies: 301-редирект на LEGAL_DOCS.cookies.href.",
+    "role": "entry",
+    "contentHash": "6897f84c941ee82fdc706cfc8842f0b73151862625bd59a16966afb62105b0f7",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:34:25.917Z"
+  },
+  {
+    "relativePath": "src/pages/docs/[slug].astro",
+    "summary": "pages/docs — юридические документы из W1DO CMS: рендер Markdown, noindex,follow если CMS запретил индексацию.",
+    "role": "entry",
+    "contentHash": "5aba325439c5c1f1b306b539c0fdbf6b2dec41fb4cf933037a86af2d4592a564",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:02:30.055Z"
+  },
+  {
+    "relativePath": "src/pages/index.astro",
+    "summary": "Главная AiCRAFT об ИИ-агентах для бизнеса, agent harness и Claude Code. Собирает услуги, сценарии, кейсы, бюджет проекта, FAQ и форму заявки.",
+    "role": "entry",
+    "contentHash": "bb5bbc68bf92e557a56e5f76463f8f56746ebd2a290c66a4b142ab5e8a1354e0",
+    "author": "agent",
+    "updatedAt": "2026-11-20T17:31:11.326Z"
+  },
+  {
+    "relativePath": "src/pages/knowledge/index.astro",
+    "summary": "pages/knowledge — страница базы знаний: вопросы и ответы по ИИ, RAG и автоматизации.",
+    "role": "entry",
+    "contentHash": "0c5b28d92e85e96f75556689d2929fd8c96ee727ef0fde57c78720644d33e5a4",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:02:47.913Z"
+  },
+  {
+    "relativePath": "src/pages/llms-full.txt.ts",
+    "summary": "Маршрут llms-full.txt: полная текстовая выгрузка страниц сайта для языковых моделей.",
+    "role": "entry",
+    "contentHash": "ffc3356badff9f3c233d488ac5d203e2a04441eff2478c6345a772acb157937c",
+    "author": "agent",
+    "updatedAt": "2026-10-14T11:57:39.184Z"
+  },
+  {
+    "relativePath": "src/pages/llms.txt.ts",
+    "summary": "pages/llms*.txt — серверная генерация /llms.txt и /llms-full.txt с региональными ссылками; плюс cms-sitemap.xml и совместимые sitemap-эндпоинты.",
+    "role": "entry",
+    "contentHash": "da8144e83656f47b8229dadd3b24bc23cf463736b0613c2c814d87250b9933dc",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:02:47.905Z"
+  },
+  {
+    "relativePath": "src/pages/opensource.astro",
+    "summary": "Раздел open source: список проектов ProjectsList, Breadcrumbs, Faqs и Testimonials внутри Layout.",
+    "role": "entry",
+    "contentHash": "11b5090ba3bea7ba3def2c3310566c1ca339e36580855f9a6972123b8df503a5",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:32:48.905Z"
+  },
+  {
+    "relativePath": "src/pages/opensource/[...slug].astro",
+    "summary": "pages/opensource — открытые проекты (self-hosted чат, Preference Memory/MCP) со ссылками на репозитории.",
+    "role": "entry",
+    "contentHash": "d32230da92f11dabd8146e40ade0483a2c1e9db2b0be492bc04771025b0dd522",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:02:30.083Z"
+  },
+  {
+    "relativePath": "src/pages/pricing.astro",
+    "summary": "Страница цен на разработку и внедрение ИИ: DevPricing, HireFaqs, Spacer и Cta внутри Layout; SEO-заголовок про Claude, Gemini и RAG.",
+    "role": "entry",
+    "contentHash": "a15a3c1df2900bd665e404619b03adabb684bfda6f6ba4a837d41a8c20ee75bd",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:40:58.161Z"
+  },
+  {
+    "relativePath": "src/pages/privacy-policy.astro",
+    "summary": "Старый адрес политики конфиденциальности: 301-редирект на LEGAL_DOCS.privacyPolicy.href.",
+    "role": "entry",
+    "contentHash": "15b9983468c543571bc26d6523fd054d32791d0d3b901a1fc2ed487f51bd2c4d",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:34:25.905Z"
+  },
+  {
+    "relativePath": "src/pages/services.astro",
+    "summary": "Страница услуг: getServiceHubs, IntroVideo, Feature, Pricing, ServicesList, Projects, Testimonials и Faqs внутри Layout.",
+    "role": "entry",
+    "contentHash": "68ef894f3b8325e032f5b7b3f2cbab3b68293156eb46293356a2757241be54ad",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:32:48.931Z"
+  },
+  {
+    "relativePath": "src/pages/services/[cluster]/[post].astro",
+    "summary": "pages/services/post — посадочные страницы услуг (коллекция serviceLanding), рендер в ServiceLandingLayout с перелинковкой хаб↔spokes.",
+    "role": "entry",
+    "contentHash": "17223569f3bbd0e54c1baa162218de24e71614762bbf8e005ac5e58f04fa372c",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:02:47.941Z"
+  },
+  {
+    "relativePath": "src/pages/services/[cluster]/index.astro",
+    "summary": "pages/services — единый динамический хаб услуг [cluster] (по pillar с hub:true); посадочные в [post].astro.",
+    "role": "entry",
+    "contentHash": "c5ef22182a1c537ba45f089c34002d1b836ea573e079cd002fe06cab211752ad",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:02:30.111Z"
+  },
+  {
+    "relativePath": "src/pages/sitemap-0.xml.ts",
+    "summary": "Основной XML-sitemap статических страниц, использующий SITE_ORIGIN.",
+    "role": "entry",
+    "contentHash": "7849b82f22cc152cec9534825722c3a0e2cd241d73bce0213ff1978299a6493c",
+    "author": "agent",
+    "updatedAt": "2026-10-23T06:20:53.592Z"
+  },
+  {
+    "relativePath": "src/pages/sitemap-index.xml.ts",
+    "summary": "Индекс XML-карт сайта, формирующий URL вложенных sitemap от SITE_ORIGIN.",
+    "role": "entry",
+    "contentHash": "2efa7ee7dabc07c00a27164a3cbb396937fad6a312dfc80a0df15f3feebaf5e4",
+    "author": "agent",
+    "updatedAt": "2026-10-23T06:20:53.606Z"
+  },
+  {
+    "relativePath": "src/pages/sitemap.xml.ts",
+    "summary": "Основной sitemap.xml: regionalSitemap поверх getFullSitemapPages; при недоступности API отдаёт 503 вместо неполной карты.",
+    "role": "entry",
+    "contentHash": "905a8ce4457d831a5055c7f0a6c4e0b5bad3db6988974d6c176e4e709d7fe455",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:34:25.930Z"
+  },
+  {
+    "relativePath": "src/pages/testimonials.astro",
+    "summary": "Страница отзывов: IntroVideo, Feature, Faqs, Process, Breadcrumbs и Header внутри Layout.",
+    "role": "entry",
+    "contentHash": "02516f5a30c9b57f5c0055a142623032d07d89e34d6b8c1bd57c8a703107af5a",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:34:26.062Z"
+  },
+  {
+    "relativePath": "src/pages/user-agreement.astro",
+    "summary": "Старый адрес пользовательского соглашения: 301-редирект на LEGAL_DOCS.userAgreement.href.",
+    "role": "entry",
+    "contentHash": "14a23c6f51fa9cf8b572bde9ed45ad80f624f01abfb6d51c1386292d6a6f602f",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:34:25.884Z"
+  },
+  {
+    "relativePath": "src/styles/ai-chat.css",
+    "summary": "Shared styles for the AI chat page and widget: messages, form, consent block, lead card, lead status and responsive rules.",
+    "role": "config",
+    "contentHash": "8f80288bbf3b4dfcc8aa8bc91e600e38d652e015328496b6eab5d954a137522b",
+    "author": "agent",
+    "updatedAt": "2026-10-14T14:13:05.584Z"
+  },
+  {
+    "relativePath": "src/styles/animate.css",
+    "summary": "Библиотека анимаций Animate.css (классы .animated и @keyframes, например fadeIn, flipInX, lightSpeedIn, slideOutRight).",
+    "role": "config",
+    "contentHash": "95d075e7d78a079f8a4383dfb65a946da278a1bc97024e93b909f83243b58c05",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:51:01.271Z"
+  },
+  {
+    "relativePath": "src/styles/custom.css",
+    "summary": "styles/ — стили: custom.css (тема, ~12k строк), ai-chat.css, animate, fonts, magnific-popup, mousecursor. Фоны/шрифты только абсолютными путями /images/ и /webfonts/.",
+    "role": "module",
+    "contentHash": "07d643700020a0aad1bb6be543befec138693f05e4c40345e6ca83add259ae43",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:01:53.914Z"
+  },
+  {
+    "relativePath": "src/styles/fonts.css",
+    "summary": "Объявления @font-face для шрифта Overused Grotesk (начертания Black, Medium и др.) из файлов в ../fonts.",
+    "role": "config",
+    "contentHash": "d87e65506a77919fcbc4730f17db6da2c0dab62815ef85d8b6fabd9d953ee4ea",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:51:01.255Z"
+  },
+  {
+    "relativePath": "src/styles/magnific-popup.css",
+    "summary": "Стили библиотеки Magnific Popup: оверлей, контейнер, курсоры zoom и изображение во всплывающем окне (mfp-*).",
+    "role": "config",
+    "contentHash": "45d1f5f6cf913746c45dd697b1a8f3b719c02d8b3f678dc7fc2766d54e1aaf6e",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:51:01.283Z"
+  },
+  {
+    "relativePath": "src/styles/mousecursor.css",
+    "summary": "Normalize.css v7 и стили демо-курсора (cb-demo-content и связанные блоки), подключаются вместе с custom.css.",
+    "role": "config",
+    "contentHash": "ae95e6a6465156785491da65111f25063d72c5e7268dfb800c15f8701c5495b9",
+    "author": "agent",
+    "updatedAt": "2026-10-14T12:40:24.386Z"
+  },
+  {
+    "relativePath": "src/utils/sitemap.js",
+    "summary": "utils/ — sitemap.js: сериализация элементов XML-карты сайта.",
+    "role": "module",
+    "contentHash": "648d3b875ef178fb512afc762c47049ea02aec54b5239822d00e6286b3388ed8",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:01:48.187Z"
+  },
+  {
+    "relativePath": "tests/chat-lead.test.ts",
+    "summary": "node:test unit tests: lead field grounding (L1), draft validation, directive parsing, lead limit and clientKeyFrom behind 0 and N trusted hops.",
+    "role": "test",
+    "contentHash": "fd050b4afbb3ea641b813f17597ac0218d33cbd580076c860f73232a1dfadf14",
+    "author": "agent",
+    "updatedAt": "2026-10-14T14:36:09.750Z"
+  },
+  {
+    "relativePath": "tests/chat-state.test.ts",
+    "summary": "node:test unit tests for chat-state with an in-memory ChatKv: lock ownership, absolute expiry, redaction, consent window and version.",
+    "role": "test",
+    "contentHash": "b5a2bbeed4a398fe6b36f24eb77a84cddb58afa0805453f2c7cd1103b1c531b8",
+    "author": "agent",
+    "updatedAt": "2026-10-14T14:29:57.490Z"
+  },
+  {
+    "relativePath": "tests/regions.test.ts",
+    "summary": "tests/ — node:test наборы: regions (города/301), sitemap, chat-state/lead/markdown, rag-context, system-prompt. Запуск: node --experimental-strip-types --test tests/.",
+    "role": "test",
+    "contentHash": "061b33b3d439b5d3f7af972925692388e3e6b847171e53f23ce3601cb776dac4",
+    "author": "agent",
+    "updatedAt": "2026-11-08T10:01:13.351Z"
+  }
+]

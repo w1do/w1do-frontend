@@ -30,7 +30,7 @@ const packages = getPackages();
                         </div>
 
                         <div class="pricing-item-price">
-                            <h2>{formatPrice(pkg)}</h2>
+                            <h2 class:list={{ "pricing-estimate-basis": pkg.priceFrom === null }}>{formatPrice(pkg)}</h2>
                             <p class="pricing-item-term">Срок: {pkg.term}</p>
                             <p>{pkg.description}</p>
                         </div>
@@ -61,7 +61,7 @@ const packages = getPackages();
                     </div>
 
                     <div class="pricing-item-price">
-                        <h2>{formatPrice(RETAINER)}</h2>
+                        <h2 class:list={{ "pricing-estimate-basis": RETAINER.priceFrom === null }}>{formatPrice(RETAINER)}</h2>
                         <p class="pricing-item-term">Срок: {RETAINER.term}</p>
                         <p>{RETAINER.description}</p>
                     </div>
@@ -81,7 +81,7 @@ const packages = getPackages();
         </div>
 
         <div class="pricing-calculator-cta">
-            <p>Не знаете, какой формат подходит? Ответьте на четыре вопроса.</p>
+            <p>Выберите нужные услуги и оцените стоимость и сроки работ.</p>
             <a href="/calculator" class="btn-default" data-cursor="-opaque">Рассчитать стоимость</a>
         </div>
 

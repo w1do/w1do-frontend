@@ -32,8 +32,9 @@ const schema = {
 <Layout title={category.seoTitle} description={category.seoDescription} keywords={category.keywords}
   image={category.image} canonical={canonical} robots={category.isIndex ? "index,follow" : "noindex,follow"} schema={schema}>
   <Header />
-  <Breadcrumbs title={category.name} breadcrumbItems={[
+  <Breadcrumbs withSchema title={category.name} breadcrumbItems={[
     { label: "Главная", href: "/" }, { label: "Блог", href: "/blog" },
+    { label: "Темы", href: "/blog/categories" },
     { label: category.name, active: true },
   ]} />
   <div class="container category-intro">

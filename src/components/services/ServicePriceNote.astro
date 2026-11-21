@@ -1,22 +1,32 @@
 ---
-import { formatPrice } from "../../lib/pricing";
-import { getStartingPackage } from "../../lib/service-pricing";
+import type { PublicServiceOffer } from "../../lib/service-pricing";
 
 interface Props {
+    offer: PublicServiceOffer;
     cluster?: string;
+    fromHub?: boolean;
 }
-const { cluster } = Astro.props;
-const pkg = getStartingPackage(cluster);
-if (!pkg) return;
+const { offer, cluster, fromHub = false } = Astro.props;
+const calculatorUrl = cluster ? `/calculator?service=${encodeURIComponent(cluster)}#estimate-catalog` : "/calculator";
 ---
 <div class="service-price-note">
     <div class="container">
-        <div class="service-price-note__inner">
-            <div class="service-price-note__facts">
-                <span>Стоимость: <strong>{formatPrice(pkg)}</strong></span>
-                <span>Срок: {pkg.term}</span>
-            </div>
-            <a href="/calculator" class="service-price-note__link">Рассчитать под задачу →</a>
+        <div class="service-price-note__inner box-border-gradiant">
+            <dl class="service-price-note__facts">
+                <div>
+                    <dt>{fromHub ? "Старт в направлении" : "Стоимость"}</dt>
+                    <dd class="service-price-note__price">{offer.priceLabel}</dd>
+                </div>
+                {!fromHub && offer.term && (
+                    <div>
+                        <dt>Срок</dt>
+                        <dd>{offer.term}</dd>
+                    </div>
+                )}
+            </dl>
+            <a href={calculatorUrl} class="btn-default service-price-note__cta" data-cursor="-opaque">
+                Рассчитать стоимость
+            </a>
         </div>
     </div>
 </div>
@@ -28,22 +38,38 @@ if (!pkg) return;
         flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
-        gap: 12px;
-        padding: 18px 22px;
-        border: 1px solid var(--divider-color);
-        border-radius: 16px;
-        background: rgba(207, 248, 94, 0.05);
+        gap: 20px;
+        padding: clamp(20px, 3vw, 32px);
     }
     .service-price-note__facts {
         display: flex;
         flex-wrap: wrap;
-        gap: 18px;
+        align-items: flex-end;
+        gap: 12px clamp(20px, 4vw, 48px);
+        min-width: 0;
+        margin: 0;
         color: var(--primary-color);
-        font-size: 16px;
+        overflow-wrap: anywhere;
     }
-    .service-price-note__facts strong { color: var(--accent-color); }
-    .service-price-note__link { color: var(--accent-color); font-weight: 600; }
+    .service-price-note__facts dt {
+        margin-bottom: 4px;
+        color: var(--text-color);
+        font-size: 14px;
+        font-weight: 500;
+    }
+    .service-price-note__facts dd {
+        margin: 0;
+        font-weight: 600;
+    }
+    .service-price-note__price {
+        font-size: clamp(24px, 3.2vw, 36px);
+        line-height: 1.15;
+    }
+    .service-price-note__cta:focus-visible {
+        outline: 2px solid var(--accent-color);
+        outline-offset: 4px;
+    }
     @media (max-width: 575px) {
-        .service-price-note__inner { flex-direction: column; align-items: flex-start; }
+        .service-price-note__cta { width: 100%; }
     }
 </style>

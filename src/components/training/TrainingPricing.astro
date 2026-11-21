@@ -1,4 +1,10 @@
 ---
+import {
+    formatPrice,
+    INDIVIDUAL_PRICE_LABEL,
+    STARTING_CONSULTATION_PRICE,
+    STARTING_PROJECT_PRICE,
+} from "../../lib/pricing";
 ---
 <!-- Training Pricing Section Start -->
 <div class="our-pricing-prime">
@@ -8,8 +14,8 @@
                 <!-- Section Title Start -->
                 <div class="section-title section-title-center">
                     <span class="section-sub-title wow fadeInUp">Стоимость обучения ИИ</span>
-                    <h2 class="text-anime-style-3" data-cursor="-opaque">Инвестируй в свои навыки будущего</h2>
-                    <p class="wow fadeInUp" data-wow-delay="0.2s">Выбери подходящий формат обучения: от интенсивных консультаций до полноценного сопровождения твоего проекта.</p>
+                    <h2 class="text-anime-style-3" data-cursor="-opaque">Форматы обучения для разработчиков</h2>
+                    <p class="wow fadeInUp" data-wow-delay="0.2s">Выберите разбор конкретного вопроса, интенсив для команды или обучение на своём проекте.</p>
                 </div>
                 <!-- Section Title End -->
             </div>
@@ -29,8 +35,8 @@
                     </div>
 
                     <div class="pricing-item-price">
-                        <h2>7 500 ₽<sub>/час</sub></h2>
-                        <p>Быстрый разбор твоего кейса, помощь с архитектурой или отладка промптов.</p>
+                        <h2>{formatPrice({ priceFrom: STARTING_CONSULTATION_PRICE, unit: "project" })}</h2>
+                        <p>Часовая консультация по задаче, архитектуре или поведению ИИ на ваших примерах.</p>
                     </div>
 
                     <div class="pricing-item-btn">
@@ -40,9 +46,9 @@
                     <div class="pricing-item-list">
                         <h3>Что разберем:</h3>
                         <ul>
-                            <li>Аудит твоей AI-архитектуры</li>
+                            <li>Разбор архитектуры ИИ-сервиса</li>
                             <li>Оптимизация RAG-системы</li>
-                            <li>Решение конкретных багов</li>
+                            <li>Поиск причин ошибок</li>
                             <li>Подбор стека под задачу</li>
                         </ul>
                     </div>
@@ -63,8 +69,8 @@
                     </div>
 
                     <div class="pricing-item-price">
-                        <h2>45 000 ₽</h2>
-                        <p>Глубокое погружение в разработку AI-агентов и MCP за 4-5 занятий.</p>
+                        <h2>{formatPrice({ priceFrom: STARTING_PROJECT_PRICE, unit: "project" })}</h2>
+                        <p>Интенсив по разработке ИИ-агентов и MCP рассчитан на 4–5 занятий. Итоговую стоимость уточняем по программе.</p>
                     </div>
 
                     <div class="pricing-item-btn">
@@ -97,20 +103,20 @@
                     </div>
 
                     <div class="pricing-item-price">
-                        <h2>120 000 ₽<sub>/мес</sub></h2>
-                        <p>Полное сопровождение твоего проекта от идеи до запуска в продакшн.</p>
+                        <h2 class="pricing-estimate-basis">{INDIVIDUAL_PRICE_LABEL}</h2>
+                        <p>Разбираем решения вашей команды по ходу проекта, от архитектуры до проверок перед запуском.</p>
                     </div>
 
                     <div class="pricing-item-btn">
-                        <a href={import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1DO_DIGITAL"} class="btn-default" data-cursor="-opaque">Стать подопечным</a>
+                        <a href={import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1DO_DIGITAL"} class="btn-default" data-cursor="-opaque">Обсудить сопровождение</a>
                     </div>
 
                     <div class="pricing-item-list">
                         <h3>Что включено:</h3>
                         <ul>
-                            <li>Еженедельные созвоны со мной</li>
+                            <li>Еженедельные встречи с разбором задач</li>
                             <li>Безлимитные Q&A в чате</li>
-                            <li>Совместная разработка твоего MVP</li>
+                            <li>Совместная разработка прототипа</li>
                             <li>Помощь с внедрением в бизнес</li>
                         </ul>
                     </div>
@@ -122,8 +128,8 @@
                 <div class="pricing-benefit-list wow fadeInUp" data-wow-delay="0.6s">
                     <ul>
                         <li><img src="/images/icon-pricing-benefit-1.svg" alt="Практика по обучению ИИ">Только реальные кейсы</li>
-                        <li><img src="/images/icon-pricing-benefit-2.svg" alt="Поддержка по ИИ">Моя поддержка после обучения</li>
-                        <li><img src="/images/icon-pricing-benefit-3.svg" alt="Экспертиза по ИИ">Актуальный AI-стек</li>
+                        <li><img src="/images/icon-pricing-benefit-2.svg" alt="Поддержка по ИИ">Поддержка по итогам обучения</li>
+                        <li><img src="/images/icon-pricing-benefit-3.svg" alt="Экспертиза по ИИ">Практика с ИИ-инструментами</li>
                     </ul>
                 </div>
             </div>

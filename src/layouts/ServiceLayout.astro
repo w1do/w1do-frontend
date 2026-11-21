@@ -1,8 +1,7 @@
 ---
 import { brandName } from "../lib/brand";
 import { SITE_ORIGIN } from "../lib/regions";
-import { aiAgentsCanonical } from "../lib/ai-agents-canonical";
-import { getStartingPackage } from "../lib/service-pricing";
+import { getStartingProjectOffer } from "../lib/service-pricing";
 import Layout from "./Layout.astro";
 import Header from "../components/shared/Header.astro";
 import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
@@ -22,9 +21,6 @@ const { frontmatter, spokes } = Astro.props;
 
 const seoTitle = brandName(frontmatter.seo?.title || frontmatter.title);
 const seoDescription = brandName(frontmatter.seo?.description || frontmatter.description);
-const canonicalOverride = frontmatter.cluster === "ai-agent-development"
-  ? new URL(aiAgentsCanonical(), SITE_ORIGIN).href
-  : undefined;
 
 const breadcrumbItems = [
     { label: "Главная", href: "/" },
@@ -38,7 +34,7 @@ const services = await getServiceHubs();
 const siteUrl = SITE_ORIGIN;
 const pageUrl = new URL(Astro.url.pathname, SITE_ORIGIN).href;
 const serviceImage = frontmatter.image ? new URL(frontmatter.image, SITE_ORIGIN).href : undefined;
-const startingPackage = getStartingPackage(frontmatter.cluster);
+const startingOffer = getStartingProjectOffer(frontmatter.pricing, frontmatter.cluster);
 
 const serviceSchema = {
     "@context": "https://schema.org",
@@ -51,12 +47,12 @@ const serviceSchema = {
     ...(serviceImage ? { "image": serviceImage } : {}),
     "provider": { "@id": `${siteUrl}/#organization` },
     "areaServed": { "@type": "Country", "name": "Россия" },
-    ...(startingPackage ? {
+    ...(startingOffer ? {
         "offers": {
             "@type": "Offer",
             "url": pageUrl,
             "priceCurrency": "RUB",
-            "price": String(startingPackage.priceFrom),
+            "price": String(startingOffer.priceFrom),
             "availability": "https://schema.org/InStock"
         }
     } : {})
@@ -86,10 +82,10 @@ const faqSchema = frontmatter.faqs && frontmatter.faqs.length > 0 ? {
 const schema = [serviceSchema, breadcrumbSchema, faqSchema].filter(Boolean);
 ---
 
-<Layout title={seoTitle} description={seoDescription} schema={schema} image={frontmatter.image} canonical={canonicalOverride}>
+<Layout title={seoTitle} description={seoDescription} schema={schema} image={frontmatter.image}>
     <Header/>
     <Breadcrumbs title={frontmatter.title} breadcrumbItems={breadcrumbItems}/>
-    <ServicePriceNote cluster={frontmatter.cluster} />
+    {startingOffer && <ServicePriceNote offer={startingOffer} cluster={frontmatter.cluster} />}
     
     <!-- Page Service Single Start -->
     <div class="page-service-single">

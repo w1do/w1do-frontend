@@ -26,13 +26,13 @@ async function collectPages(): Promise<SitemapPage[]> {
     getCmsSitemapPages(), getBlogPosts(), getBlogCategories(), getCases(), getOpenSourceProjects(), getServices(),
     getCollection("landingCluster", ({ data }) => data.hub === true), getCollection("landingSpoke"),
   ]);
-  const paths = ["/", "/about", "/contact", "/services", "/pricing", "/calculator", "/testimonials", "/knowledge",
+  const paths = ["/", "/about", "/contact", "/services", "/pricing", "/calculator", "/testimonials", "/knowledge", "/chat",
     "/blog", "/case", "/blog/categories", "/opensource",
     ...Array.from({ length: Math.max(0, Math.ceil(posts.length / 10) - 1) }, (_, i) => `/blog/page/${i + 2}`),
     ...categories.filter(category => category.isIndex).map(category => `/blog/categories/${category.slug}`),
     ...cases.map(entry => `/case/${encodeURIComponent(entry.id)}`),
     ...projects.map(entry => `/opensource/${encodeURIComponent(entry.id)}`),
-    ...services.filter(service => service.cluster !== "ai-agent-development").map(service => service.url),
+    ...services.map(service => service.url),
     ...hubs.map(hub => `/${hub.id}`),
     ...spokes.map(entry => `/${entry.data.cluster}/${entry.id.split("/").pop()}`),
   ];

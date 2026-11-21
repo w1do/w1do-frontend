@@ -1,8 +1,8 @@
 ---
 import { brandName } from "../lib/brand";
 import { SITE_ORIGIN } from "../lib/regions";
-import { aiAgentsCanonical } from "../lib/ai-agents-canonical";
-import { getStartingPackage } from "../lib/service-pricing";
+import { canonicalServicePath } from "../lib/ai-agents-canonical";
+import { getStartingProjectOffer } from "../lib/service-pricing";
 import Layout from "./Layout.astro";
 import Header from "../components/shared/Header.astro";
 import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
@@ -22,14 +22,12 @@ const { frontmatter } = Astro.props;
 const cluster = frontmatter.cluster;
 const seoTitle = brandName(frontmatter.seo?.title || frontmatter.title);
 const seoDescription = brandName(frontmatter.seo?.description || frontmatter.description);
-const canonicalOverride = cluster === "ai-agent-development"
-  ? new URL(aiAgentsCanonical(frontmatter.postSlug), SITE_ORIGIN).href
-  : undefined;
 
 // Родительский хаб кластера
-const hubUrl = `/services/${cluster}`;
+const hubUrl = canonicalServicePath(`/services/${cluster}`);
 const hubs = await getServiceHubs();
-const hubTitle = hubs.find((entry) => entry.cluster === cluster)?.title || cluster;
+const hub = hubs.find((entry) => entry.cluster === cluster);
+const hubTitle = hub?.title || cluster;
 
 // Соседние посадочные страницы кластера (для сайдбара)
 const siblings = (await getServiceSpokes(cluster))
@@ -48,7 +46,8 @@ const breadcrumbItems = [
 const siteUrl = SITE_ORIGIN;
 const pageUrl = new URL(Astro.url.pathname, SITE_ORIGIN).href;
 const serviceImage = frontmatter.image ? new URL(frontmatter.image, SITE_ORIGIN).href : undefined;
-const startingPackage = getStartingPackage(frontmatter.cluster);
+const startingOffer = getStartingProjectOffer(frontmatter.pricing, cluster);
+const priceNoteOffer = startingOffer ?? getStartingProjectOffer(hub?.pricing, cluster);
 
 const serviceSchema = {
     "@context": "https://schema.org",
@@ -61,12 +60,12 @@ const serviceSchema = {
     ...(serviceImage ? { "image": serviceImage } : {}),
     "provider": { "@id": `${siteUrl}/#organization` },
     "areaServed": { "@type": "Country", "name": "Россия" },
-    ...(startingPackage ? {
+    ...(startingOffer ? {
         "offers": {
             "@type": "Offer",
             "url": pageUrl,
             "priceCurrency": "RUB",
-            "price": String(startingPackage.priceFrom),
+            "price": String(startingOffer.priceFrom),
             "availability": "https://schema.org/InStock"
         }
     } : {})
@@ -96,10 +95,10 @@ const faqSchema = frontmatter.faqs && frontmatter.faqs.length > 0 ? {
 const schema = [serviceSchema, breadcrumbSchema, faqSchema].filter(Boolean);
 ---
 
-<Layout title={seoTitle} description={seoDescription} schema={schema} image={frontmatter.image} canonical={canonicalOverride}>
+<Layout title={seoTitle} description={seoDescription} schema={schema} image={frontmatter.image}>
     <Header/>
     <Breadcrumbs title={frontmatter.title} breadcrumbItems={breadcrumbItems}/>
-    <ServicePriceNote cluster={frontmatter.cluster} />
+    {priceNoteOffer && <ServicePriceNote offer={priceNoteOffer} cluster={cluster} fromHub={!startingOffer} />}
 
     <!-- Page Service Single Start -->
     <div class="page-service-single">

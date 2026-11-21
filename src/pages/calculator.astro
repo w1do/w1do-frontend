@@ -1,520 +1,736 @@
 ---
-import { breadcrumbSchema } from "../lib/breadcrumbs";
-import Layout from "../layouts/Layout.astro";
-import Header from "../components/shared/Header.astro";
 import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
 import Cta from "../components/Cta.astro";
+import Faqs from "../components/Faqs.astro";
 import Footer from "../components/shared/Footer.astro";
-import { getPackages } from "../lib/pricing";
+import Header from "../components/shared/Header.astro";
+import Process from "../components/Process.astro";
+import Layout from "../layouts/Layout.astro";
+import { breadcrumbSchema } from "../lib/breadcrumbs";
+import { INDIVIDUAL_PRICE_LABEL } from "../lib/pricing";
+import { getPublicServiceOffers, type PublicServiceOffer } from "../lib/service-pricing";
+import { getServiceHubs } from "../lib/server/w1do/services";
 
-const packages = getPackages();
-const pricingJson = JSON.stringify(packages);
+interface EstimateScenario {
+    id: string;
+    title: string;
+    description: string;
+    icon: string;
+    aliases: string[];
+    pricingCluster?: string;
+    offerNames?: string[];
+    faqTerm?: { offer: string; pattern: RegExp };
+}
+
+const selectedService = Astro.url.searchParams.get("service");
+const breadcrumbs = [
+    { label: "Главная", href: "/" },
+    { label: "Калькулятор", active: true },
+];
 const pageBreadcrumbs = breadcrumbSchema([
     { name: "Главная", path: "/" },
-    { name: "Калькулятор стоимости", path: "/calculator" }
+    { name: "Калькулятор", path: "/calculator" },
 ]);
 
+const noOffer: PublicServiceOffer = {
+    name: "",
+    priceLabel: INDIVIDUAL_PRICE_LABEL,
+    priceFrom: null,
+    unit: "custom",
+    term: null,
+};
+const scenarios: EstimateScenario[] = [
+    {
+        id: "automation",
+        title: "Автоматизация",
+        description: "Передавайте заявки в CRM, связывайте таблицы и сервисы, запускайте уведомления и согласования по правилам.",
+        icon: "/images/icon-process-item-2.svg",
+        aliases: ["n8n-automation", "ai-integration", "ai-integration-1c-crm"],
+        pricingCluster: "n8n-automation",
+    },
+    {
+        id: "ai-agent",
+        title: "ИИ-агент",
+        description: "Поручите агенту целую цепочку действий: проверить данные, подобрать решение и записать результат в систему.",
+        icon: "/images/icon-service-3.svg",
+        aliases: ["ai-agent-development", "ai-agents"],
+        pricingCluster: "ai-agent-development",
+        faqTerm: { offer: "Базовый агент", pattern: /базового\s+агента[^.!?]{0,150}?за\s+(\d+\s*[-–—]\s*\d+\s+недел[ьи])/iu },
+    },
+    {
+        id: "auto-replies",
+        title: "Автоответы",
+        description: "Отвечайте на входящие сообщения, собирайте контакты и передавайте сложные обращения сотруднику.",
+        icon: "/images/icon-service-2.svg",
+        aliases: ["ai-assistants-chatbots", "ai-bot-avito"],
+        pricingCluster: "ai-assistants-chatbots",
+        offerNames: ["Базовый бот"],
+        faqTerm: { offer: "Базовый бот", pattern: /базовая\s+версия\s+ассистента[^.!?]{0,150}?за\s+(\d+\s*[-–—]\s*\d+\s+рабочих\s+дней)/iu },
+    },
+    {
+        id: "auto-calls",
+        title: "Автообзвоны",
+        description: "Автоматизируйте исходящие звонки: подтверждение записи, напоминания и уточнение статуса заявки.",
+        icon: "/images/icon-headphone-white.svg",
+        aliases: [],
+    },
+    {
+        id: "ai-consultant",
+        title: "ИИ-консультант",
+        description: "Подключите помощника, который отвечает по вашим документам, каталогу и регламентам и может показать источник.",
+        icon: "/images/icon-service-4.svg",
+        aliases: ["website-chatbot"],
+        pricingCluster: "ai-assistants-chatbots",
+        offerNames: ["Pro Ассистент"],
+    },
+];
+const services = await getServiceHubs().catch(() => []);
+const items = scenarios.map((scenario) => {
+    const requestedSource = selectedService && scenario.aliases.includes(selectedService)
+        ? services.find((service) => service.cluster === selectedService)
+        : undefined;
+    const source = requestedSource ?? services.find((service) => service.cluster === scenario.pricingCluster);
+    const offerTerm = scenario.faqTerm;
+    const termFromFaq = offerTerm && Array.isArray(source?.faqs)
+        ? source.faqs.reduce<string | null>((term, faq) => term
+            ?? (typeof faq?.answer === "string" ? faq.answer.match(offerTerm.pattern)?.[1] ?? null : null), null)
+        : null;
+    const offers = getPublicServiceOffers(source?.pricing, source?.cluster)
+        .filter((offer) => source?.cluster !== scenario.pricingCluster
+            || !scenario.offerNames || scenario.offerNames.includes(offer.name))
+        .map((offer) => offer.term || offer.name !== offerTerm?.offer ? offer : { ...offer, term: termFromFaq });
+    const href = source?.url && /^\/(?!\/)[a-z0-9/-]+$/.test(source.url) ? source.url : undefined;
+    const checked = selectedService === scenario.id || scenario.aliases.some((alias) => selectedService === alias);
+    return { ...scenario, offers, href, checked };
+});
+const faq = [
+    {
+        question: "Что означает цена «от» в калькуляторе?",
+        answer: "Это опубликованная стартовая цена выбранного тарифа. Итог зависит от количества сценариев, интеграций, объёма данных и требований к запуску. Точную смету можно подготовить после разбора задачи.",
+    },
+    {
+        question: "Можно ли объединить несколько задач в одном расчёте?",
+        answer: "Да. Например, добавьте автоответы и передачу заявок в CRM. Калькулятор покажет разовые и ежемесячные позиции отдельно. Если автоответы и консультации нужны в одном боте, при уточнении сметы проверим, какие работы можно учесть один раз.",
+    },
+    {
+        question: `Почему у некоторых задач указано «${INDIVIDUAL_PRICE_LABEL}»?`,
+        answer: "Для сценария может не быть опубликованного тарифа. Такая позиция сохранится в расчёте и заявке. Стоимость и срок уточним по вводным, а числа в итоге будут относиться только к известным ценам.",
+    },
+    {
+        question: "Чем автоответы отличаются от ИИ-консультанта и агента?",
+        answer: "Автоответы помогают с типовыми входящими сообщениями. Консультант ищет информацию в ваших материалах и отвечает по ним. ИИ-агент может выполнять последовательность действий, например проверить наличие, завести заявку и уведомить менеджера.",
+    },
+    {
+        question: "От чего зависит стоимость автоматизации?",
+        answer: "На оценку влияют число систем, доступность API, правила обработки ошибок и количество веток процесса. Для начала полезно описать, что запускает процесс, кто участвует и каким должен быть результат.",
+    },
+    {
+        question: "Что нужно для оценки автообзвона?",
+        answer: "Опишите цель звонка, пример диалога, объём вызовов и правила передачи оператору. Укажите, какую телефонию и CRM используете и как получено согласие на звонки.",
+    },
+    {
+        question: "Что подготовить для ИИ-консультанта?",
+        answer: "Достаточно нескольких типовых вопросов и материалов, которыми пользуются сотрудники: базы знаний, каталога, инструкций или регламентов. По ним можно проверить, где нужны ссылки на источники и когда ответ следует передать человеку.",
+    },
+    {
+        question: "Входят ли телефония, ИИ-модели и подписки в стоимость?",
+        answer: "Телефония, услуги ИИ-провайдеров, хостинг и лицензии сторонних систем могут оплачиваться отдельно. Расход зависит от выбранных сервисов и нагрузки. Их стоит выделить отдельными строками при уточнении сметы.",
+    },
+    {
+        question: "Как узнать срок запуска проекта?",
+        answer: "Если для тарифа опубликован срок, он указан рядом с ценой. Дата запуска зависит от готовности данных, доступов и порядка этапов. Для нескольких задач часть работ может идти параллельно.",
+    },
+    {
+        question: "Что происходит после отправки расчёта?",
+        answer: "К заявке добавляются выбранные задачи, тарифы и ваши уточнения. Обсудим границы первого запуска, данные и интеграции, затем согласуем состав работ, бюджет и сроки.",
+    },
+];
 ---
-<Layout
-    title="Калькулятор стоимости ИИ-решения | AiCRAFT"
-    description="Ответьте на четыре вопроса и получите вилку стоимости внедрения ИИ-агента, срок и рекомендацию по формату работы."
-    schema={pageBreadcrumbs}
->
+
+<Layout schema={pageBreadcrumbs}>
     <Header />
-    <Breadcrumbs
-        title="Калькулятор стоимости"
-        breadcrumbItems={[
-            { label: "Главная", href: "/" },
-            { label: "Калькулятор", active: true }
-        ]}
-    />
-
-    <section class="calculator-section">
-        <div class="container">
-            <div class="section-title section-title-center">
-                <span class="section-sub-title wow fadeInUp">Оценка за 1 минуту</span>
-                <h2 class="text-anime-style-3">Сколько стоит ваше ИИ-решение</h2>
-                <p class="wow fadeInUp">Четыре вопроса — вилка стоимости, срок и следующий шаг. Точную смету считаем после разбора задачи.</p>
-            </div>
-
-            <form class="calculator" id="calculator" novalidate>
-                <section class="calculator-step box-border-gradiant" aria-labelledby="calc-step-1">
-                    <div class="calculator-step__head">
-                        <div class="icon-box"><img src="/images/icon-purpose-item-1.svg" alt="" width="40" height="40" loading="lazy" decoding="async"></div>
-                        <div class="calculator-step__heading">
-                            <p class="calculator-step__num">Шаг 01 · из 4</p>
-                            <h3 id="calc-step-1">Что нужно автоматизировать</h3>
-                            <p class="calculator-step__desc">Выберите главный сценарий. От него зависит архитектура агента и состав интеграций.</p>
-                        </div>
-                    </div>
-                    <div class="calculator-options">
-                        <label class="calculator-option">
-                            <input type="radio" name="task" value="support" checked>
-                            <span class="calculator-option__icon"><img src="/images/icon-headphone-white.svg" alt="" width="22" height="22" loading="lazy" decoding="async"></span>
-                            <span class="calculator-option__body">
-                                <span class="calculator-option__title">Поддержку клиентов</span>
-                                <span class="calculator-option__text">Ответы 24/7 и передача сложных диалогов человеку</span>
-                            </span>
-                        </label>
-                        <label class="calculator-option">
-                            <input type="radio" name="task" value="sales">
-                            <span class="calculator-option__icon"><img src="/images/icon-pricing-2.svg" alt="" width="22" height="22" loading="lazy" decoding="async"></span>
-                            <span class="calculator-option__body">
-                                <span class="calculator-option__title">Продажи и заявки</span>
-                                <span class="calculator-option__text">Квалификация лидов и доведение до сделки</span>
-                            </span>
-                        </label>
-                        <label class="calculator-option">
-                            <input type="radio" name="task" value="docs">
-                            <span class="calculator-option__icon"><img src="/images/icon-service-5.svg" alt="" width="22" height="22" loading="lazy" decoding="async"></span>
-                            <span class="calculator-option__body">
-                                <span class="calculator-option__title">Документы и базу знаний</span>
-                                <span class="calculator-option__text">Поиск по регламентам, ответы со ссылками</span>
-                            </span>
-                        </label>
-                        <label class="calculator-option">
-                            <input type="radio" name="task" value="unknown">
-                            <span class="calculator-option__icon"><img src="/images/icon-asterisk-white.svg" alt="" width="22" height="22" loading="lazy" decoding="async"></span>
-                            <span class="calculator-option__body">
-                                <span class="calculator-option__title">Пока не знаю</span>
-                                <span class="calculator-option__text">Разберём задачу и найдём точку автоматизации на аудите</span>
-                            </span>
-                        </label>
-                    </div>
-                </section>
-
-                <section class="calculator-step box-border-gradiant" aria-labelledby="calc-step-2">
-                    <div class="calculator-step__head">
-                        <div class="icon-box"><img src="/images/icon-purpose-item-2.svg" alt="" width="40" height="40" loading="lazy" decoding="async"></div>
-                        <div class="calculator-step__heading">
-                            <p class="calculator-step__num">Шаг 02 · из 4</p>
-                            <h3 id="calc-step-2">Объём обращений</h3>
-                            <p class="calculator-step__desc">От нагрузки зависят очереди, лимиты модели и стоимость инфраструктуры.</p>
-                        </div>
-                    </div>
-                    <div class="calculator-options">
-                        <label class="calculator-option">
-                            <input type="radio" name="scale" value="small" checked>
-                            <span class="calculator-option__icon"><img src="/images/icon-service-4.svg" alt="" width="22" height="22" loading="lazy" decoding="async"></span>
-                            <span class="calculator-option__body">
-                                <span class="calculator-option__title">До 100 в день</span>
-                                <span class="calculator-option__text">Точечный агент под один процесс</span>
-                            </span>
-                        </label>
-                        <label class="calculator-option">
-                            <input type="radio" name="scale" value="medium">
-                            <span class="calculator-option__icon"><img src="/images/icon-service-2.svg" alt="" width="22" height="22" loading="lazy" decoding="async"></span>
-                            <span class="calculator-option__body">
-                                <span class="calculator-option__title">100–1000 в день</span>
-                                <span class="calculator-option__text">Несколько сценариев и интеграций</span>
-                            </span>
-                        </label>
-                        <label class="calculator-option">
-                            <input type="radio" name="scale" value="large">
-                            <span class="calculator-option__icon"><img src="/images/icon-service-6.svg" alt="" width="22" height="22" loading="lazy" decoding="async"></span>
-                            <span class="calculator-option__body">
-                                <span class="calculator-option__title">Больше 1000 в день</span>
-                                <span class="calculator-option__text">Очереди, приоритеты и мониторинг качества</span>
-                            </span>
-                        </label>
-                    </div>
-                </section>
-
-                <section class="calculator-step box-border-gradiant" aria-labelledby="calc-step-3">
-                    <div class="calculator-step__head">
-                        <div class="icon-box"><img src="/images/icon-service-2.svg" alt="" width="40" height="40" loading="lazy" decoding="async"></div>
-                        <div class="calculator-step__heading">
-                            <p class="calculator-step__num">Шаг 03 · из 4</p>
-                            <h3 id="calc-step-3">С чем нужно интегрироваться</h3>
-                            <p class="calculator-step__desc">Можно выбрать несколько вариантов — каждая интеграция добавляет работ по подключению.</p>
-                        </div>
-                    </div>
-                    <div class="calculator-options">
-                        <label class="calculator-option">
-                            <input type="checkbox" name="systems" value="crm">
-                            <span class="calculator-option__icon"><img src="/images/icon-service-1.svg" alt="" width="22" height="22" loading="lazy" decoding="async"></span>
-                            <span class="calculator-option__body">
-                                <span class="calculator-option__title">CRM</span>
-                                <span class="calculator-option__text">Битрикс24, amoCRM и другие</span>
-                            </span>
-                        </label>
-                        <label class="calculator-option">
-                            <input type="checkbox" name="systems" value="1c">
-                            <span class="calculator-option__icon"><img src="/images/icon-service-3.svg" alt="" width="22" height="22" loading="lazy" decoding="async"></span>
-                            <span class="calculator-option__body">
-                                <span class="calculator-option__title">1С</span>
-                                <span class="calculator-option__text">Обмен данными и документами</span>
-                            </span>
-                        </label>
-                        <label class="calculator-option">
-                            <input type="checkbox" name="systems" value="messengers">
-                            <span class="calculator-option__icon"><img src="/images/icon-process-item-2.svg" alt="" width="22" height="22" loading="lazy" decoding="async"></span>
-                            <span class="calculator-option__body">
-                                <span class="calculator-option__title">Мессенджеры</span>
-                                <span class="calculator-option__text">Telegram, WhatsApp, VK</span>
-                            </span>
-                        </label>
-                        <label class="calculator-option">
-                            <input type="checkbox" name="systems" value="none">
-                            <span class="calculator-option__icon"><img src="/images/icon-asterisk-white.svg" alt="" width="22" height="22" loading="lazy" decoding="async"></span>
-                            <span class="calculator-option__body">
-                                <span class="calculator-option__title">Пока ни с чем</span>
-                                <span class="calculator-option__text">Начнём с автономного контура</span>
-                            </span>
-                        </label>
-                    </div>
-                </section>
-
-                <section class="calculator-step box-border-gradiant" aria-labelledby="calc-step-4">
-                    <div class="calculator-step__head">
-                        <div class="icon-box"><img src="/images/icon-calendar-date.svg" alt="" width="40" height="40" loading="lazy" decoding="async"></div>
-                        <div class="calculator-step__heading">
-                            <p class="calculator-step__num">Шаг 04 · из 4</p>
-                            <h3 id="calc-step-4">Когда нужен результат</h3>
-                            <p class="calculator-step__desc">Срок влияет на формат: быстрый MVP или полный цикл с пилотом.</p>
-                        </div>
-                    </div>
-                    <div class="calculator-options">
-                        <label class="calculator-option">
-                            <input type="radio" name="deadline" value="fast" checked>
-                            <span class="calculator-option__icon"><img src="/images/icon-process-item-1.svg" alt="" width="22" height="22" loading="lazy" decoding="async"></span>
-                            <span class="calculator-option__body">
-                                <span class="calculator-option__title">Через 2–3 недели</span>
-                                <span class="calculator-option__text">Срочный запуск, MVP-контур</span>
-                            </span>
-                        </label>
-                        <label class="calculator-option">
-                            <input type="radio" name="deadline" value="normal">
-                            <span class="calculator-option__icon"><img src="/images/icon-calendar-date.svg" alt="" width="22" height="22" loading="lazy" decoding="async"></span>
-                            <span class="calculator-option__body">
-                                <span class="calculator-option__title">В течение 1–2 месяцев</span>
-                                <span class="calculator-option__text">Полный цикл с пилотом</span>
-                            </span>
-                        </label>
-                        <label class="calculator-option">
-                            <input type="radio" name="deadline" value="flexible">
-                            <span class="calculator-option__icon"><img src="/images/icon-purpose-item-3.svg" alt="" width="22" height="22" loading="lazy" decoding="async"></span>
-                            <span class="calculator-option__body">
-                                <span class="calculator-option__title">Без жёсткого срока</span>
-                                <span class="calculator-option__text">Спокойный план и итерации</span>
-                            </span>
-                        </label>
-                    </div>
-                </section>
-
-                <div class="calculator-actions">
-                    <button type="submit" class="btn-default" data-cursor="-opaque">Показать вилку</button>
-                    <span class="calculator-hint">Без звонка и регистрации</span>
-                </div>
-            </form>
-
-            <div class="calculator-result box-border-gradiant" id="calculatorResult" hidden aria-live="polite">
-                <div class="calculator-result__header">
-                    <div class="icon-box"><img src="/images/icon-pricing-1.svg" alt="" width="40" height="40" loading="lazy" decoding="async"></div>
-                    <div class="calculator-step__heading">
-                        <p class="calculator-result__label">Рекомендуемый формат</p>
-                        <h3 id="resultPackage">AI MVP</h3>
+    <main class="estimate-page">
+        <div class="estimate-intro">
+            <Breadcrumbs title="Калькулятор стоимости ИИ для бизнеса" breadcrumbItems={breadcrumbs}>
+                <div class="estimate-intro__content" slot="after-title">
+                    <p>Выберите, что хотите поручить ИИ: автоматизировать процесс, внедрить агента, настроить автоответы, автообзвоны или консультанта.</p>
+                    <div class="estimate-intro__actions">
+                        <a href="#estimate-catalog" class="btn-default">Собрать расчёт</a>
+                        <a href="#estimate-faq" class="estimate-text-link">Как считаем стоимость</a>
                     </div>
                 </div>
-                <p class="calculator-result__price" id="resultPrice">от 150 000 ₽</p>
-                <p class="calculator-result__term" id="resultTerm">Срок: 2–3 недели</p>
-                <p class="calculator-result__note" id="resultNote">Точную смету считаем после разбора задачи: она зависит от данных, интеграций и правил передачи диалога человеку.</p>
-                <div class="calculator-result__actions">
-                    <a href="/contact" class="btn-default" data-cursor="-opaque">Обсудить расчёт</a>
-                    <a href="/pricing" class="btn-outline" data-cursor="-opaque">Сравнить тарифы</a>
-                </div>
-            </div>
+            </Breadcrumbs>
         </div>
-    </section>
 
-    <script type="application/json" id="pricingData" set:html={pricingJson}></script>
-    <script is:inline>
-        (() => {
-            const form = document.getElementById("calculator");
-            const result = document.getElementById("calculatorResult");
-            const dataEl = document.getElementById("pricingData");
-            if (!form || !result || !dataEl) return;
+        <section id="estimate-catalog" class="estimate-workspace" aria-labelledby="estimate-catalog-title">
+            <div class="container">
+                <div class="estimate-workspace__heading">
+                    <h2 id="estimate-catalog-title">Что хотите автоматизировать?</h2>
+                    <p>Добавьте одну или несколько задач. Цены даны по опубликованным тарифам, которые подходят для первого запуска. Точную стоимость уточним по вашему сценарию.</p>
+                </div>
+                <noscript><p>Для расчёта включите JavaScript. Стартовые цены и сроки можно посмотреть в карточках ниже.</p></noscript>
 
-            const packages = JSON.parse(dataEl.textContent || "[]");
-            const byId = Object.fromEntries(packages.map((pkg) => [pkg.id, pkg]));
+                <div class="estimate-layout" data-estimate>
+                    <div class="estimate-catalog">
+                        <a href="#estimate-summary" class="estimate-mobile-jump" data-mobile-jump data-estimate-control hidden>
+                            <span data-mobile-count>Выбрано 0</span>
+                            <span>К расчёту ↓</span>
+                        </a>
+                        <div class="estimate-grid">
+                            {items.map((item) => {
+                                const defaultOffer = item.offers.find((offer) => offer.unit === "project") ?? item.offers[0] ?? noOffer;
+                                return <article class="estimate-card" data-estimate-item>
+                                    <div class="estimate-card__heading">
+                                        <span class="estimate-card__icon"><img src={item.icon} width="24" height="24" alt="" loading="lazy" /></span>
+                                        <h3>{item.title}</h3>
+                                    </div>
+                                    <p class="estimate-card__description">{item.description}</p>
+                                    <div class="estimate-card__quote">
+                                        {item.offers.length > 1 && (
+                                            <label class="estimate-offers" data-estimate-control hidden>
+                                                <span>Тариф</span>
+                                                <select data-offer aria-label={`Тариф: ${item.title}`}>
+                                                    {item.offers.map((offer) => (
+                                                        <option
+                                                            selected={offer === defaultOffer}
+                                                            data-name={offer.name}
+                                                            data-price={offer.priceFrom ?? ""}
+                                                            data-price-label={offer.priceLabel}
+                                                            data-unit={offer.unit}
+                                                            data-term={offer.term}
+                                                        >{offer.name}</option>
+                                                    ))}
+                                                </select>
+                                            </label>
+                                        )}
+                                        <div class="estimate-card__facts">
+                                            <strong data-card-price>{defaultOffer.priceLabel}</strong>
+                                            <span data-card-term>{defaultOffer.term || "Срок уточним"}</span>
+                                            {defaultOffer.name && (
+                                                item.offers.length > 1
+                                                    ? <noscript><small>Тариф «{defaultOffer.name}»</small></noscript>
+                                                    : <small>Тариф «{defaultOffer.name}»</small>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div class="estimate-card__actions">
+                                        <label class="estimate-option" data-estimate-control hidden>
+                                            <input
+                                                type="checkbox"
+                                                value={item.id}
+                                                checked={item.checked}
+                                                data-service
+                                                data-title={item.title}
+                                                data-name={defaultOffer.name}
+                                                data-price={defaultOffer.priceFrom ?? ""}
+                                                data-price-label={defaultOffer.priceLabel}
+                                                data-unit={defaultOffer.unit}
+                                                data-term={defaultOffer.term}
+                                                aria-label={`Добавить к расчёту: ${item.title}`}
+                                            />
+                                            <span class="estimate-option__off">Добавить</span>
+                                            <span class="estimate-option__on">Выбрано</span>
+                                        </label>
+                                        {item.href && <a href={item.href} class="estimate-text-link">О тарифе<span class="visually-hidden"> — {item.title}</span></a>}
+                                    </div>
+                                </article>;
+                            })}
+                        </div>
 
-            // «Пока ни с чем» не сочетается с остальными интеграциями.
-            form.addEventListener("change", (event) => {
-                const target = event.target;
-                if (!(target instanceof HTMLInputElement) || target.name !== "systems") return;
-                if (target.value === "none" && target.checked) {
-                    form.querySelectorAll('input[name="systems"]:not([value="none"])').forEach((input) => { input.checked = false; });
-                } else if (target.value !== "none" && target.checked) {
-                    const none = form.querySelector('input[name="systems"][value="none"]');
-                    if (none) none.checked = false;
-                }
-            });
+                        <details class="estimate-details" data-estimate-control hidden>
+                            <summary>Уточнить параметры проекта</summary>
+                            <p>Уточнения попадут в заявку и помогут подготовить смету.</p>
+                            <label>
+                                Масштаб
+                                <select data-detail="Масштаб">
+                                    <option value="">Не выбрано</option>
+                                    <option>Один процесс или пилот</option>
+                                    <option>Несколько процессов или отдел</option>
+                                    <option>Внедрение в нескольких отделах</option>
+                                </select>
+                            </label>
+                            <label>
+                                Системы для интеграции
+                                <input type="text" maxlength="120" placeholder="Например, Битрикс24 и 1С" data-detail="Интеграции" />
+                            </label>
+                            <label>
+                                Желаемый срок
+                                <select data-detail="Желаемый срок">
+                                    <option value="">Не выбрано</option>
+                                    <option>Через 2–3 недели</option>
+                                    <option>В течение 1–2 месяцев</option>
+                                    <option>Без жёсткого срока</option>
+                                </select>
+                            </label>
+                        </details>
+                    </div>
 
-            const formatPrice = (pkg) => {
-                const value = new Intl.NumberFormat("ru-RU").format(pkg.priceFrom).replace(/\u00A0/g, " ");
-                return "от " + value + " ₽";
-            };
+                    <aside id="estimate-summary" class="estimate-summary" aria-labelledby="estimate-summary-title" tabindex="-1">
+                        <div class="estimate-summary__head">
+                            <h3 id="estimate-summary-title">Ваш расчёт</h3>
+                            <span class="estimate-summary__count" data-count aria-live="polite">Выбрано 0</span>
+                        </div>
+                        <p class="estimate-summary__empty" data-empty>Добавьте услуги, чтобы сравнить стоимость и сроки в одном списке.</p>
+                        <ul class="estimate-summary__items" data-selection aria-label="Выбранные услуги" hidden></ul>
+                        <dl class="estimate-summary__totals" data-totals aria-live="polite" hidden>
+                            <div data-project-row hidden><dt>Разовые работы</dt><dd data-project-total></dd></div>
+                            <div data-month-row hidden><dt>Сопровождение</dt><dd data-month-total></dd></div>
+                        </dl>
+                        <p class="estimate-summary__missing" data-missing hidden></p>
+                        <p class="estimate-summary__longest" data-longest hidden></p>
+                        <p class="estimate-summary__note">Итоговая смета и дата запуска зависят от состава работ, общих этапов и готовности данных.</p>
+                        <a href="#estimate-request" class="btn-default estimate-summary__cta" data-submit-estimate>Обсудить задачу</a>
+                        <a href="#estimate-catalog" class="estimate-text-link estimate-summary__back">Изменить выбор</a>
+                    </aside>
+                </div>
+                <input type="hidden" name="calculation" form="calculator-lead" data-calculation />
+            </div>
+        </section>
 
-            form.addEventListener("submit", (event) => {
-                event.preventDefault();
-                const data = new FormData(form);
-                const task = data.get("task");
-                const scale = data.get("scale");
-                const systems = data.getAll("systems").filter((value) => value !== "none");
-                const deadline = data.get("deadline");
+        <section id="estimate-process" class="estimate-process" aria-label="Этапы внедрения">
+            <Process
+                subTitle="Этапы работы"
+                title="От расчёта до запуска"
+                description="Начинаем с одного понятного сценария. На примерах ваших обращений или процессов проверяем, что ИИ экономит время и делает нужную работу."
+                step1Title="Разбор задачи"
+                step1Desc="Уточняем сценарии, данные и системы"
+                step2Title="Оценка проекта"
+                step2Desc="Согласуем смету, сроки и первый запуск"
+                step3Title="Пилот"
+                step3Desc="Проверяем работу на ваших примерах"
+                step4Title="Внедрение"
+                step4Desc="Подключаем сервисы и передаём инструкции"
+                buttonText="Получить смету"
+                buttonHref="#estimate-request"
+            />
+        </section>
 
-                let id = "mvp";
-                if (task === "unknown") id = "audit";
-                else if (task === "sales" || scale === "large" || systems.length >= 2) id = "business";
+        <section id="estimate-faq" class="estimate-faq" aria-label="Вопросы о цене и сроках">
+            <Faqs
+                subTitle="Цены и сроки"
+                title="Что влияет на стоимость"
+                description="Как сравнить варианты, что понадобится для оценки и какие расходы учесть до запуска."
+                customFaqs={faq}
+            />
+        </section>
 
-                const pkg = byId[id];
-                if (!pkg) return;
-
-                document.getElementById("resultPackage").textContent = pkg.name;
-                document.getElementById("resultPrice").textContent = formatPrice(pkg);
-                document.getElementById("resultTerm").textContent = "Срок: " + pkg.term;
-
-                const notes = [];
-                if (task === "unknown") notes.push("Начнём с аудита: он покажет, что автоматизировать первым.");
-                if (systems.length) notes.push("Интеграции: " + systems.length + ".");
-                if (deadline === "fast") notes.push("Срочный запуск может потребовать отдельного плана.");
-                document.getElementById("resultNote").textContent = notes.join(" ") ||
-                    "Точную смету считаем после разбора задачи: она зависит от данных, интеграций и правил передачи диалога человеку.";
-
-                result.hidden = false;
-                const cta = result.querySelector('a[href="/contact"]');
-                if (cta) {
-                    const params = new URLSearchParams(window.location.search);
-                    params.set("task", String(task || ""));
-                    params.set("scale", String(scale || ""));
-                    params.set("deadline", String(deadline || ""));
-                    if (systems.length) params.set("systems", systems.join(","));
-                    else params.delete("systems");
-                    cta.href = "/contact?" + params.toString();
-                }
-                result.scrollIntoView({ behavior: "smooth", block: "start" });
-                if (typeof window.ym === "function") {
-                    window.ym(109810952, "reachGoal", "calculator_result");
-                    window.ym(109810952, "reachGoal", "quiz_complete");
-                }
-            });
-        })();
-    </script>
-
-    <Cta
-        subTitle="Нужен точный расчёт?"
-        title="Разберём задачу и посчитаем смету"
-        description="Оставьте заявку — вернёмся с планом, сроком и стоимостью под ваш процесс."
-        formTitle="Получить расчёт"
-    />
-    <Footer />
+        <section id="estimate-request" class="estimate-request" aria-label="Заявка на точную смету">
+            <Cta
+                subTitle="Точная смета"
+                title="Получите смету под вашу задачу"
+                description="Оставьте контакты. Выбранные услуги и параметры проекта добавятся к заявке."
+                formTitle=""
+                source="calculator"
+                formId="calculator-lead"
+            />
+        </section>
+    </main>
+    <div class="estimate-footer"><Footer /></div>
 </Layout>
 
+<script>
+    import { formatPrice, INDIVIDUAL_PRICE_LABEL } from "../lib/pricing";
+
+    const calculator = document.querySelector<HTMLElement>("[data-estimate]");
+    const calculation = document.querySelector<HTMLInputElement>("[data-calculation]");
+
+    if (calculator && calculation) {
+        const services = Array.from(calculator.querySelectorAll<HTMLInputElement>("[data-service]"));
+        const offers = new Map(services.map((service) => [
+            service,
+            service.closest("[data-estimate-item]")?.querySelector<HTMLSelectElement>("[data-offer]"),
+        ]));
+        const selection = calculator.querySelector<HTMLUListElement>("[data-selection]")!;
+        const cta = calculator.querySelector<HTMLAnchorElement>("[data-submit-estimate]")!;
+        const details = Array.from(calculator.querySelectorAll<HTMLInputElement | HTMLSelectElement>("[data-detail]"));
+        let lastReported = "";
+
+        const setText = (selector: string, text: string) => {
+            calculator.querySelector<HTMLElement>(selector)!.textContent = text;
+        };
+
+        const toggle = (selector: string, show: boolean) => {
+            calculator.querySelector<HTMLElement>(selector)!.hidden = !show;
+        };
+
+        const render = () => {
+            const selected = services.filter((input) => input.checked);
+            const projectPrices: number[] = [];
+            const monthPrices: number[] = [];
+            const lines: string[] = [];
+            let separatePriceCount = 0;
+            let longestDays = 0;
+            let longestTerm = "";
+
+            const items = selected.map((input) => {
+                const { name: offerName, price, priceLabel, term, unit } = offers.get(input)?.selectedOptions[0]?.dataset ?? input.dataset;
+                const name = offerName ? `${input.dataset.title} · ${offerName}` : input.dataset.title ?? "";
+                const facts = `${priceLabel ?? INDIVIDUAL_PRICE_LABEL} · ${term || "Срок уточним"}`;
+                lines.push(`${name} — ${facts}`);
+
+                if (price && (unit === "project" || unit === "month")) {
+                    const prices = unit === "month" ? monthPrices : projectPrices;
+                    prices.push(Number(price));
+                } else {
+                    separatePriceCount++;
+                }
+
+                // Compare the published upper estimates for project work, excluding subscriptions.
+                const range = unit === "project" && term?.match(/^(?:до\s+|\d+\s*[-–—]\s*)?(\d+)\s+(день|дня|дней|дн|неделя|недели|недель|нед)\.?$/i);
+                if (range) {
+                    const days = Number(range[1]) * (range[2].toLowerCase().startsWith("нед") ? 7 : 1);
+                    if (days > longestDays) {
+                        longestDays = days;
+                        longestTerm = term?.replace(/\.$/, "") ?? "";
+                    }
+                }
+
+                const item = document.createElement("li");
+                const itemText = document.createElement("span");
+                const itemTitle = document.createElement("strong");
+                itemTitle.textContent = name;
+                const itemFacts = document.createElement("small");
+                itemFacts.textContent = facts;
+                itemText.append(itemTitle, itemFacts);
+                item.append(itemText);
+                return item;
+            });
+            selection.replaceChildren(...items);
+
+            const projectTotal = formatPrice({ priceFrom: projectPrices.reduce((a, b) => a + b, 0), unit: "project" });
+            const monthTotal = formatPrice({ priceFrom: monthPrices.reduce((a, b) => a + b, 0), unit: "month" });
+            const count = `Выбрано ${selected.length}`;
+            setText("[data-count]", count);
+            setText("[data-mobile-count]", count);
+            setText("[data-project-total]", projectTotal);
+            setText("[data-month-total]", monthTotal);
+            setText("[data-missing]", `Позиций вне общей суммы: ${separatePriceCount}. Стоимость уточняется индивидуально или рассчитывается по отдельным условиям.`);
+            setText("[data-longest]", `Самый долгий этап с оценкой в календарных днях или неделях: ${longestTerm}.`);
+            toggle("[data-empty]", !selected.length);
+            toggle("[data-selection]", Boolean(selected.length));
+            toggle("[data-totals]", Boolean(projectPrices.length || monthPrices.length));
+            toggle("[data-project-row]", Boolean(projectPrices.length));
+            toggle("[data-month-row]", Boolean(monthPrices.length));
+            toggle("[data-missing]", Boolean(separatePriceCount));
+            toggle("[data-longest]", Boolean(longestTerm));
+            cta.textContent = selected.length ? "Обсудить расчёт" : "Обсудить задачу";
+
+            const qualifiers = details.filter((field) => field.value.trim()).map((field) => (
+                `${field.dataset.detail}: ${field.value.trim()}`
+            ));
+            const totals = [
+                ...(projectPrices.length ? [`Разовые работы: ${projectTotal}`] : []),
+                ...(monthPrices.length ? [`Сопровождение: ${monthTotal}`] : []),
+                ...(separatePriceCount ? [`Позиций вне общей суммы: ${separatePriceCount}`] : []),
+            ];
+            calculation.value = [...lines, ...totals, ...qualifiers].join("\n");
+        };
+
+        calculator.querySelectorAll<HTMLElement>("[data-estimate-control]").forEach((control) => {
+            control.hidden = false;
+        });
+        calculator.addEventListener("input", (event) => {
+            const field = event.target;
+            if (!(field instanceof HTMLInputElement || field instanceof HTMLSelectElement)) return;
+            if (field instanceof HTMLSelectElement && field.matches("[data-offer]")) {
+                const offer = field.selectedOptions[0];
+                const card = field.closest("[data-estimate-item]");
+                if (offer && card) {
+                    card.querySelector("[data-card-price]")!.textContent = offer.dataset.priceLabel ?? INDIVIDUAL_PRICE_LABEL;
+                    card.querySelector("[data-card-term]")!.textContent = offer.dataset.term || "Срок уточним";
+                }
+            }
+            if (field.matches("[data-service], [data-detail], [data-offer]")) render();
+        });
+
+        cta.addEventListener("click", () => {
+            if (!services.some((input) => input.checked) || calculation.value === lastReported) return;
+            const { ym } = window as Window & {
+                ym?: (counter: number, method: string, goal: string) => void;
+            };
+            if (typeof ym !== "function") return;
+            ym(109810952, "reachGoal", "calculator_result");
+            ym(109810952, "reachGoal", "quiz_complete");
+            lastReported = calculation.value;
+        });
+        render();
+    }
+</script>
+
 <style>
-    .calculator-section { padding: 80px 0 40px; }
-    .calculator-section .section-title {
-        max-width: 880px;
-        margin: 0 auto 36px;
-        text-align: center;
-    }
-    .calculator-section .section-title p { margin-left: auto; margin-right: auto; }
-    .calculator {
+    .estimate-page {
+        --estimate-section-gap: clamp(40px, 6vw, 84px);
+        --estimate-section-padding: clamp(30px, 6vw, 78px);
         display: grid;
-        gap: 20px;
-        max-width: 1000px;
-        margin: 0 auto;
+        row-gap: var(--estimate-section-gap);
+        padding-bottom: var(--estimate-section-gap);
     }
-    .calculator-step {
-        margin: 0;
-        padding: 32px;
+    .estimate-page [hidden] { display: none !important; }
+    .estimate-intro :global(.page-header) {
+        padding: clamp(120px, 11vw, 168px) 0 clamp(32px, 4vw, 58px);
     }
-    .calculator-step__head {
-        display: flex;
-        align-items: flex-start;
-        gap: 18px;
-        padding-bottom: 24px;
-        margin-bottom: 24px;
-        border-bottom: 1px solid var(--dark-divider-color);
+    .estimate-intro :global(.page-header-box h1) {
+        max-width: 960px;
+        font-size: clamp(2.15rem, 5.5vw, 4.3rem);
+        text-wrap: balance;
     }
-    .calculator-step .icon-box,
-    .calculator-result .icon-box {
-        position: relative;
-        flex: 0 0 auto;
-        width: 40px;
-        height: 40px;
-    }
-    .calculator-step .icon-box::before,
-    .calculator-result .icon-box::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 18px;
-        height: 18px;
-        background: var(--accent-color);
-        border-radius: 50%;
-        z-index: -1;
-    }
-    .calculator-step .icon-box img,
-    .calculator-result .icon-box img {
-        display: block;
-        width: 40px;
-        height: 40px;
-    }
-    .calculator-step__heading { min-width: 0; }
-    .calculator-step__num,
-    .calculator-result__label {
-        margin: 0 0 4px;
-        color: var(--accent-color);
-        font-size: 12px;
-        font-weight: 600;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-    }
-    .calculator-step__head h3,
-    .calculator-result__header h3 {
-        margin: 0 0 6px;
-        color: var(--primary-color);
-        font-size: 22px;
-        line-height: 1.3;
-    }
-    .calculator-step__desc {
-        margin: 0;
+    .estimate-intro__content p {
+        max-width: 580px;
+        margin: 0 auto 20px;
         color: var(--text-color);
-        font-size: 14px;
-        line-height: 1.6;
+        font-size: clamp(1rem, 2vw, 1.25rem);
+        text-wrap: balance;
     }
-    .calculator-options {
+    .estimate-intro__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px 24px;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 24px;
+    }
+    .estimate-text-link {
+        color: var(--primary-color);
+        text-decoration: underline;
+        text-underline-offset: 4px;
+    }
+    .estimate-text-link:hover { color: var(--accent-color); }
+    .estimate-workspace,
+    #estimate-process,
+    #estimate-faq,
+    #estimate-summary,
+    #estimate-request { scroll-margin-top: 105px; }
+    .estimate-workspace__heading { margin-bottom: 30px; }
+    .estimate-workspace__heading h2 {
+        margin: 0 0 10px;
+        font-size: clamp(1.85rem, 4vw, 3.45rem);
+        line-height: 1.05;
+        letter-spacing: -0.025em;
+    }
+    .estimate-workspace__heading p { max-width: 55ch; margin: 0; }
+    .estimate-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.9fr) minmax(290px, 1fr);
+        align-items: start;
+        gap: 28px;
+    }
+    .estimate-mobile-jump { display: none; }
+    .estimate-offers,
+    .estimate-details label {
+        display: grid;
+        gap: 6px;
+        font-weight: 600;
+    }
+    .estimate-offers select,
+    .estimate-details input,
+    .estimate-details select {
+        width: 100%;
+        min-height: 46px;
+        padding: 8px 12px;
+        color: var(--primary-color);
+        color-scheme: dark;
+        background: var(--secondary-color);
+        border: 1px solid var(--dark-divider-color);
+        border-radius: 10px;
+    }
+    .estimate-offers { min-width: 0; margin-bottom: 10px; font-size: 0.9rem; }
+    .estimate-offers select { min-width: 0; background: var(--accent-secondary-color); }
+    .estimate-grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 12px;
+        gap: 16px;
     }
-    .calculator-option {
-        position: relative;
-        display: flex;
-        align-items: flex-start;
-        gap: 14px;
-        margin: 0;
-        padding: 16px 44px 16px 16px;
+    .estimate-grid > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+    .estimate-card,
+    .estimate-details,
+    .estimate-summary {
+        padding: clamp(15px, 2vw, 25px);
         border: 1px solid var(--dark-divider-color);
-        border-radius: 16px;
-        background: rgba(255, 255, 255, 0.02);
-        cursor: pointer;
-        transition: border-color 0.25s ease, background-color 0.25s ease;
-    }
-    .calculator-option:hover { border-color: rgba(207, 248, 94, 0.45); }
-    .calculator-option:has(input:checked) {
-        border-color: var(--accent-color);
-        background: rgba(207, 248, 94, 0.07);
-    }
-    .calculator-option:focus-within {
-        outline: 2px solid var(--accent-color);
-        outline-offset: 3px;
-    }
-    .calculator-option input {
-        position: absolute;
-        opacity: 0;
-        pointer-events: none;
-    }
-    .calculator-option::after {
-        content: '';
-        position: absolute;
-        top: 14px;
-        right: 14px;
-        width: 18px;
-        height: 18px;
-        border: 1px solid var(--dark-divider-color);
-        border-radius: 50%;
-        transition: all 0.25s ease;
-    }
-    .calculator-option:has(input:checked)::after {
-        border-color: var(--accent-color);
-        background: var(--accent-color) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230b0b0b' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E") center / 10px no-repeat;
-    }
-    .calculator-option__icon {
-        flex: 0 0 44px;
-        width: 44px;
-        height: 44px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 1px solid var(--dark-divider-color);
-        border-radius: 12px;
+        border-radius: 17px;
         background: var(--secondary-color);
     }
-    .calculator-option__icon img {
-        display: block;
-        width: 22px;
-        height: 22px;
+    .estimate-card { display: flex; flex-direction: column; gap: 14px; }
+    .estimate-card:has(input:checked) {
+        border-color: var(--accent-color);
+        background: linear-gradient(155deg, #202914, var(--secondary-color) 48%);
     }
-    .calculator-option__body { min-width: 0; }
-    .calculator-option__title {
-        display: block;
-        margin-bottom: 3px;
+    .estimate-card__heading { display: flex; gap: 10px; align-items: start; }
+    .estimate-card__heading h3 {
+        margin: 2px 0 0;
+        overflow-wrap: anywhere;
+        font-size: 1.1rem;
+        line-height: 1.25;
+    }
+    .estimate-card__icon {
+        display: grid;
+        flex: 0 0 34px;
+        height: 34px;
+        place-items: center;
+        background: var(--accent-secondary-color);
+        border-radius: 8px;
+    }
+    .estimate-card__description {
+        margin: 0;
+        font-size: 0.95rem;
+        line-height: 1.48;
+        overflow-wrap: anywhere;
+    }
+    .estimate-card__quote { margin-top: auto; }
+    .estimate-card__facts {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 3px 14px;
+        font-size: 0.92rem;
+    }
+    .estimate-card__facts strong { color: var(--accent-color); font-size: 1.1rem; }
+    .estimate-card__facts small { flex-basis: 100%; }
+    .estimate-card__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 12px;
+        align-items: center;
+    }
+    .estimate-card__actions a { padding: 7px 0; font-size: 0.9rem; }
+    .estimate-option {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 12px;
+        margin: 0;
+        min-height: 44px;
         color: var(--primary-color);
-        font-size: 15px;
+        background: var(--accent-secondary-color);
+        border: 1px solid var(--dark-divider-color);
+        border-radius: 9px;
+        cursor: pointer;
         font-weight: 600;
-        line-height: 1.35;
     }
-    .calculator-option__text {
-        display: block;
-        color: var(--text-color);
-        font-size: 13px;
-        line-height: 1.5;
+    .estimate-option:focus-within { outline: 2px solid var(--accent-color); outline-offset: 2px; }
+    .estimate-option:has(input:checked) {
+        border-color: var(--accent-color);
+        color: var(--black-color);
+        background: var(--accent-color);
     }
-    .calculator-actions {
+    .estimate-option input { margin: 0; accent-color: var(--accent-color); }
+    .estimate-option__on,
+    .estimate-option:has(input:checked) .estimate-option__off { display: none; }
+    .estimate-option:has(input:checked) .estimate-option__on { display: inline; }
+    .estimate-details { margin-top: 24px; }
+    .estimate-details summary { cursor: pointer; color: var(--primary-color); font-weight: 600; }
+    .estimate-details p { margin: 12px 0; }
+    .estimate-details label { max-width: 440px; margin-top: 12px; }
+    .estimate-summary {
+        position: sticky;
+        top: 105px;
+        border-top: 3px solid var(--accent-color);
+        background: #151712;
+    }
+    .estimate-summary__head {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-        gap: 16px;
-        justify-content: center;
-        padding-top: 8px;
-    }
-    .calculator-hint { color: var(--text-color); font-size: 14px; }
-    .calculator-result {
-        max-width: 1000px;
-        margin: 24px auto 0;
-        padding: 32px;
-        text-align: center;
-    }
-    .calculator-result__header {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 18px;
-        padding-bottom: 20px;
-        margin-bottom: 20px;
+        justify-content: space-between;
+        gap: 10px;
+        padding-bottom: 14px;
         border-bottom: 1px solid var(--dark-divider-color);
-        text-align: left;
     }
-    .calculator-result__price {
+    .estimate-summary__head h3 { margin: 0; font-size: clamp(1.35rem, 2.5vw, 1.75rem); }
+    .estimate-summary__count {
+        padding: 3px 9px;
+        border-radius: 6px;
+        color: var(--accent-color);
+        background: #252e17;
+        font-size: 0.85rem;
+        white-space: nowrap;
+    }
+    .estimate-summary__empty,
+    .estimate-summary__missing,
+    .estimate-summary__longest,
+    .estimate-summary__note { margin: 14px 0 0; font-size: 0.92rem; line-height: 1.5; }
+    .estimate-summary__longest { color: var(--primary-color); }
+    .estimate-summary__items {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        max-height: min(25vh, 220px);
+        overflow: auto;
+        scrollbar-color: var(--text-color) transparent;
+    }
+    .estimate-summary__items :global(li) {
+        padding: 11px 0;
+        border-bottom: 1px solid var(--dark-divider-color);
+        font-size: 0.96rem;
+        overflow-wrap: anywhere;
+    }
+    .estimate-summary__items :global(strong) { color: var(--primary-color); }
+    .estimate-summary__items :global(small) { display: block; margin-top: 3px; }
+    .estimate-summary__totals { margin: 14px 0 0; }
+    .estimate-summary__totals div {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 4px 12px;
+    }
+    .estimate-summary__totals div + div { margin-top: 8px; }
+    .estimate-summary__totals dt { font-weight: 500; }
+    .estimate-summary__totals dd {
         margin: 0;
         color: var(--accent-color);
-        font-size: 42px;
+        font-size: 1.25rem;
         font-weight: 700;
-        line-height: 1.1;
+        font-variant-numeric: tabular-nums;
     }
-    .calculator-result__term { margin: 8px 0 16px; color: var(--primary-color); font-size: 17px; }
-    .calculator-result__note { max-width: 620px; margin: 0 auto 22px; color: var(--text-color); font-size: 15px; line-height: 1.6; }
-    .calculator-result__actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
-    .btn-outline {
-        display: inline-flex;
-        align-items: center;
-        padding: 14px 24px;
-        border: 1px solid var(--divider-color);
-        border-radius: 999px;
-        color: var(--primary-color);
-        font-weight: 600;
+    .estimate-summary__cta { margin-top: 16px; }
+    .estimate-summary__back { display: none; }
+    .estimate-process :global(.our-process) { padding: 0; }
+    .estimate-process :global(.process-item) { min-height: clamp(300px, 24vw, 360px); }
+    .estimate-faq :global(.our-faqs),
+    .estimate-request :global(.cta-box) {
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-block: var(--estimate-section-padding);
     }
-    @media (max-width: 767px) {
-        .calculator-options { grid-template-columns: 1fr; }
-        .calculator-step { padding: 20px; }
-        .calculator-step__head { gap: 14px; padding-bottom: 18px; margin-bottom: 18px; }
-        .calculator-step__head h3, .calculator-result__header h3 { font-size: 18px; }
+    .estimate-faq :global(.faqs-accordion) { margin-left: 0; }
+    .estimate-faq :global(.faqs-accordion .accordion-item) { margin-bottom: 14px; }
+    .estimate-faq :global(.faqs-accordion .accordion-item:last-child) { margin-bottom: 0; }
+    .estimate-faq :global(.faqs-accordion .accordion-body) { line-height: 1.6; }
+    .estimate-faq :global(.faqs-accordion .accordion-body p) { margin-bottom: 0; }
+    .estimate-faq :global(.faq-content) { top: 105px; margin-bottom: 0; }
+    .estimate-request :global(.cta-box-content) { position: static; margin-right: 0; }
+    .estimate-request :global(.cta-box > .container > .row) { row-gap: 24px; }
+    .estimate-request :global(.cta-box-content .section-title) { margin-bottom: 0; }
+    .estimate-footer :global(.main-footer-prime) { margin-top: 0; }
+    @media (max-width: 991px) {
+        .estimate-layout { grid-template-columns: 1fr; gap: 16px; }
+        .estimate-summary { position: static; }
+        .estimate-summary__back { display: block; margin-top: 12px; width: fit-content; }
+        .estimate-summary__items { max-height: none; }
+        .estimate-mobile-jump {
+            position: sticky;
+            top: 78px;
+            z-index: 4;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            min-height: 44px;
+            margin: 0 0 14px;
+            padding: 6px 12px;
+            background: #151712;
+            border: 1px solid var(--accent-color);
+            border-radius: 9px;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+    }
+    @media (max-width: 1199px) {
+        .estimate-faq :global(.our-faqs > .container > .row) { row-gap: 24px; }
+        .estimate-faq :global(.faq-content) { position: static; }
     }
     @media (max-width: 575px) {
-        .calculator-section { padding: 48px 0 24px; }
-        .calculator-result { padding: 24px 18px; }
-        .calculator-result__price { font-size: 32px; }
+        .estimate-grid { grid-template-columns: minmax(0, 1fr); }
+        .estimate-process :global(.process-item) { min-height: 0; }
     }
 </style>

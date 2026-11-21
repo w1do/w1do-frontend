@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 
 interface Props {
+    homeOriginal?: boolean;
     subTitle?: string;
     title?: string;
     description?: string;
@@ -12,19 +13,24 @@ interface Props {
     priceTitle?: string;
     priceDesc?: string;
     priceValue?: string;
+    priceNote?: string;
+    secondaryContactHref?: string;
 }
 
 const {
-    subTitle = "Почему я",
-    title = "Почему выбирают внедрение ИИ через меня?",
-    description = "Мой главный принцип — окупаемость и прозрачность. Каждый внедренный инструмент должен приносить деньги или экономить время вашего бизнеса.",
-    benefit1Title = "Фокус на окупаемости",
-    benefit1Desc = "Внедряю только те решения, которые реально оптимизируют расходы или увеличивают прибыль. Никаких хайповых технологий ради технологий.",
-    benefit2Title = "Прозрачность и гибкость",
-    benefit2Desc = "Вы видите процесс в реальном времени. Работаю как с маленькими стартапами, так и с крупными CRM-системами.",
-    priceTitle = "Цены",
-    priceDesc = "Работаю без наценки агентства: старт с аудита или пилота, смету фиксирую до начала работ.",
-    priceValue = "3 000"
+    homeOriginal = false,
+    subTitle = "Подход к внедрению",
+    title = "Как проверяем ИИ-решение",
+    description = "До старта определяем, какой результат ожидает ваша команда и как его проверить на рабочих примерах.",
+    benefit1Title = "Пилот на ваших данных",
+    benefit1Desc = "Берём типовые и пограничные случаи. Смотрим, где сценарий работает и в каких случаях требуется сотрудник.",
+    benefit2Title = "Контроль действий",
+    benefit2Desc = "Согласуем права доступа и настраиваем проверку важных операций.",
+    priceTitle = "Оценка проекта",
+    priceDesc = "Согласуем состав и стоимость работ до запуска.",
+    priceValue,
+    priceNote,
+    secondaryContactHref,
 } = Astro.props;
 ---
 <!-- Why Choose Us Section Start -->
@@ -47,7 +53,7 @@ const {
                         <!-- Contact Us Circle Start -->
                         <div class="contact-us-circle">
                             <a href={import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1DO_DIGITAL"} data-cursor="-opaque">
-                                <img loading="lazy" decoding="async" src="/images/contact-us-circle.svg" alt="Связаться со мной">
+                                <img loading="lazy" decoding="async" src="/images/contact-us-circle.svg" alt={homeOriginal ? "Связаться со мной" : "Написать в AiCRAFT в Telegram"}>
                             </a>
                         </div>
                         <!-- Contact Us Circle End -->
@@ -61,7 +67,7 @@ const {
                             <!-- Why Digital Growth Image Start -->
                             <div class="why-digital-growth-image">
                                 <figure>
-                                    <Image src="/images/why-digital-growth-image.png" alt="График роста эффективности с ИИ" width={100} height={100} loading="lazy" />
+                                    <Image src="/images/why-digital-growth-image.png" alt={homeOriginal ? "График роста эффективности с ИИ" : ""} width={100} height={100} loading="lazy" />
                                 </figure>
                             </div>
                             <!-- Why Digital Growth Image End -->
@@ -70,7 +76,9 @@ const {
                             <div class="why-digital-growth-body">
                                 <h3>{priceTitle}</h3>
                                 <p>{priceDesc}</p>
-                                <h2>от {priceValue}<sub> р </sub></h2>
+                                {priceValue ? (
+                                    <h2>от {priceValue}<sub>{homeOriginal ? " р " : " ₽ "}</sub></h2>
+                                ) : priceNote && <h2>{priceNote}</h2>}
                             </div>
                             <!-- Why Digital Growth Body End -->
                         </div>
@@ -124,27 +132,29 @@ const {
                     <div class="why-choose-footer wow fadeInUp" data-wow-delay="0.6s">
                         <!-- Why Choose Button Start -->
                         <div class="why-choose-btn">
-                            <a href={import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1DO_DIGITAL"} class="btn-default" data-cursor="-opaque">Telegram</a>
+                            <a href={import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1DO_DIGITAL"} class="btn-default" data-cursor="-opaque">{homeOriginal ? "Telegram" : "Написать в Telegram"}</a>
                         </div>
                         <!-- Why Choose Button End -->
 
-                        <!-- Section Footer Text Start -->
-                        <div class="section-footer-text section-satisfy-img">
-                            <!-- Satisfy Client Images Start -->
-                            <div class="satisfy-client-images">
-                                <div class="satisfy-client-image">
-                                    <figure class="image-anime">
-                                        <img loading="lazy" decoding="async" src="/images/author-1.jpg" alt="Довольный клиент">
-                                    </figure>
+                        {homeOriginal ? (
+                            <div class="section-footer-text section-satisfy-img">
+                                <!-- Satisfy Client Images Start -->
+                                <div class="satisfy-client-images">
+                                    <div class="satisfy-client-image">
+                                        <figure class="image-anime">
+                                            <img loading="lazy" decoding="async" src="/images/author-1.jpg" alt="Довольный клиент">
+                                        </figure>
+                                    </div>
+                                    <div class="satisfy-client-image add-more">
+                                        <img loading="lazy" decoding="async" src="/images/icon-phone-black.svg" alt="Телефон">
+                                    </div>
                                 </div>
-                                <div class="satisfy-client-image add-more">
-                                    <img loading="lazy" decoding="async" src="/images/icon-phone-black.svg" alt="Телефон">
-                                </div>
+                                <!-- Satisfy Client Images End -->
+                                <p>Обсудить детали проекта <a href={import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1DO_DIGITAL"} data-cursor="-opaque"> написать</a></p>
                             </div>
-                            <!-- Satisfy Client Images End -->
-                            <p>Обсудить детали проекта <a href={import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1DO_DIGITAL"} data-cursor="-opaque"> написать</a></p>
-                        </div>
-                        <!-- Section Footer Text End -->
+                        ) : secondaryContactHref && (
+                            <a href={secondaryContactHref} class="readmore-btn">Другие способы связи</a>
+                        )}
                     </div>
                     <!-- Why Choose Footer End -->
                 </div>

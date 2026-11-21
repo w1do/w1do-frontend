@@ -11,5 +11,5 @@ const cleaned = items.filter(Boolean);
 ---
 
 {cleaned.map((item) => (
-    <script type="application/ld+json" set:html={JSON.stringify(item)} is:inline />
+    <script type="application/ld+json" set:html={JSON.stringify(item).replace(/</g, "\\u003c")} is:inline />
 ))}

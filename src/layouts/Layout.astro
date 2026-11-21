@@ -1,5 +1,6 @@
 ---
 interface Props {
+	bodyClass?: string;
 	title?: string;
 	description?: string;
 	keywords?: string;
@@ -11,8 +12,9 @@ interface Props {
 }
 
 import { DEFAULT_OG_IMAGE, pageSeo } from "../lib/seo";
+import { brandName } from "../lib/brand";
 import { REQUISITES } from "../lib/requisites";
-import { SITE_ORIGIN, cityPath, regionalSchema } from "../lib/regions";
+import { SITE_ORIGIN, cityPath, isIndexableCityHome, regionalSchema } from "../lib/regions";
 import CookieNotice from "../components/shared/CookieNotice.astro";
 import JsonLd from "../components/shared/JsonLd.astro";
 import ChatPopup from "../components/chat/ChatPopup";
@@ -27,10 +29,13 @@ import "../styles/mousecursor.css";
 import "../styles/custom.css";
 
 const region = Astro.locals.region;
-const pagePath = region?.path || Astro.url.pathname;
+const pagePath = region?.path || Astro.url.pathname.replace(/\/$/, "") || "/";
 const citySeo = region?.city.seo;
 const isCityHome = Boolean(region && pagePath === "/");
-const currentSeo = pageSeo[pagePath.replace(/\/$/, "") || "/"];
+const isDefaultCityHome = region && isCityHome && region.city.slug === region.defaultCitySlug;
+const metadataCity = isDefaultCityHome ? undefined : region?.city;
+const metadataCitySeo = metadataCity?.seo;
+const currentSeo = pageSeo[pagePath];
 const {
     title: suppliedTitle,
     description: suppliedDescription,
@@ -43,17 +48,20 @@ const {
 } = Astro.props;
 const pageTitle = currentSeo?.title || suppliedTitle || pageSeo["/"].title;
 const pageDescription = currentSeo?.description || suppliedDescription || pageSeo["/"].description;
-const title = isCityHome && citySeo?.title ? citySeo.title : region ? `${pageTitle} | ${region.city.name}` : pageTitle;
-const description = isCityHome && citySeo?.description ? citySeo.description
-    : region && citySeo?.description ? `${pageDescription} ${citySeo.description}` : pageDescription;
-const keywords = [currentSeo?.keywords || suppliedKeywords, citySeo?.keywords].filter(Boolean).join(", ").replace(/разработчик_ии/g, "разработчик ИИ");
-const robots = suppliedRobots?.includes("noindex") ? suppliedRobots
-    : citySeo?.robots?.includes("noindex") ? citySeo.robots : suppliedRobots || citySeo?.robots;
+const title = brandName(isCityHome && metadataCitySeo?.title ? metadataCitySeo.title
+    : metadataCity ? `${pageTitle} | ${metadataCity.name}` : pageTitle);
+const description = brandName(isCityHome && metadataCitySeo?.description ? metadataCitySeo.description
+    : metadataCitySeo?.description ? `${pageDescription} ${metadataCitySeo.description}` : pageDescription);
+const keywords = [currentSeo?.keywords || suppliedKeywords, metadataCitySeo?.keywords].filter(Boolean).join(", ").replace(/разработчик_ии/g, "разработчик ИИ");
+const robots = /\bnoindex\b/i.test(suppliedRobots || "") ? suppliedRobots
+    : /\bnoindex\b/i.test(citySeo?.robots || "") ? citySeo?.robots
+    : region && isCityHome && !isIndexableCityHome(region.city, region.defaultCitySlug) ? "noindex,follow"
+    : suppliedRobots || citySeo?.robots;
 const canonical = region ? new URL(cityPath(region.city.slug, region.defaultCitySlug), SITE_ORIGIN).href
-    : suppliedCanonical || new URL(Astro.url.pathname, SITE_ORIGIN).href;
-const ogTitle = isCityHome ? citySeo?.og_title || title : title;
-const ogDescription = isCityHome ? citySeo?.og_description || description : description;
-let image = (isCityHome ? citySeo?.og_image : undefined) || suppliedImage || DEFAULT_OG_IMAGE;
+    : suppliedCanonical || new URL(pagePath, SITE_ORIGIN).href;
+const ogTitle = brandName((isCityHome && metadataCitySeo?.og_title) || title);
+const ogDescription = brandName((isCityHome && metadataCitySeo?.og_description) || description);
+let image = (isCityHome ? metadataCitySeo?.og_image : undefined) || suppliedImage || DEFAULT_OG_IMAGE;
 if (image.startsWith("/images/og-")) image = DEFAULT_OG_IMAGE;
 if (image.startsWith("/images/blog/") && image.endsWith(".svg")) {
     image = image.replace("/images/blog/", "/images/og/").replace(/\.svg$/, ".jpg");
@@ -126,7 +134,7 @@ const quickTelegramUrl = import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1
     <meta name="description" content={description}>
     {keywords && <meta name="keywords" content={keywords}>}
     {robots && <meta name="robots" content={robots}>}
-    <meta name="author" content="Денис Митрофанов">
+    <meta name="author" content="AiCRAFT">
     <meta name="theme-color" content="#0a0a0a">
     <meta name="generator" content={Astro.generator}/>
 
@@ -145,7 +153,7 @@ const quickTelegramUrl = import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1
     <meta property="og:image" content={socialImage}>
 
     <!-- Twitter -->
-    <meta name="twitter:card" content={isCityHome ? citySeo?.twitter_card || "summary_large_image" : "summary_large_image"}>
+    <meta name="twitter:card" content={(isCityHome && metadataCitySeo?.twitter_card) || "summary_large_image"}>
     <meta name="twitter:url" content={canonical}>
     <meta name="twitter:title" content={title}>
     <meta name="twitter:description" content={description}>
@@ -218,7 +226,7 @@ const quickTelegramUrl = import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1
         }
     </style>
 </head>
-<body>
+<body class={Astro.props.bodyClass}>
 <slot/>
 <CookieNotice/>
 <div class="mobile-cta" aria-label="Быстрые действия">

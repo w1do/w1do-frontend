@@ -326,60 +326,6 @@ a:focus{
 	background: var(--accent-color);
 }
 
-.preloader{
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	z-index: 1000;
-	background: var(--bg-color);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.loading-container,
-.loading{
-	height: 100px;
-	position: relative;
-	width: 100px;
-	border-radius: 100%;
-}
-
-.loading-container{
-	margin: 40px auto;
-}
-
-.loading{
-	border: 1px solid transparent;
-	border-color: transparent var(--white-color) transparent var(--white-color);
-	animation: rotate-loading 1.5s linear 0s infinite normal;
-	transform-origin: 50% 50%;
-}
-
-.loading-container:hover .loading,
-.loading-container .loading{
-	transition: all 0.5s ease-in-out;
-}
-
-#loading-icon{
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	max-width: 66px;
-	transform: translate(-50%, -50%);
-}
-
-@keyframes rotate-loading{
-	0%{
-		transform: rotate(0deg);
-	}
-	100%{
-		transform: rotate(360deg);
-	}
-}
-
 .bg-section{
 	width: 100%;
 	max-width: 1820px;
@@ -669,17 +615,20 @@ header.main-header .header-sticky.active{
 .main-menu ul li.submenu ul.services-mega-menu {
     width: 1240px;
     max-width: calc(100vw - 30px);
+    max-height: calc(100vh - 165px);
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    padding: 30px !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding: 20px calc(25% + 20px) 20px 20px !important;
     left: 50%;
     transform: translateX(-50%) scale(1, 0.8);
     gap: 0;
     border-radius: 20px;
+    overflow-y: auto;
 }
 
 .main-menu ul.services-mega-menu > li {
-    padding: 5px 15px;
+    position: static;
+    padding: 2px 5px;
     border-right: 1px solid rgba(0, 0, 0, 0.1);
 }
 
@@ -687,7 +636,10 @@ header.main-header .header-sticky.active{
     border-right: none;
 }
 
-.main-menu ul li:hover > ul.services-mega-menu {
+.main-menu ul li:hover > ul.services-mega-menu,
+.main-menu ul li:focus-within > ul.services-mega-menu {
+    visibility: visible;
+    opacity: 1;
     transform: translateX(-50%) scale(1, 1);
 }
 
@@ -697,9 +649,135 @@ header.main-header .header-sticky.active{
 
 .main-menu ul.services-mega-menu li a {
     white-space: normal;
-    line-height: 1.3;
-    padding: 10px 15px !important;
+    min-height: 46px;
+    line-height: 1.25;
+    font-size: 15px;
+    padding: 8px !important;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    border-radius: 9px;
+    transition: background-color 0.2s ease;
+}
+
+.main-menu ul.services-mega-menu > li.is-preview-active > a,
+.main-menu ul.services-mega-menu li a:hover,
+.main-menu ul.services-mega-menu li a:focus {
+    color: var(--black-color);
+    background: rgba(21, 30, 16, 0.1);
+    padding: 8px !important;
+}
+
+.service-menu-link__icon {
+    display: inline-flex;
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.55);
+}
+
+.service-menu-link__icon img {
     display: block;
+    width: 100%;
+    height: 100%;
+    padding: 2px;
+    object-fit: contain;
+}
+
+.service-menu-link__text {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.service-menu-link__title {
+    display: block;
+}
+
+.service-menu-link__description {
+    display: -webkit-box;
+    overflow: hidden;
+    color: rgba(20, 30, 15, 0.72);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.3;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.slicknav_nav .service-menu-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.main-menu ul.services-mega-menu li a:focus-visible {
+    outline: 2px solid var(--black-color);
+    outline-offset: -2px;
+    border-radius: 8px;
+}
+
+.service-menu-preview {
+    display: none;
+}
+
+.main-menu ul.services-mega-menu:not(.has-preview-control) > li:hover .service-menu-preview,
+.main-menu ul.services-mega-menu:not(.has-preview-control) > li:focus-within .service-menu-preview,
+.main-menu ul.services-mega-menu:not(.has-preview-control):not(:has(> li:hover, > li:focus-within)) > li.is-preview-active .service-menu-preview,
+.main-menu ul.services-mega-menu.has-preview-control > li.is-preview-active .service-menu-preview {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: calc(25% - 20px);
+    max-height: calc(100vh - 205px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 13px;
+    background: #171d14;
+    color: #fff;
+    pointer-events: none;
+    transform: translateY(var(--service-preview-scroll, 0px));
+}
+
+.service-menu-preview__image {
+    flex: 0 0 172px;
+    padding: 10px;
+    background: #e8fbb9;
+}
+
+.service-menu-preview__image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.service-menu-preview__content {
+    padding: 18px;
+}
+
+.service-menu-preview__title {
+    display: block;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+.service-menu-preview__content p {
+    display: -webkit-box;
+    overflow: hidden;
+    margin: 8px 0 0;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 13px;
+    line-height: 1.45;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
 }
 
 .main-menu ul li.submenu ul li.submenu > a:after{
@@ -3546,6 +3624,10 @@ header.main-header .header-sticky.active{
 	padding: 120px 0;
 }
 
+.service-price-note + .page-service-single{
+	padding-top: 0;
+}
+
 .page-single-sidebar{
 	position: sticky;
 	top: 30px;
@@ -4678,6 +4760,11 @@ header.main-header .header-sticky.active{
 .pricing-item-price h2{
 	font-size: 54px;
 	line-height: 1em;
+}
+
+.pricing-item-price .pricing-estimate-basis{
+	font-size: clamp(24px, 2.3vw, 32px);
+	line-height: 1.2;
 }
 
 .pricing-item-price h2 sub{
@@ -11920,11 +12007,13 @@ header.main-header .header-sticky.active{
 @media (max-width: 991px) {
     .main-menu ul li.submenu ul.services-mega-menu {
         width: 100%;
+        max-height: none;
         display: block;
         grid-template-columns: none;
         left: 0;
         transform: none;
         padding: 0 !important;
+        overflow: visible;
     }
     .main-menu ul.services-mega-menu > li {
         border-right: none !important;
@@ -12081,4 +12170,20 @@ header.main-header .header-sticky.active{
 	.main-menu ul li.submenu > a:after{ font-size: 13px; margin-left: 5px; }
 	.main-menu .nav-menu-wrapper{ margin: 0 8px; }
 	.header-btn .btn-default{ padding: 12px 56px 12px 18px; font-size: 15px; }
+}
+
+/* Exterior spacing for page sections. FAQ, the calculator and Spacer can set their own gaps. */
+body{
+	--page-section-gap: clamp(24px, 4vw, 48px);
+}
+
+:where(body) > :is(
+	main, section, .bg-section, .hero-prime, .google-map, .container, div:where(:has(> .container))
+):not(:where(.page-header, .main-footer-prime, .our-faqs, .estimate-page, :has(+ .custom-spacer))){
+	margin-block-end: var(--page-section-gap);
+}
+
+/* Bootstrap's mb-0 is important. Restore the gap when no Spacer follows the FAQ. */
+body > .our-faqs.mb-0:not(:has(+ .custom-spacer)){
+	margin-block-end: var(--page-section-gap) !important;
 }

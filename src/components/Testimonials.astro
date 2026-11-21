@@ -10,35 +10,27 @@ interface TestimonialItem {
 }
 
 interface Props {
+    homeOriginal?: boolean;
     subTitle?: string;
     title?: string;
     description?: string;
     testimonials?: TestimonialItem[];
     ctaText?: string;
+    showFeedback?: boolean;
 }
 
 const {
+    homeOriginal = false,
     subTitle = "Отзывы клиентов",
-    title = "Что говорят клиенты о моем опыте разработки ИИ",
-    description = "Компании и предприниматели доверяют мне разработку ИИ-решений, которые реально влияют на бизнес-показатели и автоматизируют рутину.",
-    testimonials = [
-        {
-            rating: 5,
-            text: "Внедрение RAG-системы для нашей службы поддержки превзошло все ожидания. Раньше операторы тратили минуты на поиск по регламентам, теперь ИИ выдает точный ответ за секунды. Время обработки заявки сократилось на 60%, а клиенты получают помощь мгновенно.",
-            authorName: "Александр Волков",
-            authorRole: "Руководитель отдела поддержки",
-            authorImage: "/images/author-1.jpg"
-        },
-        {
-            rating: 5,
-            text: "Как разработчик ИИ, Денис помог нам создать автономного агента для обработки возвратов. Это не просто чат-бот, а полноценная система, которая проверяет чеки, сверяет данные в CRM и выносит решение. Мы разгрузили менеджеров на 40% за первый месяц.",
-            authorName: "Мария Соколова",
-            authorRole: "COO E-commerce проекта",
-            authorImage: "/images/author-2.jpg"
-        }
-    ],
-    ctaText = "Пилот запускаем на ограниченном участке, чтобы результат был измеримым."
+    title = homeOriginal ? "Что говорят клиенты о моем опыте разработки ИИ" : "Как клиенты оценивают работу AiCRAFT",
+    description = homeOriginal ? "Компании и предприниматели доверяют мне разработку ИИ-решений, которые реально влияют на бизнес-показатели и автоматизируют рутину." : "Отзывы о совместной работе и внедрении решений.",
+    testimonials = [],
+    ctaText = homeOriginal ? "Пилот запускаем на ограниченном участке, чтобы результат был измеримым." : "В пилоте согласуем, как измерить результат до рабочего запуска.",
+    showFeedback = false,
 } = Astro.props;
+
+const hasTestimonials = testimonials.length > 0;
+if (!hasTestimonials && !showFeedback) return null;
 ---
 <!-- Our Testimonials Section Start -->
 <div class="our-testimonials">
@@ -64,7 +56,7 @@ const {
 
                     <!-- Section Button Start -->
                     <div class="section-btn wow fadeInUp" data-wow-delay="0.4s">
-                        <a href="/testimonials/" class="btn-default">Все отзывы</a>
+                        <a href={homeOriginal ? "/testimonials/" : "/testimonials"} class="btn-default">{hasTestimonials ? "Все отзывы" : "Оставить отзыв"}</a>
                     </div>
                     <!-- Section Button End -->
                 </div>
@@ -79,41 +71,39 @@ const {
                     <!-- Testimonial image Start -->
                     <div class="testimonial-image">
                         <figure>
-                            <Image src="/images/testimonial-image.jpg" alt="Отзыв клиента AI агентства" width={800} height={600} loading="lazy" />
+                            <Image src="/images/testimonial-image.jpg" alt={homeOriginal ? "Отзыв клиента AI агентства" : ""} width={800} height={600} loading="lazy" />
                         </figure>
                     </div>
                     <!-- Testimonial image End -->
 
                     <!-- Testimonials CTA Box Start -->
                     <div class="testimonials-cta-box">
-                        <!-- Satisfy Client Images Start -->
-                        <div class="satisfy-client-images">
-                            <div class="satisfy-client-image">
-                                <figure class="image-anime">
-                                    <img loading="lazy" decoding="async" src="/images/author-1.jpg" alt="Александр Волков">
-                                </figure>
+                        {homeOriginal && (
+                            <div class="satisfy-client-images">
+                                <div class="satisfy-client-image">
+                                    <figure class="image-anime">
+                                        <img loading="lazy" decoding="async" src="/images/author-1.jpg" alt="Александр Волков">
+                                    </figure>
+                                </div>
+                                <div class="satisfy-client-image">
+                                    <figure class="image-anime">
+                                        <img loading="lazy" decoding="async" src="/images/author-2.jpg" alt="Мария Соколова">
+                                    </figure>
+                                </div>
+                                <div class="satisfy-client-image">
+                                    <figure class="image-anime">
+                                        <img loading="lazy" decoding="async" src="/images/author-3.jpg" alt="Дмитрий Иванов">
+                                    </figure>
+                                </div>
+                                <div class="satisfy-client-image">
+                                    <figure class="image-anime">
+                                        <img loading="lazy" decoding="async" src="/images/author-4.jpg" alt="Клиент">
+                                    </figure>
+                                </div>
                             </div>
-                            <div class="satisfy-client-image">
-                                <figure class="image-anime">
-                                    <img loading="lazy" decoding="async" src="/images/author-2.jpg" alt="Мария Соколова">
-                                </figure>
-                            </div>
-                            <div class="satisfy-client-image">
-                                <figure class="image-anime">
-                                    <img loading="lazy" decoding="async" src="/images/author-3.jpg" alt="Дмитрий Иванов">
-                                </figure>
-                            </div>
-                            <div class="satisfy-client-image">
-                                <figure class="image-anime">
-                                    <img loading="lazy" decoding="async" src="/images/author-4.jpg" alt="Клиент">
-                                </figure>
-                            </div>
-                        </div>
-                        <!-- Satisfy Client Images End -->
-
-                        <!-- Testimonials CTA Content Start -->
+                        )}
                         <div class="testimonials-cta-content">
-                            <p>“ {ctaText}</p>
+                            <p>{homeOriginal && "“ "}{ctaText}</p>
                         </div>
                         <!-- Testimonials CTA Content End -->
                     </div>
@@ -123,7 +113,7 @@ const {
             </div>
 
             <div class="col-xl-8 col-lg-7">
-                <!-- Testimonial Slider Start -->
+                {hasTestimonials ? (
                 <div class="testimonial-slider box-border-gradiant">
                     <div class="swiper">
                         <div class="swiper-wrapper" data-cursor-text="Drag">
@@ -144,7 +134,7 @@ const {
 
                                             <!-- Testimonial Item Content Start -->
                                             <div class="testimonial-item-content">
-                                                <p>“ {item.text} ”</p>
+                                                <p>“ {item.text} ”</p>{homeOriginal && " "}
                                             </div>
                                             <!-- Testimonial Item Content End -->
                                         </div>
@@ -158,8 +148,8 @@ const {
                                                 </figure>
                                             </div>
                                             <div class="testimonial-author-content">
-                                                <h2>{item.authorName}</h2>
-                                                <p>{item.authorRole}</p>
+                                                <h2>{item.authorName}</h2>{homeOriginal && " "}
+                                                <p>{item.authorRole}</p>{homeOriginal && " "}
                                             </div>
                                         </div>
                                         <!-- Testimonial Item Author End -->
@@ -175,9 +165,32 @@ const {
                         </div>
                     </div>
                 </div>
-                <!-- Testimonial Slider End -->
+                ) : (
+                    <div class="testimonial-feedback box-border-gradiant wow fadeInUp">
+                        <h3>Что написать в отзыве</h3>
+                        <p>Расскажите, какую задачу мы решали вместе, что получилось после запуска и что нам стоит улучшить.</p>
+                        <a href="/contact" class="btn-default">Написать в AiCRAFT</a>
+                    </div>
+                )}
             </div>
         </div>
     </div>
 </div>
 <!-- Our Testimonials Section End -->
+
+<style>
+    .testimonial-feedback {
+        display: flex;
+        min-height: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 16px;
+        padding: clamp(24px, 4vw, 56px);
+    }
+
+    .testimonial-feedback h3,
+    .testimonial-feedback p {
+        margin: 0;
+    }
+</style>

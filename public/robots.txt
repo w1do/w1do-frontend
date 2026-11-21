@@ -1,4 +1,4 @@
-# W1DO DIGITAL — https://aicraft.agency
+# AiCRAFT — https://aicraft.agency
 # LLM-контекст: https://aicraft.agency/llms.txt
 
 # --- OpenAI ---
@@ -110,7 +110,6 @@ Allow: /
 # --- Все остальные боты ---
 User-agent: *
 Allow: /
-Disallow: /*?
 Disallow: /admin
 Disallow: /api/
 Disallow: /node_modules/

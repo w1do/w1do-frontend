@@ -3,7 +3,7 @@ import { getBlogPosts } from "../../lib/server/w1do/blog";
 
 const posts = await getBlogPosts();
 const latestPosts = posts
-    .sort((a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf())
+    .toSorted((a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf())
     .slice(0, 3);
 ---
 <!-- Our Blog Section Start -->

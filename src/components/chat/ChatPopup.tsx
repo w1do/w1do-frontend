@@ -72,9 +72,9 @@ export default function ChatPopup() {
     return (
         <div className="ai-chat-popup">
             {mounted && (
-                <div id={panelId} ref={panelRef} className="ai-chat-popup__panel" role="dialog" aria-label="ИИ-помощник AiCRAFT.AGENCY" hidden={!open}>
+                <div id={panelId} ref={panelRef} className="ai-chat-popup__panel" role="dialog" aria-label="ИИ-помощник AiCRAFT" hidden={!open}>
                     <div className="ai-chat-popup__header">
-                        <span className="ai-chat-popup__title">ИИ-помощник AiCRAFT.AGENCY</span>
+                        <span className="ai-chat-popup__title">ИИ-помощник AiCRAFT</span>
                         <button type="button" className="ai-chat-popup__close" aria-label="Свернуть чат" onClick={hide}>×</button>
                     </div>
                     <AiChat variant="popup" source="chat-popup" />

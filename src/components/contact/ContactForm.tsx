@@ -7,18 +7,25 @@ interface ContactFormProps {
     /** "compact" — три поля для главной и CTA-блоков, "full" — форма страницы контактов. */
     variant?: "full" | "compact";
     source?: string;
+    formId?: string;
+    homeOriginal?: boolean;
 }
 
 export default function ContactForm({
     title = "Оставить заявку",
     variant = "full",
     source = "contact-page",
+    formId: assignedFormId,
+    homeOriginal = false,
 }: ContactFormProps) {
     const { status, message, handleSubmit } = useContactForm({ source });
     const isLoading = status === "loading";
     const isSuccess = status === "success";
     const isError = status === "error";
     const compact = variant === "compact";
+    const messagePlaceholder = compact
+        ? (homeOriginal ? "Например: автоматизировать ответы в поддержке" : "Например, перенести заявки из почты в CRM")
+        : "Что нужно изменить в вашем процессе?";
     const messageRef = useRef<HTMLTextAreaElement>(null);
     const formId = useId().replaceAll(":", "");
 
@@ -58,13 +65,13 @@ export default function ContactForm({
 
     return (
         <div className="contact-form">
-            {compact && (
+            {compact && (homeOriginal || title) && (
                 <div className="section-title section-title-center">
                     <h2 className="text-anime-style-3" data-cursor="-opaque">{title}</h2>
                 </div>
             )}
             <form
-                id={`${formId}-form`}
+                id={assignedFormId ?? `${formId}-form`}
                 method="POST"
                 className="contact-form wow fadeInUp"
                 data-wow-delay="0.2s"
@@ -112,7 +119,7 @@ export default function ContactForm({
                             id={`${formId}-message`}
                             ref={messageRef}
                             rows={compact ? 3 : 5}
-                            placeholder={compact ? "Например: автоматизировать ответы в поддержке" : "Ваше сообщение..."}
+                            placeholder={messagePlaceholder}
                         ></textarea>
                     </div>
 
@@ -125,7 +132,7 @@ export default function ContactForm({
 
                         {isSuccess && (
                             <div className="h4 text-success mt-3" role="status">
-                                Заявка отправлена. Я свяжусь с вами.
+                                {homeOriginal ? "Заявка отправлена. Я свяжусь с вами." : "Заявка отправлена. Мы свяжемся с вами."}
                             </div>
                         )}
 

@@ -94,6 +94,27 @@ export async function getBlogPosts(category?: number): Promise<BlogPost[]> {
     .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf() || a.id.localeCompare(b.id));
 }
 
+let canonicalPaths: { paths: ReadonlyMap<string, string>; expiresAt: number } | undefined;
+let pendingCanonicalPaths: Promise<ReadonlyMap<string, string>> | undefined;
+
+export async function getBlogCanonicalPaths(): Promise<ReadonlyMap<string, string>> {
+  if (canonicalPaths && canonicalPaths.expiresAt > Date.now()) return canonicalPaths.paths;
+  if (!pendingCanonicalPaths) {
+    pendingCanonicalPaths = getBlogPosts().then(posts => {
+      const paths = new Map(posts.map(post => [`/blog/${post.id}`, post.url]));
+      const engineering = paths.get("/blog/engineering");
+      if (engineering) {
+        paths.set("/blog/ai-agent-engineering", engineering);
+        paths.set("/blog/ai-agents/ai-agent-engineering", engineering);
+      }
+      canonicalPaths = { paths, expiresAt: Date.now() + 60_000 };
+      return paths;
+    }).catch(() => canonicalPaths?.paths || new Map<string, string>())
+      .finally(() => { pendingCanonicalPaths = undefined; });
+  }
+  return pendingCanonicalPaths;
+}
+
 export async function getBlogPostBySlug(slug: string): Promise<BlogPost | undefined> {
   if (!/^[a-z0-9-]+$/.test(slug)) return undefined;
   const response = await request(`/api/v1/content/posts/${encodeURIComponent(slug)}`);

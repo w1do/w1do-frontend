@@ -1,4 +1,10 @@
 ---
+import {
+    formatPrice,
+    INDIVIDUAL_PRICE_LABEL,
+    STARTING_CONSULTATION_PRICE,
+    STARTING_PROJECT_PRICE,
+} from "../../lib/pricing";
 ---
 <!-- Our Pricing Plan Section Start -->
 <div class="our-pricing-prime">
@@ -8,8 +14,8 @@
                 <!-- Section Title Start -->
                 <div class="section-title section-title-center">
                     <span class="section-sub-title wow fadeInUp">Стоимость консультаций по ИИ</span>
-                    <h2 class="text-anime-style-3" data-cursor="-opaque">Инвестируй в экспертизу для ускорения своего бизнеса</h2>
-                    <p class="wow fadeInUp" data-wow-delay="0.2s">Выбери подходящий формат взаимодействия. От короткого ответа на конкретный вопрос до глубокого разбора твоей бизнес-архитектуры.</p>
+                    <h2 class="text-anime-style-3" data-cursor="-opaque">Выберите формат консультации</h2>
+                    <p class="wow fadeInUp" data-wow-delay="0.2s">Для одного вопроса подойдёт короткая встреча. Для оценки интеграций и подготовки плана внедрения можно выбрать расширенный разбор.</p>
                 </div>
                 <!-- Section Title End -->
             </div>
@@ -32,8 +38,8 @@
 
                     <!-- Pricing Item Price Start -->
                     <div class="pricing-item-price">
-                        <h2>5 000 ₽<sub>/1 час</sub></h2>
-                        <p>Быстрое решение твоих точечных задач и ответы на вопросы по Claude/Cursor.</p>
+                        <h2>{formatPrice({ priceFrom: STARTING_CONSULTATION_PRICE, unit: "project" })}</h2>
+                        <p>Часовая встреча для разбора конкретного вопроса по ИИ-агентам, инструментам или настройке Claude Code.</p>
                     </div>
                     <!-- Pricing Item Price End -->
 
@@ -73,8 +79,8 @@
 
                     <!-- Pricing Item Price Start -->
                     <div class="pricing-item-price">
-                        <h2>9 000 ₽<sub>/2 часа</sub></h2>
-                        <p>Моё погружение в твой проект и проектирование архитектуры ИИ-решения.</p>
+                        <h2>{formatPrice({ priceFrom: STARTING_PROJECT_PRICE, unit: "project" })}</h2>
+                        <p>За два часа разбираем архитектуру проекта и варианты внедрения с учётом ваших данных и доступов.</p>
                     </div>
                     <!-- Pricing Item Price End -->
 
@@ -114,8 +120,8 @@
 
                     <!-- Pricing Item Price Start -->
                     <div class="pricing-item-price">
-                        <h2>15 000 ₽<sub>/полный разбор</sub></h2>
-                        <p>Комплексный анализ задачи с подготовкой AI Roadmap и ТЗ от меня.</p>
+                        <h2 class="pricing-estimate-basis">{INDIVIDUAL_PRICE_LABEL}</h2>
+                        <p>Разбираем процесс и готовим план внедрения с требованиями к данным и интеграциям.</p>
                     </div>
                     <!-- Pricing Item Price End -->
 
@@ -129,8 +135,8 @@
                     <div class="pricing-item-list">
                         <h3>Что включено:</h3>
                         <ul>
-                            <li>Мой аудит бизнес-процессов</li>
-                            <li>Твой готовый план внедрения ИИ</li>
+                            <li>Аудит бизнес-процессов</li>
+                            <li>План внедрения ИИ</li>
                             <li>Оценка сроков и бюджета</li>
                         </ul>
                     </div>
@@ -144,8 +150,8 @@
                 <div class="pricing-benefit-list wow fadeInUp" data-wow-delay="0.6s">
                     <ul>
                         <li><img src="/images/icon-pricing-benefit-1.svg" alt="Запись консультации по ИИ">Запись консультации</li>
-                        <li><img src="/images/icon-pricing-benefit-2.svg" alt="Чек-лист по ИИ">Твой чек-лист по итогам</li>
-                        <li><img src="/images/icon-pricing-benefit-3.svg" alt="Скидка на разработку">Скидка на мою разработку 10%</li>
+                        <li><img src="/images/icon-pricing-benefit-2.svg" alt="Чек-лист по ИИ">Чек-лист по итогам</li>
+                        <li><img src="/images/icon-pricing-benefit-3.svg" alt="Скидка на разработку">Скидка на разработку 10%</li>
                     </ul>
                 </div>
                 <!-- Pricing Benifit List End -->

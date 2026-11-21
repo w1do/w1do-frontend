@@ -1,6 +1,8 @@
 ---
 import Layout from "./Layout.astro";
 import { SITE_ORIGIN } from "../lib/regions";
+import { getEntry } from "astro:content";
+import { breadcrumbSchema } from "../lib/breadcrumbs";
 import Header from "../components/shared/Header.astro";
 import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
 import About from "../components/About.astro";
@@ -21,6 +23,7 @@ import HirePricing from "../components/hire/HirePricing.astro";
 import HireFaqs from "../components/hire/HireFaqs.astro";
 import TrainingPricing from "../components/training/TrainingPricing.astro";
 import ClusterSpokes from "../components/services/cluster/ClusterSpokes.astro";
+import { getStartingProjectOffer } from "../lib/service-pricing";
 
 const { frontmatter, spokes = [] } = Astro.props;
 const {
@@ -31,6 +34,7 @@ const {
   image,
   breadcrumbTitle,
   breadcrumbLabel,
+  cluster,
   about = {},
   feature = {},
   introVideo = {},
@@ -51,7 +55,23 @@ const {
 const metaTitle = seo?.title ?? title;
 const metaDescription = seo?.description ?? description;
 
-const pageUrl = new URL(Astro.url.pathname, SITE_ORIGIN).href;
+const pagePath = Astro.url.pathname.replace(/\/$/, "");
+const pageUrl = new URL(pagePath, SITE_ORIGIN).href;
+const parent = cluster ? await getEntry("landingCluster", cluster) : undefined;
+const parentOffer = !customPricing && cluster === "ai-agents"
+  ? getStartingProjectOffer(parent?.data.pricing, cluster)
+  : undefined;
+const breadcrumbTrail = [
+  { name: "Главная", path: "/" },
+  { name: "Услуги", path: "/services" },
+  ...(parent?.data.hub ? [{ name: parent.data.breadcrumbLabel ?? parent.data.title, path: `/${parent.id}` }] : []),
+  { name: breadcrumbLabel ?? title, path: pagePath },
+];
+const breadcrumbItems = breadcrumbTrail.map(({ name, path }) => ({
+  label: name,
+  href: path,
+  active: path === pagePath,
+}));
 const serviceSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
@@ -61,14 +81,6 @@ const serviceSchema = {
   "serviceType": title,
   "provider": { "@id": `${SITE_ORIGIN}/#organization` },
   "areaServed": { "@type": "Country", "name": "Россия" }
-};
-const breadcrumbsJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Главная", "item": new URL("/", SITE_ORIGIN).href },
-    { "@type": "ListItem", "position": 2, "name": breadcrumbLabel ?? title, "item": pageUrl }
-  ]
 };
 const faqJsonLd = Array.isArray(customFaqs) && customFaqs.length
   ? {
@@ -81,7 +93,7 @@ const faqJsonLd = Array.isArray(customFaqs) && customFaqs.length
       }))
     }
   : null;
-const pageSchemas = [serviceSchema, breadcrumbsJsonLd, faqJsonLd].filter(Boolean);
+const pageSchemas = [serviceSchema, breadcrumbSchema(breadcrumbTrail), faqJsonLd].filter(Boolean);
 ---
 
 <Layout title={metaTitle} description={metaDescription} keywords={keywords} image={image} schema={pageSchemas}>
@@ -89,10 +101,7 @@ const pageSchemas = [serviceSchema, breadcrumbsJsonLd, faqJsonLd].filter(Boolean
 
   <Breadcrumbs
     title={breadcrumbTitle ?? title}
-    breadcrumbItems={[
-      { label: "Главная", href: "/" },
-      { label: breadcrumbLabel ?? title, active: true },
-    ]}
+    breadcrumbItems={breadcrumbItems}
   />
 
   <About
@@ -174,6 +183,8 @@ const pageSchemas = [serviceSchema, breadcrumbsJsonLd, faqJsonLd].filter(Boolean
     benefit1Desc={choose.benefit1Desc}
     benefit2Title={choose.benefit2Title}
     benefit2Desc={choose.benefit2Desc}
+    priceTitle={parentOffer ? "Стоимость старта" : undefined}
+    priceDesc={parentOffer ? `Базовый сценарий — ${parentOffer.priceLabel}. Внедрение в рабочие системы оцениваем по смете.` : undefined}
   />
 
   {spokes && spokes.length > 0 && (

@@ -1,4 +1,10 @@
 ---
+import {
+    formatPrice,
+    INDIVIDUAL_PRICE_LABEL,
+    STARTING_CONSULTATION_PRICE,
+    STARTING_PROJECT_PRICE,
+} from "../../lib/pricing";
 ---
 <!-- Hire Pricing Section Start -->
 <div class="our-pricing-prime">
@@ -8,8 +14,8 @@
                 <!-- Section Title Start -->
                 <div class="section-title section-title-center">
                     <span class="section-sub-title wow fadeInUp">Форматы сотрудничества</span>
-                    <h2 class="text-anime-style-3" data-cursor="-opaque">Моя стоимость и условия</h2>
-                    <p class="wow fadeInUp" data-wow-delay="0.2s">Выбери оптимальный вариант для своего проекта: от точечных доработок до моего полного погружения в твою продуктовую команду.</p>
+                    <h2 class="text-anime-style-3" data-cursor="-opaque">Стоимость и состав работ</h2>
+                    <p class="wow fadeInUp" data-wow-delay="0.2s">Можно начать с конкретной доработки, заказать проект или согласовать долгосрочную инженерную поддержку.</p>
                 </div>
                 <!-- Section Title End -->
             </div>
@@ -29,8 +35,8 @@
                     </div>
 
                     <div class="pricing-item-price">
-                        <h2>2 400 ₽<sub>/час</sub></h2>
-                        <p>Идеально для небольших задач, багфикса или консультаций по коду.</p>
+                        <h2>{formatPrice({ priceFrom: STARTING_CONSULTATION_PRICE, unit: "project" })}</h2>
+                        <p>Для отдельных задач: проверка кода, исправление ошибок или консультация по реализации.</p>
                     </div>
 
                     <div class="pricing-item-btn">
@@ -41,7 +47,7 @@
                         <h3>Что включено:</h3>
                         <ul>
                             <li>Решение конкретных тикетов</li>
-                            <li>Код-ревью твоих ИИ-решений</li>
+                            <li>Проверка кода и настроек ИИ-решения</li>
                             <li>Настройка воркфлоу в n8n</li>
                             <li>Гибкое планирование</li>
                         </ul>
@@ -63,8 +69,8 @@
                     </div>
 
                     <div class="pricing-item-price">
-                        <h2>от 250 000 ₽</h2>
-                        <p>Разработка решения "под ключ": от архитектуры до продакшена.</p>
+                        <h2>{formatPrice({ priceFrom: STARTING_PROJECT_PRICE, unit: "project" })}</h2>
+                        <p>Базовую задачу берём в работу от стартовой суммы. Полный объём разработки и запуска оцениваем по смете.</p>
                     </div>
 
                     <div class="pricing-item-btn">
@@ -76,7 +82,7 @@
                         <ul>
                             <li>Сбор требований и ТЗ</li>
                             <li>Проектирование архитектуры</li>
-                            <li>Моя полная реализация (RAG, Агенты)</li>
+                            <li>Разработка ИИ-агентов и RAG</li>
                             <li>Гарантийная поддержка</li>
                         </ul>
                     </div>
@@ -97,8 +103,8 @@
                     </div>
 
                     <div class="pricing-item-price">
-                        <h2>от 280 000 ₽<sub>/мес</sub></h2>
-                        <p>Моё полное погружение в твою команду и процессы на постоянной основе.</p>
+                        <h2 class="pricing-estimate-basis">{INDIVIDUAL_PRICE_LABEL}</h2>
+                        <p>Длительная работа вместе с вашей продуктовой командой над развитием ИИ-сервисов.</p>
                     </div>
 
                     <div class="pricing-item-btn">
@@ -108,9 +114,9 @@
                     <div class="pricing-item-list">
                         <h3>Что включено:</h3>
                         <ul>
-                            <li>Мой фултайм 8/5</li>
-                            <li>Участие в твоих Agile-процессах</li>
-                            <li>Обучение твоей команды</li>
+                            <li>Работа на полной занятости по графику 8/5</li>
+                            <li>Участие в планировании и обсуждениях команды</li>
+                            <li>Обучение вашей команды</li>
                             <li>MLOps и развитие AI-стека</li>
                         </ul>
                     </div>
@@ -122,8 +128,8 @@
                 <div class="pricing-benefit-list wow fadeInUp" data-wow-delay="0.6s">
                     <ul>
                         <li><img src="/images/icon-pricing-benefit-1.svg" alt="Качество разработки ИИ">Промышленный подход</li>
-                        <li><img src="/images/icon-pricing-benefit-2.svg" alt="Прозрачность работы">Моя отчетность по этапам</li>
-                        <li><img src="/images/icon-pricing-benefit-3.svg" alt="Экспертиза ИИ">Deep AI Expertise</li>
+                        <li><img src="/images/icon-pricing-benefit-2.svg" alt="Прозрачность работы">Отчётность по этапам проекта</li>
+                        <li><img src="/images/icon-pricing-benefit-3.svg" alt="Экспертиза ИИ">Опыт разработки ИИ-агентов</li>
                     </ul>
                 </div>
             </div>

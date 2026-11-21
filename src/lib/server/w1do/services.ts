@@ -1,5 +1,6 @@
 import { fetchServiceEntries } from "./services-api";
-import { aiAgentsCanonical } from "../../ai-agents-canonical";
+import { canonicalServicePath } from "../../ai-agents-canonical";
+import { canonicalCmsHtml } from "../regional-html";
 const CACHE_TTL = 60_000;
 const GENERIC_SERVICE_IMAGE = "uhkgnmd2Bfd0VOWFyKCtbmD93bIEl0AaMOKnNvPW.jpg";
 const MEDIA_BASE_URL = "https://backend.w1do.ru/media/projects/01m15zc30ghk21dmk2a4ph5wkg/media";
@@ -45,6 +46,7 @@ export interface ServiceEntry {
   hub: boolean;
   cluster: string;
   postSlug: string;
+  publicPath: string;
   url: string;
   cmsPath: string;
   bodyHtml: string;
@@ -103,6 +105,7 @@ function mapEntry(entry: Awaited<ReturnType<typeof fetchServiceEntries>>[number]
 
   const hub = type === "hub";
   const postSlug = text(values.post_slug);
+  const publicPath = text(values.public_path, hub ? `/services/${cluster}` : `/services/${cluster}/${postSlug}`);
   return {
     title: cleanText(entry.title),
     description: cleanText(text(values.description)),
@@ -113,11 +116,10 @@ function mapEntry(entry: Awaited<ReturnType<typeof fetchServiceEntries>>[number]
     hub,
     cluster,
     postSlug,
-    url: cluster === "ai-agent-development"
-      ? (hub ? "/ai-agents" : aiAgentsCanonical(postSlug))
-      : text(values.public_path, hub ? `/services/${cluster}` : `/services/${cluster}/${postSlug}`),
+    publicPath,
+    url: canonicalServicePath(publicPath),
     cmsPath: `/services/${entry.slug}`,
-    bodyHtml: cleanText(text(values.body_html)),
+    bodyHtml: canonicalCmsHtml(cleanText(text(values.body_html)), publicPath),
     image: resolveImage(values, cluster),
     imageAlt: text(values.image_alt) || undefined,
     icon: text(values.icon, "/images/icon-service-3.svg"),
@@ -165,5 +167,5 @@ export async function getServiceSpokes(cluster: string): Promise<ServiceEntry[]>
 
 export async function getServiceByPath(parts: string[]): Promise<ServiceEntry | undefined> {
   const path = `/services/${parts.join("/")}`;
-  return (await getServices()).find((entry) => entry.url === path);
+  return (await getServices()).find((entry) => entry.publicPath === path && entry.url === path);
 }

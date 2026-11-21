@@ -1,12 +1,13 @@
-// Единый источник цен. Все страницы берут значения отсюда.
-// TODO(pricing): подтвердить сетку у владельца — сейчас за основу взята
-// страница /pricing, чтобы убрать расхождения между главной и услугами.
+export const STARTING_CONSULTATION_PRICE = 2500;
+export const STARTING_PROJECT_PRICE = 5000;
+export const INDIVIDUAL_PRICE_LABEL = "Индивидуально";
+
 export type PriceUnit = "project" | "month";
 
 export interface PricingPackage {
     id: string;
     name: string;
-    /** null — цена по запросу. */
+    /** null — стоимость рассчитывается индивидуально. */
     priceFrom: number | null;
     unit: PriceUnit;
     term: string;
@@ -22,7 +23,7 @@ export const PACKAGES: PricingPackage[] = [
     {
         id: "audit",
         name: "Аудит и roadmap",
-        priceFrom: 3000,
+        priceFrom: STARTING_CONSULTATION_PRICE,
         unit: "project",
         term: "1–3 дня",
         description: "Разбираем процесс, находим точку роста и считаем эффект до разработки.",
@@ -34,11 +35,11 @@ export const PACKAGES: PricingPackage[] = [
     {
         id: "mvp",
         name: "AI MVP",
-        priceFrom: 150000,
+        priceFrom: STARTING_PROJECT_PRICE,
         unit: "project",
         term: "2–3 недели",
-        description: "Рабочий прототип агента или сервиса, который можно показать команде и клиентам.",
-        features: ["Проектирование архитектуры", "Интеграция LLM", "Базовый RAG", "Тестирование и деплой"],
+        description: "Начинаем с прототипа одного сценария. Базу знаний, интеграции и запуск оцениваем отдельно.",
+        features: ["Выбор сценария", "Прототип с LLM", "Проверка результата", "Оценка следующих этапов"],
         audience: "Если нужно быстро проверить гипотезу",
         icon: "/images/icon-pricing-2.svg",
         highlighted: true,
@@ -47,7 +48,7 @@ export const PACKAGES: PricingPackage[] = [
     {
         id: "business",
         name: "Business AI",
-        priceFrom: 450000,
+        priceFrom: null,
         unit: "project",
         term: "4–8 недель",
         description: "Внедрение агента в процессы компании с интеграцией в CRM, 1С и мессенджеры.",
@@ -61,16 +62,20 @@ export const PACKAGES: PricingPackage[] = [
 export const RETAINER = {
     id: "support",
     name: "Поддержка и развитие",
-    priceFrom: 250000,
+    priceFrom: null,
     unit: "month" as PriceUnit,
     term: "от 1 месяца",
     description: "Сопровождение после запуска: мониторинг, обновления моделей, доработки.",
     features: ["Мониторинг качества", "Обновление моделей", "Доработки", "Отчётность"],
 };
 
+export function formatRubleAmount(amount: number): string {
+    return new Intl.NumberFormat("ru-RU").format(amount).replace(/\u00A0/g, " ");
+}
+
 export function formatPrice(pkg: Pick<PricingPackage, "priceFrom" | "unit">): string {
-    if (pkg.priceFrom === null) return "По запросу";
-    const value = new Intl.NumberFormat("ru-RU").format(pkg.priceFrom).replace(/\u00A0/g, " ");
+    if (pkg.priceFrom === null) return INDIVIDUAL_PRICE_LABEL;
+    const value = formatRubleAmount(pkg.priceFrom);
     return pkg.unit === "month" ? `от ${value} ₽/мес` : `от ${value} ₽`;
 }
 

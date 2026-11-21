@@ -6,24 +6,30 @@ import { getServiceHubs } from '../../lib/server/w1do/services';
 
 const currentYear = new Date().getFullYear();
 
-const services = (await getServiceHubs()).map((service) => ({
-    title: service.title,
-    link: service.url,
-}));
+const featuredServices = [
+    { title: "Разработка ИИ-агентов", link: "/ai-agents" },
+    { title: "Разработка agent harness", link: "/services/ai-solution-architecture/ai-agent-development" },
+    { title: "Инфраструктура Claude Code", link: "/consultation/claude-cursor-setup" },
+];
+const services = [
+    ...featuredServices,
+    ...(await getServiceHubs())
+        .filter((service) => !featuredServices.some(({ link }) => link === service.url))
+        .map((service) => ({ title: service.title, link: service.url })),
+];
 
 const navigationLinks = [
     { label: "Главная", href: "/" },
-    { label: "Обо мне", href: "/about" },
+    { label: "Об агентстве", href: "/about" },
     { label: "Услуги", href: "/services" },
     { label: "База знаний", href: "/knowledge" },
     { label: "Консультация", href: "/consultation" },
-    { label: "ИИ-разработчик", href: "/vibe-coding" },
-    { label: "ИИ-агенты", href: "/ai-agents" },
+    { label: "ИИ-инженерия", href: "/vibe-coding" },
     { label: "Обучение разработке с ИИ", href: "/ai-training" },
     { label: "Цены", href: "/pricing" },
     { label: "Калькулятор", href: "/calculator" },
     { label: "Кейсы", href: "/case" },
-    { label: "OpenSource", href: "/opensource" },
+    { label: "Открытые проекты", href: "/opensource" },
 ];
 ---
 <div class="main-footer-prime bg-section">
@@ -36,7 +42,7 @@ const navigationLinks = [
                     </div>
                     <div class="section-title">
                         <h2 class="text-anime-style-3">
-                            <a href="/contact" data-cursor="-opaque">Давайте создадим ваше ИИ-решение</a>
+                            <a href="/contact" data-cursor="-opaque">Обсудим вашу задачу</a>
                         </h2>
                     </div>
                 </div>
@@ -45,8 +51,8 @@ const navigationLinks = [
             <div class="col-xl-4">
                 <div class="about-footer-prime">
                     <div class="about-footer-content-prime">
-                        <h2>Обо мне</h2>
-                        <p>Специализируюсь на разработке ИИ-агентов, RAG-систем и автоматизации бизнес-процессов для повышения эффективности вашей компании.</p>
+                        <h2>Агентство AiCRAFT</h2>
+                        <p>Разрабатываем ИИ-агентов для бизнеса. Помогаем подключить данные и инструменты, развернуть agent harness и настроить Claude Code для команд.</p>
                     </div>
                     <div class="footer-contact-list-prime">
                         <ul>
@@ -68,7 +74,7 @@ const navigationLinks = [
                                 <li class={index >= 5 ? "hidden-link" : ""}><a href={link.href}>{link.label}</a></li>
                             ))}
                         </ul>
-                        {navigationLinks.length > 5 && <button class="show-more-btn" data-cursor="-opaque">Показать еще</button>}
+                        {navigationLinks.length > 5 && <button class="show-more-btn" data-cursor="-opaque">Показать ещё</button>}
                     </div>
 
                     <div class="footer-links-prime">
@@ -78,7 +84,7 @@ const navigationLinks = [
                                 <li class={index >= 5 ? "hidden-link" : ""}><a href={service.link}>{service.title}</a></li>
                             ))}
                         </ul>
-                        {services.length > 5 && <button class="show-more-btn" data-cursor="-opaque">Показать еще</button>}
+                        {services.length > 5 && <button class="show-more-btn" data-cursor="-opaque">Показать ещё</button>}
                     </div>
 
                     <div class="footer-links-prime footer-newsletter-form-prime">
@@ -86,7 +92,7 @@ const navigationLinks = [
                         <div class="footer-newsletter-form-box-prime">
                             <div class="icon-box"><i class="fa-solid fa-bell" aria-hidden="true"></i></div>
                             <div class="footer-newsletter-form-content">
-                                <p>Кейсы, разборы и заметки о внедрении ИИ.</p>
+                                <p>Примеры внедрения агентов и заметки о работе с ИИ.</p>
                             </div>
                         </div>
                         <div class="footer-social-links">
@@ -158,11 +164,11 @@ const navigationLinks = [
                 const list = button.previousElementSibling;
                 if (!list) return;
 
-                const isExpanding = button.textContent === 'Показать еще';
+                const isExpanding = button.textContent === 'Показать ещё';
                 list.querySelectorAll('.hidden-link').forEach((link) => {
                     (link as HTMLElement).style.display = isExpanding ? 'block' : 'none';
                 });
-                button.textContent = isExpanding ? 'Скрыть' : 'Показать еще';
+                button.textContent = isExpanding ? 'Скрыть' : 'Показать ещё';
             });
         });
     }
