@@ -1,14 +1,76 @@
-import { useEffect, useId, useRef } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { useContactForm } from "../../hooks/useContactForm";
 import LegalConsent from "../legal/LegalConsent";
 
+interface ServiceOption {
+    anchor: string;
+    label: string;
+    chipLabel: string;
+}
+
 interface ContactFormProps {
     title?: string;
-    /** "compact" — три поля для главной и CTA-блоков, "full" — форма страницы контактов. */
-    variant?: "full" | "compact";
+    variant?: "full" | "compact" | "quick";
+    services?: ServiceOption[];
     source?: string;
     formId?: string;
     homeOriginal?: boolean;
+}
+
+const OTHER_SERVICE = "Другая услуга";
+
+function QuickServiceFields({ id, services }: { id: string; services: ServiceOption[] }) {
+    const [service, setService] = useState(services[0].label);
+
+    useEffect(() => {
+        const selectFromAnchor = (anchor: string | null) => {
+            const selected = services.find(option => option.anchor === anchor);
+            if (selected) setService(selected.label);
+        };
+        const selectFromHash = () => selectFromAnchor(window.location.hash);
+        // Повторный клик или плавная прокрутка могут не изменить hash.
+        const selectFromLink = (event: MouseEvent) => {
+            if (event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return;
+            const link = event.target instanceof Element && event.target.closest("a");
+            if (link) selectFromAnchor(link.getAttribute("href"));
+        };
+        selectFromHash();
+        window.addEventListener("hashchange", selectFromHash);
+        document.addEventListener("click", selectFromLink);
+        return () => {
+            window.removeEventListener("hashchange", selectFromHash);
+            document.removeEventListener("click", selectFromLink);
+        };
+    }, [services]);
+
+    return (
+        <>
+            <fieldset className="quick-request__services">
+                <legend>Какая услуга вас интересует?</legend>
+                <div className="quick-request__choices">
+                    {[...services, { anchor: "other", label: OTHER_SERVICE, chipLabel: OTHER_SERVICE }].map(option => (
+                        <label className="quick-request__choice" key={option.anchor}>
+                            <input
+                                type="radio"
+                                name="service"
+                                value={option.label}
+                                aria-label={option.chipLabel === option.label ? option.label : `${option.chipLabel} — ${option.label}`}
+                                checked={service === option.label}
+                                onChange={() => setService(option.label)}
+                            />
+                            <span>{option.chipLabel}</span>
+                        </label>
+                    ))}
+                </div>
+            </fieldset>
+            {service === OTHER_SERVICE && (
+                <div className="quick-request__field">
+                    <label htmlFor={`${id}-details`}>Что хотите обсудить? <small>(необязательно)</small></label>
+                    <input id={`${id}-details`} className="form-control" name="message" type="text" />
+                </div>
+            )}
+        </>
+    );
 }
 
 export default function ContactForm({
@@ -17,17 +79,29 @@ export default function ContactForm({
     source = "contact-page",
     formId: assignedFormId,
     homeOriginal = false,
+    services,
 }: ContactFormProps) {
     const { status, message, handleSubmit } = useContactForm({ source });
     const isLoading = status === "loading";
     const isSuccess = status === "success";
     const isError = status === "error";
-    const compact = variant === "compact";
+    const compact = variant !== "full";
+    const quick = variant === "quick";
+    const [ready, setReady] = useState(false);
+    const confirmation = useRef<HTMLDivElement>(null);
     const messagePlaceholder = compact
         ? (homeOriginal ? "Например: автоматизировать ответы в поддержке" : "Например, перенести заявки из почты в CRM")
         : "Что нужно изменить в вашем процессе?";
     const messageRef = useRef<HTMLTextAreaElement>(null);
     const formId = useId().replaceAll(":", "");
+
+    useEffect(() => {
+        if (quick) setReady(true);
+    }, [quick]);
+
+    useEffect(() => {
+        if (quick && isSuccess) confirmation.current?.focus({ preventScroll: true });
+    }, [quick, isSuccess]);
 
     // Калькулятор передаёт ответы в query — подставляем их в задачу.
     useEffect(() => {
@@ -63,9 +137,18 @@ export default function ContactForm({
         if (parts.length) el.value = parts.join(". ") + ".";
     }, []);
 
+    if (quick && isSuccess) {
+        return (
+            <div className="quick-request__success" role="status" ref={confirmation} tabIndex={-1}>
+                <strong>Заявка отправлена</strong>
+                <p>Перезвоним по указанному номеру.</p>
+            </div>
+        );
+    }
+
     return (
-        <div className="contact-form">
-            {compact && (homeOriginal || title) && (
+        <div className={quick ? "quick-request__body" : "contact-form"}>
+            {variant === "compact" && (homeOriginal || title) && (
                 <div className="section-title section-title-center">
                     <h2 className="text-anime-style-3" data-cursor="-opaque">{title}</h2>
                 </div>
@@ -73,12 +156,12 @@ export default function ContactForm({
             <form
                 id={assignedFormId ?? `${formId}-form`}
                 method="POST"
-                className="contact-form wow fadeInUp"
+                className={quick ? "quick-request__form" : "contact-form wow fadeInUp"}
                 data-wow-delay="0.2s"
                 onSubmit={handleSubmit}
-                noValidate
+                noValidate={!quick}
             >
-                <div className="row">
+                <div className={quick ? "quick-request__grid" : "row"}>
                     {/* Honeypot: hidden from people, tempting to bots. */}
                     <div style={{ position: "absolute", left: "-9999px" }} aria-hidden="true">
                         <label>
@@ -87,9 +170,11 @@ export default function ContactForm({
                         </label>
                     </div>
 
-                    <div className="form-group col-md-6 mb-4">
-                        <label htmlFor={`${formId}-fname`}>Имя *</label>
-                        <input type="text" name="fname" className="form-control" id={`${formId}-fname`} placeholder="Введите имя *" autoComplete="given-name" required />
+                    {quick && services && <QuickServiceFields id={formId} services={services} />}
+
+                    <div className={quick ? "quick-request__contact" : "form-group col-md-6 mb-4"}>
+                        <label htmlFor={`${formId}-fname`}>{quick ? "Имя" : "Имя *"}</label>
+                        <input type="text" name="fname" className="form-control" id={`${formId}-fname`} placeholder={quick ? "Ваше имя" : "Введите имя *"} autoComplete="given-name" required />
                     </div>
 
                     {!compact && (
@@ -99,9 +184,9 @@ export default function ContactForm({
                         </div>
                     )}
 
-                    <div className="form-group col-md-6 mb-4">
-                        <label htmlFor={`${formId}-phone`}>Номер телефона *</label>
-                        <input type="tel" name="phone" className="form-control" id={`${formId}-phone`} placeholder="Введите номер телефона *" autoComplete="tel" required />
+                    <div className={quick ? "quick-request__contact" : "form-group col-md-6 mb-4"}>
+                        <label htmlFor={`${formId}-phone`}>{quick ? "Телефон" : "Номер телефона *"}</label>
+                        <input type="tel" name="phone" className="form-control" id={`${formId}-phone`} placeholder={quick ? "+7" : "Введите номер телефона *"} autoComplete="tel" required />
                     </div>
 
                     {!compact && (
@@ -111,7 +196,7 @@ export default function ContactForm({
                         </div>
                     )}
 
-                    <div className="form-group col-md-12 mb-5">
+                    {!quick && <div className="form-group col-md-12 mb-5">
                         <label htmlFor={`${formId}-message`}>{compact ? "Какая задача?" : "Сообщение"}</label>
                         <textarea
                             name="message"
@@ -121,13 +206,14 @@ export default function ContactForm({
                             rows={compact ? 3 : 5}
                             placeholder={messagePlaceholder}
                         ></textarea>
-                    </div>
+                    </div>}
 
                     <LegalConsent id={`${formId}-legal`} />
 
-                    <div className="col-md-12">
-                        <button type="submit" className="btn-default" disabled={isLoading}>
-                            {isLoading ? "Отправка..." : "Отправить"}
+                    <div className={quick ? "quick-request__actions" : "col-md-12"}>
+                        <button type="submit" className={quick ? "quick-request__submit" : "btn-default"} disabled={isLoading || (quick && !ready)}>
+                            {isLoading ? "Отправка..." : quick ? "Оставить заявку" : "Отправить"}
+                            {quick && <span aria-hidden="true"> →</span>}
                         </button>
 
                         {isSuccess && (

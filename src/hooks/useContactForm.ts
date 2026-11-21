@@ -85,7 +85,8 @@ export function useContactForm({ source }: UseContactFormOptions) {
 
         const payload = collectPayload();
         const calculation = source === "calculator" ? read("calculation") : "";
-        const userMessage = messageText || `Имя: ${name}`;
+        const service = read("service");
+        const userMessage = [service && `Услуга: ${service}`, messageText].filter(Boolean).join("\n") || `Имя: ${name}`;
 
         if (calculation) {
             payload.calculation = calculation;

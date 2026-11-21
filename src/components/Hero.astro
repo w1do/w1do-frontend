@@ -1,37 +1,57 @@
 ---
+import ContactForm from "./contact/ContactForm";
 
 interface Props {
     title?: string;
     description?: string;
+    quickRequest?: boolean;
 }
 
 const {
+    quickRequest = false,
     title = "Разработка ИИ-агентов для бизнеса",
     description = "Проектируем и внедряем ИИ-агентов для работы с заявками, клиентами, документами и внутренними процессами. Интегрируем с CRM, ERP, мессенджерами и вашими данными."
 } = Astro.props;
 
 const services = [
     {
+        key: "infrastructure",
+        chipLabel: "Инфраструктура",
         title: "Инфраструктура для ИИ",
-        description: "Разворачиваем и масштабируем надёжную инфраструктуру под ваши ИИ-задачи.",
+        description: quickRequest ? "Готовим серверы для запуска агентов и настраиваем мониторинг, чтобы команда видела нагрузку и сбои." : "Разворачиваем и масштабируем надёжную инфраструктуру под ваши ИИ-задачи.",
         image: "/images/hero-service-infrastructure.webp",
     },
     {
+        key: "claude-code",
+        chipLabel: "Claude Code",
         title: "Настройка Claude Code",
-        description: "Интегрируем и настраиваем Claude Code под ваши процессы и команду.",
+        description: quickRequest ? "Настраиваем Claude Code для команды разработки. Подключаем инструменты, задаём права и правила работы с репозиторием." : "Интегрируем и настраиваем Claude Code под ваши процессы и команду.",
         image: "/images/hero-service-claude-code.webp",
     },
     {
+        key: "ai-agent",
+        chipLabel: "ИИ-агент",
+        requestTitle: "Внедрение ИИ-агента",
         title: "ИИ-агенты для бизнеса",
-        description: "Создаём автономных ИИ-агентов, которые берут на себя рутину и приносят результат.",
+        description: quickRequest ? "Для бухгалтерии агент может сверить сумму счёта с заказом и передать расхождения сотруднику до оплаты." : "Создаём автономных ИИ-агентов, которые берут на себя рутину и приносят результат.",
         image: "/images/hero-service-ai-agents.webp",
     },
     {
+        key: "claude-tunnel",
+        chipLabel: "Туннелирование",
         title: "Туннелирование Claude Code",
-        description: "Настраиваем туннелирование трафика Claude Code с привязкой к выбранному гео.",
+        description: quickRequest ? "Настраиваем сетевой маршрут для Claude Code, когда команде нужен доступ из выбранного региона." : "Настраиваем туннелирование трафика Claude Code с привязкой к выбранному гео.",
         image: "/images/hero-service-geo-tunnel.webp",
     }
 ];
+const formAnchor = "quick-request";
+const requestLink = (key = "ai-agent") =>
+    quickRequest ? `#${formAnchor}-${key}` : "/contact";
+const serviceOptions = services.map(service => ({
+    anchor: requestLink(service.key),
+    chipLabel: service.chipLabel,
+    label: service.requestTitle ?? service.title,
+})).sort((a, b) => Number(b.anchor === requestLink()) - Number(a.anchor === requestLink()));
 ---
 <div class="hero-prime">
     <div class="hero-bg-video-prime">
@@ -46,7 +66,7 @@ const services = [
                     <div class="hero-sub-heading-prime hero-assistant-notice wow fadeInUp">
                         <img src="/images/assistant-robot.svg" alt="" aria-hidden="true" width="44" height="44">
                         <span>Оставьте заявку — обсудим задачу и предложим решение</span>
-                        <a href="/contact" aria-label="Оставить заявку" class="hero-assistant-notice__button">
+                        <a href={requestLink()} aria-label="Оставить заявку" class="hero-assistant-notice__button">
                             <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
                         </a>
                     </div>
@@ -66,7 +86,7 @@ const services = [
                                 <div class="hero-service__body">
                                     <h2>{service.title}</h2>
                                     <p class="hero-service__description">{service.description}</p>
-                                    <a href="/contact" aria-label={`Обсудить услугу «${service.title}»`} class="hero-service__button">
+                                    <a href={requestLink(service.key)} aria-label={`Обсудить услугу «${service.title}»`} class="hero-service__button">
                                         <span>Обсудить</span>
                                         <span class="hero-service__arrow" aria-hidden="true">→</span>
                                     </a>
@@ -80,7 +100,7 @@ const services = [
                     <div class="hero-footer-prime wow fadeInUp" data-wow-delay="0.2s">
                         <!-- Hero Button Start -->
                         <div class="hero-btn-prime">
-                            <a href="/contact" class="btn-default" data-cursor="-opaque">Обсудить ИИ-агента</a>
+                            <a href={requestLink()} class="btn-default" data-cursor="-opaque">Обсудить ИИ-агента</a>
                         </div>
                         <!-- Hero Button End -->
 
@@ -105,6 +125,25 @@ const services = [
         </div>
     </div>
 </div>
+
+<slot name="after-hero" />
+
+{quickRequest && (
+    <div>
+        <div class="container">
+            <section class="quick-request" id={formAnchor} aria-labelledby="quick-request-title">
+                {serviceOptions.map(service => (
+                    <span class="quick-request__anchor" id={service.anchor.slice(1)} aria-hidden="true"></span>
+                ))}
+                <div class="quick-request__intro">
+                    <h2 id="quick-request-title">Обсудим ваш проект</h2>
+                    <p>Выберите услугу и оставьте телефон. Перезвоним, чтобы разобрать вашу задачу и предложить первый шаг.</p>
+                </div>
+                <ContactForm client:load variant="quick" source="home-quick-request" formId={`${formAnchor}-form`} services={serviceOptions} />
+            </section>
+        </div>
+    </div>
+)}
 
 <style>
     .hero-services {
@@ -268,5 +307,173 @@ const services = [
         .hero-assistant-notice { gap: 10px; padding: 8px 14px; }
         .hero-assistant-notice > span { font-size: 15px; text-align: left; }
         .hero-assistant-notice__button { flex-basis: 36px; width: 36px; height: 36px; }
+    }
+</style>
+
+<style is:global>
+    .quick-request {
+        --request-pad: clamp(22px, 3.4vw, 44px);
+        position: relative;
+        margin: clamp(24px, 3.5vw, 56px) auto 0;
+        border: 1px solid #424541;
+        border-radius: 24px;
+        background: #191b19;
+        color: #f5f6f3;
+        color-scheme: dark;
+        overflow: clip;
+    }
+    .home-page:has(.offer-divider) .quick-request { margin-top: 0; }
+    .quick-request,
+    .quick-request__anchor { scroll-margin-top: 96px; }
+    .quick-request__anchor { position: absolute; inset: 0 auto auto 0; pointer-events: none; }
+    .quick-request__intro {
+        position: relative;
+        isolation: isolate;
+        padding: 30px var(--request-pad) 27px;
+        border-bottom: 1px solid #3b3e37;
+        background: linear-gradient(100deg, #242823, #20241e 58%, #1b1e19);
+    }
+    .quick-request__intro::before {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        inset: 0 0 0 auto;
+        width: 35%;
+        background: url("/images/hero-service-ai-agents.webp") 54% 48% / cover no-repeat;
+        mask-image: linear-gradient(90deg, transparent, #000 45%);
+    }
+    .quick-request__intro h2 {
+        margin: 0;
+        color: #f5f6f3;
+        font-size: clamp(32px, 3.4vw, 44px);
+        font-weight: 600;
+        letter-spacing: -.045em;
+        line-height: 1.08;
+    }
+    .quick-request__intro p, .quick-request__success p {
+        margin: 9px 0 0;
+        color: #c6cbc3;
+        font-size: 16px;
+        line-height: 1.5;
+    }
+    .quick-request__body, .quick-request__success { padding: 24px var(--request-pad) 22px; }
+    .quick-request__grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+        align-items: end;
+        gap: 18px 14px;
+    }
+    .quick-request__services, .quick-request__field, .quick-request__grid > .form-group,
+    .quick-request__actions [role="alert"] { grid-column: 1 / -1; }
+    .quick-request__services { min-width: 0; padding: 0; margin: 0; border: 0; }
+    .quick-request__services legend,
+    .quick-request__field > label, .quick-request__contact > label {
+        display: block;
+        float: none;
+        width: auto;
+        margin: 0 0 8px;
+        padding: 0;
+        color: #dee2db;
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.35;
+    }
+    .quick-request__choices { display: flex; flex-wrap: wrap; gap: 7px; }
+    .quick-request__choice { position: relative; margin: 0; cursor: pointer; }
+    .quick-request__choice input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        clip-path: inset(50%);
+    }
+    .quick-request__choice span {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        gap: 8px;
+        padding: 6px 16px;
+        border: 1px solid #50544b;
+        border-radius: 24px;
+        color: #d9ddd5;
+        font-size: 15px;
+        line-height: 1.2;
+    }
+    .quick-request__choice input:checked + span {
+        border-color: #b7c79c;
+        background: #e5ecd9;
+        color: #23291d;
+        font-weight: 600;
+    }
+    .quick-request__choice input:checked + span::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #587a22;
+    }
+    .quick-request__choice:hover span { border-color: #929989; }
+    .quick-request .form-control {
+        width: 100%;
+        height: 50px;
+        padding: 0 14px;
+        border: 1px solid #55594f;
+        border-radius: 10px;
+        background: #242723;
+        color: #fff;
+        font: inherit;
+        font-size: 16px;
+    }
+    .quick-request .form-control::placeholder { color: #aaafa6; }
+    .quick-request__actions { display: contents; }
+    .quick-request__submit {
+        order: 1;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        min-height: 50px;
+        padding: 0 24px;
+        border: 0;
+        border-radius: 10px;
+        background: #cff85e;
+        color: #172009;
+        font: inherit;
+        font-weight: 650;
+    }
+    .quick-request__submit span { font-size: 21px; line-height: 1; }
+    .quick-request__submit:hover:enabled { background: #dcff81; }
+    .quick-request__submit:disabled { opacity: .65; }
+    .quick-request__grid > .form-group { order: 2; margin: 0 !important; }
+    .quick-request .legal-consent .form-check-label { color: #acb1a8; font-size: 14px; line-height: 1.5; }
+    .quick-request .legal-consent a { color: #c7cdc2; text-underline-offset: 3px; }
+    .quick-request .legal-consent a:hover { color: #fff; }
+    .quick-request :focus-visible, .quick-request__choice input:focus-visible + span {
+        outline: 2px solid #cff85e;
+        outline-offset: 3px;
+    }
+    .quick-request__success strong { color: #cff85e; font-size: 24px; }
+    .quick-request__actions [role="alert"] { order: 4; color: #ffb9b2; }
+    .quick-request__actions [role="alert"] ul { margin: 0; }
+    @media (max-width: 840px) {
+        .quick-request__intro::before { width: 30%; }
+    }
+    @media (max-width: 690px) {
+        .quick-request { border-radius: 18px; }
+        .quick-request__intro { padding-block: 24px 19px; }
+        .quick-request__intro::before { display: none; }
+        .quick-request__grid { grid-template-columns: minmax(0, 1fr); gap: 15px; }
+        .quick-request__choice span { padding-inline: 12px; }
+        .quick-request__submit { order: 3; width: 100%; }
+    }
+    @media (max-width: 480px) {
+        .quick-request { --request-pad: 16px; }
+        .quick-request__choices {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+            gap: 6px;
+        }
+        .quick-request__choice span { width: 100%; padding-inline: 4px; font-size: 14px; }
+        .quick-request__choice:last-child { grid-column: 1 / -1; }
     }
 </style>

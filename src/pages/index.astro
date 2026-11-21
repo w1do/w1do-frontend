@@ -12,6 +12,7 @@ import IntroVideo from "../components/IntroVideo.astro";
 import Feature from "../components/Feature.astro";
 import Footer from "../components/shared/Footer.astro";
 import Blog from "../components/blog/Blog.astro";
+import HomeOffers from "../components/HomeOffers.astro";
 import Faqs from "../components/Faqs.astro";
 import Testimonials from "../components/Testimonials.astro";
 import Cta from "../components/Cta.astro";
@@ -20,6 +21,7 @@ import Projects from "../components/projects/Projects.astro";
 import Awards from "../components/Awards.astro";
 import Pricing from "../components/Pricing.astro";
 import { formatRubleAmount, STARTING_PROJECT_PRICE } from "../lib/pricing";
+const offerFormId = "home-offer-request";
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
@@ -43,10 +45,12 @@ const homeFaqSchema = {
 	schema={homeFaqSchema}
 >
 	<Header/>
-	<Hero 
+	<Hero quickRequest
 		title="Внедряем ИИ-агентов в поддержку и продажи" 
 		description="Агент берёт на себя заявки, звонки и документы, а результат виден в CRM. Интеграции с 1С, мессенджерами и вашими данными."
-	/>
+	>
+		<HomeOffers slot="after-hero" formId={offerFormId} />
+	</Hero>
 	<Segments />
 	<About homeOriginal
 		subTitle="О разработчике" 
@@ -170,7 +174,7 @@ const homeFaqSchema = {
 		customFaqs={HOME_ORIGINAL_FAQS}
 	/>
 	<Blog/>
-	<Cta homeOriginal
+	<Cta homeOriginal formId={offerFormId}
 		subTitle="Начните сейчас"
 		title="Нужен опытный разработчик ИИ?"
 		description="Обсудите ваш проект напрямую со специалистом. Я помогу составить ТЗ и оценю сроки реализации."

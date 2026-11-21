@@ -1,0 +1,251 @@
+---
+import { getHomeOffers } from "../lib/server/w1do/home-offers";
+
+interface Props { formId: string }
+const { formId } = Astro.props;
+const offers = await getHomeOffers();
+const multiple = offers.length > 1;
+---
+
+{offers.length > 0 && (
+  <section class="offers" aria-label="Предложения агентства"
+    aria-roledescription={multiple ? "карусель" : undefined}>
+    <div class="container">
+      <div class="offer-panel">
+        <div class="track" id="home-offer-slides" tabindex={multiple ? "0" : undefined}>
+          {offers.map((offer, index) => (
+            <article class:list={["slide", { "slide-with-art": offer.imagePath }]} aria-label={multiple ? `${index + 1} из ${offers.length}` : undefined}>
+              {offer.imagePath && <img class="art" src={offer.imagePath} alt="" loading="lazy" decoding="async" />}
+              <div class="copy section-title">
+                <h2>{offer.title}</h2>
+                {offer.description && <p>{offer.description}</p>}
+                <div class="actions">
+                  {offer.priceLabel && <strong class="price">{offer.priceLabel}</strong>}
+                  <a class="btn-default offer-link" href={`#${formId}`}>{offer.buttonLabel}</a>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+        {multiple && <div class="controls" hidden>
+          <button type="button" data-step="-1" aria-controls="home-offer-slides" aria-label="Предыдущее предложение">←</button>
+          <span class="offer-slide-count" aria-live="polite" aria-atomic="true">1 / {offers.length}</span>
+          <button type="button" data-step="1" aria-controls="home-offer-slides" aria-label="Следующее предложение">→</button>
+        </div>}
+      </div>
+      <div class="offer-divider" aria-hidden="true"></div>
+    </div>
+  </section>
+)}
+
+<script>
+  document.querySelectorAll<HTMLElement>(".offers").forEach(section => {
+    const track = section.querySelector<HTMLElement>(".track");
+    const slides = section.querySelectorAll<HTMLElement>(".slide");
+    const controls = section.querySelector<HTMLElement>(".controls");
+    const counter = section.querySelector<HTMLElement>(".offer-slide-count");
+    if (!track || !controls || !counter || slides.length < 2) return;
+
+    controls.hidden = false;
+    let active = 0;
+    const navigate = (index: number) => {
+      const next = (index + slides.length) % slides.length;
+      if (slides[active].contains(document.activeElement)) track.focus({ preventScroll: true });
+      track.scrollTo({ left: slides[next].offsetLeft, behavior: "instant" });
+    };
+    controls.querySelectorAll<HTMLButtonElement>("button").forEach(button => {
+      button.addEventListener("click", () => navigate(active + Number(button.dataset.step)));
+    });
+    section.addEventListener("keydown", event => {
+      if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+      const targets: Record<string, number> = {
+        ArrowLeft: active - 1, ArrowRight: active + 1, Home: 0, End: slides.length - 1,
+      };
+      if (!Object.hasOwn(targets, event.key)) return;
+      event.preventDefault();
+      navigate(targets[event.key]);
+    });
+    const update = () => {
+      const index = Math.round(track.scrollLeft / track.clientWidth);
+      const next = Math.max(0, Math.min(index, slides.length - 1));
+      slides.forEach((slide, i) => { slide.inert = i !== next; });
+      if (next !== active) counter.textContent = `${next + 1} / ${slides.length}`;
+      active = next;
+    };
+    track.addEventListener("scroll", update, { passive: true });
+    update();
+  });
+</script>
+
+<style>
+  .offers {
+    margin-block-start: clamp(24px, 3.5vw, 56px);
+  }
+  :global(.home-page) > .offers {
+    margin-block-end: 0;
+  }
+  .offer-divider {
+    display: grid;
+    place-items: center;
+    height: clamp(52px, 6vw, 96px);
+    background: linear-gradient(to right, #73776a calc(50% - 18px), transparent 0 calc(50% + 18px), #73776a 0)
+      center / 100% 1px no-repeat;
+  }
+  .offer-divider::after {
+    content: "";
+    width: 16px;
+    height: 9px;
+    background: var(--accent-color);
+    clip-path: polygon(0 1.5px, 1.5px 0, 50% 6.5px, 14.5px 0, 100% 1.5px, 50% 100%);
+  }
+  @property --offer-border-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+  }
+  .offer-panel {
+    border: 2px solid #595b5e;
+    border-radius: 24px;
+    background: #1b1b1c;
+    overflow: hidden;
+  }
+  @supports (background: conic-gradient(from 0deg, black, white)) {
+    .offer-panel {
+      border-color: transparent;
+      background:
+        linear-gradient(125deg, #232325, #1b1b1c 62%) padding-box,
+        conic-gradient(from var(--offer-border-angle, 0deg), #45474a 0deg 48deg,
+          #aeb3b8 96deg, #45474a 144deg 240deg,
+          var(--accent-color) 304deg, #45474a 350deg) border-box;
+    }
+    @media (prefers-reduced-motion: no-preference) and (forced-colors: none) {
+      .offer-panel { animation: offer-border-turn 12s linear infinite; }
+    }
+  }
+  @keyframes offer-border-turn {
+    from { --offer-border-angle: 0deg; }
+    to { --offer-border-angle: 360deg; }
+  }
+  .track {
+    position: relative;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .track::-webkit-scrollbar { display: none; }
+  .slide {
+    display: grid;
+    grid-template-areas: "copy";
+    min-width: 0;
+    padding: 12px;
+    scroll-snap-align: start;
+  }
+  .slide-with-art {
+    grid-template-areas: "copy art";
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    min-height: clamp(320px, 27vw, 430px);
+  }
+  .art {
+    grid-area: art;
+    contain: size;
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    object-fit: cover;
+    object-position: right center;
+  }
+  .copy {
+    grid-area: copy;
+    align-self: center;
+    min-width: 0;
+    max-width: 60rem;
+    margin: 0;
+    padding: clamp(22px, 2.7vw, 48px);
+    overflow-wrap: anywhere;
+  }
+  .copy h2 {
+    margin: 0;
+    font-size: clamp(34px, 3.65vw, 62px);
+    font-weight: 600;
+    line-height: 1.04;
+    letter-spacing: -.045em;
+    text-wrap: balance;
+  }
+  .copy p {
+    max-width: 55ch;
+    margin: 16px 0 0;
+    color: var(--text-color);
+    font-family: var(--default-font), sans-serif;
+    font-size: clamp(16px, 1.2vw, 20px);
+    line-height: 1.5;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px clamp(20px, 2vw, 36px);
+    margin-top: clamp(22px, 2.1vw, 34px);
+  }
+  .price {
+    max-width: 100%;
+    color: var(--accent-color);
+    font-size: clamp(20px, 1.65vw, 28px);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -.025em;
+  }
+  @supports (background-clip: text) {
+    .price {
+      background: linear-gradient(105deg, #e4f8bd, var(--accent-color) 58%, #66dfcf);
+      background-clip: text;
+      color: transparent;
+    }
+  }
+  .offer-link { max-width: 100%; }
+  .controls:not([hidden]) {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 14px;
+    padding: 0 12px 12px;
+  }
+  .controls button {
+    width: 44px;
+    height: 44px;
+    border: 1px solid #50544b;
+    border-radius: 12px;
+    background: var(--accent-secondary-color);
+    color: var(--white-color);
+    font: inherit;
+    cursor: pointer;
+  }
+  .controls button:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+  }
+  .offer-slide-count { font-variant-numeric: tabular-nums; font-size: 16px; }
+  .offers :focus-visible { outline: 2px solid var(--accent-color); outline-offset: 2px; }
+  .track:focus-visible { outline-offset: -4px; }
+
+  @media (max-width: 767px) {
+    .slide-with-art {
+      grid-template-areas: "art" "copy";
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto 1fr;
+      min-height: 0;
+    }
+    .art { height: auto; aspect-ratio: 2.1; }
+    .copy { padding: 22px 8px 16px; }
+    .copy h2 { font-size: clamp(30px, 7.5vw, 42px); }
+    .copy p { margin-top: 12px; }
+    .actions { gap: 14px 20px; margin-top: 20px; }
+  }
+  @media (forced-colors: active) {
+    .offer-panel { border-color: CanvasText; background: Canvas; }
+    .price { color: CanvasText; }
+  }
+</style>
