@@ -30,6 +30,7 @@ const breadcrumbItems = [
 
 // Получаем список всех услуг для сайдбара
 const services = await getServiceHubs();
+const currentPath = Astro.url.pathname.replace(/\/$/, "");
 
 const siteUrl = SITE_ORIGIN;
 const pageUrl = new URL(Astro.url.pathname, SITE_ORIGIN).href;
@@ -97,9 +98,26 @@ const schema = [serviceSchema, breadcrumbSchema, faqSchema].filter(Boolean);
                         <!-- Page Category List Start -->
                         <div class="page-category-list wow fadeInUp">
                             <h2 class="page-category-list-title">Другие услуги</h2>
-                            <ul>
+                            <ul class="service-sidebar-list">
                                 {services.map((service) => (
-                                    <li><a href={service.url}>{service.title}</a></li>
+                                    <li>
+                                        <a
+                                            class="service-sidebar-link"
+                                            href={service.url}
+                                            aria-current={service.url.replace(/\/$/, "") === currentPath ? "page" : undefined}
+                                        >
+                                            <img
+                                                class="service-sidebar-thumbnail"
+                                                src={service.image || service.icon}
+                                                alt=""
+                                                width="36"
+                                                height="36"
+                                                loading="lazy"
+                                                decoding="async"
+                                            />
+                                            <span>{service.title}</span>
+                                        </a>
+                                    </li>
                                 ))}
                             </ul>
                         </div>
@@ -251,6 +269,43 @@ const schema = [serviceSchema, breadcrumbSchema, faqSchema].filter(Boolean);
 </Layout>
 
 <style>
+    .page-category-list .service-sidebar-list {
+        padding: 16px clamp(12px, 2vw, 30px) 20px;
+    }
+    .page-category-list .service-sidebar-list > li {
+        margin: 0;
+        padding: 4px 0;
+    }
+    .page-category-list .service-sidebar-link {
+        display: grid;
+        grid-template-columns: 36px minmax(0, 1fr);
+        align-items: center;
+        gap: 10px;
+        padding: 8px 34px 8px 8px;
+        border-radius: 8px;
+        overflow-wrap: anywhere;
+    }
+    .page-category-list .service-sidebar-link::before {
+        right: 8px;
+    }
+    .service-sidebar-thumbnail {
+        display: block;
+        width: 36px;
+        height: 36px;
+        padding: 2px;
+        border-radius: 6px;
+        background: #fff;
+        object-fit: contain;
+    }
+    .page-category-list .service-sidebar-link[aria-current="page"] {
+        color: var(--accent-color);
+        background: color-mix(in srgb, var(--secondary-color), var(--accent-color) 14%);
+        box-shadow: inset 3px 0 var(--accent-color);
+    }
+    .service-sidebar-link:focus-visible {
+        outline: 2px solid var(--accent-color);
+        outline-offset: -2px;
+    }
     .entry-content :global(p) {
         margin-bottom: 20px;
     }
