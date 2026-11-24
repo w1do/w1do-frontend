@@ -1,4 +1,5 @@
 import { LEADS_API_BASE_URL, LEADS_API_KEY } from "astro:env/server";
+import { formatLeadDescription } from "../polza/lead";
 
 const DEFAULT_BASE_URL = "https://backend.w1do.ru";
 const REQUEST_TIMEOUT_MS = 10_000;
@@ -12,6 +13,9 @@ export interface LeadInput {
     email?: unknown;
     subject?: unknown;
     message?: unknown;
+    description?: unknown;
+    descriptionPrepared?: unknown;
+    service?: unknown;
     source?: unknown;
     payload?: unknown;
     legalConsent?: unknown;
@@ -24,12 +28,63 @@ export type LeadOutcome =
     | { ok: true; id: string | null }
     | { ok: false; status: 400 | 500 | 502; message: string; reason: LeadFailureReason };
 
+type LeadFailure = Extract<LeadOutcome, { ok: false }>;
+
 const asText = (value: unknown): string => (typeof value === "string" ? value.trim() : "");
 
-const fail = (status: 400 | 500 | 502, message: string, reason: LeadFailureReason): LeadOutcome =>
+const fail = (status: 400 | 500 | 502, message: string, reason: LeadFailureReason): LeadFailure =>
     ({ ok: false, status, message, reason });
 
-export async function submitLead(input: LeadInput, logTag: string = "[lead]"): Promise<LeadOutcome> {
+function isolateDescription(input: LeadInput, message: string, calculation: string): {
+    description: string;
+    service: string;
+    start: number;
+} | null {
+    // Preserve the existing calculator suffix verbatim, including custom line endings and spacing.
+    const calculationDivider = /\r?\n[ \t]*(?:\r?\n[ \t]*)?Предварительный расчёт:[ \t]*\r?\n/gu;
+    let main = message;
+    if (calculation) {
+        const sameSpacing = (value: string) => value.trim().replace(/\s+/gu, " ");
+        const boundary = [...message.matchAll(calculationDivider)].find((match) =>
+            sameSpacing(message.slice(match.index + match[0].length)) === sameSpacing(calculation));
+        if (!boundary) return null;
+        main = message.slice(0, boundary.index);
+    }
+
+    const serviceHeader = main.match(/^Услуга[ \t]*:[ \t]*([^\r\n]*)(?:\r?\n|$)/u);
+    const explicitDescription = typeof input.description === "string" ? input.description.trim() : null;
+    const selectedService = asText(input.service);
+    const headerService = serviceHeader?.[1].trim() ?? "";
+    // The description may itself begin with «Услуга:». Match the selected category and the whole editable field.
+    if (selectedService && selectedService !== headerService) return null;
+    const useHeader = Boolean(selectedService || (headerService && main.trim() !== explicitDescription));
+    const start = useHeader ? serviceHeader?.[0].length ?? 0 : 0;
+    const remainder = main.slice(start);
+    const description = explicitDescription ?? remainder.trim();
+    if (!description || remainder.trim() !== description) return null;
+
+    return { description, service: useHeader ? headerService : "", start: start + remainder.length - remainder.trimStart().length };
+}
+
+async function prepareLeadMessage(
+    input: LeadInput,
+    contact: { name: string; phone: string },
+    calculation: string,
+    allowFormatting: () => boolean,
+): Promise<string> {
+    const original = asText(input.message) || `Имя: ${contact.name}`;
+    if (original === `Имя: ${contact.name}`) return original;
+
+    const part = isolateDescription(input, original, calculation);
+    if (!part || (input.descriptionPrepared === true && typeof input.description === "string") || !allowFormatting()) return original;
+
+    const formatted = await formatLeadDescription(part.description, part.service, contact);
+    if (!formatted) return original;
+
+    return original.slice(0, part.start) + formatted + original.slice(part.start + part.description.length);
+}
+
+function validateLeadContact(input: LeadInput): { ok: true; name: string; phone: string; email: string } | LeadFailure {
     const name = asText(input.name);
     const phone = asText(input.phone);
     const email = asText(input.email);
@@ -46,6 +101,36 @@ export async function submitLead(input: LeadInput, logTag: string = "[lead]"): P
         return fail(400, "Подтвердите согласие с юридическими документами.", "validation");
     }
 
+    return { ok: true, name, phone, email };
+}
+
+function readPayload(value: unknown): Record<string, string> {
+    if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+    return Object.fromEntries(
+        Object.entries(value).filter((entry): entry is [string, string] => typeof entry[1] === "string"),
+    );
+}
+
+export async function prepareLead(
+    input: LeadInput,
+    allowFormatting: () => boolean,
+): Promise<{ ok: true; message: string } | LeadFailure> {
+    const contact = validateLeadContact(input);
+    if (!contact.ok) return contact;
+
+    const message = await prepareLeadMessage(input, contact, asText(readPayload(input.payload).calculation), allowFormatting);
+    return { ok: true, message };
+}
+
+export async function submitLead(
+    input: LeadInput,
+    logTag: string = "[lead]",
+    allowFormatting?: () => boolean,
+): Promise<LeadOutcome> {
+    const contact = validateLeadContact(input);
+    if (!contact.ok) return contact;
+    const { name, phone, email } = contact;
+
     const apiKey = LEADS_API_KEY;
     const baseUrl = LEADS_API_BASE_URL || DEFAULT_BASE_URL;
 
@@ -54,16 +139,13 @@ export async function submitLead(input: LeadInput, logTag: string = "[lead]"): P
         return fail(500, LEAD_GENERIC_ERROR, "config");
     }
 
-    const requestPayload = input.payload && typeof input.payload === "object" && !Array.isArray(input.payload)
-        ? { ...(input.payload as Record<string, unknown>) }
-        : {};
-    const payload = Object.fromEntries(
-        Object.entries(requestPayload).filter((entry): entry is [string, string] => typeof entry[1] === "string"),
-    );
+    const payload = readPayload(input.payload);
     const leadPayload: Record<string, unknown> = {
         phone,
         subject: asText(input.subject) || `Заявка с сайта: ${name}`,
-        message: asText(input.message) || `Имя: ${name}`,
+        message: allowFormatting
+            ? await prepareLeadMessage(input, contact, asText(payload.calculation), allowFormatting)
+            : asText(input.message) || `Имя: ${name}`,
         source: asText(input.source) || "site",
         payload,
     };

@@ -4,11 +4,13 @@ import { LEGAL_CONSENT_VALUE } from "../lib/legal";
 export interface UseContactFormOptions {
     /** Which form the lead came from, e.g. "contact-page" or "cta-block". */
     source: string;
+    descriptionPrepared?: boolean;
 }
 
 export type FormStatus = "idle" | "loading" | "success" | "error";
 
 const DEFAULT_ENDPOINT = "/api/lead";
+const PREPARE_TIMEOUT_MS = 8_000;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"] as const;
 
@@ -37,7 +39,31 @@ export function collectPayload(): Record<string, unknown> {
     return payload;
 }
 
-export function useContactForm({ source }: UseContactFormOptions) {
+async function prepareMessage(body: Record<string, unknown>, details: { description: string; service?: string }) {
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), PREPARE_TIMEOUT_MS);
+
+    try {
+        const response = await fetch(DEFAULT_ENDPOINT, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ...body, ...details, mode: "prepare" }),
+            signal: controller.signal,
+        });
+        const result = await response.json();
+        if (response.ok && result?.ok === true && typeof result.message === "string" && result.message.trim()) {
+            return result.message;
+        }
+    } catch {
+        // A custom endpoint still receives the original message if formatting is unavailable.
+    } finally {
+        window.clearTimeout(timeout);
+    }
+
+    return body.message;
+}
+
+export function useContactForm({ source, descriptionPrepared = false }: UseContactFormOptions) {
     const [status, setStatus] = useState<FormStatus>("idle");
     const [message, setMessage] = useState<string>("");
 
@@ -111,7 +137,17 @@ export function useContactForm({ source }: UseContactFormOptions) {
         setMessage("");
 
         try {
-            const response = await fetch(import.meta.env.PUBLIC_LEADS_ENDPOINT || DEFAULT_ENDPOINT, {
+            const endpoint = import.meta.env.PUBLIC_LEADS_ENDPOINT || DEFAULT_ENDPOINT;
+            const url = new URL(endpoint, window.location.href);
+            const details = { description: messageText, ...(service ? { service } : {}) };
+            const preserveDescription = descriptionPrepared && !!messageText;
+            if (url.origin === window.location.origin && url.pathname.replace(/\/$/, "") === DEFAULT_ENDPOINT) {
+                Object.assign(body, details);
+                if (preserveDescription) body.descriptionPrepared = true;
+            } else if (!preserveDescription) {
+                body.message = await prepareMessage(body, details);
+            }
+            const response = await fetch(endpoint, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),

@@ -79,7 +79,11 @@ const text = (value: unknown, fallback = ""): string =>
   typeof value === "string" ? value : fallback;
 
 // В CMS остались служебные подстановки вида «разработчик_ии» — чиним на выходе.
-const cleanText = (value: string): string => value.replace(/разработчик_ии/g, "разработчик ИИ");
+const cleanText = (value: string): string => value
+  .replaceAll("внедрение ИИ-решений и разработчик_ии", "внедрение ИИ-решений")
+  .replaceAll("умных AI ассистентов и чат-ботов на базе разработчик_ии", "ИИ-ассистентов и чат-ботов")
+  .replaceAll("Интеграция разработчик_ии", "Интеграция ИИ-агентов")
+  .replaceAll("разработчик_ии", "разработчик ИИ");
 
 function resolveImage(values: Record<string, unknown>, cluster: string): string | undefined {
   if (CLUSTER_IMAGE_URLS[cluster]) return CLUSTER_IMAGE_URLS[cluster];
@@ -106,6 +110,7 @@ function mapEntry(entry: Awaited<ReturnType<typeof fetchServiceEntries>>[number]
   const hub = type === "hub";
   const postSlug = text(values.post_slug);
   const publicPath = text(values.public_path, hub ? `/services/${cluster}` : `/services/${cluster}/${postSlug}`);
+  const tags = json<string[]>(values.tags_json, []);
   return {
     title: cleanText(entry.title),
     description: cleanText(text(values.description)),
@@ -125,7 +130,7 @@ function mapEntry(entry: Awaited<ReturnType<typeof fetchServiceEntries>>[number]
     icon: text(values.icon, "/images/icon-service-3.svg"),
     no: text(values.display_no, "99"),
     order: Number(values.display_order) || 0,
-    tags: json(values.tags_json, []),
+    tags: Array.isArray(tags) ? tags.map((tag) => tag === "разработчик_ии" ? "Разработка ИИ" : tag) : [],
     excerpt: cleanText(text(values.excerpt)) || undefined,
     dateLabel: text(values.date_label) || undefined,
     offersTitle: text(values.offers_title) || undefined,

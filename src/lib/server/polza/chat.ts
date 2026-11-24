@@ -10,6 +10,18 @@ export interface PolzaMessage {
     content: string;
 }
 
+interface PolzaOptions {
+    model?: string;
+    timeoutMs?: number;
+    maxTokens?: number;
+    signal?: AbortSignal;
+    jsonSchema?: {
+        name: string;
+        strict: true;
+        schema: Record<string, unknown>;
+    };
+}
+
 export type PolzaFailure = "config" | "auth" | "balance" | "rate_limited" | "timeout" | "network" | "upstream" | "empty";
 
 export type PolzaResult = { ok: true; content: string } | { ok: false; reason: PolzaFailure };
@@ -21,45 +33,56 @@ const statusToFailure = (status: number): PolzaFailure => {
     return "upstream";
 };
 
-export async function createPolzaCompletion(messages: PolzaMessage[]): Promise<PolzaResult> {
+export async function createPolzaCompletion(messages: PolzaMessage[], options: PolzaOptions = {}): Promise<PolzaResult> {
+    const logTag = options.jsonSchema ? "[lead-format]" : "[chat]";
+    if (options.signal?.aborted) return { ok: false, reason: "network" };
     if (!POLZA_AI_API_KEY) {
-        console.error("[chat] POLZA_AI_API_KEY is not set — the chat is disabled.");
+        console.error(`${logTag} POLZA_AI_API_KEY is not set`);
         return { ok: false, reason: "config" };
     }
 
     let response: Response;
+    const timeout = AbortSignal.timeout(options.timeoutMs ?? REQUEST_TIMEOUT_MS);
+    const signal = options.signal ? AbortSignal.any([options.signal, timeout]) : timeout;
 
     try {
         response = await fetch(`${BASE_URL}/chat/completions`, {
             method: "POST",
+            redirect: "error",
             headers: {
                 "Content-Type": "application/json",
                 Accept: "application/json",
                 Authorization: `Bearer ${POLZA_AI_API_KEY}`,
             },
             body: JSON.stringify({
-                model: POLZA_AI_MODEL.trim(),
+                model: options.model ?? POLZA_AI_MODEL.trim(),
                 messages,
-                temperature: TEMPERATURE,
-                max_tokens: MAX_TOKENS,
+                ...(!options.jsonSchema && { temperature: TEMPERATURE }),
+                max_tokens: options.maxTokens ?? MAX_TOKENS,
                 stream: false,
+                ...(options.jsonSchema && {
+                    response_format: { type: "json_schema", json_schema: options.jsonSchema },
+                    provider: { require_parameters: true },
+                }),
             }),
-            signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+            signal,
         });
     } catch (error) {
+        if (options.signal?.aborted) return { ok: false, reason: "network" };
         if (error instanceof Error && error.name === "TimeoutError") {
-            console.error("[chat] PolzaAI request timed out");
+            console.error(`${logTag} PolzaAI request timed out`);
             return { ok: false, reason: "timeout" };
         }
-        console.error("[chat] PolzaAI request failed:", error instanceof Error ? error.name : "unknown");
+        console.error(`${logTag} PolzaAI request failed:`, error instanceof Error ? error.name : "unknown");
         return { ok: false, reason: "network" };
     }
 
     const data: any = await response.json().catch(() => null);
+    if (options.signal?.aborted) return { ok: false, reason: "network" };
 
     if (!response.ok) {
         console.error(
-            `[chat] PolzaAI rejected the request: status=${response.status}`,
+            `${logTag} PolzaAI rejected the request: status=${response.status}`,
             `code=${data?.error?.code ?? "unknown"}`,
         );
         return { ok: false, reason: statusToFailure(response.status) };
@@ -68,7 +91,7 @@ export async function createPolzaCompletion(messages: PolzaMessage[]): Promise<P
     const content = data?.choices?.[0]?.message?.content;
 
     if (typeof content !== "string" || !content.trim()) {
-        console.error("[chat] PolzaAI returned an empty answer");
+        console.error(`${logTag} PolzaAI returned an empty answer`);
         return { ok: false, reason: "empty" };
     }
 

@@ -1,6 +1,16 @@
 ---
 import { getBlogPosts } from "../../lib/server/w1do/blog";
 
+interface Props {
+    title?: string;
+    description?: string;
+}
+
+const {
+    title = "Инсайты, кейсы и тренды из мира искусственного интеллекта",
+    description = "Оставайтесь в курсе последних достижений в области ИИ, практических советов по внедрению нейросетей и автоматизации бизнес-процессов.",
+} = Astro.props;
+
 const posts = await getBlogPosts();
 const latestPosts = posts
     .toSorted((a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf())
@@ -14,7 +24,7 @@ const latestPosts = posts
                 <!-- Section Title Start -->
                 <div class="section-title">
                     <span class="section-sub-title wow fadeInUp">Блог</span>
-                    <h2 class="text-anime-style-3" data-cursor="-opaque">Инсайты, кейсы и тренды из мира искусственного интеллекта</h2>
+                    <h2 class="text-anime-style-3" data-cursor="-opaque">{title}</h2>
                 </div>
                 <!-- Section Title End -->
             </div>
@@ -24,7 +34,7 @@ const latestPosts = posts
                 <div class="section-content-btn">
                     <!-- Section Title Content Start -->
                     <div class="section-title-content wow fadeInUp" data-wow-delay="0.2s">
-                        <p>Оставайтесь в курсе последних достижений в области ИИ, практических советов по внедрению нейросетей и автоматизации бизнес-процессов.</p>
+                        <p>{description}</p>
                     </div>
                     <!-- Section Title Content End -->
 

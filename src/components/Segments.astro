@@ -2,86 +2,592 @@
 const segments = [
     {
         title: "Поддержка клиентов",
-        task: "Отвечает по базе знаний, уточняет детали и передаёт сложное человеку.",
-        result: "Меньше пропущенных обращений",
+        icon: "fa-headset",
+        task: "Клиент задаёт вопрос в чате. Агент находит ответ в базе знаний, уточняет детали, а сложный случай передаёт оператору вместе с историей разговора.",
+        result: "Клиенту не приходится повторять вопрос",
     },
     {
         title: "Продажи и заявки",
-        task: "Квалифицирует обращение, собирает контакты и записывает сделку в CRM.",
-        result: "Быстрее первый ответ",
+        icon: "fa-filter",
+        featured: true,
+        task: "Агент отвечает на входящую заявку, уточняет задачу и собирает контакты. В CRM появляется карточка сделки с запросом клиента и контекстом для первого звонка.",
+        result: "Менеджер начинает разговор с сути",
     },
     {
         title: "Документы и регламенты",
-        task: "Извлекает данные из договоров и находит нужный пункт в инструкции.",
-        result: "Меньше ручной сверки",
+        icon: "fa-file-lines",
+        task: "Сотрудник спрашивает, какой срок указан в договоре или какой пункт инструкции применить. Агент находит фрагмент документа и показывает, где проверить ответ.",
+        result: "Нужный пункт сразу под рукой",
     },
     {
         title: "Производство",
-        task: "Ищет по технической документации и подсказывает порядок действий.",
-        result: "Реже ошибаются на входе",
+        icon: "fa-industry",
+        task: "Специалист указывает оборудование и описывает задачу. Агент находит в технической документации подходящий раздел и подсказывает порядок действий по инструкции.",
+        result: "Меньше времени на поиск инструкций",
     },
 ];
+
+const workflowNodes = [
+    { id: "chat", label: "Чат" }, { id: "docs", label: "Документы" },
+    { id: "crm", label: "CRM" }, { id: "onec", label: "1С" }, { id: "api", label: "API" },
+] as const;
+
+type SystemId = (typeof workflowNodes)[number]["id"];
+type Exchange = [SystemId, "in" | "out", string];
+interface Workflow {
+    id: string;
+    label: string;
+    request: string;
+    exchanges: Exchange[];
+    outcome: string;
+}
+
+const workflows: Workflow[] = [
+    {
+        id: "sales", label: "Продажи", request: "«Есть фильтр в наличии?»",
+        exchanges: [
+            ["chat", "in", "Покупатель присылает артикул в чат."],
+            ["onec", "out", "Агент запрашивает остаток по артикулу."],
+            ["onec", "in", "1С подтверждает наличие на складе."],
+            ["crm", "out", "Агент записывает запрос покупателя в CRM."],
+        ],
+        outcome: "У менеджера есть сделка с артикулом и подтверждённым остатком.",
+    },
+    {
+        id: "support", label: "Поддержка", request: "«Как вернуть заказ?»",
+        exchanges: [
+            ["chat", "in", "Клиент задаёт вопрос о возврате."],
+            ["docs", "out", "Агент ищет правила возврата в базе знаний."],
+            ["docs", "in", "База возвращает подходящий раздел."],
+            ["chat", "out", "Агент отправляет инструкцию в чат."],
+        ],
+        outcome: "Клиент получил порядок возврата и ссылку на правила магазина.",
+    },
+    {
+        id: "documents", label: "Документы", request: "«Сумма в счёте совпадает с заказом?»",
+        exchanges: [
+            ["docs", "in", "Агент читает номер заказа и сумму из счёта."],
+            ["onec", "out", "По номеру он запрашивает заказ в 1С."],
+            ["onec", "in", "1С возвращает сумму заказа."],
+            ["chat", "out", "Агент сравнивает суммы и пишет бухгалтеру."],
+        ],
+        outcome: "Бухгалтер получил номер счёта и подтверждение, что суммы совпали.",
+    },
+    {
+        id: "production", label: "Производство", request: "«Станку требуется обслуживание»",
+        exchanges: [
+            ["api", "in", "Датчик передаёт код события через API."],
+            ["docs", "out", "Агент находит регламент для модели станка."],
+            ["docs", "in", "Из регламента поступают условия обслуживания."],
+            ["onec", "out", "Агент создаёт заявку на обслуживание в 1С."],
+        ],
+        outcome: "У техника есть заявка с моделью станка, кодом события и регламентом.",
+    },
+];
+
+function routeLabel(exchanges: Exchange[]) {
+    const names: Record<string, string> = Object.fromEntries(workflowNodes.map(node => [node.id, node.label]));
+    names.agent = "Агент";
+    const route = exchanges.flatMap(([system, direction], index) => {
+        const pair = direction === "in" ? [system, "agent"] : ["agent", system];
+        return index === 0 ? pair : pair.slice(1);
+    });
+    return route.map(id => names[id]).join(" → ");
+}
 ---
-<section class="segments-section">
+<section class="segments-section" id="segments" aria-labelledby="segments-title">
     <div class="container">
         <div class="section-title section-title-center">
             <span class="section-sub-title wow fadeInUp">Кому подходит</span>
-            <h2 class="text-anime-style-3">Где ИИ-агент забирает рутину</h2>
-            <p class="wow fadeInUp">Четыре типовые точки входа. Если вашей задачи нет в списке — опишите её, подберём сценарий.</p>
+            <h2 class="text-anime-style-3" id="segments-title">Какие задачи бизнеса можно поручить ИИ-агенту</h2>
+            <p class="wow fadeInUp">Начать можно с одной операции, которую сотрудники повторяют каждый день. Вот как агент помогает ответить клиенту, подготовить сделку, найти условие договора или инструкцию к станку.</p>
         </div>
         <div class="segments-grid">
-            {segments.map((segment, index) => (
-                <article class="segment-card" data-wow-delay={`${index * 0.1}s`}>
+            {segments.map(segment => (
+                <article class:list={["segment-card", { "segment-card--featured": segment.featured }]}>
+                    <div class="segment-card__top">
+                        <span class="segment-card__icon" aria-hidden="true">
+                            <i class:list={["fa-solid", segment.icon]}></i>
+                        </span>
+                        {segment.featured && <span class="segment-card__badge">Чаще заказывают</span>}
+                    </div>
                     <h3>{segment.title}</h3>
                     <p>{segment.task}</p>
-                    <span class="segment-card__result">{segment.result}</span>
+                    <footer class="segment-card__result">
+                        <i class="fa-solid fa-check" aria-hidden="true"></i>
+                        <span>{segment.result}</span>
+                    </footer>
                 </article>
             ))}
         </div>
+        <aicraft-workflow id="agent-workflow" data-state="idle" role="region" aria-labelledby="workflow-title">
+            <header class="workflow__header">
+                <div>
+                    <h3 id="workflow-title">Как работает ИИ-агент</h3>
+                    <p>Выберите задачу и проследите за стрелками. В продажах агент проверяет остаток в 1С и записывает заявку в CRM, а в поддержке находит правила возврата и отвечает покупателю в чате.</p>
+                </div>
+                <div class="workflow__controls" role="group" aria-label="Сценарий автоматизации">
+                    {workflows.map((scenario, index) => (
+                        <button type="button" data-scenario={scenario.id} aria-pressed={index === 0 ? "true" : "false"}>
+                            {scenario.label}
+                        </button>
+                    ))}
+                </div>
+            </header>
+            <div class="workflow__bench">
+                <div class="workflow__stage" aria-hidden="true">
+                    <svg class="workflow__wires" width="100%" height="100%">
+                        <defs>
+                            <marker id="workflow-arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+                                <path d="M0 0 7 3.5 0 7 2 3.5Z" fill="#cfed86"/>
+                            </marker>
+                        </defs>
+                        {workflowNodes.map(node => (
+                            <g data-link={node.id}>
+                                <path class="workflow__wire" />
+                                <path class="workflow__signal" pathLength="1" />
+                            </g>
+                        ))}
+                    </svg>
+                    <div class="workflow__hub" data-node="agent">
+                        <img src="/images/workflow-agent.webp" alt="" width="144" height="144" loading="lazy"/>
+                        <strong>ИИ-агент</strong>
+                    </div>
+                    {workflowNodes.map(node => (
+                        <div class="workflow__node" data-node={node.id}>
+                            <img src={`/images/workflow-${node.id}.webp`} alt="" width="56" height="56" loading="lazy"/>
+                            <span>{node.label}</span>
+                        </div>
+                    ))}
+                </div>
+                <div class="workflow__trace">
+                    {workflows.map((scenario, index) => (
+                        <section data-outcome={scenario.outcome} data-trace={scenario.id} hidden={index !== 0}>
+                            <h4>{scenario.request}</h4>
+                            <p class="workflow__route" data-route>{routeLabel(scenario.exchanges)}</p>
+                            <ol>
+                                {scenario.exchanges.map(([system, direction, message]) => (
+                                    <li data-system={system} data-direction={direction}>{message}</li>
+                                ))}
+                            </ol>
+                        </section>
+                    ))}
+                </div>
+            </div>
+            <div class="workflow__footer">
+                <div>
+                    <span class="workflow__caption" data-caption>Результат</span>
+                    <p data-result role="status">{workflows[0].outcome}</p>
+                </div>
+                <button type="button" class="workflow__replay" data-replay><span aria-hidden="true">↻</span> Повторить</button>
+            </div>
+        </aicraft-workflow>
     </div>
 </section>
 
 <style>
-    .segments-section { padding: 80px 0 40px; }
+    .segments-section {
+        padding: 80px 0 40px;
+        scroll-margin-top: 96px;
+    }
     .segments-grid {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 16px;
+        gap: clamp(14px, 1vw, 20px);
     }
     .segment-card {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
         display: flex;
         flex-direction: column;
-        gap: 10px;
-        padding: 24px;
-        border: 1px solid var(--divider-color);
-        border-radius: 18px;
-        background: rgba(255, 255, 255, 0.02);
+        --card-pad: clamp(20px, 1.55vw, 30px);
+        padding: var(--card-pad);
+        border: 1px solid #41443d;
+        border-radius: 24px;
+        background: radial-gradient(ellipse at 9% 0%, #30342c 0, transparent 52%), #191b19;
+        box-shadow: inset 0 1px 0 rgb(255 255 255 / 5%);
     }
-    .segment-card h3 {
-        margin: 0;
-        color: var(--primary-color);
-        font-size: 20px;
-        line-height: 1.25;
+    .segment-card::before {
+        position: absolute;
+        z-index: -1;
+        inset: 0 0 auto;
+        height: 115px;
+        content: "";
+        background-image: radial-gradient(circle, #8f9983 1px, transparent 1.1px);
+        background-size: 12px 12px;
+        opacity: .24;
+        mask-image: linear-gradient(190deg, #000, transparent 82%);
     }
-    .segment-card p {
-        margin: 0;
-        color: var(--text-color);
-        font-size: 15px;
-        line-height: 1.6;
+    .segment-card--featured {
+        border-color: #98b34f;
+        background: radial-gradient(ellipse at 0% 0%, #414e28 0, transparent 58%), #20231b;
     }
-    .segment-card__result {
-        margin-top: auto;
-        padding-top: 12px;
-        color: var(--accent-color);
+    .segment-card__top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 24px;
+    }
+    .segment-card__badge {
+        align-self: center;
+        padding: 5px 10px;
+        border: 1px solid #72883f;
+        border-radius: 999px;
+        background: #303922;
+        color: #e4f8bd;
         font-size: 13px;
         font-weight: 600;
-        letter-spacing: 0.02em;
+        line-height: 1.25;
+        text-align: center;
     }
-    @media (max-width: 991px) {
+    .segment-card__icon {
+        flex: none;
+        display: grid;
+        place-items: center;
+        width: 64px;
+        height: 64px;
+        border: 1px solid #62695b;
+        border-radius: 20px;
+        background: linear-gradient(145deg, #43483c, #292d26 72%);
+        color: #e0e8d6;
+        font-size: 28px;
+        box-shadow: inset 0 1px 1px rgb(255 255 255 / 10%), 0 5px 10px rgb(0 0 0 / 16%);
+    }
+    .segment-card--featured .segment-card__icon {
+        border-color: #e1ffab;
+        color: #273016;
+        background: linear-gradient(145deg, #ecffbb, var(--accent-color) 72%);
+    }
+    .segment-card h3 {
+        margin: 0 0 12px;
+        color: #f6f7f3;
+        font-size: clamp(22px, 1.6vw, 30px);
+        line-height: 1.14;
+        letter-spacing: -.035em;
+        text-wrap: balance;
+    }
+    .segment-card p {
+        margin: 0 0 24px;
+        color: #c8cbc3;
+        font-size: 16px;
+        line-height: 1.55;
+    }
+    .segment-card__result {
+        display: flex;
+        gap: 9px;
+        align-items: baseline;
+        margin-top: auto;
+        padding-top: 16px;
+        border-top: 1px solid rgb(216 231 195 / 17%);
+        color: #e4e8dc;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.4;
+    }
+    .segment-card__result i { flex: none; color: var(--accent-color); font-size: 12px; }
+    @media (max-width: 1199px) {
         .segments-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
-    @media (max-width: 575px) {
+    @media (max-width: 639px) {
         .segments-section { padding: 48px 0 24px; }
         .segments-grid { grid-template-columns: 1fr; }
+        .segment-card__top { margin-bottom: 18px; }
+        .segment-card__icon { width: 54px; height: 54px; border-radius: 16px; font-size: 24px; }
     }
 </style>
+
+<style>
+    aicraft-workflow {
+        --flow-lime: #cff85e;
+        display: block;
+        margin-top: clamp(24px, 3vw, 48px);
+        scroll-margin-top: 88px;
+        border: 1px solid #42463d;
+        border-radius: 24px;
+        background: #191c19;
+        color: #f4f6ef;
+        overflow: clip;
+    }
+    .workflow__header,.workflow__footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: clamp(20px, 2.4vw, 40px);
+    }
+    .workflow__header h3 {
+        margin: 0;
+        font-size: clamp(28px, 2.7vw, 46px);
+        letter-spacing: -.045em;
+        line-height: 1.12;
+        color: inherit;
+    }
+    .workflow__header p { margin: 9px 0 0; color: #c4c9bd; line-height: 1.5; }
+    .workflow__controls { display: flex; flex-wrap: wrap; gap: 6px; }
+    .workflow__controls button,.workflow__replay {
+        border: 1px solid #51584a;
+        border-radius: 999px;
+        background: #222620;
+        color: #e4e8df;
+        min-height: 44px;
+        padding: 7px 16px;
+        font: inherit;
+        line-height: 1.25;
+    }
+    .workflow__controls button[aria-pressed="true"] {
+        color: #1c2712;
+        background: var(--flow-lime);
+        border-color: var(--flow-lime);
+        font-weight: 600;
+    }
+    aicraft-workflow button:hover { border-color: #a3ba80; }
+    aicraft-workflow button:focus-visible { outline: 2px solid var(--flow-lime); outline-offset: 2px; }
+    .workflow__bench { display: grid; grid-template-columns: minmax(0, 2fr) minmax(290px, 1fr); border-block: 1px solid #3c4238; }
+    .workflow__stage {
+        position: relative;
+        min-height: clamp(314px, 24vw, 408px);
+        background: radial-gradient(ellipse at center, rgb(102 136 63 / 14%), transparent 56%),
+            radial-gradient(circle, #3b4237 1px, transparent 1.2px) 50% 50% / 20px 20px, #101410;
+    }
+    .workflow__wires { position: absolute; inset: 0; overflow: visible; }
+    .workflow__wire,.workflow__signal { fill: none; }
+    .workflow__wire { stroke: #535c4d; stroke-width: 1.5; }
+    [data-link].is-in .workflow__wire { marker-end: url(#workflow-arrow); }
+    [data-link].is-out .workflow__wire { marker-start: url(#workflow-arrow); }
+    [data-link]:is(.is-in,.is-out) .workflow__wire { stroke: #8c9e73; }
+    [data-link].is-active .workflow__wire { stroke: #c8ef83; stroke-width: 2; }
+    .workflow__signal { opacity: 0; stroke: #eaffc3; stroke-linecap: round; stroke-width: 4; stroke-dasharray: .17 1; filter: drop-shadow(0 0 4px #beff45); }
+    .workflow__node,.workflow__hub {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .workflow__node {
+        left: var(--x); top: var(--y);
+        gap: clamp(4px, .7vw, 12px);
+        width: clamp(156px, 22%, 230px);
+        min-height: 66px;
+        padding: 5px;
+        border: 1px solid #4c5547;
+        border-radius: 18px;
+        background: linear-gradient(135deg,#2a3028,#191d18);
+        box-shadow: 0 8px 20px #0004, inset 0 1px #ffffff0d;
+        color: #ecefe7;
+        font-size: clamp(13px, 1.1vw, 19px);
+        font-weight: 600;
+        line-height: 1.15;
+    }
+    .workflow__node img { flex: none; width: clamp(44px, 3.4vw, 60px); height: auto; aspect-ratio: 1; object-fit: contain; }
+    [data-node="chat"] { --x: 16%; --y: 30%; }
+    [data-node="docs"] { --x: 16%; --y: 70%; }
+    [data-node="crm"] { --x: 84%; --y: 18%; }
+    [data-node="onec"] { --x: 84%; --y: 50%; }
+    [data-node="api"] { --x: 84%; --y: 82%; }
+    .workflow__node.is-lit { border-color: #cbeb8a; background: linear-gradient(135deg,#3a452e,#1c2319); box-shadow: 0 0 18px #bff16b15; }
+    .workflow__hub {
+        left: 50%; top: 50%;
+        width: clamp(116px, 10vw, 172px);
+        aspect-ratio: 1;
+        flex-direction: column;
+        border: 1px solid #a0b777;
+        border-radius: 50%;
+        background: radial-gradient(circle at 40% 20%, #46513c, #1a2117 74%);
+        box-shadow: 0 0 0 7px #20281e, 0 0 0 8px #526044, 0 0 0 15px #aacb7208;
+    }
+    .workflow__hub img { width: 74%; height: 69%; object-fit: contain; }
+    .workflow__hub strong { color: #e7f8c8; font-size: clamp(15px, 1.25vw, 22px); line-height: 1.2; }
+    .workflow__hub.is-lit { border-color: #dcff96; box-shadow: 0 0 0 7px #283321, 0 0 0 8px #a8c676, 0 0 36px #b4ec4c22; }
+    .workflow__trace { padding: clamp(20px, 2.2vw, 38px); border-left: 1px solid #3c4238; align-self: stretch; display: grid; align-items: center; background: #1c201c; }
+    .workflow__trace h4 { margin: 0; font-size: clamp(20px, 1.55vw, 29px); line-height: 1.22; letter-spacing: -.03em; color: #f1f3ed; }
+    .workflow__route { margin: 10px 0 20px; color: #c7dba8; font-size: 14px; line-height: 1.5; }
+    .workflow__trace ol { list-style: none; counter-reset: exchange; margin: 0; padding: 0; }
+    .workflow__trace li { counter-increment: exchange; position: relative; padding: 0 0 13px 31px; color: #c0c7b9; line-height: 1.45; font-size: 15px; }
+    .workflow__trace li:last-child { padding-bottom: 0; }
+    .workflow__trace li::before { content: counter(exchange); position: absolute; top: 0; left: 0; width: 22px; line-height: 20px; text-align: center; border-radius: 50%; border: 1px solid #525c4b; color: #cbd7c4; font-size: 12px; }
+    .workflow__trace li.is-current { color: #f0f5e9; }
+    .workflow__trace li.is-current::before { color: #172010; border-color: var(--flow-lime); background: var(--flow-lime); }
+    .workflow__footer { padding-block: 17px; background: #20261d; }
+    .workflow__caption { display: block; color: #d5efa8; font-size: 14px; font-weight: 600; }
+    .workflow__footer p { margin: 3px 0 0; color: #eef2e8; line-height: 1.5; }
+    .workflow__replay { flex: none; display: inline-flex; align-items: center; gap: 7px; }
+    .workflow__replay span { font-size: 22px; }
+    aicraft-workflow:not(:defined) :is(.workflow__controls,.workflow__replay) { display: none; }
+    @media (max-width: 1199px) {
+        .workflow__header { align-items: flex-start; flex-direction: column; gap: 14px; }
+    }
+    @media (max-width: 959px) {
+        .workflow__bench { grid-template-columns: minmax(0, 1fr); }
+        .workflow__trace { border-left: 0; border-top: 1px solid #3c4238; }
+    }
+    @media (max-width: 620px) {
+        .workflow__stage { --vertical-links: yes; min-height: 320px; }
+        .workflow__node { width: 27%; max-width: 116px; min-height: 65px; flex-direction: column; gap: 2px; border-radius: 13px; font-size: 13px; }
+        .workflow__node img { width: 35px; }
+        .workflow__hub { width: 98px; }
+        [data-node="chat"],[data-node="docs"] { width: 35%; }
+        [data-node="chat"] { --x: 23%; --y: 15%; }
+        [data-node="docs"] { --x: 77%; --y: 15%; }
+        [data-node="crm"] { --x: 17%; --y: 85%; }
+        [data-node="onec"] { --x: 50%; --y: 85%; }
+        [data-node="api"] { --x: 83%; --y: 85%; }
+        .workflow__controls { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+        .workflow__controls button { padding-inline: 8px; }
+        .workflow__footer { align-items: flex-start; flex-direction: column; gap: 12px; }
+    }
+</style>
+
+<script>
+    class AgentWorkflow extends HTMLElement {
+        private events?: AbortController;
+        private visibility?: IntersectionObserver;
+        private layout?: ResizeObserver;
+        private timer?: number;
+        private pulse?: Animation;
+        private motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+        connectedCallback() {
+            this.events = new AbortController();
+            const options = { signal: this.events.signal };
+            this.querySelectorAll<HTMLButtonElement>("[data-scenario]").forEach(button => {
+                button.addEventListener("click", () => this.play(button.dataset.scenario!), options);
+            });
+            this.querySelector("[data-replay]")!.addEventListener("click", () => this.play(this.selected()), options);
+            this.motion.addEventListener("change", () => {
+                if (this.motion.matches && this.dataset.state === "running") this.play(this.selected());
+            }, options);
+
+            const stage = this.querySelector<HTMLElement>(".workflow__stage")!;
+            this.layout = new ResizeObserver(() => this.draw(stage));
+            this.layout.observe(stage);
+            this.draw(stage);
+            this.visibility = new IntersectionObserver(entries => {
+                if (entries.some(entry => entry.isIntersecting)) this.play(this.selected());
+            }, { threshold: 0.25 });
+            this.visibility.observe(stage);
+        }
+
+        disconnectedCallback() {
+            this.events?.abort();
+            this.visibility?.disconnect();
+            this.layout?.disconnect();
+            this.stop();
+        }
+
+        private selected() {
+            return this.querySelector<HTMLButtonElement>('[data-scenario][aria-pressed="true"]')!.dataset.scenario!;
+        }
+
+        private draw(stage: HTMLElement) {
+            const frame = stage.getBoundingClientRect();
+            const hub = this.querySelector<HTMLElement>('[data-node="agent"]')!.getBoundingClientRect();
+            const vertical = getComputedStyle(stage).getPropertyValue("--vertical-links").trim() === "yes";
+            const cx = hub.x - frame.x + hub.width / 2;
+            const cy = hub.y - frame.y + hub.height / 2;
+            for (const link of this.querySelectorAll<SVGGElement>("[data-link]")) {
+                const node = this.querySelector<HTMLElement>(`[data-node="${link.dataset.link}"]`)!.getBoundingClientRect();
+                let x = node.x - frame.x + node.width / 2;
+                let y = node.y - frame.y + node.height / 2;
+                let path: string;
+                // End each curve just outside the outlines, so both arrow directions stay visible.
+                if (vertical) {
+                    const sign = Math.sign(cy - y);
+                    y += sign * (node.height / 2 + 3);
+                    const endY = cy - sign * (hub.height / 2 + 10);
+                    const bend = (y + endY) / 2;
+                    path = `M ${x} ${y} C ${x} ${bend}, ${cx} ${bend}, ${cx} ${endY}`;
+                } else {
+                    const sign = Math.sign(cx - x);
+                    x += sign * (node.width / 2 + 3);
+                    const endX = cx - sign * (hub.width / 2 + 10);
+                    const bend = (x + endX) / 2;
+                    path = `M ${x} ${y} C ${bend} ${y}, ${bend} ${cy}, ${endX} ${cy}`;
+                }
+                link.querySelectorAll("path").forEach(wire => wire.setAttribute("d", path));
+            }
+        }
+
+        private stop() {
+            window.clearTimeout(this.timer);
+            this.pulse?.cancel();
+        }
+
+        private play(id: string) {
+            this.stop();
+            this.visibility?.disconnect();
+            const trace = this.querySelector<HTMLElement>(`[data-trace="${id}"]`)!;
+            this.querySelectorAll<HTMLElement>("[data-trace]").forEach(item => item.hidden = item !== trace);
+            this.querySelectorAll<HTMLButtonElement>("[data-scenario]").forEach(button => {
+                button.setAttribute("aria-pressed", String(button.dataset.scenario === id));
+            });
+            const steps = Array.from(trace.querySelectorAll<HTMLElement>("[data-system]"));
+            const links = this.querySelectorAll<SVGGElement>("[data-link]");
+            const nodes = this.querySelectorAll<HTMLElement>("[data-node]");
+            const caption = this.querySelector<HTMLElement>("[data-caption]")!;
+            const result = this.querySelector<HTMLElement>("[data-result]")!;
+            const highlight = (active?: HTMLElement) => {
+                for (const step of steps) {
+                    step.classList.toggle("is-current", step === active);
+                    if (step === active) step.setAttribute("aria-current", "step");
+                    else step.removeAttribute("aria-current");
+                }
+                for (const link of links) {
+                    const matching = active ? [active] : steps;
+                    for (const direction of ["in", "out"]) {
+                        link.classList.toggle("is-" + direction, matching.some(step =>
+                            step.dataset.system === link.dataset.link && step.dataset.direction === direction));
+                    }
+                    link.classList.toggle("is-active", !!active && link.dataset.link === active.dataset.system);
+                }
+                for (const node of nodes) {
+                    const participants = active ? [active] : steps;
+                    node.classList.toggle("is-lit", node.dataset.node === "agent" ||
+                        participants.some(step => step.dataset.system === node.dataset.node));
+                }
+            };
+            const done = () => {
+                this.stop();
+                this.dataset.state = "done";
+                this.dataset.step = String(steps.length);
+                highlight();
+                caption.textContent = "Результат";
+                result.setAttribute("aria-live", "polite");
+                result.textContent = trace.dataset.outcome!;
+            };
+            if (this.motion.matches) {
+                done();
+                return;
+            }
+
+            const stepTime = 1220;
+            const show = (index: number) => {
+                const step = steps[index];
+                if (!step) {
+                    done();
+                    return;
+                }
+                this.pulse?.cancel();
+                this.dataset.step = String(index + 1);
+                highlight(step);
+                caption.textContent = `Шаг ${index + 1} из ${steps.length}`;
+                result.textContent = step.textContent;
+                const signal = this.querySelector<SVGPathElement>(`[data-link="${step.dataset.system}"] .workflow__signal`)!;
+                this.pulse = signal.animate([
+                    { strokeDashoffset: ".17", opacity: 0 },
+                    { opacity: 1, offset: 0.12 },
+                    { opacity: 1, offset: 0.88 },
+                    { strokeDashoffset: "-1", opacity: 0 },
+                ], { duration: stepTime - 120, direction: step.dataset.direction === "in" ? "normal" : "reverse", easing: "ease-in-out" });
+                this.timer = window.setTimeout(() => show(index + 1), stepTime);
+            };
+            this.dataset.state = "running";
+            result.setAttribute("aria-live", "off");
+            show(0);
+        }
+    }
+
+    if (!customElements.get("aicraft-workflow")) customElements.define("aicraft-workflow", AgentWorkflow);
+</script>

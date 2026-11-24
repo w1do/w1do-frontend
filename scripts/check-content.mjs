@@ -9,6 +9,10 @@ const PATTERNS = [
     { re: /2022-2024/g, message: "устаревший диапазон копирайта" },
     { re: /Claude 4\.8/g, message: "неподтверждённая версия модели Claude 4.8" },
     { re: /Gemini 1\.5/g, message: "устаревшая модель Gemini 1.5" },
+    {
+        re: /(?:\b(?:title|subTitle)\s*[:=]\s*["'`]|<h[1-6]\b[^>]*>\s*|<span\b[^>]*section-sub-title[^>]*>\s*)(?:как я разрабатываю|где я показываю|что я предлагаю)(?![а-яё])/iu,
+        message: "заголовок от лица одного специалиста. Сформулируйте его от имени команды AiCRAFT",
+    },
 ];
 const ALLOW = new Set(["src/layouts/Layout.astro"]);
 

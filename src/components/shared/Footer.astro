@@ -4,6 +4,11 @@ import { CONTACT_EMAILS } from '../../lib/contact-emails';
 import { REQUISITES } from '../../lib/requisites';
 import { getServiceHubs } from '../../lib/server/w1do/services';
 
+interface Props {
+    description?: string;
+}
+
+const { description = "Разрабатываем ИИ-агентов для бизнеса. Помогаем подключить данные и инструменты, развернуть agent harness и настроить Claude Code для команд." } = Astro.props;
 const currentYear = new Date().getFullYear();
 
 const featuredServices = [
@@ -52,7 +57,7 @@ const navigationLinks = [
                 <div class="about-footer-prime">
                     <div class="about-footer-content-prime">
                         <h2>Агентство AiCRAFT</h2>
-                        <p>Разрабатываем ИИ-агентов для бизнеса. Помогаем подключить данные и инструменты, развернуть agent harness и настроить Claude Code для команд.</p>
+                        <p>{description}</p>
                     </div>
                     <div class="footer-contact-list-prime">
                         <ul>

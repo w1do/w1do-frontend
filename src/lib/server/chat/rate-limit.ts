@@ -97,3 +97,17 @@ export const checkLeadLimit = createLimiter({
     globalWindowMs: LEAD_LIMIT_WINDOW_MS,
     global: LEAD_LIMIT_GLOBAL,
 });
+
+export const checkVoiceLimit = createLimiter({
+    windowMs: 2 * 60_000,
+    perClient: 6,
+    globalWindowMs: RATE_LIMIT_GLOBAL_WINDOW_MS,
+    global: 60,
+});
+
+export const checkLeadFormattingLimit = createLimiter({
+    windowMs: RATE_LIMIT_WINDOW_MS,
+    perClient: 6,
+    globalWindowMs: RATE_LIMIT_GLOBAL_WINDOW_MS,
+    global: 120,
+});

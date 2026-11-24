@@ -13,7 +13,6 @@ import Testimonials from "../components/Testimonials.astro";
 import Pricing from "../components/Pricing.astro";
 import Process from "../components/Process.astro";
 import Works from "../components/Works.astro";
-import Spacer from "../components/shared/Spacer.astro";
 import ServicePriceNote from "../components/services/ServicePriceNote.astro";
 import { getServiceHubs, getServiceSpokes } from "../lib/server/w1do/services";
 
@@ -155,7 +154,7 @@ const schema = [serviceSchema, breadcrumbSchema, faqSchema].filter(Boolean);
                             {frontmatter.offers && (
                                 <div class="service-offer-box">
                                     <div class="section-title">
-                                        <span class="section-sub-title wow fadeInUp">Что я предлагаю</span>
+                                        <span class="section-sub-title wow fadeInUp">Что предлагаем</span>
                                         <h2 class="text-anime-style-3" data-cursor="-opaque">{frontmatter.offersTitle || "Что входит в решение"}</h2>
                                         <p class="wow fadeInUp" data-wow-delay="0.2s">{frontmatter.offersDescription}</p>
                                     </div>
@@ -246,13 +245,11 @@ const schema = [serviceSchema, breadcrumbSchema, faqSchema].filter(Boolean);
         />
     )}
 
-    <Faqs customFaqs={frontmatter.faqs} />
+    <Faqs customFaqs={frontmatter.faqs} withBottomSpacing />
     <Testimonials/>
     <Cta/>
 
-    <Spacer/>
-    <Works />
-    <Spacer/>
+    <Works servicePath={frontmatter.publicPath ?? ""} />
     <Footer/>
 </Layout>
 

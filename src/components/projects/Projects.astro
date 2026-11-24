@@ -6,6 +6,7 @@ interface Props {
     homeOriginal?: boolean;
     subTitle?: string;
     title?: string;
+    description?: string;
     filterAll?: string;
     filterSeo?: string;
     filterAi?: string;
@@ -16,14 +17,15 @@ interface Props {
 
 const {
     homeOriginal = false,
-    subTitle = homeOriginal ? "Мои проекты" : "Кейсы AiCRAFT",
-    title = homeOriginal ? "Воплощаю идеи в мощные цифровые решения" : "Выполненные проекты",
+    subTitle = homeOriginal ? "Проекты AiCRAFT" : "Кейсы AiCRAFT",
+    title = homeOriginal ? "Какие задачи мы решили для клиентов" : "Выполненные проекты",
+    description,
     filterAll = "Все проекты",
     filterSeo = "SEO & Content",
     filterAi = "AI Решения",
     filterAutomation = "AI Автоматизация",
-    footerText = homeOriginal ? "Давайте создадим что-то великое вместе." : "Задачи, ход работы и решения в кейсах AiCRAFT.",
-    footerLinkText = homeOriginal ? "Посмотреть все проекты." : "Смотреть все кейсы"
+    footerText = homeOriginal ? "Больше примеров автоматизации — в каталоге проектов." : "Задачи, ход работы и решения в кейсах AiCRAFT.",
+    footerLinkText = homeOriginal ? "Все проекты" : "Смотреть все кейсы"
 } = Astro.props;
 
 const projects = await getCases().catch(() => {
@@ -59,6 +61,7 @@ for (const { categorySlug, category } of homeOriginal ? [] : featuredProjects) {
                     <div class="section-title">
                         <span class="section-sub-title wow fadeInUp">{subTitle}</span>
                         <h2 class="text-anime-style-3" data-cursor="-opaque">{title}</h2>
+                        {description && <p class="wow fadeInUp" data-wow-delay="0.2s">{description}</p>}
                     </div>
                     <!-- Section Title End -->
 

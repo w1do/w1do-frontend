@@ -336,6 +336,12 @@ a:focus{
 	margin: 0 auto;
 }
 
+body:not(.home-page) > section[aria-labelledby="service-directions"] a {
+	color: var(--accent-color);
+	text-decoration: underline;
+	text-underline-offset: .16em;
+}
+
 .box-border-gradiant{
 	position: relative;
 	background: var(--secondary-color);
@@ -2614,7 +2620,7 @@ header.main-header .header-sticky.active{
 /************************************/
 
 .our-faqs{
-	padding: 120px 0 0;
+	padding: 120px 0 clamp(32px, 4vw, 64px);
 	margin-bottom: 200px;
 }
 
@@ -6058,7 +6064,7 @@ header.main-header .header-sticky.active{
 	}
 
 	.our-faqs{
-		padding: 60px 0 0;
+		padding-top: 60px;
 		margin-bottom: 150px;
 	}
 

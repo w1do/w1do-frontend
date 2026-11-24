@@ -11,7 +11,7 @@ interface AiChatProps {
     source?: ChatSource;
 }
 
-const GREETING = "Здравствуйте! Я ИИ-помощник агентства AiCRAFT. Расскажите, какую задачу вы хотите решить с помощью ИИ.";
+const GREETING = "Здравствуйте! Это чат с ИИ-помощником AiCRAFT. Какую задачу вы хотите автоматизировать?";
 const SUGGESTIONS = [
     "Как внедрить ИИ-агента в бизнес?",
     "Что входит в настройку agent harness?",

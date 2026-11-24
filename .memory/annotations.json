@@ -312,14 +312,6 @@
     "updatedAt": "2026-10-14T11:55:37.355Z"
   },
   {
-    "relativePath": "seo/ai-agents/cluster.md",
-    "summary": "seo/ — семантика и кластерные карты; cluster.md — карта SERP-интентов кластера 'ИИ-агенты' и приоритетные под-кластеры для посадочных.",
-    "role": "doc",
-    "contentHash": "517d486530913fea59b7096c2d9d8d64c80227d29806d4f0709da0eabfeaf7cb",
-    "author": "agent",
-    "updatedAt": "2026-11-08T10:01:13.325Z"
-  },
-  {
     "relativePath": "source/css/animate.css",
     "summary": "Библиотека CSS-анимаций animate.css для появления и движения элементов страниц.",
     "role": "module",
@@ -457,11 +449,19 @@
   },
   {
     "relativePath": "src/components/Hero.astro",
-    "summary": "Первый экран главной с ИИ-агентами для бизнеса, прямыми ссылками на четыре направления и переходом к форме. Фоновое видео с затемнением.",
+    "summary": "Первый экран с карточками услуг, слотом after-hero и опциональной формой быстрой заявки. При наличии разделителя на главной он задаёт отступ перед формой.",
     "role": "module",
-    "contentHash": "3258e7fa50ed77f31911897a940a41afc95ff9266b42b2750663430af14f6751",
+    "contentHash": "6dbdb9237ff97b8c71baa8671ca24be7a465f75ed679e45a7cdb430e57bb090c",
     "author": "agent",
-    "updatedAt": "2026-11-20T17:31:11.342Z"
+    "updatedAt": "2026-11-21T19:27:27.747Z"
+  },
+  {
+    "relativePath": "src/components/HomeOffers.astro",
+    "summary": "Карусель CMS-предложений на главной. Графитовая карточка с ценой, фото и CTA, переливающейся рамкой с учётом reduced motion, ниже разделитель с шевроном.",
+    "role": "module",
+    "contentHash": "09485d036f19f931fa864bc53a8f4128bd0754dd484788cc1bbd1b06d55c08ba",
+    "author": "agent",
+    "updatedAt": "2026-11-21T19:33:22.529Z"
   },
   {
     "relativePath": "src/components/IntroVideo.astro",
@@ -488,6 +488,14 @@
     "updatedAt": "2026-10-14T12:36:21.439Z"
   },
   {
+    "relativePath": "src/components/Segments.astro",
+    "summary": "Карточки бизнес-сценариев и интерактивная демосхема обмена данными ИИ-агента с чатом, 1С, CRM, API и документами.",
+    "role": "module",
+    "contentHash": "9f47bd332ff491e5cb697690adb5e4e21cedaa9747e3506b34b85c32e53ce2cc",
+    "author": "agent",
+    "updatedAt": "2026-11-21T18:30:57.282Z"
+  },
+  {
     "relativePath": "src/components/Services.astro",
     "summary": "Блок услуг с заголовком и подзаголовком из props; список услуг выводится через ServiceCard.",
     "role": "module",
@@ -505,11 +513,11 @@
   },
   {
     "relativePath": "src/components/Works.astro",
-    "summary": "Список ИИ-инструментов и моделей (ChatGPT и другие) с иконками, производителем и годом; данные в массиве works во frontmatter.",
+    "summary": "Показывает тематическое описание и карточки стека по public_path услуги; сохраняет общий вариант без адреса и скрывает секцию для неизвестного адреса.",
     "role": "module",
-    "contentHash": "03eb69282587ea634ba18a75e671d488618ff60d0b45106aab31bd507cc99fac",
+    "contentHash": "e3392ba74c7d1c0464c13d748f23199bc2f98aec5fc25216109f101b2e08440b",
     "author": "agent",
-    "updatedAt": "2026-10-14T12:48:54.194Z"
+    "updatedAt": "2026-11-24T07:41:09.113Z"
   },
   {
     "relativePath": "src/components/blog/Blog.astro",
@@ -609,11 +617,11 @@
   },
   {
     "relativePath": "src/components/contact/ContactForm.tsx",
-    "summary": "components/contact — форма контакта с legalConsent, отправка на клиентский роут /api/lead.",
+    "summary": "Формы заявки full, compact, quick. Быстрая форма выбирает услугу радиокнопками, поддерживает hash, комментарий для другой услуги, согласие и подтверждение отправки.",
     "role": "module",
-    "contentHash": "de0e0cabfa99fe9a49c067b72e3ed276844a5133c3fabc3684b1f70a6dbaf1ff",
+    "contentHash": "fca98c69c63971748d4c210432c5b87f2dc56b24c82ddd1e56e27d157e0ba051",
     "author": "agent",
-    "updatedAt": "2026-11-08T10:01:31.097Z"
+    "updatedAt": "2026-11-21T17:38:17.114Z"
   },
   {
     "relativePath": "src/components/hire/HireFaqs.astro",
@@ -641,11 +649,11 @@
   },
   {
     "relativePath": "src/components/media/MediaResources.astro",
-    "summary": "components/media — блок медиа-ресурсов каналов (Telegram-чат, YouTube) на главной из src/lib/media-resources.ts.",
+    "summary": "Медиа и сообщество AiCRAFT на главной, секция #media-resources со ссылками на площадки, контрастными подписями и подложкой из дымчатого стекла.",
     "role": "module",
-    "contentHash": "0c79c0c037b4613c5dc7cb0ab64d5f762b0106d36c05db25f0a021c56538df49",
+    "contentHash": "75368d59c282d0d9d77033aed1e15ed37e3e3dd1738c5436b1d70eb95f397d78",
     "author": "agent",
-    "updatedAt": "2026-11-08T10:02:47.933Z"
+    "updatedAt": "2026-11-21T18:18:20.750Z"
   },
   {
     "relativePath": "src/components/pricing/DevPricing.astro",
@@ -774,6 +782,14 @@
     "contentHash": "102cf1c3eb539907709c373c4e830b8e77c9998eede17e250172eeeae370f0b7",
     "author": "agent",
     "updatedAt": "2026-10-14T12:39:24.487Z"
+  },
+  {
+    "relativePath": "src/components/shared/VoiceInput.tsx",
+    "summary": "Голосовой ввод форм заявок. Подтверждение обработки, лимит записи, WAV PCM 16 кГц, отмена и вставка расшифровки в редактируемое поле.",
+    "role": "module",
+    "contentHash": "2a826483263ab709aa32b1d06708a68ecfd7f5e53b0736fcc620e8fa9eb7bbae",
+    "author": "agent",
+    "updatedAt": "2026-11-24T09:19:02.689Z"
   },
   {
     "relativePath": "src/components/shared/faq/FaqItem.astro",
@@ -1049,11 +1065,11 @@
   },
   {
     "relativePath": "src/layouts/ServiceLayout.astro",
-    "summary": "Layout страницы услуги с SEO-разметкой и ссылками, использующими SITE_ORIGIN.",
+    "summary": "Шаблон основной услуги с миниатюрами обложек CMS в «Другие услуги», резервными иконками и выделением текущего канонического URL через aria-current.",
     "role": "module",
-    "contentHash": "421e689a2f240de54be2da8dd30ea899de41ae6a8522c30c3b052d48273434d0",
+    "contentHash": "293f5a9110a11519dc8b702fc9a958096d525e05d27c3766ddd44db5cb577069",
     "author": "agent",
-    "updatedAt": "2026-10-23T06:20:38.486Z"
+    "updatedAt": "2026-11-22T06:25:43.652Z"
   },
   {
     "relativePath": "src/lib/ai-agents-canonical.ts",
@@ -1094,6 +1110,14 @@
     "contentHash": "d68e9578f1fd98c078a5703be2654313a2fb1b881498684a844f774972b7e96c",
     "author": "agent",
     "updatedAt": "2026-10-14T12:38:04.067Z"
+  },
+  {
+    "relativePath": "src/lib/pricing.ts",
+    "summary": "Пакеты, форматирование цен и каталог 20 работ для таблицы /pricing. Для двух услуг заданы стартовые цены, остальные оцениваются по запросу.",
+    "role": "module",
+    "contentHash": "bfe18320e1ec1622bd22bbc140322e198e72f16d6085cbe852fd5bf3d2a39022",
+    "author": "agent",
+    "updatedAt": "2026-11-24T08:46:03.933Z"
   },
   {
     "relativePath": "src/lib/regions.ts",
@@ -1176,6 +1200,22 @@
     "updatedAt": "2026-11-08T10:01:53.895Z"
   },
   {
+    "relativePath": "src/lib/server/leads/read-request-body.ts",
+    "summary": "Читает тело запроса с ограничением байтов и времени, отменяет потоки при превышении лимита или закрытии запроса.",
+    "role": "module",
+    "contentHash": "f1915af9b342a97f0444fbbb21d7fb2c0952c08cc7196d82b688245f1dc3b67c",
+    "author": "agent",
+    "updatedAt": "2026-11-24T09:20:37.019Z"
+  },
+  {
+    "relativePath": "src/lib/server/leads/request-origin.ts",
+    "summary": "Проверяет Origin и Fetch Metadata у голосового ввода и подготовки заявок, учитывает настроенный HTTPS за reverse proxy.",
+    "role": "module",
+    "contentHash": "51f3cbd11f19f00ea2cbab34bf4caa57534545f5d5f7e13ec52aef8b52747247",
+    "author": "agent",
+    "updatedAt": "2026-11-24T09:16:17.190Z"
+  },
+  {
     "relativePath": "src/lib/server/leads/submit-lead.ts",
     "summary": "Shared lead submission used by /api/lead and the chat: validation, LEADS_API_KEY check and platform POST with logTag-prefixed logs.",
     "role": "module",
@@ -1206,6 +1246,22 @@
     "contentHash": "214baa5f7f58c05d0233e4981e8324426873f9d1191111fed67a6cd504ee8cce",
     "author": "agent",
     "updatedAt": "2026-11-08T10:01:48.140Z"
+  },
+  {
+    "relativePath": "src/lib/server/polza/lead.ts",
+    "summary": "Claude Haiku 5.5 форматирует описание заявки с уточняющим вопросом по строгой JSON-схеме, исключая типовые контакты.",
+    "role": "module",
+    "contentHash": "c6c3b4fcce614e0fbbc4a3cd73b1190fae1c6f80d2012a947cd478ee7ee39c09",
+    "author": "agent",
+    "updatedAt": "2026-11-24T09:15:02.982Z"
+  },
+  {
+    "relativePath": "src/lib/server/polza/transcription.ts",
+    "summary": "Серверный адаптер Polza Whisper для канонического WAV в памяти с ограничением времени и нормализованными ошибками.",
+    "role": "module",
+    "contentHash": "b7417f9cf0d6e7cf0161bdc2586363212814018c647fae8cfef32baa38be7d0e",
+    "author": "agent",
+    "updatedAt": "2026-11-24T09:20:37.092Z"
   },
   {
     "relativePath": "src/lib/server/rag/context.ts",
@@ -1294,6 +1350,14 @@
     "contentHash": "099dfc042e968e0c177a7fbf83758d361545b4c7e32316e56643ff9663ac9e85",
     "author": "agent",
     "updatedAt": "2026-10-14T11:58:01.207Z"
+  },
+  {
+    "relativePath": "src/lib/server/w1do/home-offers.ts",
+    "summary": "Серверный адаптер home-offers с раздельными парами адреса и ключа, проверкой публикации, пагинацией и обработкой сбоя CMS.",
+    "role": "module",
+    "contentHash": "a8a308af89da94ace3519fda9d198e670d4b0ebf389ba87684ded1ff764a4a5c",
+    "author": "agent",
+    "updatedAt": "2026-11-21T19:14:13.110Z"
   },
   {
     "relativePath": "src/lib/server/w1do/opensource.ts",
@@ -1398,6 +1462,14 @@
     "contentHash": "3644fb9318eabaf8c509feaa561b331b45bfb7b8fc929e66f2969d84feff4b52",
     "author": "agent",
     "updatedAt": "2026-10-14T12:35:45.185Z"
+  },
+  {
+    "relativePath": "src/pages/api/voice-transcription.ts",
+    "summary": "Обрабатывает PCM16 WAV 16 кГц до 90 секунд с проверкой согласия и Origin и отправляет валидированные сэмплы в Polza Whisper.",
+    "role": "entry",
+    "contentHash": "a8828b1f1388ab1fcb8dde5cbfc815e0aabab3a87f2c7c060ca5ddfd5d32baa8",
+    "author": "agent",
+    "updatedAt": "2026-11-24T09:20:37.057Z"
   },
   {
     "relativePath": "src/pages/blog-sitemap.xml.ts",
@@ -1537,11 +1609,11 @@
   },
   {
     "relativePath": "src/pages/index.astro",
-    "summary": "Главная AiCRAFT об ИИ-агентах для бизнеса, agent harness и Claude Code. Собирает услуги, сценарии, кейсы, бюджет проекта, FAQ и форму заявки.",
+    "summary": "Главная AiCRAFT выводит CMS-предложения сразу после первого экрана, перед быстрой заявкой. Кнопка предложения ведёт к нижней форме.",
     "role": "entry",
-    "contentHash": "bb5bbc68bf92e557a56e5f76463f8f56746ebd2a290c66a4b142ab5e8a1354e0",
+    "contentHash": "74577c402efe26c4b7435135dfbf63e98c58b54fb5873e65849a447131008d2e",
     "author": "agent",
-    "updatedAt": "2026-11-20T17:31:11.326Z"
+    "updatedAt": "2026-11-21T19:21:46.615Z"
   },
   {
     "relativePath": "src/pages/knowledge/index.astro",
@@ -1585,11 +1657,11 @@
   },
   {
     "relativePath": "src/pages/pricing.astro",
-    "summary": "Страница цен на разработку и внедрение ИИ: DevPricing, HireFaqs, Spacer и Cta внутри Layout; SEO-заголовок про Claude, Gemini и RAG.",
+    "summary": "/pricing: таблица 20 работ в табличном стиле AiCRAFT, готовые Choose и Segments, блок agent harness, FAQ, пакеты и форма расчёта.",
     "role": "entry",
-    "contentHash": "a15a3c1df2900bd665e404619b03adabb684bfda6f6ba4a837d41a8c20ee75bd",
+    "contentHash": "b8112cb592719bacd5c353af649937c109010844092c97448d71497263553e8a",
     "author": "agent",
-    "updatedAt": "2026-10-14T12:40:58.161Z"
+    "updatedAt": "2026-11-24T08:52:48.840Z"
   },
   {
     "relativePath": "src/pages/privacy-policy.astro",
@@ -1681,11 +1753,11 @@
   },
   {
     "relativePath": "src/styles/custom.css",
-    "summary": "styles/ — стили: custom.css (тема, ~12k строк), ai-chat.css, animate, fonts, magnific-popup, mousecursor. Фоны/шрифты только абсолютными путями /images/ и /webfonts/.",
+    "summary": "Глобальные и адаптивные стили AiCRAFT, включая фон страниц, шапки, общие секции и оформление ссылок каталога.",
     "role": "module",
-    "contentHash": "07d643700020a0aad1bb6be543befec138693f05e4c40345e6ca83add259ae43",
+    "contentHash": "c999eea2ff7f274a3c4c421fe6050b549cafb55ca78772c1ecc7ea74b8177598",
     "author": "agent",
-    "updatedAt": "2026-11-08T10:01:53.914Z"
+    "updatedAt": "2026-11-24T07:20:38.863Z"
   },
   {
     "relativePath": "src/styles/fonts.css",

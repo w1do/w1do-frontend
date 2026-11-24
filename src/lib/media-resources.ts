@@ -8,11 +8,11 @@ export interface MediaResource {
 
 export const MEDIA_SECTION = {
     subTitle: "Медиа и сообщество",
-    title: "Где я показываю разработку ИИ изнутри",
+    title: "Как команда AiCRAFT разрабатывает ИИ-агентов",
     description:
-        "В коммерческих проектах заказчик видит готовый результат. Здесь я выкладываю то, что обычно остаётся за кадром: как собираю агентов, где они ломаются и какие инструменты в итоге оставляю в работе.",
+        "Делимся тем, что обычно остаётся за кадром проекта. Показываем, как собираем агентов, находим причины сбоев и выбираем инструменты для работы.",
     counterValue: "3",
-    counterDesc: "Три площадки: видео, чат, где можно задать вопрос, и личка для разговора о проекте.",
+    counterDesc: "Смотрите разборы на YouTube, задавайте вопросы в чате или обсудите проект с нашей командой в Telegram.",
 } as const;
 
 export const MEDIA_RESOURCES: readonly MediaResource[] = [
@@ -20,7 +20,7 @@ export const MEDIA_RESOURCES: readonly MediaResource[] = [
         icon: "/images/media/icon-youtube.svg",
         title: "YouTube-канал",
         description:
-            "Записи экрана без монтажных чудес: подключаю LLM к живым сервисам, собираю агентов в Cursor и Claude Code и показываю, на каком шаге всё пошло не так и как я это починил.",
+            "Записываем экран во время разработки. Подключаем языковые модели к сервисам, собираем агентов в Cursor и Claude Code, разбираем ошибки и показываем исправления.",
         label: "Видео",
         href: "https://www.youtube.com/@w1do_digital",
     },
@@ -28,8 +28,8 @@ export const MEDIA_RESOURCES: readonly MediaResource[] = [
         icon: "/images/media/icon-telegram-channel.svg",
         title: "Telegram",
         description:
-            "Напишите напрямую, если хотите обсудить проект или задать вопрос по разработке. Ответ придёт в Telegram.",
-        label: "Личка",
+            "Напишите команде AiCRAFT в Telegram. Обсудим вашу задачу и ответим на вопросы о разработке.",
+        label: "Связь",
         href: "https://t.me/W1DO_DIGITAL",
     },
     {

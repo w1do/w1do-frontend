@@ -3,6 +3,7 @@ interface Props {
     homeOriginal?: boolean;
     subTitle?: string;
     title?: string;
+    description?: string;
     tickerItems?: string[];
 }
 
@@ -10,6 +11,7 @@ const {
     homeOriginal = false,
     subTitle = "Видео",
     title = "Разработка и внедрение ИИ на практике",
+    description,
     tickerItems = ["ИИ-агенты", "Интеграции", "Проверка качества", "Запуск"]
 } = Astro.props;
 ---
@@ -26,6 +28,7 @@ const {
                         <div class="section-title">
                             <span class="section-sub-title wow fadeInUp">{subTitle}</span>
                             <h2 class="text-anime-style-3" data-cursor="-opaque">{title}</h2>
+                            {description && <p class="wow fadeInUp" data-wow-delay="0.2s">{description}</p>}
                         </div>
                         <!-- Section Title End -->
 

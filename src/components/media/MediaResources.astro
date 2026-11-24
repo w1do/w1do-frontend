@@ -20,7 +20,7 @@ const {
 } = Astro.props;
 ---
 <!-- Media Resources Section Start -->
-<div class='our-awards-prime bg-section'>
+<div class='our-awards-prime bg-section' id='media-resources'>
     <div class='container'>
         <div class='row'>
             <div class='col-xl-6'>
@@ -87,6 +87,7 @@ const {
 
     .awards-item-year-prime h3 {
         font-size: 32px !important;
+        color: #a7aba1;
     }
 
     @media only screen and (max-width: 767px) {
@@ -133,6 +134,11 @@ const {
 
         .media-resource-item .awards-item-content-prime {
             width: calc(100% - 80px);
+        }
+
+        .media-resource-item .awards-item-content-prime h3 {
+            min-height: 32px;
+            padding-inline-end: 8rem;
         }
 
         .media-resource-item .awards-item-year-prime {

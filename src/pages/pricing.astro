@@ -1,5 +1,6 @@
 ---
 import { breadcrumbSchema } from "../lib/breadcrumbs";
+import { formatPrice, PRICING_SERVICES } from "../lib/pricing";
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/shared/Header.astro";
 import Breadcrumbs from "../components/shared/Breadcrumbs.astro";
@@ -7,17 +8,41 @@ import About from "../components/About.astro";
 import Feature from "../components/Feature.astro";
 import Process from "../components/Process.astro";
 import Choose from "../components/Choose.astro";
+import Segments from "../components/Segments.astro";
 import Cta from "../components/Cta.astro";
 import Footer from "../components/shared/Footer.astro";
 import IntroVideo from "../components/IntroVideo.astro";
 import Spacer from "../components/shared/Spacer.astro";
-import HireFaqs from "../components/hire/HireFaqs.astro";
+import Faqs from "../components/Faqs.astro";
 import DevPricing from "../components/pricing/DevPricing.astro";
 
 const pageBreadcrumbs = breadcrumbSchema([
     { name: "Главная", path: "/" },
     { name: "Цены", path: "/pricing" }
 ]);
+
+const pricingFaqs = [
+    {
+        question: "Можно ли начать с одного процесса?",
+        answer: "Да. Выбираем один сценарий, согласуем критерии и проверяем пилот на ваших примерах.",
+    },
+    {
+        question: "Хватит ли нашего сервера для локальной модели?",
+        answer: "Проверяем доступное оборудование, ожидаемую нагрузку и требования ко времени ответа. По этим данным подбираем модель и способ запуска.",
+    },
+    {
+        question: "Можно ли совместить RAG и дообучение?",
+        answer: "Да. RAG подключает актуальные материалы, а дообучение помогает модели соблюдать нужный формат или правила обработки. Сочетаем их, если нужны оба результата.",
+    },
+    {
+        question: "Может ли агент сам менять данные в CRM или 1С?",
+        answer: "Настраиваем разрешения на каждую операцию. Например, агент готовит запись, а сотрудник подтверждает её сохранение.",
+    },
+    {
+        question: "Что оплачивается после запуска?",
+        answer: "Отдельно оцениваем вызовы моделей, хранение данных, мониторинг и сопровождение. На старте согласуем, кто проверяет спорные результаты, обновляет источники и следит за интеграциями.",
+    },
+];
 
 ---
 
@@ -40,7 +65,7 @@ const pageBreadcrumbs = breadcrumbSchema([
     <About 
         subTitle="Форматы проекта"
         title="Из чего складывается смета"
-        description="Смета зависит от числа сценариев, качества данных, доступных API и объёма проверок. На старте обсуждаем, что входит в пилот и какие расходы будут регулярными после запуска."
+        description="Оцениваем сценарии, качество данных, доступные API и объём проверок. На старте уточняем, что входит в пилот и какие расходы возникнут после запуска."
         counterValue="2"
         counterTag="Статьи расходов"
         counterDescription="Уточняем работы и инфраструктурные расходы отдельно."
@@ -48,10 +73,63 @@ const pageBreadcrumbs = breadcrumbSchema([
 
     <DevPricing />
 
-    <Feature 
-        subTitle="Состав работ"
-        title="Что оцениваем перед разработкой"
-        description="Уточняем необходимое число интеграций, источники данных, требования к доступам и процедуру проверки действий. Отдельно оцениваем сопровождение."
+    <section class="our-pricing-prime pt-0 pb-0" id="pricing-work" aria-labelledby="pricing-work-title">
+        <div class="container">
+            <div class="row section-row">
+                <div class="col-lg-12">
+                    <div class="section-title section-title-center">
+                        <h2 class="text-anime-style-3" id="pricing-work-title">Работы и цены</h2>
+                        <p>Можно заказать отдельную работу или собрать из нескольких позиций состав проекта.</p>
+                    </div>
+                </div>
+            </div>
+
+            <table class="pricing-table" aria-labelledby="pricing-work-title">
+                <colgroup>
+                    <col class="pricing-column-work">
+                    <col>
+                    <col class="pricing-column-cost">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th scope="col">Работа</th>
+                        <th scope="col">Что входит</th>
+                        <th scope="col" class="text-end">Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {PRICING_SERVICES.map(({ name, description, priceFrom }) => (
+                        <tr>
+                            <th scope="row">{name}</th>
+                            <td>{description}</td>
+                            <td class="text-end">
+                                {priceFrom === undefined ? "По запросу" : formatPrice({ priceFrom, unit: "project" })}
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <Choose
+        subTitle="Модели и данные"
+        title="Как выбрать подход"
+        description="Смотрим, где должна работать модель, откуда ей брать знания и какой результат она должна выдавать. При необходимости сочетаем локальный запуск, RAG и дообучение."
+        priceTitle="Локальная модель"
+        priceDesc="Разворачиваем модель на вашей инфраструктуре, чтобы обработка данных оставалась внутри компании."
+        benefit1Title="Поиск по документам с RAG"
+        benefit1Desc="Подключаем актуальные документы и настраиваем ответы со ссылками на источники."
+        benefit2Title="Дообучение модели"
+        benefit2Desc="Адаптируем модель под заданный стиль, формат ответа или правила классификации."
+    />
+
+    <Segments />
+
+    <Feature
+        subTitle="Инфраструктура агента"
+        title="Как мы настраиваем agent harness"
+        description="Определяем, с какими системами работает агент, какие действия он выполняет самостоятельно и где нужно согласование. Записываем вызовы инструментов, чтобы команда могла проверить результат и разобраться в ошибках."
     />
 
     <IntroVideo 
@@ -76,24 +154,19 @@ const pageBreadcrumbs = breadcrumbSchema([
         />
     </div>
 
-    <Choose 
-        subTitle="Расходы после запуска"
-        title="Что учитывать в бюджете эксплуатации"
-        description="Отдельно обсуждаем стоимость вызовов моделей, хранение данных, мониторинг и работу с инцидентами."
-        benefit1Title="Оплата инфраструктуры"
-        benefit1Desc="Расходы на модель и инфраструктуру зависят от объёма задач и требований к запуску."
-        benefit2Title="Роль команды"
-        benefit2Desc="Уточняем, кто проверяет спорные результаты, обновляет источники и следит за интеграциями."
+    <Faqs
+        subTitle="FAQ"
+        title="Вопросы о внедрении ИИ"
+        description="Как начать с пилота, запустить модель локально и настроить работу агента с данными."
+        customFaqs={pricingFaqs}
     />
-
-    <HireFaqs />
     
     <Spacer height="120px" />
 
     <Cta 
         subTitle="Оценка проекта"
         title="Рассчитаем стоимость под вашу задачу"
-        description="Опишите процесс и используемые системы. Уточним требования и подготовим предложение с составом работ."
+        description="Опишите процесс, укажите, где находятся данные, и расскажите, что агент должен делать. Предложим состав пилота и подготовим смету."
         formTitle="Запросить расчёт"
     />
 
@@ -101,3 +174,76 @@ const pageBreadcrumbs = breadcrumbSchema([
 
     <Footer/>
 </Layout>
+
+<style>
+    .pricing-table {
+        width: 100%;
+        background-color: var(--accent-secondary-color);
+        color: var(--text-color);
+        text-align: left;
+        table-layout: fixed;
+        border: 1px solid var(--dark-divider-color);
+        border-collapse: separate;
+        border-spacing: 0;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .pricing-column-work {
+        width: 30%;
+    }
+
+    .pricing-column-cost {
+        width: 18%;
+    }
+
+    .pricing-table th,
+    .pricing-table td {
+        padding: 15px 20px;
+        vertical-align: top;
+        line-height: 1.6;
+        overflow-wrap: anywhere;
+    }
+
+    .pricing-table thead th {
+        background-color: var(--accent-color);
+        color: var(--black-color);
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    .pricing-table tbody tr > * {
+        border-top: 1px solid var(--dark-divider-color);
+    }
+
+    .pricing-table tbody th {
+        color: var(--white-color);
+        font-weight: 500;
+    }
+
+    @media (max-width: 767px) {
+        .pricing-column-work {
+            width: 33%;
+        }
+
+        .pricing-column-cost {
+            width: 26%;
+        }
+
+        .pricing-table {
+            font-size: clamp(13px, 3.45vw, 16px);
+        }
+
+        .pricing-table thead th {
+            font-size: 12px;
+            letter-spacing: 0;
+        }
+
+        .pricing-table th,
+        .pricing-table td {
+            padding: 10px 6px;
+        }
+    }
+</style>

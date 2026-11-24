@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { useContactForm } from "../../hooks/useContactForm";
 import LegalConsent from "../legal/LegalConsent";
+import VoiceInput from "../shared/VoiceInput";
 
 interface ServiceOption {
     anchor: string;
@@ -19,7 +20,7 @@ interface ContactFormProps {
 
 const OTHER_SERVICE = "Другая услуга";
 
-function QuickServiceFields({ id, services }: { id: string; services: ServiceOption[] }) {
+function QuickServiceFields({ services }: { services: ServiceOption[] }) {
     const [service, setService] = useState(services[0].label);
 
     useEffect(() => {
@@ -63,12 +64,6 @@ function QuickServiceFields({ id, services }: { id: string; services: ServiceOpt
                     ))}
                 </div>
             </fieldset>
-            {service === OTHER_SERVICE && (
-                <div className="quick-request__field">
-                    <label htmlFor={`${id}-details`}>Что хотите обсудить? <small>(необязательно)</small></label>
-                    <input id={`${id}-details`} className="form-control" name="message" type="text" />
-                </div>
-            )}
         </>
     );
 }
@@ -81,13 +76,16 @@ export default function ContactForm({
     homeOriginal = false,
     services,
 }: ContactFormProps) {
-    const { status, message, handleSubmit } = useContactForm({ source });
+    const [descriptionPrepared, setDescriptionPrepared] = useState(false);
+    const { status, message, handleSubmit } = useContactForm({ source, descriptionPrepared });
     const isLoading = status === "loading";
     const isSuccess = status === "success";
     const isError = status === "error";
     const compact = variant !== "full";
     const quick = variant === "quick";
     const [ready, setReady] = useState(false);
+    const [messageText, setMessageText] = useState("");
+    const [voiceBusy, setVoiceBusy] = useState(false);
     const confirmation = useRef<HTMLDivElement>(null);
     const messagePlaceholder = compact
         ? (homeOriginal ? "Например: автоматизировать ответы в поддержке" : "Например, перенести заявки из почты в CRM")
@@ -134,8 +132,37 @@ export default function ContactForm({
         if (scale && scaleLabels[scale]) parts.push("Объём: " + scaleLabels[scale]);
         if (systems.length) parts.push("Интеграции: " + systems.join(", "));
         if (deadline && deadlineLabels[deadline]) parts.push("Срок: " + deadlineLabels[deadline]);
-        if (parts.length) el.value = parts.join(". ") + ".";
+        if (parts.length) setMessageText(parts.join(". ") + ".");
     }, []);
+
+    const messageId = `${formId}-message`;
+    const trimmedMessage = messageText.trim();
+    const showMessageHint = !!trimmedMessage && trimmedMessage.split(/\s+/).length <= 3;
+    const messageField = (
+        <div className={quick ? "quick-request__field" : "form-group col-md-12 mb-5"}>
+            <label htmlFor={messageId}>{quick ? "Что хотите обсудить?" : compact ? "Какая задача?" : "Сообщение"}</label>
+            <textarea
+                name="message"
+                className="form-control"
+                id={messageId}
+                ref={messageRef}
+                rows={quick ? 2 : compact ? 3 : 5}
+                placeholder={messagePlaceholder}
+                value={messageText}
+                onChange={(event) => {
+                    const value = event.target.value;
+                    setMessageText(value);
+                    if (!value.trim()) setDescriptionPrepared(false);
+                }}
+                aria-describedby={showMessageHint ? `${messageId}-hint` : undefined}
+            />
+            {showMessageHint && <small id={`${messageId}-hint`}>Уточните, какую работу нужно автоматизировать или какой результат вы хотите получить.</small>}
+            <VoiceInput targetRef={messageRef} onValueChange={(value, formatted) => {
+                setMessageText(value);
+                setDescriptionPrepared(formatted);
+            }} onBusyChange={setVoiceBusy} disabled={isLoading} />
+        </div>
+    );
 
     if (quick && isSuccess) {
         return (
@@ -158,7 +185,11 @@ export default function ContactForm({
                 method="POST"
                 className={quick ? "quick-request__form" : "contact-form wow fadeInUp"}
                 data-wow-delay="0.2s"
-                onSubmit={handleSubmit}
+                onSubmit={voiceBusy ? (event) => event.preventDefault() : handleSubmit}
+                onReset={() => {
+                    setMessageText("");
+                    setDescriptionPrepared(false);
+                }}
                 noValidate={!quick}
             >
                 <div className={quick ? "quick-request__grid" : "row"}>
@@ -170,7 +201,8 @@ export default function ContactForm({
                         </label>
                     </div>
 
-                    {quick && services && <QuickServiceFields id={formId} services={services} />}
+                    {quick && services && <QuickServiceFields services={services} />}
+                    {quick && messageField}
 
                     <div className={quick ? "quick-request__contact" : "form-group col-md-6 mb-4"}>
                         <label htmlFor={`${formId}-fname`}>{quick ? "Имя" : "Имя *"}</label>
@@ -196,29 +228,19 @@ export default function ContactForm({
                         </div>
                     )}
 
-                    {!quick && <div className="form-group col-md-12 mb-5">
-                        <label htmlFor={`${formId}-message`}>{compact ? "Какая задача?" : "Сообщение"}</label>
-                        <textarea
-                            name="message"
-                            className="form-control"
-                            id={`${formId}-message`}
-                            ref={messageRef}
-                            rows={compact ? 3 : 5}
-                            placeholder={messagePlaceholder}
-                        ></textarea>
-                    </div>}
+                    {!quick && messageField}
 
                     <LegalConsent id={`${formId}-legal`} />
 
                     <div className={quick ? "quick-request__actions" : "col-md-12"}>
-                        <button type="submit" className={quick ? "quick-request__submit" : "btn-default"} disabled={isLoading || (quick && !ready)}>
+                        <button type="submit" className={quick ? "quick-request__submit" : "btn-default"} disabled={isLoading || voiceBusy || (quick && !ready)}>
                             {isLoading ? "Отправка..." : quick ? "Оставить заявку" : "Отправить"}
                             {quick && <span aria-hidden="true"> →</span>}
                         </button>
 
                         {isSuccess && (
                             <div className="h4 text-success mt-3" role="status">
-                                {homeOriginal ? "Заявка отправлена. Я свяжусь с вами." : "Заявка отправлена. Мы свяжемся с вами."}
+                                Заявка отправлена. Мы свяжемся с вами.
                             </div>
                         )}
 
