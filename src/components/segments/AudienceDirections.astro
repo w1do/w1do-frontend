@@ -206,20 +206,44 @@ const seo = [
                     <div class="ad-outro__copy">
                         <h3>Автоматизация начинается с вашей задачи</h3>
                         <p>Заявки, документы, ответы клиентам и отчёты — находим процессы, где ИИ полезен вашей команде. Подключаем агента к CRM и базе знаний, настраиваем сценарии и контроль результата.</p>
+                        <a class="ad-outro__link" href="/contact" data-request-modal>
+                            Подобрать решение для моего бизнеса
+                            <span class="ad-icon ad-icon--arrow" aria-hidden="true"></span>
+                        </a>
                     </div>
-                    <a class="ad-outro__link" href="/contact" data-request-modal>
-                        Подобрать решение для моего бизнеса
-                        <span class="ad-icon ad-icon--arrow" aria-hidden="true"></span>
-                    </a>
+                    <figure class="ad-outro__visual" aria-hidden="true">
+                        <img
+                            src="/images/aicraft-audience-assets-120/ai/agent-assistant.svg"
+                            alt=""
+                            width="1024"
+                            height="1024"
+                            loading="lazy"
+                            decoding="async"
+                        />
+                    </figure>
                 </div>
 
                 <div class="ad-seo">
-                    {seo.map((block) => (
-                        <div class="ad-seo__item">
-                            <h3>{block.title}</h3>
-                            <p>{block.text}</p>
-                        </div>
-                    ))}
+                    <div class="ad-seo__text">
+                        {seo.map((block, index) => (
+                            <div class="ad-seo__item">
+                                <span class="ad-seo__num" aria-hidden="true">{"0" + (index + 1)}</span>
+                                <h3>{block.title}</h3>
+                                <p>{block.text}</p>
+                            </div>
+                        ))}
+                    </div>
+                    <figure class="ad-seo__visual">
+                        <img
+                            src="/images/aicraft-audience-assets-120/ai/agent-analytics.svg"
+                            alt=""
+                            width="1024"
+                            height="1024"
+                            loading="lazy"
+                            decoding="async"
+                        />
+                        <figcaption class="ad-seo__caption">Агент работает с сообщениями, документами и записями в ваших системах — результат приходит со ссылками на источники.</figcaption>
+                    </figure>
                     <nav class="ad-seo__nav" aria-label="Услуги для внедрения">
                         {services.map((service) => (
                             <a href={service.href}>{service.title}</a>
@@ -1125,13 +1149,17 @@ const seo = [
     }
 
     .ad-outro {
-        display: flex;
-        align-items: flex-end;
-        justify-content: space-between;
-        gap: clamp(18px, 3vw, 56px);
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(220px, 340px);
+        align-items: center;
+        gap: clamp(22px, 3.4vw, 56px);
         margin-top: clamp(26px, 3vw, 44px);
         padding-top: clamp(22px, 2.4vw, 34px);
         border-top: 1px solid #343a2f;
+    }
+
+    .ad-outro__copy {
+        min-width: 0;
     }
 
     .ad-outro h3 {
@@ -1144,7 +1172,7 @@ const seo = [
     }
 
     .ad-outro p {
-        max-width: 66ch;
+        max-width: 62ch;
         margin: 12px 0 0;
         color: var(--ad-text);
         font-size: 16px;
@@ -1152,10 +1180,10 @@ const seo = [
     }
 
     .ad-outro__link {
-        flex: none;
         display: inline-flex;
         align-items: center;
         gap: 10px;
+        margin-top: 20px;
         padding-bottom: 4px;
         border-bottom: 1px solid rgba(207, 248, 94, 0.4);
         color: var(--ad-accent);
@@ -1174,15 +1202,78 @@ const seo = [
         color: var(--ad-accent-bright);
     }
 
+    .ad-outro__visual {
+        position: relative;
+        margin: 0;
+        padding: clamp(12px, 1.4vw, 18px);
+        border: 1px solid rgba(207, 248, 94, 0.18);
+        border-radius: 26px;
+        background:
+            radial-gradient(ellipse at 50% -10%, rgba(207, 248, 94, 0.14), transparent 62%),
+            rgba(255, 255, 255, 0.02);
+        overflow: hidden;
+    }
+
+    .ad-outro__visual::before {
+        position: absolute;
+        right: -20%;
+        bottom: -45%;
+        width: 130%;
+        height: 80%;
+        content: "";
+        background: radial-gradient(ellipse at 50% 100%, rgba(207, 248, 94, 0.2), transparent 66%);
+        pointer-events: none;
+    }
+
+    .ad-outro__visual img {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: auto;
+        filter: drop-shadow(0 0 22px rgba(207, 248, 94, 0.15));
+    }
+
     .ad-seo {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: clamp(18px, 2.4vw, 38px);
+        grid-template-columns: minmax(0, 1.08fr) minmax(240px, 380px);
+        align-items: start;
+        gap: clamp(22px, 3.2vw, 52px);
         margin-top: clamp(26px, 3vw, 42px);
+        padding-top: clamp(22px, 2.4vw, 34px);
+        border-top: 1px solid #343a2f;
+    }
+
+    .ad-seo__text {
+        display: grid;
+        gap: clamp(18px, 2vw, 30px);
+        min-width: 0;
+    }
+
+    .ad-seo__item {
+        position: relative;
+        padding-left: 44px;
+    }
+
+    .ad-seo__num {
+        position: absolute;
+        top: 2px;
+        left: 0;
+        display: grid;
+        place-items: center;
+        width: 28px;
+        height: 28px;
+        border: 1px solid rgba(207, 248, 94, 0.28);
+        border-radius: 50%;
+        background: rgba(207, 248, 94, 0.06);
+        color: var(--ad-accent);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        line-height: 1;
     }
 
     .ad-seo__item h3 {
-        margin: 0 0 9px;
+        margin: 2px 0 9px;
         color: #eef1e7;
         font-size: clamp(19px, 1.45vw, 23px);
         font-weight: 500;
@@ -1192,9 +1283,61 @@ const seo = [
 
     .ad-seo__item p {
         margin: 0;
+        max-width: 64ch;
         color: var(--ad-text);
         font-size: 15px;
         line-height: 1.66;
+    }
+
+    .ad-seo__visual {
+        position: relative;
+        display: flex;
+        align-self: stretch;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: clamp(14px, 1.6vw, 22px);
+        margin: 0;
+        padding: clamp(18px, 2vw, 30px);
+        border: 1px solid rgba(207, 248, 94, 0.16);
+        border-radius: 26px;
+        background:
+            radial-gradient(ellipse at 100% 0%, rgba(207, 248, 94, 0.1), transparent 58%),
+            rgba(255, 255, 255, 0.02);
+        overflow: hidden;
+    }
+
+    .ad-seo__visual::before {
+        position: absolute;
+        top: -12px;
+        right: -12px;
+        width: 180px;
+        height: 180px;
+        content: "";
+        background-image: radial-gradient(circle, rgba(207, 248, 94, 0.55) 1px, transparent 1.2px);
+        background-size: 14px 14px;
+        opacity: 0.35;
+        mask-image: radial-gradient(120% 100% at 100% 0, #000 10%, transparent 70%);
+        -webkit-mask-image: radial-gradient(120% 100% at 100% 0, #000 10%, transparent 70%);
+        pointer-events: none;
+    }
+
+    .ad-seo__visual img {
+        position: relative;
+        display: block;
+        width: 100%;
+        max-width: 320px;
+        height: auto;
+        filter: drop-shadow(0 0 20px rgba(207, 248, 94, 0.12));
+    }
+
+    .ad-seo__caption {
+        position: relative;
+        max-width: 34ch;
+        color: var(--ad-muted);
+        font-size: 13.5px;
+        line-height: 1.55;
+        text-align: center;
     }
 
     .ad-seo__nav {
@@ -1242,8 +1385,8 @@ const seo = [
             order: 3;
         }
 
-        .ad-seo {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+        .ad-outro {
+            grid-template-columns: minmax(0, 1fr) minmax(180px, 260px);
         }
     }
 
@@ -1263,8 +1406,31 @@ const seo = [
             flex: 1 1 100%;
         }
 
+        .ad-outro {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .ad-outro__visual {
+            order: 2;
+            max-width: 320px;
+        }
+
         .ad-seo {
             grid-template-columns: minmax(0, 1fr);
+        }
+
+        .ad-seo__visual {
+            order: 2;
+            max-width: 420px;
+            justify-self: start;
+        }
+
+        .ad-seo__nav {
+            order: 3;
+        }
+
+        .ad-seo__visual img {
+            max-width: 280px;
         }
 
         .ad-card__footer {
@@ -1276,10 +1442,6 @@ const seo = [
             justify-content: center;
         }
 
-        .ad-outro {
-            align-items: flex-start;
-            flex-direction: column;
-        }
     }
 
     @media (max-width: 640px) {
