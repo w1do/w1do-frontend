@@ -12193,3 +12193,55 @@ body{
 body > .our-faqs.mb-0:not(:has(+ .custom-spacer)){
 	margin-block-end: var(--page-section-gap) !important;
 }
+
+/* SEO-текст хабовой страницы лендинга */
+.landing-seo-section{
+    padding-block: clamp(56px, 7vw, 120px) 0;
+}
+
+.landing-seo-entry{
+    max-width: none;
+    margin-bottom: 0;
+}
+
+.landing-seo-entry h2{
+    font-size: clamp(26px, 2.4vw, 36px);
+    line-height: 1.2;
+    margin-top: 56px;
+    margin-bottom: 22px;
+    padding-top: 44px;
+    border-top: 1px solid var(--divider-color);
+}
+
+.landing-seo-entry h2:first-child{
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+}
+
+.landing-seo-entry h3{
+    font-size: 22px;
+    margin-top: 34px;
+    margin-bottom: 12px;
+}
+
+.landing-seo-entry p{
+    font-size: 18px;
+    line-height: 1.7;
+    margin-bottom: 22px;
+    max-width: none;
+}
+
+.landing-seo-entry ul{
+    margin-bottom: 22px;
+}
+
+.landing-seo-entry li{
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+.pricing-item-price h2{
+    font-size: clamp(28px, 2.6vw, 36px);
+    line-height: 1.1;
+}

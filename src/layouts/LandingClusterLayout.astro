@@ -50,6 +50,9 @@ const {
   cta = {},
   pricing: customPricing,
   faqs: customFaqs,
+  faqsSubTitle,
+  faqsTitle,
+  faqsDescription,
 } = frontmatter;
 
 const metaTitle = seo?.title ?? title;
@@ -218,7 +221,22 @@ const pageSchemas = [serviceSchema, breadcrumbSchema(breadcrumbTrail), faqJsonLd
   {faqsVariant === "hire" && <HireFaqs />}
 
   {customFaqs && (
-    <Faqs customFaqs={customFaqs} />
+    <Faqs
+      subTitle={faqsSubTitle}
+      title={faqsTitle}
+      description={faqsDescription}
+      customFaqs={customFaqs}
+    />
+  )}
+
+  {Astro.slots.has("default") && (
+    <section class="landing-seo-section">
+      <div class="container">
+        <div class="service-entry landing-seo-entry">
+          <slot />
+        </div>
+      </div>
+    </section>
   )}
 
   {showProjects && (

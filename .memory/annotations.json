@@ -785,11 +785,11 @@
   },
   {
     "relativePath": "src/components/shared/VoiceInput.tsx",
-    "summary": "Голосовой ввод форм заявок. Подтверждение обработки, лимит записи, WAV PCM 16 кГц, отмена и вставка расшифровки в редактируемое поле.",
+    "summary": "Диктовка в формах заявок. Подтверждение обработки, WAV PCM 16 кГц и вставка редактируемого черновика либо расшифровки с сохранением текущего текста.",
     "role": "module",
-    "contentHash": "2a826483263ab709aa32b1d06708a68ecfd7f5e53b0736fcc620e8fa9eb7bbae",
+    "contentHash": "0970964a844c6f58b490c9f1378580a474339bd5f9b9c48e260f91dded5003a7",
     "author": "agent",
-    "updatedAt": "2026-11-24T09:19:02.689Z"
+    "updatedAt": "2026-11-24T09:29:08.931Z"
   },
   {
     "relativePath": "src/components/shared/faq/FaqItem.astro",
@@ -1217,11 +1217,11 @@
   },
   {
     "relativePath": "src/lib/server/leads/submit-lead.ts",
-    "summary": "Shared lead submission used by /api/lead and the chat: validation, LEADS_API_KEY check and platform POST with logTag-prefixed logs.",
+    "summary": "Проверяет согласие и отправляет заявку в W1DO. Может форматировать описание, сохраняя отредактированный голосовой черновик без повторной обработки.",
     "role": "module",
-    "contentHash": "e508fdc3a3f2b664ba1c2b3d6e503008614be613291b9414a80f84c91ed3bd02",
+    "contentHash": "08f080f4052e6eba9edf8329fae897091e3ca2db1f6ef859251160161fc49073",
     "author": "agent",
-    "updatedAt": "2026-10-14T14:13:05.603Z"
+    "updatedAt": "2026-11-24T09:29:12.801Z"
   },
   {
     "relativePath": "src/lib/server/llms.ts",
@@ -1249,11 +1249,11 @@
   },
   {
     "relativePath": "src/lib/server/polza/lead.ts",
-    "summary": "Claude Haiku 5.5 форматирует описание заявки с уточняющим вопросом по строгой JSON-схеме, исключая типовые контакты.",
+    "summary": "Claude Haiku 5.5 готовит подробный черновик заявки по JSON-схеме, исключает контакты и поддерживает отмену.",
     "role": "module",
-    "contentHash": "c6c3b4fcce614e0fbbc4a3cd73b1190fae1c6f80d2012a947cd478ee7ee39c09",
+    "contentHash": "c71a3824720977673d7ea8bde94013b26db5340e6af3ac4cd596e2851c8daa6a",
     "author": "agent",
-    "updatedAt": "2026-11-24T09:15:02.982Z"
+    "updatedAt": "2026-11-24T09:29:12.761Z"
   },
   {
     "relativePath": "src/lib/server/polza/transcription.ts",
@@ -1465,11 +1465,11 @@
   },
   {
     "relativePath": "src/pages/api/voice-transcription.ts",
-    "summary": "Обрабатывает PCM16 WAV 16 кГц до 90 секунд с проверкой согласия и Origin и отправляет валидированные сэмплы в Polza Whisper.",
+    "summary": "Проверяет WAV до 90 с, учитывает в квоте только допущенные записи, готовит черновик через Polza Whisper и Claude Haiku.",
     "role": "entry",
-    "contentHash": "a8828b1f1388ab1fcb8dde5cbfc815e0aabab3a87f2c7c060ca5ddfd5d32baa8",
+    "contentHash": "4dec488abb592fa1b1be881a6285d50b0b7ffbb5f7b007bd07bf39c47e693395",
     "author": "agent",
-    "updatedAt": "2026-11-24T09:20:37.057Z"
+    "updatedAt": "2026-11-24T09:38:58.006Z"
   },
   {
     "relativePath": "src/pages/blog-sitemap.xml.ts",

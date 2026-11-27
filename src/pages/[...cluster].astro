@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import LandingClusterLayout from '../layouts/LandingClusterLayout.astro';
 
 async function getLandingPaths() {
@@ -56,5 +56,9 @@ const entry = match ? undefined : (await getCollection('landingSpoke')).find(ite
 if (!match && !entry) return Astro.rewrite("/404");
 const frontmatter = match ? match.props.pillar.data : entry!.data;
 const spokes = match?.props.spokes || [];
+const rendered = match && match.props.pillar.body?.trim() ? await render(match.props.pillar) : null;
+const Content = rendered?.Content;
 ---
-<LandingClusterLayout frontmatter={frontmatter} spokes={spokes} />
+<LandingClusterLayout frontmatter={frontmatter} spokes={spokes}>
+  {Content && <Content />}
+</LandingClusterLayout>

@@ -4,6 +4,7 @@ import { formatPrice, getPackages, INDIVIDUAL_PRICE_LABEL } from "../lib/pricing
 interface PricingItem {
     title: string;
     price?: string;
+    unit?: string;
     estimateBasis?: string;
     description: string;
     features: string[];
@@ -72,7 +73,7 @@ const {
                         <!-- Pricing Item Price Start -->
                         <div class="pricing-item-price">
                             {item.price ? (
-                                <h2 class:list={{ "pricing-estimate-basis": item.price === INDIVIDUAL_PRICE_LABEL }}>{item.price}</h2>
+                                <h2 class:list={{ "pricing-estimate-basis": item.price === INDIVIDUAL_PRICE_LABEL }}>{item.price}{item.unit && <sub>{item.unit}</sub>}</h2>
                             ) : item.estimateBasis && (
                                 <h2 class="pricing-estimate-basis">{item.estimateBasis}</h2>
                             )}
