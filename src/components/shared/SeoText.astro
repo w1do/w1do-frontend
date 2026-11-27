@@ -1,0 +1,19 @@
+---
+interface Props {
+    /** id заголовка SEO-блока для aria-labelledby. */
+    labelledBy?: string;
+    /** id секции, если нужен якорь для ссылки. */
+    id?: string;
+}
+
+const { labelledBy, id } = Astro.props;
+---
+
+<!-- Единый блок SEO-текста: используется на хабах-лендингах и в каталоге услуг. -->
+<section class="landing-seo-section" id={id} aria-labelledby={labelledBy}>
+    <div class="container">
+        <div class="service-entry landing-seo-entry">
+            <slot />
+        </div>
+    </div>
+</section>

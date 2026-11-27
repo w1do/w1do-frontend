@@ -336,12 +336,6 @@ a:focus{
 	margin: 0 auto;
 }
 
-body:not(.home-page) > section[aria-labelledby="service-directions"] a {
-	color: var(--accent-color);
-	text-decoration: underline;
-	text-underline-offset: .16em;
-}
-
 .box-border-gradiant{
 	position: relative;
 	background: var(--secondary-color);
@@ -12196,7 +12190,12 @@ body > .our-faqs.mb-0:not(:has(+ .custom-spacer)){
 
 /* SEO-текст хабовой страницы лендинга */
 .landing-seo-section{
-    padding-block: clamp(56px, 7vw, 120px) 0;
+    padding-block: clamp(24px, 3vw, 48px) 0;
+}
+
+/* FAQ перед SEO-текстом: убираем его большой нижний отступ, чтобы не было пустой полосы. */
+.our-faqs:has(+ .landing-seo-section){
+    margin-bottom: 0;
 }
 
 .landing-seo-entry{
