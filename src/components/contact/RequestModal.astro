@@ -1,0 +1,410 @@
+---
+import ContactForm from "./ContactForm";
+
+const services = [
+    { key: "ai-agent", chipLabel: "ИИ-агент", label: "Внедрение ИИ-агента" },
+    { key: "infrastructure", chipLabel: "Инфраструктура", label: "Инфраструктура для ИИ" },
+    { key: "claude-code", chipLabel: "Claude Code", label: "Настройка Claude Code" },
+    { key: "claude-tunnel", chipLabel: "Туннелирование", label: "Туннелирование Claude Code" },
+];
+const formAnchor = "quick-request";
+const serviceOptions = services.map((service) => ({
+    anchor: "#" + formAnchor + "-" + service.key,
+    chipLabel: service.chipLabel,
+    label: service.label,
+}));
+const telegramUrl = import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1DO_DIGITAL";
+---
+
+<dialog class="request-modal" id="request-modal" aria-labelledby="request-modal-title">
+    <div class="request-modal__closebar">
+        <button type="button" class="request-modal__close" data-request-close aria-label="Закрыть окно">
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <div class="request-modal__panel quick-request">
+        <header class="request-modal__head">
+            <span class="request-modal__eyebrow">Заявка</span>
+            <h2 id="request-modal-title">Обсудим ваш проект</h2>
+            <p>Выберите услугу и оставьте телефон. Перезвоним, разберём задачу и предложим первый шаг.</p>
+        </header>
+
+        {serviceOptions.map((service) => (
+            <span class="quick-request__anchor" id={service.anchor.slice(1)} aria-hidden="true"></span>
+        ))}
+
+        <ContactForm client:load variant="quick" source="modal-request" formId={formAnchor + "-form"} services={serviceOptions} />
+
+        <p class="request-modal__note">
+            Не удобно заполнять? Напишите в <a href={telegramUrl} target="_blank" rel="noopener">Telegram</a>.
+        </p>
+    </div>
+</dialog>
+
+<script>
+    const modal = document.getElementById("request-modal") as HTMLDialogElement | null;
+
+    if (modal) {
+        let lastFocused: HTMLElement | null = null;
+
+        const openModal = (service?: string) => {
+            lastFocused = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+            if (service) {
+                history.replaceState(null, "", "#quick-request-" + service);
+                window.dispatchEvent(new HashChangeEvent("hashchange"));
+            }
+            if (!modal.open) modal.showModal();
+            document.body.classList.add("request-modal-open");
+            modal.querySelector<HTMLElement>("[data-request-close]")?.focus({ preventScroll: true });
+        };
+
+        modal.addEventListener("close", () => {
+            document.body.classList.remove("request-modal-open");
+            lastFocused?.focus({ preventScroll: true });
+        });
+
+        modal.addEventListener("click", (event) => {
+            if (event.target === modal) modal.close();
+        });
+
+        modal.querySelectorAll<HTMLElement>("[data-request-close]").forEach((button) => {
+            button.addEventListener("click", () => modal.close());
+        });
+
+        document.querySelectorAll<HTMLElement>("[data-request-modal]").forEach((trigger) => {
+            trigger.addEventListener("click", (event) => {
+                const mouse = event as MouseEvent;
+                if (mouse.metaKey || mouse.ctrlKey || mouse.shiftKey || mouse.altKey) return;
+                event.preventDefault();
+                openModal(trigger.dataset.requestService);
+            });
+        });
+
+        if (location.hash.indexOf("#quick-request") === 0) openModal();
+    }
+</script>
+
+<style is:global>
+    body.request-modal-open {
+        overflow: hidden;
+    }
+
+    .request-modal {
+        width: min(780px, calc(100vw - 28px));
+        max-height: min(92vh, 980px);
+        margin: auto;
+        padding: 0;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 26px;
+        background: #141514;
+        color: #f5f6f3;
+        color-scheme: dark;
+        overflow: auto;
+        overscroll-behavior: contain;
+        box-shadow: 0 40px 120px rgba(0, 0, 0, 0.6);
+    }
+
+    .request-modal::backdrop {
+        background: rgba(4, 5, 4, 0.76);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        .request-modal[open] {
+            animation: request-modal-in 0.26s ease both;
+        }
+    }
+
+    @keyframes request-modal-in {
+        from {
+            opacity: 0;
+            transform: translateY(16px) scale(0.985);
+        }
+
+        to {
+            opacity: 1;
+            transform: none;
+        }
+    }
+
+    .request-modal__panel {
+        position: relative;
+        padding: clamp(24px, 3.2vw, 40px);
+    }
+
+    .request-modal__closebar {
+        position: sticky;
+        top: 0;
+        z-index: 3;
+        display: flex;
+        justify-content: flex-end;
+        height: 0;
+    }
+
+    .request-modal__close {
+        margin: 14px 14px 0 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        color: #e8ece3;
+        font-size: 16px;
+        cursor: pointer;
+        transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+    }
+
+    .request-modal__close:hover {
+        border-color: var(--accent-color);
+        background: rgba(207, 248, 94, 0.12);
+        color: var(--accent-color);
+    }
+
+    .request-modal__head {
+        padding-right: 58px;
+        margin-bottom: 20px;
+    }
+
+    .request-modal__eyebrow {
+        color: var(--accent-color);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    .request-modal__head h2 {
+        margin: 10px 0 0;
+        color: #fff;
+        font-size: clamp(26px, 2.6vw, 34px);
+        font-weight: 600;
+        line-height: 1.1;
+        letter-spacing: -0.03em;
+    }
+
+    .request-modal__head p {
+        max-width: 52ch;
+        margin: 10px 0 0;
+        color: #b9beb4;
+        font-family: var(--default-font), sans-serif;
+        font-size: 15px;
+        line-height: 1.5;
+    }
+
+    .request-modal .quick-request {
+        margin: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        overflow: visible;
+        color: inherit;
+    }
+
+    .request-modal .quick-request__body,
+    .request-modal .quick-request__success {
+        padding: 0;
+    }
+
+    .request-modal__note {
+        margin: 16px 0 0;
+        color: #8f958b;
+        font-family: var(--default-font), sans-serif;
+        font-size: 13px;
+        line-height: 1.4;
+        text-align: center;
+    }
+
+    .request-modal__note a {
+        color: #c9cfc2;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+
+    @media (max-width: 640px) {
+        .request-modal {
+            width: calc(100vw - 16px);
+            border-radius: 20px;
+        }
+
+        .request-modal__panel {
+            padding: 22px 18px 24px;
+        }
+
+        .request-modal__close {
+            top: 12px;
+            right: 12px;
+            width: 38px;
+            height: 38px;
+        }
+    }
+
+        .quick-request {
+        --request-pad: clamp(22px, 3.4vw, 44px);
+        position: relative;
+        margin: clamp(24px, 3.5vw, 56px) auto 0;
+        border: 1px solid #424541;
+        border-radius: 24px;
+        background: #191b19;
+        color: #f5f6f3;
+        color-scheme: dark;
+        overflow: clip;
+    }
+    .quick-request,
+    .quick-request__anchor { scroll-margin-top: 96px; }
+    .quick-request__anchor { position: absolute; inset: 0 auto auto 0; pointer-events: none; }
+    .quick-request__intro {
+        position: relative;
+        isolation: isolate;
+        padding: 30px var(--request-pad) 27px;
+        border-bottom: 1px solid #3b3e37;
+        background: linear-gradient(100deg, #242823, #20241e 58%, #1b1e19);
+    }
+    .quick-request__intro::before {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        inset: 0 0 0 auto;
+        width: 35%;
+        background: url("/images/hero-service-ai-agents.webp") 54% 48% / cover no-repeat;
+        mask-image: linear-gradient(90deg, transparent, #000 45%);
+    }
+    .quick-request__intro h2 {
+        margin: 0;
+        color: #f5f6f3;
+        font-size: clamp(32px, 3.4vw, 44px);
+        font-weight: 600;
+        letter-spacing: -.045em;
+        line-height: 1.08;
+    }
+    .quick-request__intro p, .quick-request__success p {
+        margin: 9px 0 0;
+        color: #c6cbc3;
+        font-size: 16px;
+        line-height: 1.5;
+    }
+    .quick-request__body, .quick-request__success { padding: 24px var(--request-pad) 22px; }
+    .quick-request__grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+        align-items: end;
+        gap: 18px 14px;
+    }
+    .quick-request__services, .quick-request__field, .quick-request__grid > .form-group,
+    .quick-request__actions [role="alert"] { grid-column: 1 / -1; }
+    .quick-request__services { min-width: 0; padding: 0; margin: 0; border: 0; }
+    .quick-request__services legend,
+    .quick-request__field > label, .quick-request__contact > label {
+        display: block;
+        float: none;
+        width: auto;
+        margin: 0 0 8px;
+        padding: 0;
+        color: #dee2db;
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.35;
+    }
+    .quick-request__choices { display: flex; flex-wrap: wrap; gap: 7px; }
+    .quick-request__choice { position: relative; margin: 0; cursor: pointer; }
+    .quick-request__choice input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        clip-path: inset(50%);
+    }
+    .quick-request__choice span {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        gap: 8px;
+        padding: 6px 16px;
+        border: 1px solid #50544b;
+        border-radius: 24px;
+        color: #d9ddd5;
+        font-size: 15px;
+        line-height: 1.2;
+    }
+    .quick-request__choice input:checked + span {
+        border-color: #b7c79c;
+        background: #e5ecd9;
+        color: #23291d;
+        font-weight: 600;
+    }
+    .quick-request__choice input:checked + span::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #587a22;
+    }
+    .quick-request__choice:hover span { border-color: #929989; }
+    .quick-request .form-control {
+        width: 100%;
+        height: 50px;
+        padding: 0 14px;
+        border: 1px solid #55594f;
+        border-radius: 10px;
+        background: #242723;
+        color: #fff;
+        font: inherit;
+        font-size: 16px;
+    }
+    .quick-request .form-control::placeholder { color: #aaafa6; }
+    .quick-request__actions { display: contents; }
+    .quick-request__submit {
+        order: 1;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        min-height: 50px;
+        padding: 0 24px;
+        border: 0;
+        border-radius: 10px;
+        background: #cff85e;
+        color: #172009;
+        font: inherit;
+        font-weight: 650;
+    }
+    .quick-request__submit span { font-size: 21px; line-height: 1; }
+    .quick-request__submit:hover:enabled { background: #dcff81; }
+    .quick-request__submit:disabled { opacity: .65; }
+    .quick-request__grid > .form-group { order: 2; margin: 0 !important; }
+    .quick-request .legal-consent .form-check-label { color: #acb1a8; font-size: 14px; line-height: 1.5; }
+    .quick-request .legal-consent a { color: #c7cdc2; text-underline-offset: 3px; }
+    .quick-request .legal-consent a:hover { color: #fff; }
+    .quick-request :focus-visible, .quick-request__choice input:focus-visible + span {
+        outline: 2px solid #cff85e;
+        outline-offset: 3px;
+    }
+    .quick-request__success strong { color: #cff85e; font-size: 24px; }
+    .quick-request__actions [role="alert"] { order: 4; color: #ffb9b2; }
+    .quick-request__actions [role="alert"] ul { margin: 0; }
+    @media (max-width: 840px) {
+        .quick-request__intro::before { width: 30%; }
+    }
+    @media (max-width: 690px) {
+        .quick-request { border-radius: 18px; }
+        .quick-request__intro { padding-block: 24px 19px; }
+        .quick-request__intro::before { display: none; }
+        .quick-request__grid { grid-template-columns: minmax(0, 1fr); gap: 15px; }
+        .quick-request__choice span { padding-inline: 12px; }
+        .quick-request__submit { order: 3; width: 100%; }
+    }
+    @media (max-width: 480px) {
+        .quick-request { --request-pad: 16px; }
+        .quick-request__choices {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+            gap: 6px;
+        }
+        .quick-request__choice span { width: 100%; padding-inline: 4px; font-size: 14px; }
+        .quick-request__choice:last-child { grid-column: 1 / -1; }
+    }
+</style>

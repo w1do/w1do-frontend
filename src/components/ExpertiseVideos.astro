@@ -1,0 +1,727 @@
+---
+import JsonLd from "./shared/JsonLd.astro";
+import { EXPERTISE_SECTION, EXPERTISE_VIDEOS } from "../lib/expertise-videos";
+
+interface Props {
+    formId: string;
+}
+
+const { formId } = Astro.props;
+const total = EXPERTISE_VIDEOS.length;
+const totalLabel = String(total).padStart(2, "0");
+
+const schema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: EXPERTISE_SECTION.title,
+    itemListElement: EXPERTISE_VIDEOS.map((item, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+            "@type": "Service",
+            name: item.title,
+            description: item.description,
+            serviceType: item.kicker,
+            provider: { "@type": "Organization", name: "AiCRAFT.AGENCY" },
+            areaServed: { "@type": "Country", name: "Россия" },
+        },
+    })),
+};
+---
+
+<section class="expertise-videos bg-section" id="expertise-videos" aria-labelledby="expertise-title">
+    <div class="container">
+        <div class="expertise-head">
+            <div class="section-title">
+                <span class="section-sub-title">{EXPERTISE_SECTION.subTitle}</span>
+                <h2 id="expertise-title" data-cursor="-opaque">
+                    {EXPERTISE_SECTION.title}
+                </h2>
+            </div>
+
+            <div class="expertise-head__aside">
+                <p class="expertise-head__text">{EXPERTISE_SECTION.description}</p>
+                <div class="expertise-nav" data-expertise-nav hidden>
+                    <button type="button" class="expertise-nav__btn" data-expertise-prev aria-label="Предыдущее направление">
+                        <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                    </button>
+                    <p class="expertise-nav__status">
+                        <span data-expertise-current>01</span><span aria-hidden="true"> / </span>{totalLabel}
+                    </p>
+                    <button type="button" class="expertise-nav__btn" data-expertise-next aria-label="Следующее направление">
+                        <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="expertise-slider swiper" aria-roledescription="карусель" aria-label={EXPERTISE_SECTION.slidesLabel}>
+            <div class="swiper-wrapper">
+                {EXPERTISE_VIDEOS.map((item, index) => (
+                    <div class="swiper-slide" aria-label={`${index + 1} из ${total}`}>
+                        <article class="expertise-card" data-expertise-card>
+                            <div class="expertise-card__media">
+                                <img
+                                    class="expertise-card__poster"
+                                    src={item.poster}
+                                    alt={item.posterAlt}
+                                    width="1672"
+                                    height="941"
+                                    loading={index === 0 ? "eager" : "lazy"}
+                                    decoding="async"
+                                />
+                                <video
+                                    class="expertise-card__video"
+                                    muted
+                                    loop
+                                    playsinline
+                                    preload="none"
+                                    aria-hidden="true"
+                                    tabindex="-1"
+                                    data-expertise-video
+                                >
+                                    <source src={item.video} type="video/mp4" />
+                                </video>
+                                <span class="expertise-card__scrim" aria-hidden="true"></span>
+
+                                <div class="expertise-card__top">
+                                    <span class="expertise-card__kicker">{item.kicker}</span>
+                                    <button
+                                        type="button"
+                                        class="expertise-card__toggle"
+                                        data-video-toggle
+                                        aria-pressed="false"
+                                        aria-label={`${item.title}: воспроизвести видео`}
+                                        hidden
+                                    >
+                                        <span class="expertise-card__toggle-icon" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="expertise-card__content">
+                                <h3>{item.title}</h3>
+                                <p>{item.description}</p>
+                                <ul class="expertise-card__points">
+                                    {item.points.map((point) => <li>{point}</li>)}
+                                </ul>
+                                <a class="btn-default expertise-card__cta" href="/contact" data-request-modal>
+                                    Обсудить задачу
+                                </a>
+                            </div>
+                        </article>
+                    </div>
+                ))}
+            </div>
+        </div>
+
+        <div class="expertise-progress" aria-hidden="true">
+            <span data-expertise-progress></span>
+        </div>
+
+        <div class="expertise-footer">
+            <p class="expertise-footer__note">{EXPERTISE_SECTION.note}</p>
+            <a class="btn-default" href="/contact" data-request-modal>{EXPERTISE_SECTION.cta}</a>
+        </div>
+    </div>
+</section>
+
+<JsonLd schema={schema} />
+
+<script>
+    type SwiperLike = {
+        activeIndex: number;
+        slideNext: () => void;
+        slidePrev: () => void;
+    };
+
+    type SwiperWindow = Window & {
+        Swiper?: new (el: HTMLElement, options: Record<string, unknown>) => SwiperLike;
+    };
+
+    const ready = (callback: () => void) => {
+        if (document.readyState === "complete") callback();
+        else window.addEventListener("load", callback, { once: true });
+    };
+
+    ready(() => {
+        const section = document.getElementById("expertise-videos");
+        if (!section) return;
+
+        const slider = section.querySelector<HTMLElement>(".expertise-slider");
+        const nav = section.querySelector<HTMLElement>("[data-expertise-nav]");
+        const prevButton = section.querySelector<HTMLButtonElement>("[data-expertise-prev]");
+        const nextButton = section.querySelector<HTMLButtonElement>("[data-expertise-next]");
+        const currentLabel = section.querySelector<HTMLElement>("[data-expertise-current]");
+        const progressBar = section.querySelector<HTMLElement>("[data-expertise-progress]");
+        if (!slider) return;
+
+        const cards = Array.from(section.querySelectorAll<HTMLElement>("[data-expertise-card]"));
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        let visible = false;
+        let activeIndex = 0;
+        let swiper: SwiperLike | null = null;
+
+        const slides = cards.map((card) => {
+            const video = card.querySelector<HTMLVideoElement>("[data-expertise-video]");
+            const toggle = card.querySelector<HTMLButtonElement>("[data-video-toggle]");
+            const state = { card, video, toggle, userPaused: false };
+
+            toggle?.addEventListener("click", () => {
+                if (!video) return;
+                const playing = card.classList.contains("is-playing");
+                if (playing) {
+                    state.userPaused = true;
+                    video.pause();
+                    card.classList.remove("is-playing");
+                    toggle.setAttribute("aria-pressed", "false");
+                    toggle.setAttribute("aria-label", "Воспроизвести видео");
+                } else {
+                    state.userPaused = false;
+                    void video.play().catch(() => {});
+                    card.classList.add("is-playing");
+                    toggle.setAttribute("aria-pressed", "true");
+                    toggle.setAttribute("aria-label", "Приостановить видео");
+                }
+            });
+
+            if (toggle) toggle.hidden = false;
+            return state;
+        });
+
+        const pauseAll = (except = -1) => {
+            slides.forEach((slide, index) => {
+                if (index === except) return;
+                slide.video?.pause();
+                slide.card.classList.remove("is-playing");
+                slide.toggle?.setAttribute("aria-pressed", "false");
+                slide.toggle?.setAttribute("aria-label", "Воспроизвести видео");
+            });
+        };
+
+        const playIndex = (index: number) => {
+            const slide = slides[index];
+            if (!visible || reduceMotion || !slide?.video || slide.userPaused) return;
+            void slide.video.play().then(() => {
+                slide.card.classList.add("is-playing");
+                slide.toggle?.setAttribute("aria-pressed", "true");
+                slide.toggle?.setAttribute("aria-label", "Приостановить видео");
+            }).catch(() => {});
+        };
+
+        const setActive = (index: number) => {
+            activeIndex = Math.max(0, Math.min(index, slides.length - 1));
+            if (currentLabel) currentLabel.textContent = String(activeIndex + 1).padStart(2, "0");
+            if (progressBar) progressBar.style.transform = `scaleX(${(activeIndex + 1) / slides.length})`;
+            pauseAll(activeIndex);
+            slides[activeIndex].userPaused = false;
+            playIndex(activeIndex);
+        };
+
+        const SwiperCtor = (window as SwiperWindow).Swiper;
+        if (SwiperCtor) {
+            swiper = new SwiperCtor(slider, {
+                slidesPerView: 1,
+                spaceBetween: 16,
+                speed: 600,
+                grabCursor: true,
+                watchOverflow: true,
+                rewind: true,
+                keyboard: { enabled: true, onlyInViewport: true },
+                a11y: {
+                    enabled: true,
+                    prevSlideMessage: "Предыдущее направление",
+                    nextSlideMessage: "Следующее направление",
+                    firstSlideMessage: "Это первое направление",
+                    lastSlideMessage: "Это последнее направление",
+                },
+                breakpoints: {
+                    576: { slidesPerView: 1, spaceBetween: 18 },
+                    768: { slidesPerView: 1, spaceBetween: 20 },
+                    1024: { slidesPerView: 1, spaceBetween: 20 },
+                    1440: { slidesPerView: 1, spaceBetween: 24 },
+                },
+                on: {
+                    slideChange: (instance: SwiperLike) => setActive(instance.activeIndex),
+                },
+            });
+            if (nav) nav.hidden = false;
+            prevButton?.addEventListener("click", () => swiper?.slidePrev());
+            nextButton?.addEventListener("click", () => swiper?.slideNext());
+            setActive(0);
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            visible = entries[0]?.isIntersecting ?? false;
+            if (visible) playIndex(activeIndex);
+            else pauseAll();
+        }, { threshold: 0.35 });
+        observer.observe(section);
+
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) pauseAll();
+            else playIndex(activeIndex);
+        });
+    });
+</script>
+
+<style>
+    .expertise-videos {
+        position: relative;
+        margin-top: clamp(24px, 3.5vw, 56px);
+        margin-bottom: 60px;
+        padding: clamp(48px, 5.4vw, 96px) 0 clamp(40px, 4.4vw, 72px);
+        overflow: clip;
+    }
+
+    .expertise-videos > .container {
+        width: 100%;
+        max-width: none;
+        padding-inline: clamp(20px, 2.4vw, 44px);
+    }
+
+    .expertise-head {
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+        align-items: end;
+        gap: 26px clamp(32px, 4vw, 80px);
+        margin-bottom: clamp(28px, 3vw, 46px);
+    }
+
+    .expertise-head .section-title {
+        margin-bottom: 0;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        .expertise-head .section-title > *,
+        .expertise-head__aside {
+            animation: expertise-reveal 0.65s ease both;
+        }
+
+        .expertise-head__aside {
+            animation-delay: 0.12s;
+        }
+    }
+
+    @keyframes expertise-reveal {
+        from {
+            opacity: 0;
+            transform: translateY(14px);
+        }
+
+        to {
+            opacity: 1;
+            transform: none;
+        }
+    }
+
+    .expertise-head .section-title h2 {
+        max-width: 22ch;
+        text-wrap: balance;
+    }
+
+    .expertise-head__aside {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 22px;
+    }
+
+    .expertise-head__text {
+        max-width: 52ch;
+        margin: 0;
+        color: var(--text-color);
+        font-family: var(--default-font), sans-serif;
+        font-size: clamp(15px, 1.15vw, 18px);
+        line-height: 1.6;
+    }
+
+    .expertise-nav {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .expertise-nav[hidden] {
+        display: none;
+    }
+
+    .expertise-nav__btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 52px;
+        height: 52px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--white-color);
+        font-size: 17px;
+        cursor: pointer;
+        transition: border-color 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+    }
+
+    .expertise-nav__btn:hover:not(:disabled) {
+        border-color: var(--accent-color);
+        background: rgba(207, 248, 94, 0.12);
+        color: var(--accent-color);
+    }
+
+    .expertise-nav__btn:disabled {
+        opacity: 0.4;
+        cursor: default;
+    }
+
+    .expertise-nav__status {
+        min-width: 62px;
+        margin: 0;
+        color: var(--white-color);
+        font-size: 15px;
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+        letter-spacing: 0.04em;
+        text-align: center;
+    }
+
+    .expertise-slider {
+        width: 100%;
+    }
+
+    .expertise-slider .swiper-slide {
+        height: auto;
+    }
+
+    .expertise-card {
+        position: relative;
+        display: flex;
+        height: 100%;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 24px;
+        background: #141414;
+        isolation: isolate;
+    }
+
+    .expertise-card__media {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 4 / 5;
+        overflow: hidden;
+        border-radius: inherit;
+    }
+
+    .expertise-card__poster,
+    .expertise-card__video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .expertise-card__poster {
+        filter: brightness(1.18) contrast(1.04) saturate(1.06);
+    }
+
+    .expertise-card__video {
+        opacity: 0;
+        mix-blend-mode: screen;
+        transition: opacity 0.7s ease;
+    }
+
+    .expertise-card.is-playing .expertise-card__video {
+        opacity: 0.6;
+    }
+
+    .expertise-card__scrim {
+        position: absolute;
+        inset: 0;
+        background:
+            linear-gradient(0deg, rgba(8, 9, 8, 0.96) 0%, rgba(8, 9, 8, 0.88) 38%, rgba(8, 9, 8, 0.3) 74%),
+            linear-gradient(90deg, rgba(8, 9, 8, 0.8), transparent 62%);
+        pointer-events: none;
+    }
+
+    .expertise-card__top {
+        position: absolute;
+        top: clamp(16px, 1.8vw, 26px);
+        right: clamp(16px, 1.8vw, 26px);
+        left: clamp(16px, 1.8vw, 26px);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+    }
+
+    .expertise-card__kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        padding: 9px 16px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 999px;
+        background: rgba(12, 13, 12, 0.6);
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+        color: var(--white-color);
+        font-family: var(--default-font), sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        line-height: 1;
+        text-transform: uppercase;
+    }
+
+    .expertise-card__kicker::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent-color);
+        box-shadow: 0 0 12px rgba(207, 248, 94, 0.8);
+    }
+
+    .expertise-card__toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 48px;
+        width: 48px;
+        height: 48px;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 50%;
+        background: rgba(12, 13, 12, 0.55);
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+        color: var(--white-color);
+        cursor: pointer;
+        transition: border-color 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+    }
+
+    .expertise-card__toggle:hover {
+        border-color: var(--accent-color);
+        color: var(--accent-color);
+    }
+
+    .expertise-card__toggle-icon {
+        width: 0;
+        height: 0;
+        margin-left: 3px;
+        border-style: solid;
+        border-width: 7px 0 7px 11px;
+        border-color: transparent transparent transparent currentColor;
+    }
+
+    .expertise-card.is-playing .expertise-card__toggle-icon {
+        width: 11px;
+        height: 13px;
+        margin-left: 0;
+        border: 0;
+        border-right: 4px solid currentColor;
+        border-left: 4px solid currentColor;
+    }
+
+    .expertise-card__content {
+        position: absolute;
+        right: clamp(18px, 2.2vw, 34px);
+        bottom: clamp(18px, 2.2vw, 34px);
+        left: clamp(18px, 2.2vw, 34px);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: clamp(10px, 1vw, 16px);
+        max-width: min(100%, 620px);
+    }
+
+    .expertise-card__content h3 {
+        margin: 0;
+        color: var(--white-color);
+        font-size: clamp(24px, 2.3vw, 40px);
+        font-weight: 600;
+        letter-spacing: -0.035em;
+        line-height: 1.06;
+        text-wrap: balance;
+    }
+
+    .expertise-card__content p {
+        max-width: 52ch;
+        margin: 0;
+        color: #d7dad2;
+        font-family: var(--default-font), sans-serif;
+        font-size: clamp(14px, 1vw, 17px);
+        line-height: 1.55;
+    }
+
+    .expertise-card__points {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 2px 0 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .expertise-card__points li {
+        padding: 7px 13px;
+        border: 1px solid rgba(207, 248, 94, 0.26);
+        border-radius: 999px;
+        background: rgba(207, 248, 94, 0.08);
+        color: #e4ecd8;
+        font-family: var(--default-font), sans-serif;
+        font-size: 12.5px;
+        font-weight: 500;
+        line-height: 1.2;
+    }
+
+    .expertise-card__cta {
+        margin-top: clamp(6px, 0.8vw, 14px);
+        font-size: 16px;
+    }
+
+    .expertise-progress {
+        position: relative;
+        height: 2px;
+        margin-top: clamp(20px, 2vw, 30px);
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.12);
+    }
+
+    .expertise-progress span {
+        display: block;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, #9fcf3a, var(--accent-color));
+        transform: scaleX(0.333);
+        transform-origin: left center;
+        transition: transform 0.5s ease;
+    }
+
+    .expertise-footer {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px 28px;
+        margin-top: clamp(24px, 2.6vw, 38px);
+    }
+
+    .expertise-footer__note {
+        max-width: 58ch;
+        margin: 0;
+        color: var(--text-color);
+        font-family: var(--default-font), sans-serif;
+        font-size: clamp(14px, 1vw, 16px);
+        line-height: 1.55;
+    }
+
+    .expertise-slider:not(.swiper-initialized) .swiper-wrapper {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 20px;
+    }
+
+    @media (min-width: 768px) {
+        .expertise-card__media {
+            aspect-ratio: 16 / 9;
+        }
+
+        .expertise-head {
+            align-items: end;
+        }
+    }
+
+    @media (min-width: 1200px) {
+        .expertise-card__media {
+            height: clamp(520px, 34vw, 660px);
+            aspect-ratio: auto;
+        }
+
+        .expertise-card__scrim {
+            background:
+                linear-gradient(90deg, rgba(8, 9, 8, 0.95) 0%, rgba(8, 9, 8, 0.88) 30%, rgba(8, 9, 8, 0.34) 58%, rgba(8, 9, 8, 0) 82%),
+                linear-gradient(0deg, rgba(8, 9, 8, 0.72) 0%, transparent 44%);
+        }
+
+        .expertise-card__content {
+            top: 50%;
+            bottom: auto;
+            transform: translateY(-50%);
+            max-width: min(58%, 600px);
+        }
+    }
+
+    @media (max-width: 991px) {
+        .expertise-head {
+            grid-template-columns: minmax(0, 1fr);
+            align-items: start;
+        }
+
+        .expertise-head__aside {
+            gap: 18px;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .expertise-videos {
+            margin-bottom: 40px;
+            padding: 44px 0 36px;
+        }
+
+        .expertise-card {
+            flex-direction: column;
+        }
+
+        .expertise-card__media {
+            flex: 1 1 auto;
+            min-height: 220px;
+            aspect-ratio: 16 / 10;
+        }
+
+        .expertise-card__scrim {
+            background: linear-gradient(0deg, rgba(8, 9, 8, 0.92) 0%, rgba(8, 9, 8, 0.55) 30%, rgba(8, 9, 8, 0.05) 70%);
+        }
+
+        .expertise-card__content {
+            position: static;
+            gap: 10px;
+            max-width: none;
+            padding: 20px 18px 22px;
+            transform: none;
+        }
+
+        .expertise-card__content h3 {
+            font-size: clamp(23px, 6.4vw, 30px);
+        }
+
+        .expertise-card__content p {
+            font-size: 14px;
+        }
+
+        .expertise-card__points li {
+            font-size: 12px;
+        }
+
+        .expertise-card__cta {
+            font-size: 15px;
+        }
+
+        .expertise-footer {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .expertise-footer .btn-default {
+            width: 100%;
+            text-align: center;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .expertise-card__poster,
+        .expertise-card__video,
+        .expertise-progress span {
+            transition: none;
+        }
+    }
+</style>

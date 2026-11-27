@@ -12,7 +12,7 @@ import IntroVideo from "../components/IntroVideo.astro";
 import Feature from "../components/Feature.astro";
 import Footer from "../components/shared/Footer.astro";
 import Blog from "../components/blog/Blog.astro";
-import HomeOffers from "../components/HomeOffers.astro";
+import ExpertiseVideos from "../components/ExpertiseVideos.astro";
 import Faqs from "../components/Faqs.astro";
 import Testimonials from "../components/Testimonials.astro";
 import Cta from "../components/Cta.astro";
@@ -42,11 +42,11 @@ const homeFaqSchema = {
 	schema={homeFaqSchema}
 >
 	<Header/>
-	<Hero quickRequest
-		title="Разработка и внедрение ИИ-агентов для бизнеса"
-		description="Автоматизация бизнес-процессов любой сложности начинается с конкретной задачи. Разрабатываем агента для одного отдела или связываем через API целую цепочку действий — от заявки в CRM до проверки остатков в 1С."
+	<Hero
+		title="ИИ-агенты для бизнеса, которые работают в ваших системах"
+		description="Разрабатываем и внедряем агентов для поддержки, продаж и работы с документами. Обучаем модель на ваших данных, подключаем CRM, 1С и мессенджеры и проверяем результат на реальных примерах."
 	>
-		<HomeOffers slot="after-hero" formId={offerFormId} />
+		<ExpertiseVideos slot="after-hero" formId={offerFormId} />
 	</Hero>
 	<Segments />
 	<About homeOriginal

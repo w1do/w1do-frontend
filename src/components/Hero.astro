@@ -1,479 +1,624 @@
 ---
-import ContactForm from "./contact/ContactForm";
+import HeroLeadForm from "./hero/HeroLeadForm";
 
 interface Props {
     title?: string;
     description?: string;
-    quickRequest?: boolean;
 }
 
 const {
-    quickRequest = false,
-    title = "Разработка ИИ-агентов для бизнеса",
-    description = "Проектируем и внедряем ИИ-агентов для работы с заявками, клиентами, документами и внутренними процессами. Интегрируем с CRM, ERP, мессенджерами и вашими данными."
+    title = "ИИ-агенты для бизнеса, которые работают в ваших системах",
+    description = "Разрабатываем и внедряем агентов для поддержки, продаж и работы с документами. Обучаем модель на ваших данных, подключаем CRM, 1С и мессенджеры и проверяем результат на реальных примерах."
 } = Astro.props;
 
-const services = [
-    {
-        key: "infrastructure",
-        chipLabel: "Инфраструктура",
-        title: "Инфраструктура для ИИ",
-        description: quickRequest ? "Готовим серверы для запуска агентов и настраиваем мониторинг, чтобы команда видела нагрузку и сбои." : "Разворачиваем и масштабируем надёжную инфраструктуру под ваши ИИ-задачи.",
-        image: "/images/hero-service-infrastructure.webp",
-    },
-    {
-        key: "claude-code",
-        chipLabel: "Claude Code",
-        title: "Настройка Claude Code",
-        description: quickRequest ? "Настраиваем Claude Code для команды разработки. Подключаем инструменты, задаём права и правила работы с репозиторием." : "Интегрируем и настраиваем Claude Code под ваши процессы и команду.",
-        image: "/images/hero-service-claude-code.webp",
-    },
-    {
-        key: "ai-agent",
-        chipLabel: "ИИ-агент",
-        requestTitle: "Внедрение ИИ-агента",
-        title: "ИИ-агенты для бизнеса",
-        description: quickRequest ? "Для бухгалтерии агент может сверить сумму счёта с заказом и передать расхождения сотруднику до оплаты." : "Создаём автономных ИИ-агентов, которые берут на себя рутину и приносят результат.",
-        image: "/images/hero-service-ai-agents.webp",
-    },
-    {
-        key: "claude-tunnel",
-        chipLabel: "Туннелирование",
-        title: "Туннелирование Claude Code",
-        description: quickRequest ? "Настраиваем сетевой маршрут для Claude Code, когда команде нужен доступ из выбранного региона." : "Настраиваем туннелирование трафика Claude Code с привязкой к выбранному гео.",
-        image: "/images/hero-service-geo-tunnel.webp",
-    }
+const proof = [
+    { icon: "fa-bolt", title: "Пилот на ваших данных" },
+    { icon: "fa-server", title: "Данные в вашем контуре" },
+    { icon: "fa-layer-group", title: "100+ ИИ-систем" },
 ];
-const formAnchor = "quick-request";
-const requestLink = (key = "ai-agent") =>
-    quickRequest ? `#${formAnchor}-${key}` : "/contact";
-const serviceOptions = services.map(service => ({
-    anchor: requestLink(service.key),
-    chipLabel: service.chipLabel,
-    label: service.requestTitle ?? service.title,
-})).sort((a, b) => Number(b.anchor === requestLink()) - Number(a.anchor === requestLink()));
+
 ---
+
 <div class="hero-prime">
     <div class="hero-bg-video-prime">
         <video autoplay muted playsinline loop id="myvideo" preload="metadata" poster="/images/hero-poster.webp" aria-hidden="true" tabindex="-1"><source src="/videos/hero.mp4" type="video/mp4" media="(min-width: 768px)"></video>
     </div>
+    <span class="hero-prime__shade" aria-hidden="true"></span>
 
     <div class="container">
-        <div class="row">
-            <div class="col-xl-12">
-                <!-- Hero Content Box Start -->
-                <div class="hero-content-box-prime">
-                    <div class="hero-sub-heading-prime hero-assistant-notice wow fadeInUp">
-                        <img src="/images/assistant-robot.svg" alt="" aria-hidden="true" width="44" height="44">
-                        <span>Оставьте заявку — обсудим задачу и предложим решение</span>
-                        <a href={requestLink()} aria-label="Оставить заявку" class="hero-assistant-notice__button">
-                            <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
-                        </a>
-                    </div>
+        <div class="hero-grid">
+            <div class="hero-copy">
+                <span class="hero-eyebrow">
+                    <span class="hero-eyebrow__dot" aria-hidden="true"></span>
+                    Внедрение ИИ под ключ
+                </span>
 
-                    <!-- Section Title Start -->
-                    <div class="section-title">
-                        <h1 class="wow fadeInUp" data-wow-delay="0.2s" data-cursor="-opaque">{title}</h1>
-                        <p class="wow fadeInUp" data-wow-delay="0.4s">{description}</p>
-                    </div>
-                    <!-- Section Title End -->
-
-                    <!-- Hero Services Start -->
-                    <div class="hero-content-counter-box-prime hero-services">
-                        {services.map((service, index) => (
-                            <article class="hero-service">
-                                <img class="hero-service__image" src={service.image} alt="" width="960" height="640" loading="eager" decoding="async" fetchpriority={index === 0 ? "high" : undefined} />
-                                <div class="hero-service__body">
-                                    <h2>{service.title}</h2>
-                                    <p class="hero-service__description">{service.description}</p>
-                                    <a href={requestLink(service.key)} aria-label={`Обсудить услугу «${service.title}»`} class="hero-service__button">
-                                        <span>Обсудить</span>
-                                        <span class="hero-service__arrow" aria-hidden="true">→</span>
-                                    </a>
-                                </div>
-                            </article>
-                        ))}
-                    </div>
-                    <!-- Hero Services End -->
-
-                    <!-- Hero Footer Start -->
-                    <div class="hero-footer-prime wow fadeInUp" data-wow-delay="0.2s">
-                        <!-- Hero Button Start -->
-                        <div class="hero-btn-prime">
-                            <a href={requestLink()} class="btn-default" data-cursor="-opaque">Обсудить ИИ-агента</a>
-                        </div>
-                        <!-- Hero Button End -->
-
-                        <!-- Google Rating Box Start -->
-                        <div class="google-rating-box-prime">
-                            <div class="google-rating-info-prime">
-                                <div class="google-rating-info-header-prime">
-                                    <h2><span class="counter">4.9</span>/5</h2>
-                                    <span class="google-rating-star-prime"><i class="fa fa-solid fa-star"></i><i class="fa fa-solid fa-star"></i><i class="fa fa-solid fa-star"></i><i class="fa fa-solid fa-star"></i><i class="fa fa-solid fa-star"></i></span>
-                                </div>
-                                <div class="google-rating-info-content-prime">
-                                    <p>Более 100 положительных отзывов на фриланс-биржах</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Google Rating Box End -->
-                    </div>
-                    <!-- Hero Footer End -->
-                </div>
-                <!-- Hero Content Box End -->
+                <h1 class="hero-title" data-cursor="-opaque">{title}</h1>
+                <p class="hero-desc">{description}</p>
             </div>
+
+            <div class="hero-extra">
+                <ul class="hero-proof" role="list">
+                    {proof.map((item) => (
+                        <li class="hero-proof__item">
+                            <span class="hero-proof__icon" aria-hidden="true"><i class:list={["fa-solid", item.icon]}></i></span>
+                            {item.title}
+                        </li>
+                    ))}
+                </ul>
+
+                <div class="hero-actions">
+                    <a class="hero-action" href="#expertise-videos">
+                        Смотреть, чем мы занимаемся
+                        <span aria-hidden="true">↓</span>
+                    </a>
+                    <a class="hero-action-link" href="/contact" data-request-modal>Описать задачу подробно</a>
+                </div>
+
+                <div class="hero-trust">
+                    <span class="hero-trust__stars" aria-hidden="true">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </span>
+                    <p><strong>4.9 из 5</strong> — более 100 отзывов на фриланс-биржах</p>
+                </div>
+            </div>
+
+            <aside class="hero-lead" aria-labelledby="hero-lead-title">
+                <span class="hero-lead__eyebrow">Бесплатный разбор</span>
+                <h2 class="hero-lead__title" id="hero-lead-title">Рассчитаем ваш проект</h2>
+                <p class="hero-lead__text">Оставьте телефон — перезвоним, разберём задачу и предложим сценарий с оценкой.</p>
+                <HeroLeadForm client:load source="hero" />
+                <p class="hero-lead__offer">MVP за 2–3 недели · <a href="/pricing">от 5 000 ₽</a></p>
+            </aside>
         </div>
     </div>
 </div>
 
 <slot name="after-hero" />
 
-{quickRequest && (
-    <div>
-        <div class="container">
-            <section class="quick-request" id={formAnchor} aria-labelledby="quick-request-title">
-                {serviceOptions.map(service => (
-                    <span class="quick-request__anchor" id={service.anchor.slice(1)} aria-hidden="true"></span>
-                ))}
-                <div class="quick-request__intro">
-                    <h2 id="quick-request-title">Обсудим ваш проект</h2>
-                    <p>Выберите услугу и оставьте телефон. Перезвоним, чтобы разобрать вашу задачу и предложить первый шаг.</p>
-                </div>
-                <ContactForm client:load variant="quick" source="home-quick-request" formId={`${formAnchor}-form`} services={serviceOptions} />
-            </section>
-        </div>
-    </div>
-)}
-
 <style>
-    .hero-services {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+    .hero-prime {
+        padding: clamp(140px, 10.5vw, 200px) 0 clamp(52px, 4.6vw, 88px);
+    }
+
+    .hero-prime .container {
         width: 100%;
         max-width: none;
-        gap: 20px;
-        align-items: stretch;
-        text-align: left;
+        padding-inline: clamp(20px, 3vw, 56px);
     }
-    .hero-service {
+
+    .hero-prime__shade {
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(115% 95% at 18% 32%, rgba(8, 9, 8, 0.94) 0%, rgba(8, 9, 8, 0.72) 46%, rgba(8, 9, 8, 0.34) 78%, rgba(8, 9, 8, 0.28) 100%),
+            linear-gradient(0deg, rgba(8, 9, 8, 0.9) 0%, rgba(8, 9, 8, 0.3) 46%, rgba(8, 9, 8, 0.55) 100%);
+        pointer-events: none;
+    }
+
+    .hero-bg-video-prime video {
+        opacity: 0.7;
+    }
+
+    .hero-grid {
         position: relative;
-        isolation: isolate;
+        display: grid;
+        grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+        grid-template-areas:
+            "copy lead"
+            "extra lead";
+        align-items: start;
+        row-gap: clamp(16px, 1.6vw, 24px);
+        column-gap: clamp(32px, 4vw, 72px);
+    }
+
+    .hero-copy {
+        grid-area: copy;
         display: flex;
         flex-direction: column;
-        min-width: 0;
-        padding: 12px;
-        border: 1px solid rgba(255, 255, 255, .18);
-        border-radius: 24px;
-        background: linear-gradient(145deg, rgba(255, 255, 255, .055), transparent 42%), rgba(20, 20, 20, .58);
-        -webkit-backdrop-filter: blur(16px);
-        backdrop-filter: blur(16px);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 18px 42px rgba(0, 0, 0, .15);
-        transition: border-color .25s ease, box-shadow .25s ease;
+        align-items: flex-start;
+        max-width: 46rem;
     }
-    .hero-service__image {
-        display: block;
-        width: 100%;
-        height: auto;
-        aspect-ratio: 1.75;
-        object-fit: cover;
-        border-radius: 16px;
-    }
-    .hero-service__body {
+
+    .hero-extra {
+        grid-area: extra;
         display: flex;
-        flex: 1;
         flex-direction: column;
-        padding: 24px 4px 12px;
+        align-items: flex-start;
+        max-width: 46rem;
     }
-    .hero-service h2 {
-        margin: 0 0 14px;
-        color: #fff;
-        font-size: 26px;
-        line-height: 1.22;
-        font-weight: 600;
-        letter-spacing: -.02em;
-    }
-    .hero-service__description {
-        margin: 0 0 26px;
-        color: #d5d5d5;
+
+    .hero-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 18px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.05);
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+        color: var(--white-color);
         font-family: var(--default-font), sans-serif;
-        font-size: 15px;
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        line-height: 1;
+        text-transform: uppercase;
+    }
+
+    .hero-eyebrow__dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent-color);
+        box-shadow: 0 0 14px rgba(207, 248, 94, 0.85);
+    }
+
+    .hero-title {
+        max-width: 20ch;
+        margin: clamp(18px, 2vw, 26px) 0 0;
+        color: var(--white-color);
+        font-size: clamp(38px, 4vw, 64px);
+        font-weight: 600;
+        letter-spacing: -0.035em;
+        line-height: 1.03;
+        text-wrap: balance;
+    }
+
+    .hero-desc {
+        max-width: 48ch;
+        margin: clamp(16px, 1.6vw, 22px) 0 0;
+        color: #d7dad2;
+        font-family: var(--default-font), sans-serif;
+        font-size: clamp(15px, 1.1vw, 18px);
         line-height: 1.6;
     }
-    .hero-service__button {
+
+    .hero-proof {
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        width: 100%;
-        min-height: 52px;
-        padding: 13px 18px;
-        border: 1px solid rgba(255, 255, 255, .24);
-        border-radius: 12px;
-        background: rgba(255, 255, 255, .045);
-        color: #fff;
-        font-size: 16px;
-        line-height: 1.5;
-        font-weight: 600;
-        transition: border-color .25s ease, background-color .25s ease, color .25s ease;
-    }
-    .hero-service__arrow { font-size: 22px; line-height: 1; }
-    .hero-service__button:focus-visible {
-        outline: 2px solid #cff85e;
-        outline-offset: 4px;
-        border-color: #cff85e;
-        color: #cff85e;
-    }
-    .hero-service:has(.hero-service__button:focus-visible) { border-color: rgba(207, 248, 94, .55); }
-    .hero-service__sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: clamp(18px, 2vw, 26px) 0 0;
         padding: 0;
-        overflow: hidden;
-        clip-path: inset(50%);
+        list-style: none;
+    }
+
+    .hero-proof__item {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        padding: 9px 16px 9px 11px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.04);
+        color: #e2e6dd;
+        font-family: var(--default-font), sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.3;
         white-space: nowrap;
     }
-    @media (hover: hover) and (pointer: fine) {
-        .hero-service:hover {
-            border-color: rgba(207, 248, 94, .48);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 18px 42px rgba(0, 0, 0, .15), 0 0 24px rgba(207, 248, 94, .06);
-        }
-        .hero-service__button:hover {
-            border-color: rgba(207, 248, 94, .55);
-            background: rgba(207, 248, 94, .08);
-            color: #cff85e;
-        }
-    }
-    @media (max-width: 640px) {
-        .hero-services { grid-template-columns: minmax(0, 1fr); }
-        .hero-service__body { padding: 22px 10px 10px; }
-        .hero-service h2 { font-size: 25px; }
-        .hero-service__description { font-size: 16px; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-        .hero-service, .hero-service__button { transition: none; }
-    }
-    .hero-assistant-notice {
-        position: relative;
-        isolation: isolate;
-        width: min(720px, 100%);
-        justify-content: space-between;
-        min-height: 58px;
-        padding: 8px 22px;
-        color: var(--white-color);
-        font-size: 16px;
-        font-weight: 500;
-        line-height: 1.5;
-        text-align: left;
-    }
-    .hero-assistant-notice > span { flex: 1; min-width: 0; font-size: 18px; text-align: center; }
-    .hero-assistant-notice__button {
+
+    .hero-proof__icon {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        flex: 0 0 42px;
-        width: 42px;
-        height: 42px;
+        flex: 0 0 24px;
+        width: 24px;
+        height: 24px;
         border-radius: 50%;
-        background: var(--accent-color);
-        color: #101010;
-        font-size: 18px;
+        background: rgba(207, 248, 94, 0.14);
+        color: var(--accent-color);
+        font-size: 11px;
     }
-    .hero-assistant-notice__button:hover { color: #101010; }
-    .hero-assistant-notice__button:focus-visible { outline: 2px solid white; outline-offset: 3px; }
-    @property --assistant-border-angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
-    .hero-assistant-notice::before {
+
+    .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 14px 26px;
+        margin-top: clamp(18px, 2vw, 26px);
+    }
+
+    .hero-action {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        min-height: 54px;
+        padding: 0 24px;
+        border: 1px solid rgba(255, 255, 255, 0.24);
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--white-color);
+        font-size: 16px;
+        font-weight: 600;
+        transition: border-color 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+    }
+
+    .hero-action span {
+        font-size: 17px;
+        line-height: 1;
+    }
+
+    .hero-action:hover {
+        border-color: var(--accent-color);
+        background: rgba(207, 248, 94, 0.1);
+        color: var(--accent-color);
+    }
+
+    .hero-action-link {
+        color: #d4d9cd;
+        font-size: 15px;
+        text-decoration: underline;
+        text-decoration-color: rgba(207, 248, 94, 0.5);
+        text-underline-offset: 4px;
+    }
+
+    .hero-action-link:hover {
+        color: var(--accent-color);
+    }
+
+    .hero-trust {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: clamp(16px, 1.7vw, 24px);
+        padding-top: clamp(14px, 1.4vw, 20px);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        width: 100%;
+    }
+
+    .hero-trust__stars {
+        display: inline-flex;
+        gap: 3px;
+        color: var(--accent-color);
+        font-size: 13px;
+    }
+
+    .hero-trust p {
+        margin: 0;
+        color: #b9beb4;
+        font-family: var(--default-font), sans-serif;
+        font-size: 14px;
+        line-height: 1.4;
+    }
+
+    .hero-trust strong {
+        color: var(--white-color);
+        font-weight: 600;
+    }
+
+    .hero-lead {
+        position: relative;
+        grid-area: lead;
+        align-self: center;
+        width: 100%;
+        max-width: 29rem;
+        justify-self: end;
+        padding: clamp(22px, 2vw, 32px);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 24px;
+        background: rgba(16, 17, 16, 0.86);
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+        overflow: hidden;
+    }
+
+    .hero-lead::before {
         content: "";
         position: absolute;
-        inset: 0;
-        border-radius: inherit;
-        padding: 2px;
-        background: conic-gradient(from var(--assistant-border-angle), #cff85e, #66dfcf, #9daeff, #cff85e);
-        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-        mask-composite: exclude;
-        pointer-events: none;
-        animation: assistant-border-flow 8s linear infinite;
+        inset: 0 0 auto;
+        height: 2px;
+        background: linear-gradient(90deg, var(--accent-color), rgba(207, 248, 94, 0));
     }
-    @keyframes assistant-border-flow { to { --assistant-border-angle: 360deg; } }
-    @media (prefers-reduced-motion: reduce) { .hero-assistant-notice::before { animation: none; } }
-    .hero-assistant-notice img {
-        flex: 0 0 42px;
-        width: 42px;
-        height: 42px;
-        object-fit: contain;
-        filter: brightness(0) invert(1);
+
+    .hero-lead__eyebrow {
+        display: inline-block;
+        color: var(--accent-color);
+        font-family: var(--default-font), sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        line-height: 1.2;
+        text-transform: uppercase;
     }
+
+    .hero-lead__title {
+        margin: 10px 0 0;
+        color: var(--white-color);
+        font-size: clamp(24px, 1.9vw, 30px);
+        font-weight: 600;
+        letter-spacing: -0.025em;
+        line-height: 1.12;
+    }
+
+    .hero-lead__text {
+        margin: 10px 0 20px;
+        color: #b9beb4;
+        font-family: var(--default-font), sans-serif;
+        font-size: 14.5px;
+        line-height: 1.5;
+    }
+
+    .hero-lead__offer {
+        margin: 14px 0 0;
+        color: #a9afa5;
+        font-family: var(--default-font), sans-serif;
+        font-size: 13px;
+        line-height: 1.4;
+        text-align: center;
+    }
+
+    .hero-lead__offer a {
+        color: var(--accent-color);
+        text-underline-offset: 3px;
+    }
+
+    @media (max-width: 1199px) {
+        .hero-grid {
+            grid-template-columns: minmax(0, 1fr);
+            grid-template-areas:
+                "copy"
+                "lead"
+                "extra";
+            row-gap: 26px;
+        }
+
+        .hero-copy,
+        .hero-extra {
+            max-width: none;
+        }
+
+        .hero-lead {
+            align-self: stretch;
+        }
+
+        .hero-lead {
+            max-width: none;
+            justify-self: stretch;
+        }
+
+        .hero-title {
+            max-width: 24ch;
+        }
+    }
+
     @media (max-width: 767px) {
-        .hero-assistant-notice { gap: 10px; padding: 8px 14px; }
-        .hero-assistant-notice > span { font-size: 15px; text-align: left; }
-        .hero-assistant-notice__button { flex-basis: 36px; width: 36px; height: 36px; }
+        .hero-prime {
+            padding: 130px 0 48px;
+            margin: 10px 10px 0;
+        }
+
+        .hero-title {
+            font-size: clamp(32px, 8.6vw, 42px);
+        }
+
+        .hero-proof__item {
+            white-space: normal;
+        }
+
+        .hero-actions {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 12px;
+        }
+
+        .hero-action {
+            justify-content: space-between;
+        }
+
+        .hero-action-link {
+            text-align: center;
+        }
+
+        .hero-lead {
+            border-radius: 20px;
+            padding: 20px 18px;
+        }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        .hero-copy > *,
+        .hero-lead {
+            animation: hero-reveal 0.7s ease both;
+        }
+
+        .hero-copy > :nth-child(2) { animation-delay: 0.06s; }
+        .hero-copy > :nth-child(3) { animation-delay: 0.12s; }
+        .hero-copy > :nth-child(4) { animation-delay: 0.18s; }
+        .hero-copy > :nth-child(5) { animation-delay: 0.24s; }
+        .hero-copy > :nth-child(6) { animation-delay: 0.3s; }
+        .hero-lead { animation-delay: 0.16s; }
+    }
+
+    @keyframes hero-reveal {
+        from {
+            opacity: 0;
+            transform: translateY(16px);
+        }
+
+        to {
+            opacity: 1;
+            transform: none;
+        }
     }
 </style>
 
 <style is:global>
-    .quick-request {
-        --request-pad: clamp(22px, 3.4vw, 44px);
-        position: relative;
-        margin: clamp(24px, 3.5vw, 56px) auto 0;
-        border: 1px solid #424541;
-        border-radius: 24px;
-        background: #191b19;
-        color: #f5f6f3;
-        color-scheme: dark;
-        overflow: clip;
-    }
-    .home-page:has(.offer-divider) .quick-request { margin-top: 0; }
-    .quick-request,
-    .quick-request__anchor { scroll-margin-top: 96px; }
-    .quick-request__anchor { position: absolute; inset: 0 auto auto 0; pointer-events: none; }
-    .quick-request__intro {
-        position: relative;
-        isolation: isolate;
-        padding: 30px var(--request-pad) 27px;
-        border-bottom: 1px solid #3b3e37;
-        background: linear-gradient(100deg, #242823, #20241e 58%, #1b1e19);
-    }
-    .quick-request__intro::before {
-        content: "";
-        position: absolute;
-        z-index: -1;
-        inset: 0 0 0 auto;
-        width: 35%;
-        background: url("/images/hero-service-ai-agents.webp") 54% 48% / cover no-repeat;
-        mask-image: linear-gradient(90deg, transparent, #000 45%);
-    }
-    .quick-request__intro h2 {
-        margin: 0;
-        color: #f5f6f3;
-        font-size: clamp(32px, 3.4vw, 44px);
-        font-weight: 600;
-        letter-spacing: -.045em;
-        line-height: 1.08;
-    }
-    .quick-request__intro p, .quick-request__success p {
-        margin: 9px 0 0;
-        color: #c6cbc3;
-        font-size: 16px;
-        line-height: 1.5;
-    }
-    .quick-request__body, .quick-request__success { padding: 24px var(--request-pad) 22px; }
-    .quick-request__grid {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
-        align-items: end;
-        gap: 18px 14px;
-    }
-    .quick-request__services, .quick-request__field, .quick-request__grid > .form-group,
-    .quick-request__actions [role="alert"] { grid-column: 1 / -1; }
-    .quick-request__services { min-width: 0; padding: 0; margin: 0; border: 0; }
-    .quick-request__services legend,
-    .quick-request__field > label, .quick-request__contact > label {
-        display: block;
-        float: none;
-        width: auto;
-        margin: 0 0 8px;
-        padding: 0;
-        color: #dee2db;
-        font-size: 15px;
-        font-weight: 500;
-        line-height: 1.35;
-    }
-    .quick-request__choices { display: flex; flex-wrap: wrap; gap: 7px; }
-    .quick-request__choice { position: relative; margin: 0; cursor: pointer; }
-    .quick-request__choice input {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        clip-path: inset(50%);
-    }
-    .quick-request__choice span {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 44px;
-        gap: 8px;
-        padding: 6px 16px;
-        border: 1px solid #50544b;
-        border-radius: 24px;
-        color: #d9ddd5;
-        font-size: 15px;
-        line-height: 1.2;
-    }
-    .quick-request__choice input:checked + span {
-        border-color: #b7c79c;
-        background: #e5ecd9;
-        color: #23291d;
-        font-weight: 600;
-    }
-    .quick-request__choice input:checked + span::before {
-        content: "";
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: #587a22;
-    }
-    .quick-request__choice:hover span { border-color: #929989; }
-    .quick-request .form-control {
-        width: 100%;
-        height: 50px;
-        padding: 0 14px;
-        border: 1px solid #55594f;
-        border-radius: 10px;
-        background: #242723;
-        color: #fff;
-        font: inherit;
-        font-size: 16px;
-    }
-    .quick-request .form-control::placeholder { color: #aaafa6; }
-    .quick-request__actions { display: contents; }
-    .quick-request__submit {
-        order: 1;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
+    .hero-prime .hero-lead__form {
+        display: flex;
+        flex-direction: column;
         gap: 12px;
-        min-height: 50px;
-        padding: 0 24px;
-        border: 0;
-        border-radius: 10px;
-        background: #cff85e;
-        color: #172009;
+    }
+
+    .hero-prime .hero-lead__trap {
+        position: absolute;
+        left: -9999px;
+    }
+
+    .hero-prime .hero-lead__field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .hero-prime .hero-lead__field label {
+        color: #dee2db;
+        font-family: var(--default-font), sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 1.3;
+    }
+
+    .hero-prime .hero-lead__field input {
+        width: 100%;
+        height: 52px;
+        padding: 0 15px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--white-color);
         font: inherit;
+        font-family: var(--default-font), sans-serif;
+        font-size: 16px;
+    }
+
+    .hero-prime .hero-lead__field input::placeholder {
+        color: #8f958b;
+    }
+
+    .hero-prime .hero-lead__field input:focus {
+        outline: none;
+        border-color: var(--accent-color);
+        background: rgba(207, 248, 94, 0.06);
+        box-shadow: 0 0 0 3px rgba(207, 248, 94, 0.15);
+    }
+
+    .hero-prime .hero-lead .legal-consent {
+        margin: 2px 0 0;
+    }
+
+    .hero-prime .hero-lead .legal-consent .form-group {
+        margin: 0;
+    }
+
+    .hero-prime .hero-lead .legal-consent .form-check {
+        display: flex;
+        align-items: flex-start;
+        gap: 9px;
+        margin: 0;
+        padding-left: 0;
+    }
+
+    .hero-prime .hero-lead .legal-consent .form-check-input {
+        flex: 0 0 16px;
+        width: 16px;
+        height: 16px;
+        margin: 2px 0 0;
+        accent-color: var(--accent-color);
+    }
+
+    .hero-prime .hero-lead .legal-consent .form-check-label {
+        color: #9aa092;
+        font-family: var(--default-font), sans-serif;
+        font-size: 12px;
+        line-height: 1.45;
+    }
+
+    .hero-prime .hero-lead .legal-consent a {
+        color: #c9cfc2;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+    }
+
+    .hero-prime .hero-lead__submit {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        width: 100%;
+        min-height: 54px;
+        margin-top: 2px;
+        padding: 0 20px;
+        border: 0;
+        border-radius: 12px;
+        background: var(--accent-color);
+        color: #10150a;
+        font: inherit;
+        font-family: var(--default-font), sans-serif;
+        font-size: 17px;
         font-weight: 650;
+        cursor: pointer;
+        transition: background-color 0.25s ease;
     }
-    .quick-request__submit span { font-size: 21px; line-height: 1; }
-    .quick-request__submit:hover:enabled { background: #dcff81; }
-    .quick-request__submit:disabled { opacity: .65; }
-    .quick-request__grid > .form-group { order: 2; margin: 0 !important; }
-    .quick-request .legal-consent .form-check-label { color: #acb1a8; font-size: 14px; line-height: 1.5; }
-    .quick-request .legal-consent a { color: #c7cdc2; text-underline-offset: 3px; }
-    .quick-request .legal-consent a:hover { color: #fff; }
-    .quick-request :focus-visible, .quick-request__choice input:focus-visible + span {
-        outline: 2px solid #cff85e;
-        outline-offset: 3px;
+
+    .hero-prime .hero-lead__submit span {
+        font-size: 20px;
+        line-height: 1;
     }
-    .quick-request__success strong { color: #cff85e; font-size: 24px; }
-    .quick-request__actions [role="alert"] { order: 4; color: #ffb9b2; }
-    .quick-request__actions [role="alert"] ul { margin: 0; }
-    @media (max-width: 840px) {
-        .quick-request__intro::before { width: 30%; }
+
+    .hero-prime .hero-lead__submit:hover:enabled {
+        background: #dcff81;
     }
-    @media (max-width: 690px) {
-        .quick-request { border-radius: 18px; }
-        .quick-request__intro { padding-block: 24px 19px; }
-        .quick-request__intro::before { display: none; }
-        .quick-request__grid { grid-template-columns: minmax(0, 1fr); gap: 15px; }
-        .quick-request__choice span { padding-inline: 12px; }
-        .quick-request__submit { order: 3; width: 100%; }
+
+    .hero-prime .hero-lead__submit:disabled {
+        opacity: 0.7;
+        cursor: default;
     }
-    @media (max-width: 480px) {
-        .quick-request { --request-pad: 16px; }
-        .quick-request__choices {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
-            gap: 6px;
-        }
-        .quick-request__choice span { width: 100%; padding-inline: 4px; font-size: 14px; }
-        .quick-request__choice:last-child { grid-column: 1 / -1; }
+
+    .hero-prime .hero-lead__note {
+        margin: 0;
+        color: #8f958b;
+        font-family: var(--default-font), sans-serif;
+        font-size: 12px;
+        line-height: 1.4;
+        text-align: center;
+    }
+
+    .hero-prime .hero-lead__error {
+        margin: 0;
+        color: #ffb9b2;
+        font-family: var(--default-font), sans-serif;
+        font-size: 13px;
+        line-height: 1.4;
+    }
+
+    .hero-prime .hero-lead__success {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        padding: 26px 8px 18px;
+        text-align: center;
+    }
+
+    .hero-prime .hero-lead__success-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        margin-bottom: 4px;
+        border-radius: 50%;
+        background: rgba(207, 248, 94, 0.14);
+        color: var(--accent-color);
+        font-size: 18px;
+    }
+
+    .hero-prime .hero-lead__success strong {
+        color: var(--white-color);
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .hero-prime .hero-lead__success p {
+        max-width: 32ch;
+        margin: 0;
+        color: #b9beb4;
+        font-family: var(--default-font), sans-serif;
+        font-size: 14px;
+        line-height: 1.5;
     }
 </style>
