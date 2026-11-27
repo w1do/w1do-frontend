@@ -340,12 +340,12 @@ def icon_svg(slug,label,inner):
 
 
 SERVICES={
- 'agents':{'title':'Разработка ИИ-агентов','href':'https://aicraft.agency/ai-agents'},
- 'chatbots':{'title':'ИИ-ассистенты и чат-боты','href':'https://aicraft.agency/services/ai-assistants-chatbots'},
- 'crm':{'title':'Интеграция с 1С и CRM','href':'https://aicraft.agency/services/ai-integration-1c-crm'},
- 'marketing':{'title':'Автоматизация маркетинга и контента','href':'https://aicraft.agency/services/ai-marketing-content'},
- 'integration':{'title':'Внедрение ИИ в бизнес-процессы','href':'https://aicraft.agency/services/ai-integration'},
- 'architecture':{'title':'Архитектура ИИ-систем','href':'https://aicraft.agency/services/ai-solution-architecture'},
+ 'agents':{'title':'Разработка ИИ-агентов','href':'https://w1do.ru/ai-agents'},
+ 'chatbots':{'title':'ИИ-ассистенты и чат-боты','href':'https://w1do.ru/services/ai-assistants-chatbots'},
+ 'crm':{'title':'Интеграция с 1С и CRM','href':'https://w1do.ru/services/ai-integration-1c-crm'},
+ 'marketing':{'title':'Автоматизация маркетинга и контента','href':'https://w1do.ru/services/ai-marketing-content'},
+ 'integration':{'title':'Внедрение ИИ в бизнес-процессы','href':'https://w1do.ru/services/ai-integration'},
+ 'architecture':{'title':'Архитектура ИИ-систем','href':'https://w1do.ru/services/ai-solution-architecture'},
 }
 FACETS={'rag':'chatbots','chatbot':'chatbots','documents':'agents','crm':'crm','analytics':'integration','agents':'agents','local_models':'architecture'}
 

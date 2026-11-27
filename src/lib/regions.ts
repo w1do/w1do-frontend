@@ -1,4 +1,7 @@
+import { SITE_ORIGIN } from "./site";
 import { canonicalServicePath } from "./ai-agents-canonical.ts";
+
+export { SITE_ORIGIN, SITE_HOST, siteUrl } from "./site";
 
 export interface CitySeo {
   title?: string | null;
@@ -26,8 +29,8 @@ export interface RegionContext {
   path: string;
 }
 
-export const SITE_ORIGIN = new URL(import.meta.env.SITE).origin;
-const sharedPaths = /^\/(?:api|_astro|images|videos|fonts|js|assets|chunks|entry)(?:\/|$)/;
+// Файлы, которые не зависят от региона и отдаются без обращения к CMS.
+const sharedPaths = /^\/(?:api|_astro|images|videos|fonts|js|assets|chunks|entry|robots\.txt)(?:\/|$)/;
 
 export function isSiteUrl(url: URL): boolean {
   return !url.username && !url.password && (url.origin === SITE_ORIGIN ||

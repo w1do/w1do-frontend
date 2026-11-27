@@ -1,12 +1,12 @@
 import type { APIRoute } from "astro";
 import { getFullSitemapPages } from "../lib/server/full-sitemap";
 import { regionalSitemap } from "../lib/server/regional-sitemap";
+import { SITE_ORIGIN } from "../lib/site";
 
 export const prerender = false;
-export const GET: APIRoute = async ({ site }) => {
+export const GET: APIRoute = async () => {
   try {
-    return await regionalSitemap(await getFullSitemapPages(),
-      site?.href.replace(/\/$/, "") || "https://aicraft.agency", true);
+    return await regionalSitemap(await getFullSitemapPages(), SITE_ORIGIN, true);
   } catch {
     // Do not present a partial sitemap as complete when a required API is unavailable.
     return new Response("Карта сайта временно недоступна. Попробуйте позже.", {

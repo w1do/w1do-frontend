@@ -6,13 +6,14 @@ import Header from "../../../components/shared/Header.astro";
 import Layout from "../../../layouts/Layout.astro";
 import { getBlogCategories } from "../../../lib/server/w1do/blog-categories";
 import { getBlogPosts } from "../../../lib/server/w1do/blog";
+import { SITE_ORIGIN } from "../../../lib/site";
 
 export const prerender = false;
 const categories = await getBlogCategories();
 const category = categories.find(item => item.slug === Astro.params.slug);
 if (!category) return Astro.rewrite("/404");
 const posts = await getBlogPosts(category.id);
-const canonical = new URL(`/blog/categories/${category.slug}`, Astro.site || "https://aicraft.agency").href;
+const canonical = new URL(`/blog/categories/${category.slug}`, SITE_ORIGIN).href;
 const schema = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
@@ -24,7 +25,7 @@ const schema = {
     itemListElement: posts.map((post, index) => ({
       "@type": "ListItem", position: index + 1,
       name: post.data.title,
-      url: new URL(post.url, Astro.site || "https://aicraft.agency").href,
+      url: new URL(post.url, SITE_ORIGIN).href,
     })),
   },
 };

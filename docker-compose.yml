@@ -8,6 +8,7 @@ services:
         SITE_URL: ${SITE_URL:?Set SITE_URL to the public site origin}
     restart: unless-stopped
     environment:
+      SITE_URL: ${SITE_URL:?Set SITE_URL to the public site origin}
       REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379
       LEADS_API_KEY: ${LEADS_API_KEY:-}
       LEADS_API_BASE_URL: ${LEADS_API_BASE_URL:-}

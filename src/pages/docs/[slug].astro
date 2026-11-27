@@ -4,6 +4,7 @@ import Footer from "../../components/shared/Footer.astro";
 import Header from "../../components/shared/Header.astro";
 import { markdownToHtml } from "../../lib/server/markdown";
 import { getPublishedPageBySlug } from "../../lib/server/w1do/pages";
+import { SITE_ORIGIN } from "../../lib/site";
 import Layout from "../../layouts/Layout.astro";
 
 export const prerender = false;
@@ -23,7 +24,7 @@ if (!page) Astro.response.status = failed ? 502 : 404;
 
 const title = page?.seoTitle || "Документ не найден";
 const description = page?.seoDescription || "Документ не найден или снят с публикации.";
-const canonical = page?.canonical || new URL(page?.path || Astro.url.pathname, Astro.site || Astro.url).href;
+const canonical = page?.canonical || new URL(page?.path || Astro.url.pathname, SITE_ORIGIN).href;
 const robots = !page || page.isIndex === false ? "noindex,follow" : undefined;
 const bodyHtml = page ? markdownToHtml(page.body.replace(/^#\s+[^\n]+\n+/, "")) : "";
 const schema = page ? {

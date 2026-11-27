@@ -102,7 +102,7 @@ SVG удобен для адаптивной вёрстки и редактир�
            width="960" height="640" loading="lazy" decoding="async"
            alt="Сравнение договоров: документы с выделенными расхождениями.">
       <p>Агент сравнивает договор с шаблоном и готовит замечания для проверки юристом.</p>
-      <a href="https://aicraft.agency/ai-agents">Разработка ИИ-агентов</a>
+      <a href="https://w1do.ru/ai-agents">Разработка ИИ-агентов</a>
     </article>
 
 Для растровой версии замените src на illustrations/webp/lawyers.webp либо illustrations/png/lawyers.png. Сохраняйте соотношение сторон 3:2. У PNG исходный размер 1440 × 960; в HTML можно указать его исходные размеры, а отображаемую ширину ограничить CSS.
@@ -187,12 +187,12 @@ SVG удобен для адаптивной вёрстки и редактир�
 
 Проверенные адреса услуг на дату 27 ноября 2026:
 
-    https://aicraft.agency/ai-agents
-    https://aicraft.agency/services/ai-assistants-chatbots
-    https://aicraft.agency/services/ai-integration-1c-crm
-    https://aicraft.agency/services/ai-marketing-content
-    https://aicraft.agency/services/ai-integration
-    https://aicraft.agency/services/ai-solution-architecture
+    https://w1do.ru/ai-agents
+    https://w1do.ru/services/ai-assistants-chatbots
+    https://w1do.ru/services/ai-integration-1c-crm
+    https://w1do.ru/services/ai-marketing-content
+    https://w1do.ru/services/ai-integration
+    https://w1do.ru/services/ai-solution-architecture
 
 Готовые абзацы ниже взяты из section.seo_paragraphs основного манифеста.
 

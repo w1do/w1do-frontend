@@ -346,7 +346,7 @@ def build(root: Path) -> Path:
     for item in audiences:
         assert len(item['workflow']) == 3, f'Expected three steps: {item["slug"]}'
         assert 2 <= len(item['links']) <= 3, f'Expected two or three service links: {item["slug"]}'
-        assert all(link['href'].startswith('https://aicraft.agency/') for link in item['links'])
+        assert all(link['href'].startswith('https://w1do.ru/') for link in item['links'])
     options = ''.join(
         f'<option value="{html.escape(group["id"], quote=True)}">{html.escape(group["label"])} · {group["count"]}</option>'
         for group in data['groups']

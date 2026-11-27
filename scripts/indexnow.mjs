@@ -1,7 +1,17 @@
 import { readFile } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
+
+// Домен берётся из SITE_URL в .env — тот же адрес использует Astro и sitemap.
+try {
+    process.loadEnvFile(fileURLToPath(new URL("../.env", import.meta.url)));
+} catch {
+    // .env нет — берём переменные окружения (CI, systemd).
+}
 
 const KEY_FILE = "7882fe25e2e46ffa5a479c756b0a39f3.txt";
-const HOST = "aicraft.agency";
+const siteUrl = process.env.SITE_URL;
+if (!siteUrl) throw new Error("Set SITE_URL in .env or the environment before publishing to IndexNow.");
+const HOST = new URL(siteUrl).host;
 const KEY_LOCATION = `https://${HOST}/${KEY_FILE}`;
 
 const key = (await readFile(new URL(`../public/${KEY_FILE}`, import.meta.url), "utf8")).trim();

@@ -87,27 +87,27 @@
   "service_catalog": {
     "agents": {
       "title": "Разработка ИИ-агентов",
-      "href": "https://aicraft.agency/ai-agents"
+      "href": "https://w1do.ru/ai-agents"
     },
     "chatbots": {
       "title": "ИИ-ассистенты и чат-боты",
-      "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+      "href": "https://w1do.ru/services/ai-assistants-chatbots"
     },
     "crm": {
       "title": "Интеграция с 1С и CRM",
-      "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+      "href": "https://w1do.ru/services/ai-integration-1c-crm"
     },
     "marketing": {
       "title": "Автоматизация маркетинга и контента",
-      "href": "https://aicraft.agency/services/ai-marketing-content"
+      "href": "https://w1do.ru/services/ai-marketing-content"
     },
     "integration": {
       "title": "Внедрение ИИ в бизнес-процессы",
-      "href": "https://aicraft.agency/services/ai-integration"
+      "href": "https://w1do.ru/services/ai-integration"
     },
     "architecture": {
       "title": "Архитектура ИИ-систем",
-      "href": "https://aicraft.agency/services/ai-solution-architecture"
+      "href": "https://w1do.ru/services/ai-solution-architecture"
     }
   },
   "services_verified_at": "2026-11-27",
@@ -212,17 +212,17 @@
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "integration",
           "title": "Внедрение ИИ в бизнес-процессы",
-          "href": "https://aicraft.agency/services/ai-integration"
+          "href": "https://w1do.ru/services/ai-integration"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         }
       ],
       "industry_page": {
@@ -269,17 +269,17 @@
         {
           "id": "integration",
           "title": "Внедрение ИИ в бизнес-процессы",
-          "href": "https://aicraft.agency/services/ai-integration"
+          "href": "https://w1do.ru/services/ai-integration"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -326,17 +326,17 @@
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -383,17 +383,17 @@
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "integration",
           "title": "Внедрение ИИ в бизнес-процессы",
-          "href": "https://aicraft.agency/services/ai-integration"
+          "href": "https://w1do.ru/services/ai-integration"
         },
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         }
       ],
       "industry_page": {
@@ -440,17 +440,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -497,17 +497,17 @@
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -554,17 +554,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -611,17 +611,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "integration",
           "title": "Внедрение ИИ в бизнес-процессы",
-          "href": "https://aicraft.agency/services/ai-integration"
+          "href": "https://w1do.ru/services/ai-integration"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -668,17 +668,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -725,17 +725,17 @@
         {
           "id": "integration",
           "title": "Внедрение ИИ в бизнес-процессы",
-          "href": "https://aicraft.agency/services/ai-integration"
+          "href": "https://w1do.ru/services/ai-integration"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -782,17 +782,17 @@
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -839,17 +839,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -896,17 +896,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         }
       ],
       "industry_page": {
@@ -953,17 +953,17 @@
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         },
         {
           "id": "integration",
           "title": "Внедрение ИИ в бизнес-процессы",
-          "href": "https://aicraft.agency/services/ai-integration"
+          "href": "https://w1do.ru/services/ai-integration"
         }
       ],
       "industry_page": {
@@ -1010,17 +1010,17 @@
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "integration",
           "title": "Внедрение ИИ в бизнес-процессы",
-          "href": "https://aicraft.agency/services/ai-integration"
+          "href": "https://w1do.ru/services/ai-integration"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -1067,17 +1067,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -1124,17 +1124,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         }
       ],
       "industry_page": {
@@ -1181,17 +1181,17 @@
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -1238,17 +1238,17 @@
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         }
       ],
       "industry_page": {
@@ -1295,17 +1295,17 @@
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "integration",
           "title": "Внедрение ИИ в бизнес-процессы",
-          "href": "https://aicraft.agency/services/ai-integration"
+          "href": "https://w1do.ru/services/ai-integration"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -1352,17 +1352,17 @@
         {
           "id": "marketing",
           "title": "Автоматизация маркетинга и контента",
-          "href": "https://aicraft.agency/services/ai-marketing-content"
+          "href": "https://w1do.ru/services/ai-marketing-content"
         },
         {
           "id": "integration",
           "title": "Внедрение ИИ в бизнес-процессы",
-          "href": "https://aicraft.agency/services/ai-integration"
+          "href": "https://w1do.ru/services/ai-integration"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         }
       ],
       "industry_page": {
@@ -1409,17 +1409,17 @@
         {
           "id": "marketing",
           "title": "Автоматизация маркетинга и контента",
-          "href": "https://aicraft.agency/services/ai-marketing-content"
+          "href": "https://w1do.ru/services/ai-marketing-content"
         },
         {
           "id": "integration",
           "title": "Внедрение ИИ в бизнес-процессы",
-          "href": "https://aicraft.agency/services/ai-integration"
+          "href": "https://w1do.ru/services/ai-integration"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -1466,17 +1466,17 @@
         {
           "id": "marketing",
           "title": "Автоматизация маркетинга и контента",
-          "href": "https://aicraft.agency/services/ai-marketing-content"
+          "href": "https://w1do.ru/services/ai-marketing-content"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         }
       ],
       "industry_page": {
@@ -1523,17 +1523,17 @@
         {
           "id": "marketing",
           "title": "Автоматизация маркетинга и контента",
-          "href": "https://aicraft.agency/services/ai-marketing-content"
+          "href": "https://w1do.ru/services/ai-marketing-content"
         },
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -1580,17 +1580,17 @@
         {
           "id": "marketing",
           "title": "Автоматизация маркетинга и контента",
-          "href": "https://aicraft.agency/services/ai-marketing-content"
+          "href": "https://w1do.ru/services/ai-marketing-content"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         }
       ],
       "industry_page": {
@@ -1637,17 +1637,17 @@
         {
           "id": "marketing",
           "title": "Автоматизация маркетинга и контента",
-          "href": "https://aicraft.agency/services/ai-marketing-content"
+          "href": "https://w1do.ru/services/ai-marketing-content"
         },
         {
           "id": "integration",
           "title": "Внедрение ИИ в бизнес-процессы",
-          "href": "https://aicraft.agency/services/ai-integration"
+          "href": "https://w1do.ru/services/ai-integration"
         },
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         }
       ],
       "industry_page": {
@@ -1694,17 +1694,17 @@
         {
           "id": "marketing",
           "title": "Автоматизация маркетинга и контента",
-          "href": "https://aicraft.agency/services/ai-marketing-content"
+          "href": "https://w1do.ru/services/ai-marketing-content"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         }
       ],
       "industry_page": {
@@ -1751,17 +1751,17 @@
         {
           "id": "marketing",
           "title": "Автоматизация маркетинга и контента",
-          "href": "https://aicraft.agency/services/ai-marketing-content"
+          "href": "https://w1do.ru/services/ai-marketing-content"
         },
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -1808,17 +1808,17 @@
         {
           "id": "marketing",
           "title": "Автоматизация маркетинга и контента",
-          "href": "https://aicraft.agency/services/ai-marketing-content"
+          "href": "https://w1do.ru/services/ai-marketing-content"
         },
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -1865,17 +1865,17 @@
         {
           "id": "marketing",
           "title": "Автоматизация маркетинга и контента",
-          "href": "https://aicraft.agency/services/ai-marketing-content"
+          "href": "https://w1do.ru/services/ai-marketing-content"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -1922,17 +1922,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -1979,17 +1979,17 @@
         {
           "id": "integration",
           "title": "Внедрение ИИ в бизнес-процессы",
-          "href": "https://aicraft.agency/services/ai-integration"
+          "href": "https://w1do.ru/services/ai-integration"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -2036,17 +2036,17 @@
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -2093,17 +2093,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -2150,17 +2150,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -2207,17 +2207,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -2264,17 +2264,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         }
       ],
       "industry_page": {
@@ -2321,17 +2321,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -2378,17 +2378,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -2435,17 +2435,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -2492,17 +2492,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -2549,17 +2549,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -2606,17 +2606,17 @@
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "integration",
           "title": "Внедрение ИИ в бизнес-процессы",
-          "href": "https://aicraft.agency/services/ai-integration"
+          "href": "https://w1do.ru/services/ai-integration"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -2663,17 +2663,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         }
       ],
       "industry_page": {
@@ -2720,17 +2720,17 @@
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -2777,17 +2777,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -2834,17 +2834,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -2891,17 +2891,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -2948,17 +2948,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -3005,17 +3005,17 @@
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -3062,17 +3062,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -3119,17 +3119,17 @@
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -3176,17 +3176,17 @@
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "integration",
           "title": "Внедрение ИИ в бизнес-процессы",
-          "href": "https://aicraft.agency/services/ai-integration"
+          "href": "https://w1do.ru/services/ai-integration"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -3233,17 +3233,17 @@
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "integration",
           "title": "Внедрение ИИ в бизнес-процессы",
-          "href": "https://aicraft.agency/services/ai-integration"
+          "href": "https://w1do.ru/services/ai-integration"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         }
       ],
       "industry_page": {
@@ -3290,17 +3290,17 @@
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -3347,17 +3347,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -3404,17 +3404,17 @@
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "integration",
           "title": "Внедрение ИИ в бизнес-процессы",
-          "href": "https://aicraft.agency/services/ai-integration"
+          "href": "https://w1do.ru/services/ai-integration"
         },
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         }
       ],
       "industry_page": {
@@ -3461,17 +3461,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -3518,17 +3518,17 @@
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -3575,17 +3575,17 @@
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -3632,17 +3632,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -3689,17 +3689,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -3746,17 +3746,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -3803,17 +3803,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -3860,17 +3860,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -3917,17 +3917,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -3974,17 +3974,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -4031,17 +4031,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -4088,17 +4088,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         }
       ],
       "industry_page": {
@@ -4145,17 +4145,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -4202,17 +4202,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -4259,17 +4259,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -4316,17 +4316,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -4373,17 +4373,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -4430,17 +4430,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -4487,17 +4487,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -4544,17 +4544,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -4601,17 +4601,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -4658,17 +4658,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -4715,17 +4715,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -4772,17 +4772,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "integration",
           "title": "Внедрение ИИ в бизнес-процессы",
-          "href": "https://aicraft.agency/services/ai-integration"
+          "href": "https://w1do.ru/services/ai-integration"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -4829,17 +4829,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -4886,17 +4886,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -4943,17 +4943,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "integration",
           "title": "Внедрение ИИ в бизнес-процессы",
-          "href": "https://aicraft.agency/services/ai-integration"
+          "href": "https://w1do.ru/services/ai-integration"
         }
       ],
       "industry_page": {
@@ -5000,17 +5000,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -5057,17 +5057,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -5114,17 +5114,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -5171,17 +5171,17 @@
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -5228,17 +5228,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -5285,17 +5285,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -5342,17 +5342,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -5399,17 +5399,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -5456,17 +5456,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -5513,17 +5513,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         }
       ],
       "industry_page": {
@@ -5570,17 +5570,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -5627,17 +5627,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -5684,17 +5684,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -5741,17 +5741,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -5798,17 +5798,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -5855,17 +5855,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         }
       ],
       "industry_page": {
@@ -5912,17 +5912,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -5969,17 +5969,17 @@
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -6026,17 +6026,17 @@
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -6083,17 +6083,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -6140,17 +6140,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -6197,17 +6197,17 @@
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -6254,17 +6254,17 @@
         {
           "id": "integration",
           "title": "Внедрение ИИ в бизнес-процессы",
-          "href": "https://aicraft.agency/services/ai-integration"
+          "href": "https://w1do.ru/services/ai-integration"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         }
       ],
       "industry_page": {
@@ -6311,17 +6311,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         }
       ],
       "industry_page": {
@@ -6368,17 +6368,17 @@
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -6425,17 +6425,17 @@
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -6482,17 +6482,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -6539,17 +6539,17 @@
         {
           "id": "integration",
           "title": "Внедрение ИИ в бизнес-процессы",
-          "href": "https://aicraft.agency/services/ai-integration"
+          "href": "https://w1do.ru/services/ai-integration"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -6596,17 +6596,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -6653,17 +6653,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -6710,17 +6710,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -6767,17 +6767,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {
@@ -6824,17 +6824,17 @@
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -6881,17 +6881,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -6938,17 +6938,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         },
         {
           "id": "architecture",
           "title": "Архитектура ИИ-систем",
-          "href": "https://aicraft.agency/services/ai-solution-architecture"
+          "href": "https://w1do.ru/services/ai-solution-architecture"
         }
       ],
       "industry_page": {
@@ -6995,17 +6995,17 @@
         {
           "id": "chatbots",
           "title": "ИИ-ассистенты и чат-боты",
-          "href": "https://aicraft.agency/services/ai-assistants-chatbots"
+          "href": "https://w1do.ru/services/ai-assistants-chatbots"
         },
         {
           "id": "crm",
           "title": "Интеграция с 1С и CRM",
-          "href": "https://aicraft.agency/services/ai-integration-1c-crm"
+          "href": "https://w1do.ru/services/ai-integration-1c-crm"
         },
         {
           "id": "agents",
           "title": "Разработка ИИ-агентов",
-          "href": "https://aicraft.agency/ai-agents"
+          "href": "https://w1do.ru/ai-agents"
         }
       ],
       "industry_page": {

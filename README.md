@@ -130,7 +130,7 @@ LEADS_API_KEY=pk_live_… node ./dist/server/entry.mjs
 | `TRUSTED_PROXY_HOPS` | Число обратных прокси перед контейнером: `1` за одним прокси, `0` без прокси. При `0` за прокси все клиенты делят один лимит |
 | `CHAT_LEAD_HASH_SECRET` | Случайная строка не короче 32 байт для HMAC-маркера телефона |
 | `LEADS_API_KEY` | Ключ отправки заявок в платформу W1DO (`/api/lead`, `/api/chat-lead`) |
-| `SITE_URL` | Публичный origin сайта, например `https://aicraft.agency`. Обязателен при production-сборке; Docker Compose передаёт его как build argument. Используется Astro, canonical, региональными ссылками и проверками URL блога и sitemap. При смене требуется пересборка образа. Ассеты загружаются с текущего origin |
+| `SITE_URL` | Публичный origin сайта, например `https://w1do.ru`. Обязателен при production-сборке; Docker Compose передаёт его и в build argument, и в окружение контейнера, поэтому после смены домена достаточно поправить .env и перезапустить контейнер. Из него строятся canonical, Open Graph, JSON-LD, sitemap, robots.txt и региональные ссылки. Ассеты загружаются с текущего origin |
 
 Redis должен работать с политикой `maxmemory-policy noeviction`, чтобы ключи диалогов не вытеснялись до истечения срока (24 часа).
 
