@@ -1,0 +1,19 @@
+{
+  "colors": {
+    "blue": "#2563EB",
+    "ink": "#16336B",
+    "pale": "#EEF5FF",
+    "line": "#C5D8F5",
+    "surface": "#FFFFFF"
+  },
+  "radius": {
+    "chip": 999,
+    "card": 24,
+    "image_panel": 32
+  },
+  "stroke": {
+    "icon": 3,
+    "illustration": 2
+  },
+  "font": "Manrope, Inter, system-ui, sans-serif"
+}

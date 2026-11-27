@@ -1,0 +1,1655 @@
+---
+import { AUDIENCES, AUDIENCE_COUNT, AUDIENCE_SECTION, type Audience } from "../../lib/audience-directions";
+
+interface Props {
+    id?: string;
+    subTitle?: string;
+    title?: string;
+    titleAccent?: string;
+    description?: string;
+    allHref?: string;
+    allLabel?: string;
+    ctaLabel?: string;
+    audiences?: readonly Audience[];
+    defaultSlug?: string;
+}
+
+const {
+    id = "directions",
+    subTitle = AUDIENCE_SECTION.eyebrow,
+    title = "ИИ-агенты",
+    titleAccent = "для вашей сферы",
+    description = AUDIENCE_SECTION.intro,
+    allHref = "/services",
+    allLabel = "Все " + AUDIENCE_COUNT + " направлений",
+    ctaLabel = "Обсудить задачу",
+    audiences = AUDIENCES,
+    defaultSlug = "lawyers",
+} = Astro.props;
+
+const initial = audiences.find((audience) => audience.slug === defaultSlug) ?? audiences[0];
+const half = Math.ceil(audiences.length / 2);
+const rows = [audiences.slice(0, half), audiences.slice(half)];
+const payload = audiences.map(({ slug, label, pain, workflow, outcome, example, scene, alt, illustration, links }) => ({
+    slug, label, pain, workflow, outcome, example, scene, alt, illustration, links,
+}));
+const services = [
+    { title: "Разработка ИИ-агентов", href: "/ai-agents" },
+    { title: "Внедрение ИИ в бизнес-процессы", href: "/services/ai-integration" },
+    { title: "Интеграция с 1С и CRM", href: "/services/ai-integration-1c-crm" },
+    { title: "ИИ-ассистенты и чат-боты", href: "/services/ai-assistants-chatbots" },
+    { title: "Автоматизация маркетинга", href: "/services/ai-marketing-content" },
+    { title: "Архитектура ИИ-систем", href: "/services/ai-solution-architecture" },
+];
+const seo = [
+    { title: "Где ИИ-агент забирает рутину", text: AUDIENCE_SECTION.seoParagraphs[0] },
+    { title: "Как мы подключаем агента к процессам", text: AUDIENCE_SECTION.seoParagraphs[1] },
+    { title: "С чего начать в вашей сфере", text: AUDIENCE_SECTION.seoParagraphs[2] },
+];
+---
+
+<section class="ad" id={id} aria-labelledby={id + "-title"}>
+    <div class="container">
+        <aicraft-directions class="ad__inner">
+            <div class="ad__panel">
+                <span class="ad__dots ad__dots--start" aria-hidden="true"></span>
+                <span class="ad__dots ad__dots--end" aria-hidden="true"></span>
+
+                <header class="ad__head">
+                    <span class="ad__eyebrow">
+                        <span class="ad__eyebrow-dot" aria-hidden="true"></span>
+                        {subTitle}
+                    </span>
+                    <h2 class="ad__title" id={id + "-title"}>
+                        {title}
+                        <span class="ad__title-accent">{titleAccent}</span>
+                    </h2>
+                    <p class="ad__lead">{description}</p>
+
+                    <div class="ad__tools">
+                        <label class="ad-search">
+                            <span class="ad-icon ad-icon--search" aria-hidden="true"></span>
+                            <input
+                                class="ad-search__input"
+                                type="search"
+                                name="direction"
+                                placeholder="Найти свою сферу…"
+                                autocomplete="off"
+                                aria-label="Найти сферу среди направлений"
+                                data-ad-search
+                            />
+                        </label>
+                        <a class="ad__all" href={allHref}>
+                            {allLabel}
+                            <span class="ad-icon ad-icon--external" aria-hidden="true"></span>
+                        </a>
+                        <button class="ad__pause" type="button" data-ad-pause aria-pressed="false">
+                            <span class="visually-hidden">Остановить движение строк</span>
+                            <span class="ad-icon ad__pause-icon ad__pause-icon--pause" aria-hidden="true"></span>
+                            <span class="ad-icon ad__pause-icon ad__pause-icon--play" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </header>
+
+                <div class="ad__marquee" data-ad-marquee>
+                    {rows.map((row, rowIndex) => (
+                        <div class="ad__row" data-ad-row={rowIndex + 1} data-direction={rowIndex === 0 ? "left" : "right"}>
+                            <div class="ad__track">
+                                {row.map((audience) => (
+                                    <button
+                                        type="button"
+                                        class="ad-chip"
+                                        data-slug={audience.slug}
+                                        aria-pressed={audience.slug === initial.slug ? "true" : "false"}
+                                        aria-controls="direction-detail"
+                                        tabindex={audience.slug === initial.slug ? 0 : -1}
+                                        aria-label={audience.label + " — подробнее"}
+                                        style={"--ad-icon: url(" + audience.icon + ")"}
+                                    >
+                                        <span class="ad-chip__icon" aria-hidden="true"></span>
+                                        <span class="ad-chip__label">{audience.label}</span>
+                                        <span class="ad-chip__more" aria-hidden="true">
+                                            Подробнее
+                                            <span class="ad-chip__more-icon"></span>
+                                        </span>
+                                    </button>
+                                ))}
+                                {row.map((audience) => (
+                                    <span class="ad-chip ad-chip--clone" aria-hidden="true" style={"--ad-icon: url(" + audience.icon + ")"}>
+                                        <span class="ad-chip__icon"></span>
+                                        <span class="ad-chip__label">{audience.label}</span>
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+
+                    <p class="ad__hint" aria-hidden="true">
+                        <span></span>
+                        Наведите на сферу — строка остановится
+                        <span></span>
+                    </p>
+                    <p class="ad__empty" data-ad-empty hidden>Такой сферы пока нет в списке. Опишите задачу — подберём похожий сценарий.</p>
+                </div>
+
+                <article class="ad-card" id="direction-detail" data-ad-card aria-live="polite">
+                    <button class="ad-card__close" type="button" data-ad-close aria-label="Закрыть карточку направления">
+                        <span class="ad-icon ad-icon--close" aria-hidden="true"></span>
+                    </button>
+
+                    <div class="ad-card__main">
+                        <span class="ad-card__badge" data-ad-badge>{initial.label}</span>
+                        <h3 class="ad-card__title" data-ad-title>{"ИИ-агент: " + initial.label}</h3>
+
+                        <p class="ad-card__label">Задача</p>
+                        <p class="ad-card__pain" data-ad-pain>{initial.pain}</p>
+
+                        <p class="ad-card__label">Что делает агент</p>
+                        <ul class="ad-card__workflow" data-ad-workflow>
+                            {initial.workflow.map((step) => (
+                                <li>
+                                    <span class="ad-card__check" aria-hidden="true"></span>
+                                    <span>{step}</span>
+                                </li>
+                            ))}
+                        </ul>
+
+                        <p class="ad-card__outcome" data-ad-outcome>
+                            <span class="ad-card__outcome-label">Результат</span>
+                            <span data-ad-outcome-text>{initial.outcome}</span>
+                        </p>
+                        <p class="ad-card__example" data-ad-example>{initial.example}</p>
+                    </div>
+
+                    <aside class="ad-visual" aria-label="Пример результата">
+                        <div class="ad-visual__top">
+                            <span class="ad-visual__eyebrow">Пример результата</span>
+                            <span class="ad-visual__status" data-ad-output>{initial.scene.output}</span>
+                        </div>
+                        <p class="ad-visual__title" data-ad-scene>{initial.scene.title}</p>
+                        <img
+                            class="ad-visual__image"
+                            data-ad-illustration
+                            src={initial.illustration}
+                            alt={initial.alt}
+                            width="960"
+                            height="640"
+                            loading="lazy"
+                            decoding="async"
+                        />
+                        <div class="ad-visual__flow">
+                            <span class="ad-visual__step"><span class="ad-visual__dot" aria-hidden="true"></span><span data-ad-input>{initial.scene.input}</span></span>
+                            <span class="ad-visual__arrow" aria-hidden="true"></span>
+                            <span class="ad-visual__step ad-visual__step--end"><span class="ad-visual__dot" aria-hidden="true"></span><span data-ad-output-text>{initial.scene.output}</span></span>
+                        </div>
+                    </aside>
+
+                    <footer class="ad-card__footer">
+                        <nav class="ad-card__links" data-ad-links aria-label="Связанные услуги">
+                            {initial.links.map((item) => (
+                                <a class="ad-card__link" href={item.href}>
+                                    {item.title}
+                                    <span class="ad-icon ad-icon--external" aria-hidden="true"></span>
+                                </a>
+                            ))}
+                        </nav>
+                        <a class="ad-card__cta" href="/contact" data-request-modal>
+                            {ctaLabel}
+                            <span class="ad-icon ad-icon--arrow" aria-hidden="true"></span>
+                        </a>
+                    </footer>
+                </article>
+
+                <p class="ad__note">{AUDIENCE_SECTION.disclaimer}</p>
+
+                <div class="ad-outro">
+                    <div class="ad-outro__copy">
+                        <h3>Автоматизация начинается с вашей задачи</h3>
+                        <p>Заявки, документы, ответы клиентам и отчёты — находим процессы, где ИИ полезен вашей команде. Подключаем агента к CRM и базе знаний, настраиваем сценарии и контроль результата.</p>
+                    </div>
+                    <a class="ad-outro__link" href="/contact" data-request-modal>
+                        Подобрать решение для моего бизнеса
+                        <span class="ad-icon ad-icon--arrow" aria-hidden="true"></span>
+                    </a>
+                </div>
+
+                <div class="ad-seo">
+                    {seo.map((block) => (
+                        <div class="ad-seo__item">
+                            <h3>{block.title}</h3>
+                            <p>{block.text}</p>
+                        </div>
+                    ))}
+                    <nav class="ad-seo__nav" aria-label="Услуги для внедрения">
+                        {services.map((service) => (
+                            <a href={service.href}>{service.title}</a>
+                        ))}
+                    </nav>
+                </div>
+            </div>
+
+            <script is:inline type="application/json" data-ad-data set:html={JSON.stringify(payload)} />
+        </aicraft-directions>
+    </div>
+</section>
+
+
+<style>
+    .ad {
+        --ad-accent: #cff85e;
+        --ad-accent-bright: #e4ff92;
+        --ad-accent-soft: rgba(207, 248, 94, 0.1);
+        --ad-ink: #f4f6ee;
+        --ad-text: #b9bdb2;
+        --ad-muted: #8f948a;
+        --ad-line: #3c4236;
+        --ad-line-strong: #4e5545;
+        --ad-surface: #191c17;
+        --ad-surface-2: #1f231d;
+        --ad-deep: #101310;
+        position: relative;
+        padding: clamp(24px, 3vw, 52px) 0 clamp(38px, 4vw, 72px);
+        scroll-margin-top: 96px;
+    }
+
+    .ad__panel {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        padding: clamp(18px, 3vw, 48px);
+        border: 1px solid #343a2f;
+        border-radius: clamp(20px, 2.4vw, 36px);
+        background:
+            radial-gradient(ellipse at 50% -10%, rgba(108, 134, 68, 0.18) 0, transparent 55%),
+            linear-gradient(170deg, #1a1e18 0%, #131611 100%);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 30px 70px rgba(0, 0, 0, 0.45);
+        color: var(--ad-ink);
+    }
+
+    .ad__dots {
+        position: absolute;
+        z-index: -1;
+        width: min(320px, 26vw);
+        height: 230px;
+        background-image: radial-gradient(circle, #cff85e 1px, transparent 1.2px);
+        background-size: 16px 16px;
+        opacity: 0.16;
+        pointer-events: none;
+    }
+
+    .ad__dots--start {
+        top: -18px;
+        left: -22px;
+        mask-image: radial-gradient(115% 100% at 0 0, #000 24%, transparent 76%);
+        -webkit-mask-image: radial-gradient(115% 100% at 0 0, #000 24%, transparent 76%);
+    }
+
+    .ad__dots--end {
+        right: -22px;
+        bottom: -26px;
+        mask-image: radial-gradient(115% 100% at 100% 100%, #000 20%, transparent 74%);
+        -webkit-mask-image: radial-gradient(115% 100% at 100% 100%, #000 20%, transparent 74%);
+    }
+
+    .ad__head {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .ad__eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        min-height: 36px;
+        padding: 7px 16px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.04);
+        color: #e2e6da;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.11em;
+        text-transform: uppercase;
+        line-height: 1.2;
+    }
+
+    .ad__eyebrow-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--ad-accent);
+        box-shadow: 0 0 0 4px rgba(207, 248, 94, 0.12);
+    }
+
+    .ad__title {
+        display: flex;
+        flex-direction: column;
+        gap: 0.04em;
+        margin: 20px 0 0;
+        color: var(--ad-ink);
+        font-size: clamp(32px, 4.2vw, 64px);
+        font-weight: 500;
+        line-height: 0.99;
+        letter-spacing: -0.045em;
+    }
+
+    .ad__title-accent {
+        color: var(--ad-accent);
+    }
+
+    .ad__lead {
+        max-width: 660px;
+        margin: 18px 0 0;
+        color: var(--ad-text);
+        font-size: clamp(15px, 1.15vw, 18px);
+        line-height: 1.6;
+    }
+
+    .ad__tools {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        max-width: 800px;
+        margin-top: 26px;
+    }
+
+    .ad-search {
+        display: flex;
+        flex: 1 1 auto;
+        align-items: center;
+        gap: 11px;
+        min-height: 54px;
+        padding: 0 18px;
+        border: 1px solid var(--ad-line);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--ad-accent);
+        transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .ad-search:focus-within {
+        border-color: rgba(207, 248, 94, 0.55);
+        background: rgba(255, 255, 255, 0.05);
+        box-shadow: 0 0 0 4px rgba(207, 248, 94, 0.1);
+    }
+
+    .ad-search__input {
+        width: 100%;
+        min-width: 0;
+        border: 0;
+        outline: 0;
+        background: transparent;
+        color: var(--ad-ink);
+        font: inherit;
+        font-size: 16px;
+    }
+
+    .ad-search__input::placeholder {
+        color: var(--ad-muted);
+    }
+
+    .ad-search__input::-webkit-search-cancel-button {
+        filter: invert(1) opacity(0.5);
+    }
+
+    .ad-icon {
+        display: inline-block;
+        flex: none;
+        width: 18px;
+        height: 18px;
+        background-color: currentColor;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+    }
+
+    .ad-icon--search {
+        -webkit-mask-image: url("/images/aicraft-audience-assets-120/common/search.svg");
+        mask-image: url("/images/aicraft-audience-assets-120/common/search.svg");
+    }
+
+    .ad-icon--external {
+        -webkit-mask-image: url("/images/aicraft-audience-assets-120/common/external-link.svg");
+        mask-image: url("/images/aicraft-audience-assets-120/common/external-link.svg");
+    }
+
+    .ad-icon--close {
+        -webkit-mask-image: url("/images/aicraft-audience-assets-120/common/close.svg");
+        mask-image: url("/images/aicraft-audience-assets-120/common/close.svg");
+    }
+
+    .ad-icon--arrow {
+        -webkit-mask-image: url("/images/aicraft-audience-assets-120/common/arrow-right.svg");
+        mask-image: url("/images/aicraft-audience-assets-120/common/arrow-right.svg");
+    }
+
+    .ad__pause-icon--pause {
+        -webkit-mask-image: url("/images/aicraft-audience-assets-120/common/pause.svg");
+        mask-image: url("/images/aicraft-audience-assets-120/common/pause.svg");
+    }
+
+    .ad__pause-icon--play {
+        -webkit-mask-image: url("/images/aicraft-audience-assets-120/common/play.svg");
+        mask-image: url("/images/aicraft-audience-assets-120/common/play.svg");
+    }
+
+    .ad__all {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        min-height: 44px;
+        padding: 0 4px;
+        color: var(--ad-accent);
+        font-size: 15px;
+        font-weight: 500;
+        text-decoration: underline;
+        text-decoration-color: rgba(207, 248, 94, 0.4);
+        text-underline-offset: 6px;
+        white-space: nowrap;
+        transition: color 0.2s ease;
+    }
+
+    .ad__all .ad-icon {
+        width: 14px;
+        height: 14px;
+    }
+
+    .ad__all:hover {
+        color: var(--ad-accent-bright);
+    }
+
+    .ad__pause {
+        position: relative;
+        display: grid;
+        flex: none;
+        place-items: center;
+        width: 54px;
+        height: 54px;
+        border: 1px solid var(--ad-line);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.03);
+        color: #e7eadf;
+        cursor: pointer;
+        transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .ad__pause:hover {
+        border-color: rgba(207, 248, 94, 0.55);
+        color: var(--ad-accent);
+    }
+
+    .ad__pause[aria-pressed="true"] {
+        border-color: rgba(207, 248, 94, 0.55);
+        color: var(--ad-accent);
+        background: var(--ad-accent-soft);
+    }
+
+    .ad__pause-icon {
+        grid-area: 1 / 1;
+        width: 16px;
+        height: 16px;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .ad__pause-icon--play {
+        opacity: 0;
+        transform: scale(0.75);
+    }
+
+    .ad__pause[aria-pressed="true"] .ad__pause-icon--pause {
+        opacity: 0;
+        transform: scale(0.75);
+    }
+
+    .ad__pause[aria-pressed="true"] .ad__pause-icon--play {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    .ad__marquee {
+        margin-top: clamp(22px, 2.4vw, 34px);
+    }
+
+    .ad__row {
+        position: relative;
+        overflow: hidden;
+        padding-block: 6px;
+        mask-image: linear-gradient(90deg, transparent, #000 2.5%, #000 97.5%, transparent);
+        -webkit-mask-image: linear-gradient(90deg, transparent, #000 2.5%, #000 97.5%, transparent);
+    }
+
+    .ad__track {
+        display: flex;
+        gap: 9px;
+        width: max-content;
+        animation: ad-scroll 165s linear infinite;
+        will-change: transform;
+    }
+
+    .ad__row[data-direction="right"] .ad__track {
+        animation-direction: reverse;
+        animation-duration: 185s;
+    }
+
+    .ad__row:hover .ad__track,
+    .ad__row:focus-within .ad__track,
+    .ad__marquee[data-paused="true"] .ad__track {
+        animation-play-state: paused;
+    }
+
+    @keyframes ad-scroll {
+        from { transform: translate3d(0, 0, 0); }
+        to { transform: translate3d(-50%, 0, 0); }
+    }
+
+    .ad-chip {
+        display: inline-flex;
+        flex: none;
+        align-items: center;
+        gap: 10px;
+        min-height: 54px;
+        padding: 0 20px;
+        border: 1px solid var(--ad-line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.035);
+        color: #e7eadf;
+        font: inherit;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.1;
+        white-space: nowrap;
+        cursor: pointer;
+        transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .ad-chip__icon {
+        flex: none;
+        width: 24px;
+        height: 24px;
+        background-color: var(--ad-accent);
+        -webkit-mask-image: var(--ad-icon);
+        mask-image: var(--ad-icon);
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        transition: background-color 0.25s ease;
+    }
+
+    .ad-chip__more {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        max-width: 0;
+        overflow: hidden;
+        opacity: 0;
+        font-size: 14px;
+        font-weight: 600;
+        white-space: nowrap;
+        transition: max-width 0.28s ease, opacity 0.22s ease, margin-left 0.28s ease;
+    }
+
+    .ad-chip__more-icon {
+        width: 13px;
+        height: 13px;
+        background-color: currentColor;
+        -webkit-mask: url("/images/aicraft-audience-assets-120/common/arrow-right.svg") center / contain no-repeat;
+        mask: url("/images/aicraft-audience-assets-120/common/arrow-right.svg") center / contain no-repeat;
+    }
+
+    .ad-chip:hover,
+    .ad-chip:focus-visible {
+        background: var(--ad-accent);
+        border-color: var(--ad-accent);
+        color: #14170d;
+        box-shadow: 0 12px 26px rgba(207, 248, 94, 0.18);
+        outline: none;
+    }
+
+    .ad-chip:hover .ad-chip__icon,
+    .ad-chip:focus-visible .ad-chip__icon {
+        background-color: #14170d;
+    }
+
+    .ad-chip:hover .ad-chip__more,
+    .ad-chip:focus-visible .ad-chip__more {
+        max-width: 150px;
+        margin-left: 2px;
+        opacity: 1;
+    }
+
+    .ad-chip[aria-pressed="true"] {
+        background: var(--ad-accent);
+        border-color: var(--ad-accent);
+        color: #14170d;
+        box-shadow: 0 12px 26px rgba(207, 248, 94, 0.18);
+    }
+
+    .ad-chip[aria-pressed="true"] .ad-chip__icon {
+        background-color: #14170d;
+    }
+
+    .ad-chip:focus-visible {
+        outline: 2px solid var(--ad-accent);
+        outline-offset: 3px;
+    }
+
+    .ad-chip--clone {
+        pointer-events: none;
+    }
+
+    .ad-chip[hidden] {
+        display: none;
+    }
+
+    .ad__hint {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin: 8px auto 0;
+        max-width: 620px;
+        color: var(--ad-muted);
+        font-size: 14px;
+        line-height: 1.3;
+        text-align: center;
+    }
+
+    .ad__hint span {
+        flex: 1 1 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--ad-line));
+    }
+
+    .ad__hint span:last-child {
+        background: linear-gradient(90deg, var(--ad-line), transparent);
+    }
+
+    .ad__empty {
+        margin: 16px auto 0;
+        max-width: 560px;
+        color: var(--ad-text);
+        font-size: 15px;
+        line-height: 1.5;
+        text-align: center;
+    }
+
+    .ad__marquee[data-searching="true"] .ad__hint {
+        display: none;
+    }
+
+    .ad__marquee[data-searching="true"] .ad__track {
+        animation: none;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        gap: 8px;
+    }
+
+    .ad__marquee[data-searching="true"] .ad__row {
+        overflow: visible;
+        mask-image: none;
+        -webkit-mask-image: none;
+    }
+
+    .ad__marquee[data-searching="true"] .ad-chip--clone {
+        display: none;
+    }
+
+    .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    .ad-card {
+        position: relative;
+        display: grid;
+        grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+        gap: clamp(18px, 2.4vw, 40px);
+        margin-top: clamp(24px, 2.8vw, 42px);
+        padding: clamp(20px, 2.6vw, 38px);
+        border: 1px solid #41473c;
+        border-radius: 28px;
+        background:
+            radial-gradient(ellipse at 4% 0%, rgba(74, 87, 56, 0.32) 0, transparent 48%),
+            linear-gradient(165deg, #1c201a 0%, #151814 62%);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    .ad-card.is-closed {
+        display: none;
+    }
+
+    .ad-card.is-updating [data-ad-badge],
+    .ad-card.is-updating [data-ad-title],
+    .ad-card.is-updating [data-ad-pain],
+    .ad-card.is-updating [data-ad-workflow],
+    .ad-card.is-updating [data-ad-outcome],
+    .ad-card.is-updating [data-ad-scene],
+    .ad-card.is-updating [data-ad-output],
+    .ad-card.is-updating .ad-visual__image,
+    .ad-card.is-updating .ad-card__link {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+
+    .ad-card [data-ad-badge],
+    .ad-card [data-ad-title],
+    .ad-card [data-ad-pain],
+    .ad-card [data-ad-workflow],
+    .ad-card [data-ad-outcome],
+    .ad-card [data-ad-scene],
+    .ad-card [data-ad-output],
+    .ad-card .ad-visual__image,
+    .ad-card .ad-card__link {
+        transition: opacity 0.26s ease, transform 0.26s ease;
+    }
+
+    .ad-card__close {
+        position: absolute;
+        z-index: 2;
+        top: 14px;
+        right: 14px;
+        display: grid;
+        place-items: center;
+        width: 44px;
+        height: 44px;
+        border: 1px solid var(--ad-line);
+        border-radius: 50%;
+        background: #1b1f1a;
+        color: #b9bdb2;
+        cursor: pointer;
+        transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .ad-card__close .ad-icon {
+        width: 14px;
+        height: 14px;
+    }
+
+    .ad-card__close:hover {
+        border-color: rgba(207, 248, 94, 0.5);
+        background: var(--ad-accent-soft);
+        color: var(--ad-accent);
+    }
+
+    .ad-card__close:focus-visible,
+    .ad-chip:focus-visible,
+    .ad__pause:focus-visible,
+    .ad__all:focus-visible,
+    .ad-card__cta:focus-visible,
+    .ad-card__link:focus-visible,
+    .ad-outro__link:focus-visible,
+    .ad-seo__nav a:focus-visible {
+        outline: 2px solid var(--ad-accent);
+        outline-offset: 3px;
+    }
+
+    .ad-card__main {
+        min-width: 0;
+        padding-right: clamp(0px, 3vw, 20px);
+    }
+
+    .ad-card__badge {
+        display: inline-flex;
+        align-items: center;
+        min-height: 32px;
+        padding: 5px 14px;
+        border: 1px solid rgba(207, 248, 94, 0.4);
+        border-radius: 999px;
+        background: var(--ad-accent-soft);
+        color: var(--ad-accent);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        line-height: 1.2;
+    }
+
+    .ad-card__title {
+        margin: 14px 0 0;
+        color: var(--ad-ink);
+        font-size: clamp(24px, 2.3vw, 38px);
+        font-weight: 500;
+        line-height: 1.1;
+        letter-spacing: -0.03em;
+        text-wrap: balance;
+    }
+
+    .ad-card__label {
+        margin: 22px 0 7px;
+        color: var(--ad-muted);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        line-height: 1.3;
+    }
+
+    .ad-card__pain {
+        margin: 0;
+        color: #d3d7ca;
+        font-size: clamp(15px, 1.1vw, 17px);
+        line-height: 1.55;
+        max-width: 54ch;
+    }
+
+    .ad-card__workflow {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .ad-card :global(.ad-card__workflow li) {
+        display: grid;
+        grid-template-columns: 22px minmax(0, 1fr);
+        gap: 10px;
+        align-items: start;
+        color: #e8ece1;
+        font-size: clamp(15px, 1.1vw, 17px);
+        line-height: 1.45;
+    }
+
+    .ad-card :global(.ad-card__check) {
+        display: grid;
+        place-items: center;
+        width: 22px;
+        height: 22px;
+        margin-top: 1px;
+        border-radius: 50%;
+        background: var(--ad-accent-soft);
+        box-shadow: inset 0 0 0 1px rgba(207, 248, 94, 0.24);
+    }
+
+    .ad-card :global(.ad-card__check)::before {
+        content: "";
+        width: 13px;
+        height: 13px;
+        background-color: var(--ad-accent);
+        -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4.5 12.5 5 5 10-11'/%3E%3C/svg%3E") center / contain no-repeat;
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4.5 12.5 5 5 10-11'/%3E%3C/svg%3E") center / contain no-repeat;
+    }
+
+    .ad-card__outcome {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 10px;
+        align-items: baseline;
+        margin: 22px 0 0;
+        padding: 13px 16px;
+        border: 1px solid rgba(207, 248, 94, 0.18);
+        border-radius: 14px;
+        background: rgba(207, 248, 94, 0.06);
+        color: #e8ece1;
+        font-size: 15px;
+        line-height: 1.5;
+    }
+
+    .ad-card__example {
+        margin: 16px 0 0;
+        max-width: 58ch;
+        color: var(--ad-muted);
+        font-size: 14.5px;
+        line-height: 1.6;
+    }
+
+    .ad-card__outcome-label {
+        color: var(--ad-accent);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+    }
+
+    .ad-visual {
+        display: flex;
+        flex-direction: column;
+        align-self: start;
+        padding: clamp(14px, 1.4vw, 20px);
+        border: 1px solid rgba(207, 248, 94, 0.18);
+        border-radius: 24px;
+        background:
+            radial-gradient(ellipse at 100% 0%, rgba(207, 248, 94, 0.09), transparent 55%),
+            rgba(255, 255, 255, 0.02);
+    }
+
+    .ad-visual__top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .ad-visual__eyebrow {
+        color: var(--ad-muted);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+    }
+
+    .ad-visual__status {
+        display: inline-flex;
+        align-items: center;
+        min-height: 28px;
+        padding: 4px 12px;
+        border: 1px solid rgba(207, 248, 94, 0.35);
+        border-radius: 999px;
+        background: rgba(207, 248, 94, 0.1);
+        color: #e9ffb9;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 1.2;
+        text-align: right;
+    }
+
+    .ad-visual__title {
+        margin: 12px 0 10px;
+        color: #f2f6e8;
+        font-size: clamp(18px, 1.4vw, 23px);
+        font-weight: 500;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+    }
+
+    .ad-visual__image {
+        display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 3 / 2;
+        object-fit: contain;
+        filter: brightness(1.14) contrast(1.03);
+    }
+
+    .ad-visual__flow {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        color: #a7ac9d;
+        font-size: 12.5px;
+        line-height: 1.35;
+    }
+
+    .ad-visual__step {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        min-width: 0;
+    }
+
+    .ad-visual__step--end {
+        color: #f0f3e7;
+        font-weight: 500;
+    }
+
+    .ad-visual__dot {
+        flex: none;
+        width: 7px;
+        height: 7px;
+        border: 1.5px solid var(--ad-accent);
+        border-radius: 50%;
+    }
+
+    .ad-visual__step--end .ad-visual__dot {
+        background: var(--ad-accent);
+    }
+
+    .ad-visual__arrow {
+        position: relative;
+        flex: none;
+        width: 22px;
+        height: 1px;
+        background: var(--ad-line-strong);
+    }
+
+    .ad-visual__arrow::after {
+        content: "";
+        position: absolute;
+        top: -3px;
+        right: 0;
+        width: 6px;
+        height: 6px;
+        border-top: 1px solid var(--ad-accent);
+        border-right: 1px solid var(--ad-accent);
+        transform: rotate(45deg);
+    }
+
+    .ad-card__footer {
+        display: flex;
+        grid-column: 1 / -1;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        flex-wrap: wrap;
+        margin-top: 4px;
+        padding-top: 18px;
+        border-top: 1px solid rgba(255, 255, 255, 0.09);
+    }
+
+    .ad-card__links {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 6px 20px;
+    }
+
+    .ad-card :global(.ad-card__link) {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        min-height: 32px;
+        color: var(--ad-accent);
+        font-size: 15px;
+        font-weight: 500;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .ad-card :global(.ad-card__link .ad-icon) {
+        width: 12px;
+        height: 12px;
+        opacity: 0.75;
+    }
+
+    .ad-card :global(.ad-card__link + .ad-card__link)::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: -11px;
+        width: 1px;
+        height: 16px;
+        transform: translateY(-50%);
+        background: var(--ad-line);
+    }
+
+    .ad-card :global(.ad-card__link):hover {
+        color: var(--ad-accent-bright);
+        text-decoration: underline;
+        text-underline-offset: 5px;
+    }
+
+    .ad-card__cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        min-height: 52px;
+        padding: 0 24px;
+        border-radius: 14px;
+        background: var(--ad-accent);
+        color: #14170d;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 1.15;
+        text-decoration: none;
+        transition: background 0.22s ease, transform 0.22s ease;
+    }
+
+    .ad-card__cta .ad-icon {
+        width: 15px;
+        height: 15px;
+    }
+
+    .ad-card__cta:hover {
+        background: var(--ad-accent-bright);
+        transform: translateY(-1px);
+    }
+
+    .ad__note {
+        max-width: 76ch;
+        margin: 14px 0 0;
+        color: var(--ad-muted);
+        font-size: 12.5px;
+        line-height: 1.55;
+    }
+
+    .ad-outro {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: clamp(18px, 3vw, 56px);
+        margin-top: clamp(26px, 3vw, 44px);
+        padding-top: clamp(22px, 2.4vw, 34px);
+        border-top: 1px solid #343a2f;
+    }
+
+    .ad-outro h3 {
+        margin: 0;
+        color: var(--ad-ink);
+        font-size: clamp(26px, 2.9vw, 42px);
+        font-weight: 500;
+        line-height: 1.06;
+        letter-spacing: -0.04em;
+    }
+
+    .ad-outro p {
+        max-width: 66ch;
+        margin: 12px 0 0;
+        color: var(--ad-text);
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .ad-outro__link {
+        flex: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding-bottom: 4px;
+        border-bottom: 1px solid rgba(207, 248, 94, 0.4);
+        color: var(--ad-accent);
+        font-size: 16px;
+        font-weight: 500;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .ad-outro__link .ad-icon {
+        width: 15px;
+        height: 15px;
+    }
+
+    .ad-outro__link:hover {
+        color: var(--ad-accent-bright);
+    }
+
+    .ad-seo {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: clamp(18px, 2.4vw, 38px);
+        margin-top: clamp(26px, 3vw, 42px);
+    }
+
+    .ad-seo__item h3 {
+        margin: 0 0 9px;
+        color: #eef1e7;
+        font-size: clamp(19px, 1.45vw, 23px);
+        font-weight: 500;
+        line-height: 1.22;
+        letter-spacing: -0.02em;
+    }
+
+    .ad-seo__item p {
+        margin: 0;
+        color: var(--ad-text);
+        font-size: 15px;
+        line-height: 1.66;
+    }
+
+    .ad-seo__nav {
+        display: flex;
+        flex-wrap: wrap;
+        grid-column: 1 / -1;
+        gap: 8px;
+        padding-top: 4px;
+    }
+
+    .ad-seo__nav a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 40px;
+        padding: 0 16px;
+        border: 1px solid var(--ad-line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.03);
+        color: #dcdfd4;
+        font-size: 14px;
+        text-decoration: none;
+        transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+    }
+
+    .ad-seo__nav a:hover {
+        border-color: rgba(207, 248, 94, 0.5);
+        background: var(--ad-accent-soft);
+        color: var(--ad-accent);
+    }
+
+    @media (max-width: 1100px) {
+        .ad-card {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .ad-card__main {
+            padding-right: 0;
+        }
+
+        .ad-visual {
+            order: 2;
+        }
+
+        .ad-card__footer {
+            order: 3;
+        }
+
+        .ad-seo {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @media (max-width: 900px) {
+        .ad__hint {
+            display: none;
+        }
+    }
+
+    @media (max-width: 860px) {
+        .ad__tools {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .ad-search {
+            flex: 1 1 100%;
+        }
+
+        .ad-seo {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .ad-card__footer {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .ad-card__cta {
+            justify-content: center;
+        }
+
+        .ad-outro {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .ad__row {
+            overflow-x: auto;
+            mask-image: none;
+            -webkit-mask-image: none;
+            scrollbar-width: none;
+        }
+
+        .ad__row::-webkit-scrollbar {
+            display: none;
+        }
+
+        .ad__track {
+            animation: none;
+        }
+
+        .ad-chip {
+            min-height: 48px;
+            padding: 0 16px;
+            font-size: 14px;
+            gap: 9px;
+        }
+
+        .ad-chip__icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .ad-chip__more {
+            display: none;
+        }
+
+        .ad__hint {
+            font-size: 12px;
+            gap: 10px;
+        }
+
+        .ad__panel {
+            border-radius: 20px;
+        }
+
+        .ad-card {
+            border-radius: 20px;
+            padding: 16px;
+        }
+
+        .ad-card__close {
+            top: 10px;
+            right: 10px;
+            width: 42px;
+            height: 42px;
+        }
+
+        .ad-card :global(.ad-card__link + .ad-card__link)::before {
+            display: none;
+        }
+
+        .ad-visual__flow {
+            flex-wrap: wrap;
+        }
+    }
+
+    @media (hover: none) {
+        .ad__hint {
+            display: none;
+        }
+
+        .ad-chip:hover {
+            background: rgba(255, 255, 255, 0.035);
+            border-color: var(--ad-line);
+            color: #e7eadf;
+            box-shadow: none;
+        }
+
+        .ad-chip:hover .ad-chip__icon {
+            background-color: var(--ad-accent);
+        }
+
+        .ad-chip[aria-pressed="true"],
+        .ad-chip[aria-pressed="true"]:hover {
+            background: var(--ad-accent);
+            border-color: var(--ad-accent);
+            color: #14170d;
+            box-shadow: 0 12px 26px rgba(207, 248, 94, 0.18);
+        }
+
+        .ad-chip[aria-pressed="true"] .ad-chip__icon,
+        .ad-chip[aria-pressed="true"]:hover .ad-chip__icon {
+            background-color: #14170d;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .ad__row {
+            overflow-x: auto;
+            mask-image: none;
+            -webkit-mask-image: none;
+        }
+
+        .ad__track {
+            animation: none;
+        }
+    }
+</style>
+
+<script>
+    interface DirectionPayload {
+        slug: string;
+        label: string;
+        pain: string;
+        workflow: string[];
+        outcome: string;
+        example: string;
+        scene: { title: string; input: string; output: string };
+        alt: string;
+        illustration: string;
+        links: { title: string; href: string }[];
+    }
+
+    class AudienceDirections extends HTMLElement {
+        private data: DirectionPayload[] = [];
+        private active = "";
+        private abort?: AbortController;
+        private paintToken = 0;
+
+        connectedCallback() {
+            const raw = this.querySelector<HTMLScriptElement>("[data-ad-data]");
+            if (!raw?.textContent) return;
+            try {
+                this.data = JSON.parse(raw.textContent) as DirectionPayload[];
+            } catch {
+                return;
+            }
+            if (!this.data.length) return;
+
+            this.active = this.data[0].slug;
+            this.abort = new AbortController();
+            const options = { signal: this.abort.signal };
+
+            this.addEventListener("click", (event) => {
+                const target = event.target as HTMLElement;
+                if (target.closest("[data-ad-close]")) {
+                    this.closeCard();
+                    return;
+                }
+                const chip = target.closest<HTMLButtonElement>(".ad-chip[data-slug]");
+                if (!chip) return;
+                event.preventDefault();
+                this.openCard();
+                this.select(chip.dataset.slug!, { focus: false, scroll: true });
+            }, options);
+
+            this.querySelector("[data-ad-pause]")?.addEventListener("click", (event) => {
+                const button = event.currentTarget as HTMLButtonElement;
+                const marquee = this.querySelector<HTMLElement>("[data-ad-marquee]");
+                const paused = button.getAttribute("aria-pressed") === "true";
+                button.setAttribute("aria-pressed", String(!paused));
+                const hint = button.querySelector(".visually-hidden");
+                if (hint) hint.textContent = paused ? "Остановить движение строк" : "Продолжить движение строк";
+                if (marquee) marquee.dataset.paused = String(!paused);
+            }, options);
+
+            const search = this.querySelector<HTMLInputElement>("[data-ad-search]");
+            search?.addEventListener("input", () => this.filter(search.value), options);
+            search?.addEventListener("keydown", (event) => {
+                if (event.key !== "Enter") return;
+                event.preventDefault();
+                const first = this.pills()[0];
+                if (first) {
+                    this.openCard();
+                    this.select(first.dataset.slug!, { focus: true, scroll: true });
+                }
+            }, options);
+
+            this.addEventListener("keydown", (event) => this.onKey(event as KeyboardEvent), options);
+            document.addEventListener("keydown", (event) => {
+                if (event.key !== "Escape") return;
+                const search = this.querySelector<HTMLInputElement>("[data-ad-search]");
+                if (search && search.value) {
+                    search.value = "";
+                    this.filter("");
+                    return;
+                }
+                const card = this.querySelector<HTMLElement>("[data-ad-card]");
+                if (!card || card.classList.contains("is-closed")) return;
+                this.closeCard();
+            }, options);
+
+            const fromHash = location.hash.match(/^#direction-(.+)$/);
+            const initial = fromHash && this.data.some((item) => item.slug === fromHash[1])
+                ? fromHash[1]
+                : this.data[0].slug;
+            this.select(initial, { focus: false, scroll: false });
+        }
+
+        disconnectedCallback() {
+            this.abort?.abort();
+        }
+
+        private card() {
+            return this.querySelector<HTMLElement>("[data-ad-card]");
+        }
+
+        private openCard() {
+            this.card()?.classList.remove("is-closed");
+        }
+
+        private closeCard() {
+            const card = this.card();
+            if (!card) return;
+            card.classList.add("is-closed");
+            const chip = this.querySelector<HTMLButtonElement>('.ad-chip[data-slug="' + this.active + '"]:not(.ad-chip--clone)');
+            chip?.focus({ preventScroll: true });
+        }
+
+        private pills() {
+            return Array.from(this.querySelectorAll<HTMLButtonElement>(".ad-chip[data-slug]"))
+                .filter((chip) => !chip.hidden);
+        }
+
+        private rowOf(chip: HTMLElement) {
+            return chip.closest<HTMLElement>("[data-ad-row]");
+        }
+
+        private onKey(event: KeyboardEvent) {
+            const chip = (event.target as HTMLElement).closest<HTMLButtonElement>(".ad-chip[data-slug]");
+            if (!chip) return;
+            const row = this.rowOf(chip);
+            if (!row) return;
+            const rowChips = Array.from(row.querySelectorAll<HTMLButtonElement>(".ad-chip[data-slug]")).filter((item) => !item.hidden);
+            const index = rowChips.indexOf(chip);
+            let target: HTMLButtonElement | undefined;
+
+            if (event.key === "ArrowRight") target = rowChips[index + 1] ?? rowChips[0];
+            else if (event.key === "ArrowLeft") target = rowChips[index - 1] ?? rowChips[rowChips.length - 1];
+            else if (event.key === "Home") target = rowChips[0];
+            else if (event.key === "End") target = rowChips[rowChips.length - 1];
+            else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+                const rows = Array.from(this.querySelectorAll<HTMLElement>("[data-ad-row]"));
+                const targetRow = rows[rows.indexOf(row) + (event.key === "ArrowDown" ? 1 : -1)];
+                const targetChips = targetRow
+                    ? Array.from(targetRow.querySelectorAll<HTMLButtonElement>(".ad-chip[data-slug]")).filter((item) => !item.hidden)
+                    : [];
+                if (targetChips.length) {
+                    const ratio = rowChips.length > 1 ? index / (rowChips.length - 1) : 0;
+                    target = targetChips[Math.round(ratio * (targetChips.length - 1))];
+                }
+            } else {
+                return;
+            }
+
+            if (!target) return;
+            event.preventDefault();
+            this.openCard();
+            this.select(target.dataset.slug!, { focus: true, scroll: false });
+            target.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+        }
+
+        private filter(query: string) {
+            const value = query.trim().toLowerCase();
+            const marquee = this.querySelector<HTMLElement>("[data-ad-marquee]");
+            const empty = this.querySelector<HTMLElement>("[data-ad-empty]");
+            let visible = 0;
+
+            for (const chip of this.querySelectorAll<HTMLButtonElement>(".ad-chip[data-slug]")) {
+                const match = !value || (chip.textContent ?? "").toLowerCase().includes(value);
+                chip.hidden = !match;
+                if (match) visible += 1;
+            }
+
+            if (marquee) marquee.dataset.searching = String(Boolean(value));
+            if (empty) empty.hidden = visible > 0 || !value;
+
+            const active = this.querySelector<HTMLButtonElement>('.ad-chip[data-slug="' + this.active + '"]:not(.ad-chip--clone)');
+            if (value && active?.hidden) {
+                const first = this.pills()[0];
+                if (first) this.select(first.dataset.slug!, { focus: false, scroll: false });
+            }
+        }
+
+        private select(slug: string, options: { focus: boolean; scroll: boolean }) {
+            const item = this.data.find((entry) => entry.slug === slug);
+            if (!item) return;
+            this.active = slug;
+
+            for (const chip of this.querySelectorAll<HTMLButtonElement>(".ad-chip[data-slug]")) {
+                const isActive = chip.dataset.slug === slug;
+                chip.setAttribute("aria-pressed", String(isActive));
+                chip.tabIndex = isActive ? 0 : -1;
+            }
+
+            const card = this.card();
+            const paint = () => {
+                const setText = (selector: string, value: string) => {
+                    const node = this.querySelector<HTMLElement>(selector);
+                    if (node) node.textContent = value;
+                };
+                setText("[data-ad-badge]", item.label);
+                setText("[data-ad-title]", "ИИ-агент: " + item.label);
+                setText("[data-ad-pain]", item.pain);
+                setText("[data-ad-outcome-text]", item.outcome);
+                setText("[data-ad-example]", item.example);
+                setText("[data-ad-scene]", item.scene.title);
+                setText("[data-ad-output]", item.scene.output);
+                setText("[data-ad-input]", item.scene.input);
+                setText("[data-ad-output-text]", item.scene.output);
+
+                const workflow = this.querySelector<HTMLElement>("[data-ad-workflow]");
+                if (workflow) {
+                    workflow.replaceChildren(...item.workflow.map((step) => {
+                        const li = document.createElement("li");
+                        const check = document.createElement("span");
+                        check.className = "ad-card__check";
+                        check.setAttribute("aria-hidden", "true");
+                        const text = document.createElement("span");
+                        text.textContent = step;
+                        li.append(check, text);
+                        return li;
+                    }));
+                }
+
+                const image = this.querySelector<HTMLImageElement>("[data-ad-illustration]");
+                if (image) {
+                    image.src = item.illustration;
+                    image.alt = item.alt;
+                }
+
+                const links = this.querySelector<HTMLElement>("[data-ad-links]");
+                if (links) {
+                    links.replaceChildren(...item.links.map((link) => {
+                        const anchor = document.createElement("a");
+                        anchor.className = "ad-card__link";
+                        anchor.href = link.href;
+                        anchor.textContent = link.title;
+                        const icon = document.createElement("span");
+                        icon.className = "ad-icon ad-icon--external";
+                        icon.setAttribute("aria-hidden", "true");
+                        anchor.append(icon);
+                        return anchor;
+                    }));
+                }
+
+                card?.classList.remove("is-updating");
+            };
+
+            const token = ++this.paintToken;
+            if (card && !options.focus) {
+                card.classList.add("is-updating");
+                window.setTimeout(() => {
+                    if (token === this.paintToken) paint();
+                }, 110);
+            } else {
+                paint();
+            }
+
+            if (options.focus) {
+                const target = this.querySelector<HTMLButtonElement>('.ad-chip[data-slug="' + slug + '"]:not(.ad-chip--clone)');
+                target?.focus({ preventScroll: true });
+            }
+
+            if (options.scroll && card) {
+                const rect = card.getBoundingClientRect();
+                if (rect.top > window.innerHeight - 120 || rect.bottom < 80) {
+                    card.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+            }
+        }
+    }
+
+    if (!customElements.get("aicraft-directions")) customElements.define("aicraft-directions", AudienceDirections);
+</script>

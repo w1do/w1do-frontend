@@ -1,0 +1,19 @@
+{
+  "audiences": 120,
+  "referenced_asset_files": 600,
+  "unique_illustration_svgs": 120,
+  "unique_illustration_pngs": 120,
+  "common_svg": 14,
+  "groups": 12,
+  "errors": [],
+  "checks": [
+    "all assets exist",
+    "all SVG parse",
+    "correct raster dimensions",
+    "transparent outer margin",
+    "no unsafe external SVG elements",
+    "120 distinct card illustrations",
+    "three distinct internal service links per card",
+    "complete problem/workflow/outcome content"
+  ]
+}

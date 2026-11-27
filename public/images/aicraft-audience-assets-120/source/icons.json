@@ -1,0 +1,482 @@
+{
+  "business-owners": {
+    "name": "Владельцам бизнеса",
+    "svg": "<rect x=\"15\" y=\"33\" width=\"66\" height=\"47\" rx=\"7\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"M34 33V23h28v10M15 47l33 11 33-11M43 53h10v12H43z\"/>"
+  },
+  "branch-managers": {
+    "name": "Управляющим филиалами",
+    "svg": "<rect x=\"36\" y=\"13\" width=\"24\" height=\"25\" rx=\"3\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"M43 21h10M43 29h10M48 38v12M22 59v-9h52v9\"/><rect x=\"12\" y=\"59\" width=\"22\" height=\"24\" rx=\"3\"/><rect x=\"63\" y=\"59\" width=\"22\" height=\"24\" rx=\"3\"/><path d=\"M19 67h8M19 75h8M70 67h8M70 75h8\"/>"
+  },
+  "project-teams": {
+    "name": "Проектным командам",
+    "svg": "<rect x=\"13\" y=\"18\" width=\"70\" height=\"61\" rx=\"6\"/><path d=\"M13 32h70M36 32v47M60 32v47\"/><rect x=\"20\" y=\"42\" width=\"10\" height=\"22\" rx=\"2\" fill=\"currentColor\" fill-opacity=\".08\"/><rect x=\"43\" y=\"42\" width=\"10\" height=\"14\" rx=\"2\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"m67 47 4 4 6-8M20 25h8\"/>"
+  },
+  "operations-directors": {
+    "name": "Операционным директорам",
+    "svg": "<path d=\"m42 23 2-9h10l2 9 8 4 9-3 5 9-7 6v9l7 6-5 9-9-3-8 4-2 9H44l-2-9-8-4-9 3-5-9 7-6v-9l-7-6 5-9 9 3z\" fill=\"currentColor\" fill-opacity=\".08\"/><circle cx=\"49\" cy=\"44\" r=\"13\"/><path d=\"M18 68c7 11 18 17 31 17 10 0 19-4 26-10M74 65l2 11-11 1\"/>"
+  },
+  "hr-teams": {
+    "name": "HR-отделам",
+    "svg": "<circle cx=\"48\" cy=\"28\" r=\"11\"/><circle cx=\"22\" cy=\"38\" r=\"8\"/><circle cx=\"74\" cy=\"38\" r=\"8\"/><path d=\"M29 79V66c0-12 8-20 19-20s19 8 19 20v13z\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"M12 74V62c0-8 4-14 10-14 5 0 8 2 11 6M84 74V62c0-8-4-14-10-14-5 0-8 2-11 6\"/>"
+  },
+  "recruiters": {
+    "name": "Рекрутерам",
+    "svg": "<circle cx=\"41\" cy=\"40\" r=\"26\" fill=\"currentColor\" fill-opacity=\".08\"/><circle cx=\"41\" cy=\"33\" r=\"8\"/><path d=\"M27 55c0-8 6-14 14-14s14 6 14 14M60 59l21 21M65 62l-4 4\"/>"
+  },
+  "office-managers": {
+    "name": "Офис-менеджерам",
+    "svg": "<rect x=\"19\" y=\"17\" width=\"40\" height=\"30\" rx=\"3\"/><path d=\"M31 47v8M47 47v8M26 55h26M12 60h72M18 60v23M77 60v23M54 60v15h23\"/><path d=\"M67 39h11v15H67zM78 41h3c5 0 5 9 0 9h-3M70 23v6M77 23v6\"/>"
+  },
+  "corporate-training": {
+    "name": "Корпоративному обучению",
+    "svg": "<path d=\"m48 13 31 13-31 13-31-13z\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"M29 32v11c11 8 27 8 38 0V32M79 27v19M15 53c12-3 23-1 33 5 10-6 21-8 33-5v28c-12-3-23-1-33 5-10-6-21-8-33-5zM48 58v28M23 64l16 4M57 68l16-4\"/>"
+  },
+  "compliance-teams": {
+    "name": "Комплаенс-командам",
+    "svg": "<path d=\"M48 13c10 7 22 11 33 13v22c0 17-13 29-33 38-20-9-33-21-33-38V26c11-2 23-6 33-13z\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"m31 49 11 12 24-27\"/>"
+  },
+  "finance-directors": {
+    "name": "Финансовым директорам",
+    "svg": "<path d=\"M20 14h34l12 12v56H20zM54 14v14h12\"/><path d=\"M29 69V56h7v13M42 69V46h7v23M55 69V37h7v32M28 33h13\"/><path d=\"M70 13v17h16a16 16 0 0 0-16-17z\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"M64 17a16 16 0 1 0 20 20\"/>"
+  },
+  "lawyers": {
+    "name": "Юристам",
+    "svg": "<path d=\"M48 16v63M31 82h34M19 30h58M48 16l-7 7h14z\"/><path d=\"m20 30-10 25h20zM76 30 66 55h20z\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"M10 55c0 9 20 9 20 0M66 55c0 9 20 9 20 0\"/>"
+  },
+  "advocates": {
+    "name": "Адвокатам",
+    "svg": "<path d=\"m25 25 10-10 32 32-10 10zM19 30l11-11M62 62l11-11M44 49l-7 7 28 28 7-7z\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"M17 76h25l6 8H11zM31 31l17 17\"/>"
+  },
+  "notary-offices": {
+    "name": "Нотариальным конторам",
+    "svg": "<path d=\"M18 19h21M18 19v64h53V59M26 68h21M26 75h14\"/><path d=\"M50 36c-7-9-4-21 7-21s14 12 7 21l5 13H45z\" fill=\"currentColor\" fill-opacity=\".08\"/><rect x=\"39\" y=\"49\" width=\"36\" height=\"11\" rx=\"3\"/><path d=\"M35 65h44\"/><circle cx=\"76\" cy=\"77\" r=\"8\"/><path d=\"m72 77 3 3 5-6\"/>"
+  },
+  "accounting-firms": {
+    "name": "Бухгалтерским фирмам",
+    "svg": "<rect x=\"24\" y=\"12\" width=\"48\" height=\"72\" rx=\"7\"/><rect x=\"33\" y=\"22\" width=\"30\" height=\"16\" rx=\"2\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"M34 49h4M48 49h4M61 49h2M34 61h4M48 61h4M34 73h4M48 73h4M62 61v12\"/>"
+  },
+  "auditors": {
+    "name": "Аудиторам",
+    "svg": "<rect x=\"17\" y=\"19\" width=\"49\" height=\"63\" rx=\"4\"/><rect x=\"30\" y=\"12\" width=\"23\" height=\"13\" rx=\"3\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"m26 39 4 4 7-8M42 39h13M26 55h12M26 66h8\"/><circle cx=\"61\" cy=\"61\" r=\"17\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"m73 74 12 12m-31-25 5 5 9-11\"/>"
+  },
+  "tax-consultants": {
+    "name": "Налоговым консультантам",
+    "svg": "<path d=\"M24 13h35l13 13v57H24zM59 13v15h13M34 36h19\"/><circle cx=\"37\" cy=\"49\" r=\"5\"/><circle cx=\"59\" cy=\"70\" r=\"5\"/><path d=\"m35 72 25-26\"/>"
+  },
+  "insurance-brokers": {
+    "name": "Страховым брокерам",
+    "svg": "<path d=\"M12 44c4-17 18-29 36-29s32 12 36 29H12z\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"M48 12v3M48 15c-8 9-12 18-12 29M48 15c8 9 12 18 12 29M48 44v27c0 8 5 12 11 12 7 0 11-5 11-12\"/>"
+  },
+  "leasing-companies": {
+    "name": "Лизинговым компаниям",
+    "svg": "<circle cx=\"69\" cy=\"23\" r=\"9\"/><path d=\"M60 23H24M30 23v8M41 23v6\"/><path d=\"m17 61 8-18h43l12 18v15H16V61zM26 43l-2 18h45l-4-18M17 63h62\" fill=\"currentColor\" fill-opacity=\".08\"/><circle cx=\"29\" cy=\"76\" r=\"7\"/><circle cx=\"67\" cy=\"76\" r=\"7\"/>"
+  },
+  "credit-brokers": {
+    "name": "Кредитным брокерам",
+    "svg": "<rect x=\"29\" y=\"16\" width=\"53\" height=\"35\" rx=\"5\"/><path d=\"M29 28h53M39 39h12\"/><path d=\"M13 66c9-9 17-12 29-5h13c10 0 10 10 0 10H38M12 79l9-5 23 8c5 2 9 1 13-1l25-17c7-5 2-13-5-9L62 65\"/>"
+  },
+  "financial-consultants": {
+    "name": "Финансовым консультантам",
+    "svg": "<path d=\"M20 43V31l33-12 12 24M30 43V34l23-8M19 43h58v38H19z\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"M77 55H59v15h24V55z\"/><circle cx=\"66\" cy=\"62\" r=\"2\"/><path d=\"M62 15a15 15 0 0 1 17 23M73 16l-3 8 9 1\"/>"
+  },
+  "marketers": {
+    "name": "Маркетологам",
+    "svg": "<circle cx=\"43\" cy=\"53\" r=\"29\"/><circle cx=\"43\" cy=\"53\" r=\"18\"/><circle cx=\"43\" cy=\"53\" r=\"6\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"m43 53 33-33M65 20l13-6 4 13-11-2z\"/>"
+  },
+  "seo-agencies": {
+    "name": "SEO-студиям",
+    "svg": "<rect x=\"13\" y=\"18\" width=\"70\" height=\"61\" rx=\"5\"/><path d=\"M13 32h70M22 25h2M31 25h2M40 25h2\"/><circle cx=\"43\" cy=\"51\" r=\"12\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"m52 60 13 12M22 71h17\"/>"
+  },
+  "advertising-agencies": {
+    "name": "Рекламным агентствам",
+    "svg": "<path d=\"M25 38h12l34-19v53L37 54H25z\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"M37 38v16M25 38c-13 0-13 16 0 16M29 54l5 25h14l-8-24M79 29l7-4M80 45h8M79 62l7 4\"/>"
+  },
+  "smm-teams": {
+    "name": "SMM-командам",
+    "svg": "<path d=\"M18 16h49a7 7 0 0 1 7 7v29a7 7 0 0 1-7 7H37L19 71V59h-1a7 7 0 0 1-7-7V23a7 7 0 0 1 7-7z\"/><path d=\"M37 68h21l20 14V68h1a6 6 0 0 0 6-6V39\"/><path d=\"M43 48S25 38 30 29c3-6 10-5 13 0 3-5 10-6 13 0 5 9-13 19-13 19z\" fill=\"currentColor\" fill-opacity=\".08\"/>"
+  },
+  "content-studios": {
+    "name": "Контент-студиям",
+    "svg": "<path d=\"M19 14h47v17M19 14v69h47V67M28 27h25M28 39h18M28 51h12M28 64h9\"/><path d=\"m45 69 4-16 27-27 10 10-27 27zM49 53l10 10M70 32l10 10\" fill=\"currentColor\" fill-opacity=\".08\"/>"
+  },
+  "pr-agencies": {
+    "name": "PR-агентствам",
+    "svg": "<rect x=\"37\" y=\"15\" width=\"22\" height=\"43\" rx=\"11\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"M27 43v5a21 21 0 0 0 42 0v-5M48 69v13M33 83h30M15 28c-6 8-6 17 0 25M23 33c-3 4-3 10 0 15M81 28c6 8 6 17 0 25M73 33c3 4 3 10 0 15\"/>"
+  },
+  "video-production": {
+    "name": "Видеопродакшенам",
+    "svg": "<rect x=\"13\" y=\"35\" width=\"49\" height=\"43\" rx=\"6\" fill=\"currentColor\" fill-opacity=\".08\"/><circle cx=\"26\" cy=\"24\" r=\"11\"/><circle cx=\"50\" cy=\"24\" r=\"11\"/><path d=\"m62 48 21-12v43L62 66zM24 48h15M24 58h24\"/>"
+  },
+  "design-studios": {
+    "name": "Дизайн-студиям",
+    "svg": "<path d=\"M49 13c-22 0-37 16-37 36s16 35 35 35h9c9 0 12-10 6-16-4-4-1-10 4-10h8c9 0 12-8 9-17C78 23 65 13 49 13z\" fill=\"currentColor\" fill-opacity=\".08\"/><circle cx=\"30\" cy=\"33\" r=\"5\"/><circle cx=\"48\" cy=\"25\" r=\"5\"/><circle cx=\"67\" cy=\"34\" r=\"5\"/><circle cx=\"24\" cy=\"53\" r=\"5\"/><circle cx=\"42\" cy=\"66\" r=\"6\"/>"
+  },
+  "branding-agencies": {
+    "name": "Брендинговым агентствам",
+    "svg": "<path d=\"M15 17h31l38 38-29 29-40-40z\" fill=\"currentColor\" fill-opacity=\".08\"/><circle cx=\"29\" cy=\"31\" r=\"5\"/><path d=\"m54 37 4 9 10 2-8 7 2 10-8-5-9 5 2-10-8-7 11-2z\"/>"
+  },
+  "event-agencies": {
+    "name": "Event-агентствам",
+    "svg": "<rect x=\"16\" y=\"23\" width=\"65\" height=\"59\" rx=\"6\"/><path d=\"M16 39h65M31 13v20M66 13v20\"/><path d=\"m48 47 5 10 11 2-8 8 2 11-10-5-10 5 2-11-8-8 11-2z\" fill=\"currentColor\" fill-opacity=\".08\"/>"
+  },
+  "online-stores": {
+    "name": "Интернет-магазинам",
+    "svg": "<path d=\"M25 32h45l5 48H20z\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"M34 35V26a14 14 0 0 1 28 0v9\"/><path d=\"m51 49 28 14-12 4-4 13zM67 67l11 13\"/>"
+  },
+  "marketplace-sellers": {
+    "name": "Продавцам маркетплейсов",
+    "svg": "<path d=\"m17 16-6 20h74l-6-20zM15 36v43h66V36M32 16l-3 20M48 16v20M65 16l3 20\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"M11 36c0 10 18 10 18 0 0 10 19 10 19 0 0 10 20 10 20 0 0 10 17 10 17 0M24 57h19v22H24zM55 55h16v12H55z\"/>"
+  },
+  "wholesale-companies": {
+    "name": "Оптовым компаниям",
+    "svg": "<path d=\"m48 12 18 9-18 10-18-10zM30 21v21l18 10 18-10V21M48 31v21M26 45 8 55l18 10 18-10zM8 55v20l18 10 18-10V55M26 65v20M70 45l18 10-18 10-18-10zM52 55v20l18 10 18-10V55M70 65v20\" fill=\"currentColor\" fill-opacity=\".08\"/>"
+  },
+  "distributors": {
+    "name": "Дистрибьюторам",
+    "svg": "<rect x=\"35\" y=\"35\" width=\"26\" height=\"26\" rx=\"3\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"M43 35v9h10v-9M48 35V19M48 61v16M35 48H19M61 48h16M13 16h12v12H13zM71 13h12v12H71zM13 70h12v12H13zM71 70h12v12H71zM48 19H32M77 48V32M48 77H32M19 48v15\"/>"
+  },
+  "retail-chains": {
+    "name": "Розничным сетям",
+    "svg": "<path d=\"M34 14h28l5 17H29zM32 31v43h32V31M39 47h18v27H39zM8 41h18l4 13H4zM7 54v20h18V54M70 41h18l4 13H66zM71 54v20h18V54M12 83h72\" fill=\"currentColor\" fill-opacity=\".08\"/>"
+  },
+  "franchise-networks": {
+    "name": "Франчайзинговым сетям",
+    "svg": "<path d=\"M48 13v24M48 14h22l-6 8 6 8H48M28 38h40l5 16H23zM28 54v29h40V54M40 63h16v20H40zM12 27h17v13H12zM75 44h13v13H75zM11 63h13v13H11zM29 33l8 5M73 52h2M24 69h4\" fill=\"currentColor\" fill-opacity=\".08\"/>"
+  },
+  "equipment-suppliers": {
+    "name": "Поставщикам оборудования",
+    "svg": "<path d=\"M12 15h10l12 59h44M20 34h35v32H27\"/><path d=\"M38 33V23h30v39H55M47 23v-9h11v9M61 44h15v18H61z\" fill=\"currentColor\" fill-opacity=\".08\"/><circle cx=\"39\" cy=\"82\" r=\"6\"/><circle cx=\"72\" cy=\"82\" r=\"6\"/><circle cx=\"47\" cy=\"47\" r=\"7\"/>"
+  },
+  "furniture-stores": {
+    "name": "Магазинам мебели",
+    "svg": "<path d=\"M24 48V30c0-10 7-16 16-16h16c9 0 16 6 16 16v18M25 63h46M24 77v8M72 77v8\"/><path d=\"M14 49c0-10 14-10 14 0v9h40v-9c0-10 14-10 14 0v28H14z\" fill=\"currentColor\" fill-opacity=\".08\"/>"
+  },
+  "auto-parts-stores": {
+    "name": "Магазинам автозапчастей",
+    "svg": "<circle cx=\"35\" cy=\"55\" r=\"27\"/><circle cx=\"35\" cy=\"55\" r=\"13\"/><path d=\"M35 42V28M48 55h14M35 68v14M22 55H8M16 36l9 10M45 65l10 10M16 74l10-9M45 45l9-10M68 13h11v11H68zM66 24h15v20H66zM64 44h19v9H64zM69 53v17h9V53M72 70v10h10\"/>"
+  },
+  "flower-shops": {
+    "name": "Цветочным магазинам",
+    "svg": "<path d=\"m27 55 15 28h12l15-28M29 58l19 14 19-14M48 72V31M48 63 29 39M48 60l19-24\"/><path d=\"M28 21c-8-8-18 0-11 9-7 9 4 16 11 8 8 8 17-1 10-9 7-8-3-16-10-8zM67 20c-7-7-16 0-10 8-6 8 4 15 10 8 7 7 16-1 10-8 6-7-3-14-10-8zM48 12c-7-5-15 2-8 9-5 8 4 14 10 6 9 2 13-9 4-12z\" fill=\"currentColor\" fill-opacity=\".08\"/>"
+  },
+  "real-estate-agencies": {
+    "name": "Агентствам недвижимости",
+    "svg": "<path d=\"m12 43 34-29 34 29M21 39v42h45V39M37 81V57h17v24\" fill=\"currentColor\" fill-opacity=\".08\"/><circle cx=\"75\" cy=\"63\" r=\"9\"/><path d=\"m69 70-16 15M62 76l5 5M56 81l4 4\"/>"
+  },
+  "property-developers": {
+    "name": "Застройщикам",
+    "svg": "<path d=\"M11 23h75M26 14l27 9M29 23v60M39 23v60M29 33l10 10-10 10 10 10-10 10M18 83h33M73 23v23l-5 5M56 55h23v28H56zM63 63h8M63 72h8\"/>"
+  },
+  "construction-companies": {
+    "name": "Строительным компаниям",
+    "svg": "<path d=\"M17 59V49c0-17 12-29 31-29s31 12 31 29v10M39 22V14h18v8M39 22v29M57 22v29\"/><path d=\"M12 59h72v13c-20 12-52 12-72 0z\" fill=\"currentColor\" fill-opacity=\".08\"/>"
+  },
+  "renovation-teams": {
+    "name": "Ремонтным бригадам",
+    "svg": "<rect x=\"16\" y=\"16\" width=\"56\" height=\"25\" rx=\"5\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"M72 27h9v26H47v11M24 16v25\"/><rect x=\"40\" y=\"64\" width=\"14\" height=\"21\" rx=\"4\"/>"
+  },
+  "architecture-firms": {
+    "name": "Архитектурным бюро",
+    "svg": "<circle cx=\"48\" cy=\"24\" r=\"8\"/><path d=\"M48 12v4M42 30 22 82M54 30l20 52M32 56h32M48 49v14M23 69c14 14 37 14 50 0\"/><path d=\"m34 49 8-19 6 2-10 19M62 49l-8-19-6 2 10 19\" fill=\"currentColor\" fill-opacity=\".08\"/>"
+  },
+  "engineering-design-firms": {
+    "name": "Проектным институтам",
+    "svg": "<path d=\"M19 15h55c7 0 10 4 10 11v52H27c-9 0-15-5-15-12V23c0-5 2-8 7-8zM27 15v63M12 65c0-8 15-8 15 0M74 15v63\"/><path d=\"m36 65 28-31v31zM48 58h8v-9\" fill=\"currentColor\" fill-opacity=\".08\"/>"
+  },
+  "property-management": {
+    "name": "Управляющим компаниям",
+    "svg": "<path d=\"M15 13h43v69H15zM25 25h6M42 25h6M25 38h6M42 38h6M25 51h6M42 51h6M31 82V65h13v17\"/><path d=\"M79 42a14 14 0 0 0-14 18L52 76l9 8 14-17a14 14 0 0 0 10-21l-7 10-8-6z\" fill=\"currentColor\" fill-opacity=\".08\"/>"
+  },
+  "homeowners-associations": {
+    "name": "ТСЖ",
+    "svg": "<path d=\"m12 42 36-28 36 28M21 36v24M75 36v24M41 32h14v14H41z\"/><circle cx=\"48\" cy=\"59\" r=\"8\"/><circle cx=\"24\" cy=\"65\" r=\"6\"/><circle cx=\"72\" cy=\"65\" r=\"6\"/><path d=\"M34 84v-5c0-8 5-12 14-12s14 4 14 12v5M12 84v-3c0-8 4-10 12-10 4 0 8 2 10 5M84 84v-3c0-8-4-10-12-10-4 0-8 2-10 5\"/>"
+  },
+  "commercial-property-operators": {
+    "name": "Коммерческой недвижимости",
+    "svg": "<path d=\"M14 26h29v56H14zM43 12h37v70H43zM8 83h79M22 36h7M22 48h7M22 60h7M53 24h6M67 24h5M53 36h6M67 36h5M53 48h6M67 48h5M55 82V62h14v20\"/><path d=\"M14 26h29v9H14M43 12h37v9H43\" fill=\"currentColor\" fill-opacity=\".08\"/>"
+  },
+  "building-systems-contractors": {
+    "name": "Инженерным подрядчикам",
+    "svg": "<path d=\"M15 15h18v31h40v37H55V63H15z\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"M12 23h24M12 37h24M52 74h24M33 50v10M44 49v11\"/><circle cx=\"66\" cy=\"26\" r=\"15\"/><path d=\"M66 41v5M66 26l8-7M58 17l2 3M76 27h-4\"/>"
+  },
+  "machine-building-plants": {
+    "name": "Машиностроительным заводам",
+    "svg": "<path d=\"M24 76h47v8H24zM37 76V63h21v13M43 58 23 38l10-12 23 24M31 27l21-12 9 13-24 10M62 27l15 14M71 39l10-4 5 11-10 5\" fill=\"currentColor\" fill-opacity=\".08\"/><circle cx=\"47\" cy=\"56\" r=\"9\"/><circle cx=\"28\" cy=\"32\" r=\"9\"/><circle cx=\"57\" cy=\"22\" r=\"8\"/>"
+  },
+  "metalworking-companies": {
+    "name": "Металлообработке",
+    "svg": "<path d=\"M11 44h73l-9 14H59l-4 16h13v9H27v-9h13l-5-16H27z\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"m43 12 20 10-7 13-20-10zM45 29l-7 15M70 15l8-4M76 27h9\"/>"
+  },
+  "food-manufacturers": {
+    "name": "Пищевым производствам",
+    "svg": "<path d=\"M23 59V41c0-11 8-18 25-18s25 7 25 18v18z\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"M36 32l-6 12M49 30l-6 14M62 32l-6 12\"/><rect x=\"10\" y=\"64\" width=\"76\" height=\"16\" rx=\"8\"/><circle cx=\"22\" cy=\"72\" r=\"3\"/><circle cx=\"40\" cy=\"72\" r=\"3\"/><circle cx=\"58\" cy=\"72\" r=\"3\"/><circle cx=\"76\" cy=\"72\" r=\"3\"/>"
+  },
+  "garment-manufacturers": {
+    "name": "Швейным производствам",
+    "svg": "<path d=\"M22 24h43c11 0 16 6 16 17v29H49V40H34v15H22V40h-8v-8c0-5 3-8 8-8z\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"M29 55v12M36 70H17v12h67V70M35 13h14v11H35zM31 13h22M24 64h10\"/><circle cx=\"66\" cy=\"40\" r=\"7\"/>"
+  },
+  "furniture-manufacturers": {
+    "name": "Мебельным фабрикам",
+    "svg": "<path d=\"M12 57h72v11H12zM22 68v16M74 68v16M19 48h60M31 48V36M65 48V36\"/><path d=\"m48 13 5 6 8-2 1 8 8 3-3 8 5 6-7 4-1 8-9-1-6 6-6-6-8 1-2-8-7-4 5-6-3-8 8-3 1-8 8 2z\" fill=\"currentColor\" fill-opacity=\".08\"/><circle cx=\"49\" cy=\"36\" r=\"9\"/>"
+  },
+  "logistics-companies": {
+    "name": "Логистическим компаниям",
+    "svg": "<path d=\"M12 27h46v43H12zM58 41h16l12 16v13H58zM63 47h8l8 11H63z\" fill=\"currentColor\" fill-opacity=\".08\"/><circle cx=\"27\" cy=\"73\" r=\"9\"/><circle cx=\"72\" cy=\"73\" r=\"9\"/><path d=\"M12 57h46M18 19h26M10 37h14M6 47h15\"/>"
+  },
+  "fulfillment-warehouses": {
+    "name": "Складам и фулфилменту",
+    "svg": "<path d=\"m12 35 36-21 36 21v48H12zM12 35h72M29 83V47h38v36\"/><path d=\"M35 63h25v20H35zM35 63l12-7 13 7M47 56v20M47 76l13-6M35 70l12 6\" fill=\"currentColor\" fill-opacity=\".08\"/>"
+  },
+  "courier-services": {
+    "name": "Курьерским службам",
+    "svg": "<circle cx=\"22\" cy=\"73\" r=\"11\"/><circle cx=\"75\" cy=\"73\" r=\"11\"/><path d=\"M22 73h31l16-37h10M65 29h12v13M55 68h16M17 57h27v10H22M54 73h10\"/><rect x=\"15\" y=\"25\" width=\"30\" height=\"28\" rx=\"3\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"M26 25v10h8V25M11 17h21\"/>"
+  },
+  "freight-forwarders": {
+    "name": "Экспедиторам",
+    "svg": "<rect x=\"23\" y=\"17\" width=\"51\" height=\"34\" rx=\"3\"/><path d=\"M33 24v20M45 24v20M57 24v20M67 24v20M13 53h72L73 73H27z\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"M10 82q9-9 19 0 10-9 19 0 10-9 19 0 10-9 19 0\"/>"
+  },
+  "customs-representatives": {
+    "name": "Таможенным представителям",
+    "svg": "<path d=\"M13 20h13v64H13zM26 22h58v13H26M35 22l9 13M53 22l9 13M70 22l9 13M9 84h22\"/><path d=\"m48 49 17-9 18 9v27L65 85 48 76zM48 49l17 10 18-10M65 59v26M57 44l17 10v10\" fill=\"currentColor\" fill-opacity=\".08\"/>"
+  },
+  "auto-repair-shops": {
+    "name": "Автосервисам",
+    "svg": "<path d=\"M13 65v-14l7-5 6-15h32l7 15 6 5v14H13Z\" fill=\"currentColor\" fill-opacity=\".06\"/><path d=\"M20 46h44M29 31l-5 15M54 31l6 15M19 55h9M56 55h9\"/><path d=\"M20 65v7h9v-7M56 65v7h9v-7\"/><path d=\"M63 17a12 12 0 0 0 14 17l7-7-8-1-3-8-6 7-5-1Z\"/><path d=\"m64 33-14 16\"/>"
+  },
+  "car-dealers": {
+    "name": "Автодилерам",
+    "svg": "<path d=\"M14 74V26l34-12 34 12v48M14 32h68M24 24h48\"/><path d=\"M24 65V52l6-4 5-11h26l5 11 6 4v13Z\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"M30 48h36M30 56h8M58 56h8M31 65v6h8v-6M57 65v6h8v-6M12 78h72\"/>"
+  },
+  "detailing-centers": {
+    "name": "Детейлинг-центрам",
+    "svg": "<path d=\"M13 65V53l10-4 11-14h24l12 14 12 4v12H13Z\" fill=\"currentColor\" fill-opacity=\".06\"/><path d=\"M26 49h41M46 35v14M15 57h8M73 57h7\"/><circle cx=\"29\" cy=\"65\" r=\"7\"/><circle cx=\"67\" cy=\"65\" r=\"7\"/><path d=\"m23 13 3 8 8 3-8 3-3 8-3-8-8-3 8-3ZM72 13l3 7 7 3-7 3-3 7-3-7-7-3 7-3\"/>"
+  },
+  "tire-services": {
+    "name": "Шиномонтажам",
+    "svg": "<circle cx=\"43\" cy=\"46\" r=\"29\" fill=\"currentColor\" fill-opacity=\".06\"/><circle cx=\"43\" cy=\"46\" r=\"18\"/><circle cx=\"43\" cy=\"46\" r=\"6\"/><path d=\"M43 28v12M60 40l-11 4M53 61l-7-10M32 61l8-10M26 40l11 4M30 20l4 7M56 20l-4 7M16 42l8 1M61 67l5 6M20 66l6-5\"/><path d=\"m71 43 9 7-6 8v16M68 80h14M66 61h15\"/>"
+  },
+  "car-rental": {
+    "name": "Автопрокату",
+    "svg": "<path d=\"M14 68V53l7-5 7-14h28l7 14 7 5v15H14Z\" fill=\"currentColor\" fill-opacity=\".06\"/><path d=\"M22 48h40M22 57h8M54 57h8M21 68v7h9v-7M54 68v7h9v-7\"/><circle cx=\"69\" cy=\"24\" r=\"11\"/><path d=\"m61 32-13 13v8h8v-6h6l5-5M72 21h.1\"/>"
+  },
+  "taxi-fleets": {
+    "name": "Таксопаркам",
+    "svg": "<path d=\"M17 69V49l6-5 7-17h36l7 17 6 5v20H17Z\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"M37 27V17h22v10M23 44h50M25 69v9h10v-9M61 69v9h10v-9\"/><path d=\"M25 54h11M60 54h11M39 57h18M39 64h18\"/><rect x=\"39\" y=\"33\" width=\"6\" height=\"5\"/><rect x=\"51\" y=\"33\" width=\"6\" height=\"5\"/>"
+  },
+  "driving-schools": {
+    "name": "Автошколам",
+    "svg": "<circle cx=\"43\" cy=\"50\" r=\"30\" fill=\"currentColor\" fill-opacity=\".06\"/><circle cx=\"43\" cy=\"50\" r=\"9\"/><path d=\"M14 43h21M51 43h21M43 59v20M26 28l4 7M60 28l-4 7\"/><path d=\"m66 14 18 30H57l9-30Z\" fill=\"currentColor\" fill-opacity=\".06\"/><path d=\"M67 24v9M67 38h.1\"/>"
+  },
+  "roadside-assistance": {
+    "name": "Выездной техпомощи",
+    "svg": "<path d=\"M14 65V42h37v23M51 49h17l12 11v5H14\" fill=\"currentColor\" fill-opacity=\".06\"/><path d=\"M58 49V35h12l10 14M58 35V23M35 42V23h23M35 23 18 42M45 23v11a5 5 0 0 1-10 0\"/><circle cx=\"28\" cy=\"67\" r=\"8\"/><circle cx=\"66\" cy=\"67\" r=\"8\"/><path d=\"M20 51h22M69 56h8\"/>"
+  },
+  "passenger-transport": {
+    "name": "Пассажирским перевозчикам",
+    "svg": "<rect x=\"22\" y=\"15\" width=\"52\" height=\"62\" rx=\"10\" fill=\"currentColor\" fill-opacity=\".06\"/><rect x=\"28\" y=\"28\" width=\"40\" height=\"25\" rx=\"4\"/><path d=\"M48 28v25M37 21h22M29 77v6h10v-6M57 77v6h10v-6M22 34h-7v16h7M74 34h7v16h-7M29 63h8M59 63h8M42 67h12\"/>"
+  },
+  "construction-equipment-rental": {
+    "name": "Аренде спецтехники",
+    "svg": "<rect x=\"13\" y=\"67\" width=\"49\" height=\"14\" rx=\"7\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"M23 67V41h25v26M28 41V26h17l10 15M30 31v15h18M48 51l12-29 12 4 8 28M61 22l-6-8M73 45l-8 10 11 8h8V49\"/><circle cx=\"24\" cy=\"74\" r=\"2\"/><circle cx=\"36\" cy=\"74\" r=\"2\"/><circle cx=\"49\" cy=\"74\" r=\"2\"/>"
+  },
+  "medical-clinics": {
+    "name": "Клиникам",
+    "svg": "<path d=\"M19 80V27h58v53M31 27V16h34v11M13 80h70\"/><path d=\"M43 35h10v8h8v10h-8v8H43v-8h-8V43h8Z\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"M39 80V68h18v12M25 34v8M71 34v8M25 53v8M71 53v8\"/>"
+  },
+  "dental-clinics": {
+    "name": "Стоматологиям",
+    "svg": "<path d=\"M47 23c-12-10-31-7-32 9-1 14 8 21 10 34 3 23 14 20 16 1 1-12 13-12 14 0 2 19 13 22 16-1 2-13 11-20 10-34-1-16-20-19-34-9Z\" fill=\"currentColor\" fill-opacity=\".06\"/><path d=\"M36 25c8 6 16 6 24 0M25 37c0 6 2 10 6 13M67 17l3-5M77 24l6-1\"/>"
+  },
+  "veterinary-clinics": {
+    "name": "Ветклиникам",
+    "svg": "<path d=\"M25 65c1-9 10-12 15-21 4-8 13-8 18 0 5 9 14 12 14 21 0 10-11 12-18 8-4-2-6-2-11 0-8 4-19 2-18-8Z\" fill=\"currentColor\" fill-opacity=\".08\"/><ellipse cx=\"24\" cy=\"37\" rx=\"7\" ry=\"10\" transform=\"rotate(-24 24 37)\"/><ellipse cx=\"41\" cy=\"25\" rx=\"7\" ry=\"10\" transform=\"rotate(-8 41 25)\"/><ellipse cx=\"59\" cy=\"25\" rx=\"7\" ry=\"10\" transform=\"rotate(8 59 25)\"/><ellipse cx=\"76\" cy=\"37\" rx=\"7\" ry=\"10\" transform=\"rotate(24 76 37)\"/><path d=\"M48 51v15M41 58h15\"/>"
+  },
+  "pharmacy-chains": {
+    "name": "Аптечным сетям",
+    "svg": "<path d=\"M21 27h40v54H21Z\" fill=\"currentColor\" fill-opacity=\".06\"/><rect x=\"27\" y=\"15\" width=\"28\" height=\"12\" rx=\"3\"/><path d=\"M35 39h12v10h9v10h-9v10H35V59h-9V49h9Z\"/><path d=\"m61 40 8-8c10-10 23 3 13 13L70 57c-5 5-9 5-13 1M67 36l13 13\"/>"
+  },
+  "medical-laboratories": {
+    "name": "Медицинским лабораториям",
+    "svg": "<path d=\"M23 16h23M29 16v25L15 68c-4 8 1 13 9 13h23c8 0 12-5 8-13L40 41V16\" fill=\"currentColor\" fill-opacity=\".06\"/><path d=\"M22 58h26M29 67h.1M40 73h.1M62 17h20M66 17v49a6 6 0 0 0 12 0V17M66 43h12M65 31h6M65 38h6\"/>"
+  },
+  "beauty-salons": {
+    "name": "Салонам красоты",
+    "svg": "<ellipse cx=\"58\" cy=\"34\" rx=\"20\" ry=\"23\" fill=\"currentColor\" fill-opacity=\".06\"/><path d=\"M58 57v24M48 81h20M48 22c6-6 15-2 18 4\"/><circle cx=\"23\" cy=\"56\" r=\"9\"/><circle cx=\"23\" cy=\"77\" r=\"9\"/><path d=\"m30 62 20-21M30 71l20 14M30 64l6 3M30 69l6-2\"/>"
+  },
+  "barbershops": {
+    "name": "Барбершопам",
+    "svg": "<rect x=\"18\" y=\"20\" width=\"24\" height=\"57\" rx=\"8\" fill=\"currentColor\" fill-opacity=\".06\"/><path d=\"M18 35 42 23M18 49l24-12M18 63l24-12M23 77l19-12M23 20v-7h14v7M23 77v7h14v-7\"/><path d=\"m53 29 11-14 16 13-11 14Z\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"m55 32-6 34c-2 10 7 16 13 8l8-14M59 42l11 18M64 23l9 7\"/>"
+  },
+  "cosmetology-clinics": {
+    "name": "Косметологиям",
+    "svg": "<path d=\"M55 24c-18-6-30 7-29 24l-7 12h10c1 17 10 21 22 17M50 76v8M55 24c11 8 14 20 9 32l-9 13\" fill=\"currentColor\" fill-opacity=\".05\"/><path d=\"M29 46h7M29 63h9M52 38l4 5M47 48l6 2M45 59l7-2\"/><path d=\"m65 15 12-3 5 7-7 10-8-3Z\"/><path d=\"m68 27-8 12M73 30l-8 12M76 46c-5 8-8 11-8 15a7 7 0 0 0 14 0c0-4-2-7-6-15Z\"/>"
+  },
+  "fitness-clubs": {
+    "name": "Фитнес-клубам",
+    "svg": "<path d=\"M29 41h38v14H29Z\" fill=\"currentColor\" fill-opacity=\".08\"/><rect x=\"18\" y=\"25\" width=\"11\" height=\"46\" rx=\"3\"/><rect x=\"67\" y=\"25\" width=\"11\" height=\"46\" rx=\"3\"/><path d=\"M18 34h-7v28h7M78 34h7v28h-7M39 17l5 7M57 17l-5 7M39 79l5-7M57 79l-5-7\"/>"
+  },
+  "yoga-studios": {
+    "name": "Студиям йоги",
+    "svg": "<circle cx=\"48\" cy=\"21\" r=\"9\"/><path d=\"M36 39c3-8 21-8 24 0l8 14 13 5M36 39l-8 14-13 5M48 39v21M36 45l-4 15M60 45l4 15\"/><path d=\"M48 60c-15-9-30-5-33 5-2 8 10 17 33 15 23 2 35-7 33-15-3-10-18-14-33-5Z\" fill=\"currentColor\" fill-opacity=\".06\"/><path d=\"M31 67c6 1 12 6 17 13M65 67c-6 1-12 6-17 13\"/>"
+  },
+  "online-schools": {
+    "name": "Онлайн-школам",
+    "svg": "<path d=\"M18 39v30h60V39M11 69h74l-6 11H17Z\" fill=\"currentColor\" fill-opacity=\".05\"/><path d=\"m16 27 32-14 32 14-32 15Z\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"M30 34v14c10 7 26 7 36 0V34M80 27v22M76 49h8M42 58h12\"/>"
+  },
+  "training-centers": {
+    "name": "Учебным центрам",
+    "svg": "<rect x=\"15\" y=\"17\" width=\"66\" height=\"46\" rx=\"4\" fill=\"currentColor\" fill-opacity=\".05\"/><path d=\"M48 63v18M32 81l16-9 16 9M26 30h26M26 40h18M26 50h12\"/><circle cx=\"64\" cy=\"37\" r=\"8\"/><path d=\"M53 54c2-10 20-10 22 0\"/>"
+  },
+  "language-schools": {
+    "name": "Языковым школам",
+    "svg": "<path d=\"M17 17h43a8 8 0 0 1 8 8v25a8 8 0 0 1-8 8H34L17 70V58h-1a7 7 0 0 1-7-7V25a8 8 0 0 1 8-8Z\" fill=\"currentColor\" fill-opacity=\".06\"/><path d=\"M68 33h11a8 8 0 0 1 8 8v28a8 8 0 0 1-8 8h-1v8L64 77H45a8 8 0 0 1-8-8v-7\"/><path d=\"M23 31h29M23 42h20M51 66h19\"/>"
+  },
+  "private-tutors": {
+    "name": "Репетиторам",
+    "svg": "<circle cx=\"27\" cy=\"26\" r=\"10\"/><circle cx=\"69\" cy=\"26\" r=\"10\"/><path d=\"M12 55V49c0-12 28-15 31-1M84 55V49c0-12-28-15-31-1\"/><path d=\"M15 58c13-6 23-3 33 3 10-6 20-9 33-3v23c-14-6-23-4-33 2-10-6-19-8-33-2Z\" fill=\"currentColor\" fill-opacity=\".06\"/><path d=\"M48 61v22M25 65l12 2M59 67l12-2\"/>"
+  },
+  "colleges": {
+    "name": "Колледжам",
+    "svg": "<path d=\"M17 81V29h62v52M12 81h72M30 29V17h36v12M48 17V9l17 4v8\"/><path d=\"M39 81V63h18v18\" fill=\"currentColor\" fill-opacity=\".08\"/><rect x=\"27\" y=\"39\" width=\"10\" height=\"11\"/><rect x=\"59\" y=\"39\" width=\"10\" height=\"11\"/><rect x=\"43\" y=\"39\" width=\"10\" height=\"11\"/><path d=\"M27 61v8M69 61v8\"/>"
+  },
+  "universities": {
+    "name": "Университетам",
+    "svg": "<path d=\"m12 32 36-19 36 19H12ZM16 74h64v8H16Z\" fill=\"currentColor\" fill-opacity=\".06\"/><path d=\"M23 37v32M36 37v32M60 37v32M73 37v32M18 37h10M31 37h10M55 37h10M68 37h10M18 69h10M31 69h10M55 69h10M68 69h10M48 43v31\"/><circle cx=\"48\" cy=\"27\" r=\"3\"/>"
+  },
+  "children-centers": {
+    "name": "Детским центрам",
+    "svg": "<rect x=\"14\" y=\"51\" width=\"31\" height=\"31\" rx=\"4\" fill=\"currentColor\" fill-opacity=\".06\"/><rect x=\"50\" y=\"51\" width=\"31\" height=\"31\" rx=\"4\"/><path d=\"m53 46 12-23 13 23Z\"/><path d=\"m31 13 5 10 11 2-8 8 2 11-10-5-10 5 2-11-8-8 11-2Z\" fill=\"currentColor\" fill-opacity=\".06\"/><circle cx=\"30\" cy=\"67\" r=\"7\"/><path d=\"M59 74 73 60M59 60l14 14\"/>"
+  },
+  "publishers": {
+    "name": "Издательствам",
+    "svg": "<path d=\"M12 24c12-5 24-3 36 4 12-7 24-9 36-4v51c-13-6-25-4-36 4-11-8-23-10-36-4Z\" fill=\"currentColor\" fill-opacity=\".05\"/><path d=\"M48 28v51M21 37l16 3M21 49l16 3M21 61l12 2\"/><path d=\"m60 57 5-19 11-17 7 5-12 17-11 14ZM65 38l6 5M59 66h16\"/>"
+  },
+  "media-editorial-teams": {
+    "name": "Редакциям медиа",
+    "svg": "<path d=\"M17 19h49v61H21a9 9 0 0 1-9-9V34h5M66 34h15v37a9 9 0 0 1-9 9h-6\" fill=\"currentColor\" fill-opacity=\".04\"/><rect x=\"25\" y=\"29\" width=\"32\" height=\"17\" rx=\"2\"/><path d=\"M25 56h13M25 65h13M47 56h10M47 65h10M73 43v25\"/>"
+  },
+  "libraries": {
+    "name": "Библиотекам",
+    "svg": "<path d=\"M13 15h70v68H13ZM13 48h70M13 75h70\"/><rect x=\"20\" y=\"23\" width=\"12\" height=\"25\" rx=\"1\"/><rect x=\"35\" y=\"20\" width=\"10\" height=\"28\" rx=\"1\"/><path d=\"m49 23 10-3 8 25-10 3ZM22 57h12v18H22ZM39 54h11v21H39ZM55 59h20v9H55ZM55 68h20v7\" fill=\"currentColor\" fill-opacity=\".06\"/>"
+  },
+  "restaurants": {
+    "name": "Ресторанам",
+    "svg": "<path d=\"M26 65c0-17 10-29 25-29s25 12 25 29H26ZM22 72h58M47 36v-7h8v7\" fill=\"currentColor\" fill-opacity=\".06\"/><path d=\"M14 16v24M8 16v17c0 7 12 7 12 0V16M14 40v40M84 16v64M84 16c-8 4-11 15-10 28h10\"/>"
+  },
+  "cafes-coffee-shops": {
+    "name": "Кафе и кофейням",
+    "svg": "<path d=\"M18 39h48v22a18 18 0 0 1-18 18H36a18 18 0 0 1-18-18Z\" fill=\"currentColor\" fill-opacity=\".06\"/><path d=\"M66 45h7a11 11 0 0 1 0 22h-8M12 83h65M30 29c-8-9 9-11 0-21M44 29c-8-9 9-11 0-21M58 29c-8-9 9-11 0-21\"/>"
+  },
+  "food-delivery": {
+    "name": "Доставке еды",
+    "svg": "<circle cx=\"27\" cy=\"72\" r=\"11\"/><circle cx=\"72\" cy=\"72\" r=\"11\"/><path d=\"M27 72h28l11-28h11M56 52H36L25 67M55 72l-4-18M66 44l-5-18h12M69 32h8M32 52V36h22v16\"/><rect x=\"14\" y=\"20\" width=\"34\" height=\"22\" rx=\"3\" fill=\"currentColor\" fill-opacity=\".06\"/><path d=\"M14 27h34M31 20v22M10 52h9M10 60h5\"/>"
+  },
+  "catering-companies": {
+    "name": "Кейтерингу",
+    "svg": "<path d=\"M11 55h74v24H11ZM19 48c0-15 11-27 29-27s29 12 29 27H19ZM16 48h64\" fill=\"currentColor\" fill-opacity=\".06\"/><path d=\"M42 27v-8h12v8M18 79v5M78 79v5M20 63h16v8H20M43 63h10v8H43M60 63h16v8H60\"/>"
+  },
+  "hotels": {
+    "name": "Отелям",
+    "svg": "<path d=\"M24 82V14h48v68M14 82h68M41 82V67h14v15\" fill=\"currentColor\" fill-opacity=\".04\"/><path d=\"M34 27h7v8h-7ZM55 27h7v8h-7ZM34 45h7v8h-7ZM55 45h7v8h-7\"/><path d=\"M16 22v42M10 27h12M10 39h12M10 51h12M80 24v40M74 31h12M74 44h12M74 57h12\"/>"
+  },
+  "glamping-sites": {
+    "name": "Глэмпингам",
+    "svg": "<path d=\"m13 79 35-55 35 55H13ZM48 24v55M48 44 30 79M48 44l18 35\" fill=\"currentColor\" fill-opacity=\".06\"/><path d=\"M73 13a10 10 0 1 0 11 14 11 11 0 0 1-11-14ZM16 32l-6 11h12l-6-11ZM16 44v9M31 13h.1M55 13h.1\"/>"
+  },
+  "tour-operators": {
+    "name": "Туроператорам",
+    "svg": "<circle cx=\"48\" cy=\"48\" r=\"33\" fill=\"currentColor\" fill-opacity=\".04\"/><ellipse cx=\"48\" cy=\"48\" rx=\"15\" ry=\"33\"/><path d=\"M16 38h64M16 58h64M48 15v66\"/><path d=\"m66 56 7 12 12 7-12 7-7 12-7-12-12-7 12-7Z\" fill=\"currentColor\" fill-opacity=\".08\" transform=\"translate(0 -7) scale(1 .95)\"/>"
+  },
+  "travel-agencies": {
+    "name": "Турагентствам",
+    "svg": "<rect x=\"16\" y=\"29\" width=\"49\" height=\"49\" rx=\"7\" fill=\"currentColor\" fill-opacity=\".06\"/><path d=\"M29 29v-9h23v9M28 29v49M53 29v49M24 78v5M56 78v5\"/><path d=\"m57 43 11-19-4-8 5-4 8 7 9-7-6 22-8 8-4 14-5 2 2-17Z\" fill=\"currentColor\" fill-opacity=\".06\"/>"
+  },
+  "tour-guides-bureaus": {
+    "name": "Экскурсионным бюро",
+    "svg": "<path d=\"m13 38 23-8 25 9 22-8v45l-22 8-25-9-23 8ZM36 30v45M61 39v45\" fill=\"currentColor\" fill-opacity=\".05\"/><path d=\"M37 25c0-15 23-15 23 0 0 10-11 22-11 22S37 35 37 25Z\"/><circle cx=\"49\" cy=\"25\" r=\"4\"/><path d=\"M73 31V12l12 4-12 5M21 57l7-3M44 63l9 3M68 67l8-3\"/>"
+  },
+  "conference-venues": {
+    "name": "Конференц-площадкам",
+    "svg": "<path d=\"M32 37h32l-5 29H37ZM23 66h50M48 37V25c0-10 16-12 16-3v6\" fill=\"currentColor\" fill-opacity=\".06\"/><path d=\"M15 78v-7a6 6 0 0 1 12 0v7M42 84v-7a6 6 0 0 1 12 0v7M69 78v-7a6 6 0 0 1 12 0v7M12 84h18M39 89h18M66 84h18M16 17h22M16 25h12\"/>"
+  },
+  "saas-companies": {
+    "name": "SaaS-компаниям",
+    "svg": "<path d=\"M25 43C9 42 8 22 24 20c7-17 32-15 38 2 18-5 30 18 13 27H63\" fill=\"currentColor\" fill-opacity=\".06\"/><rect x=\"22\" y=\"43\" width=\"43\" height=\"17\" rx=\"4\"/><rect x=\"22\" y=\"65\" width=\"43\" height=\"17\" rx=\"4\"/><path d=\"M30 51h.1M38 51h.1M30 73h.1M38 73h.1M51 51h6M51 73h6M73 58h10v15H73M73 65h10\"/>"
+  },
+  "web-studios": {
+    "name": "Веб-студиям",
+    "svg": "<rect x=\"12\" y=\"17\" width=\"72\" height=\"62\" rx=\"7\" fill=\"currentColor\" fill-opacity=\".04\"/><path d=\"M12 32h72M21 24h.1M29 24h.1M37 24h.1M34 44 23 54l11 10M62 44l11 10-11 10M53 41 43 68\"/>"
+  },
+  "crm-integrators": {
+    "name": "Интеграторам CRM",
+    "svg": "<rect x=\"31\" y=\"31\" width=\"34\" height=\"34\" rx=\"8\" fill=\"currentColor\" fill-opacity=\".08\"/><circle cx=\"48\" cy=\"43\" r=\"5\"/><path d=\"M39 57c1-8 17-8 18 0M48 31V21M48 65v10M31 48H21M65 48h10\"/><circle cx=\"48\" cy=\"14\" r=\"7\"/><circle cx=\"48\" cy=\"82\" r=\"7\"/><circle cx=\"14\" cy=\"48\" r=\"7\"/><circle cx=\"82\" cy=\"48\" r=\"7\"/>"
+  },
+  "it-outsourcing": {
+    "name": "IT-аутсорсингу",
+    "svg": "<rect x=\"14\" y=\"18\" width=\"44\" height=\"19\" rx=\"4\"/><rect x=\"14\" y=\"42\" width=\"44\" height=\"19\" rx=\"4\" fill=\"currentColor\" fill-opacity=\".06\"/><path d=\"M23 27h.1M31 27h.1M43 27h7M23 51h.1M31 51h.1M18 70h25M18 78h18\"/><path d=\"m66 44 5 8 9 1v10l-7 4-2 10H60l-4-8-9-3 2-10 9-2 4-10Z\"/><circle cx=\"64\" cy=\"61\" r=\"7\"/>"
+  },
+  "support-centers": {
+    "name": "Центрам поддержки",
+    "svg": "<path d=\"M17 50V42a31 31 0 0 1 62 0v20c0 11-9 19-23 19M24 50V41a24 24 0 0 1 48 0v9\"/><rect x=\"13\" y=\"47\" width=\"16\" height=\"23\" rx=\"6\" fill=\"currentColor\" fill-opacity=\".08\"/><rect x=\"67\" y=\"47\" width=\"16\" height=\"23\" rx=\"6\" fill=\"currentColor\" fill-opacity=\".08\"/><rect x=\"42\" y=\"75\" width=\"17\" height=\"9\" rx=\"4\"/><path d=\"M37 47h22M37 57h16\"/>"
+  },
+  "translation-agencies": {
+    "name": "Агентствам перевода",
+    "svg": "<rect x=\"12\" y=\"14\" width=\"38\" height=\"44\" rx=\"5\" fill=\"currentColor\" fill-opacity=\".06\"/><rect x=\"46\" y=\"40\" width=\"38\" height=\"44\" rx=\"5\"/><path d=\"M21 27h20M21 37h20M21 47h12M56 53h18M56 63h18M56 73h10M57 19h18l-7-7M75 19l-7 7M39 77H21l7-7M21 77l7 7\"/>"
+  },
+  "research-firms": {
+    "name": "Исследовательским бюро",
+    "svg": "<path d=\"M16 15h42v63H16Z\" fill=\"currentColor\" fill-opacity=\".04\"/><path d=\"M25 27h23M25 36h15M25 65V54M36 65V46M47 65v-7\"/><circle cx=\"64\" cy=\"45\" r=\"17\"/><path d=\"m76 57 10 13M57 45l5 5 10-12\"/>"
+  },
+  "consulting-companies": {
+    "name": "Консалтинговым компаниям",
+    "svg": "<path d=\"M15 18h36v63H15Z\" fill=\"currentColor\" fill-opacity=\".04\"/><path d=\"M24 31h17M24 42h17M24 53h10M24 65h12\"/><path d=\"M57 48c-16-14-10-35 6-35s24 20 9 35l-3 7H60l-3-7ZM59 61h12M61 68h8M63 55V37M57 34l6 6 6-6\"/><path d=\"M50 15l-4-6M78 17l6-4M81 34h6\"/>"
+  },
+  "tender-teams": {
+    "name": "Тендерным отделам",
+    "svg": "<path d=\"M21 19h48v65H21Z\" fill=\"currentColor\" fill-opacity=\".04\"/><rect x=\"33\" y=\"12\" width=\"24\" height=\"13\" rx=\"3\"/><path d=\"M31 37h28M31 48h20M31 59h11\"/><circle cx=\"66\" cy=\"63\" r=\"14\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"m58 63 5 5 10-11M57 75l-3 12 11-5 10 5-2-12\"/>"
+  },
+  "b2b-sales-teams": {
+    "name": "B2B-отделам продаж",
+    "svg": "<path d=\"m12 47 14-16 15 5 10-2 14 7 17 15-10 16-10 8-25-10-15-9Z\" fill=\"currentColor\" fill-opacity=\".05\"/><path d=\"m26 31 12 13-9 20M65 41 53 52c-5 4-12-3-8-7l6-11M53 52l16 13M44 59l15 13M36 66l13 10M12 47l10 14M82 56l-10 16\"/><path d=\"M33 25v-9h30v10M41 16v-6h14v6\"/>"
+  },
+  "farms": {
+    "name": "Фермерским хозяйствам",
+    "svg": "<path d=\"M18 59V33l24-18 24 18v26H18ZM30 59V40h24v19\" fill=\"currentColor\" fill-opacity=\".06\"/><path d=\"m30 40 24 19M54 40 30 59M11 66h73M11 79c16-9 37-11 73-5M36 84c15-6 29-8 48-8\"/><circle cx=\"75\" cy=\"22\" r=\"8\"/><path d=\"M42 15V9\"/>"
+  },
+  "agricultural-holdings": {
+    "name": "Агрохолдингам",
+    "svg": "<circle cx=\"33\" cy=\"66\" r=\"16\"/><circle cx=\"74\" cy=\"72\" r=\"10\"/><path d=\"M33 50V27h24l9 27h12v8M40 27V16h15v11M57 27l8 26M48 66h16M17 48h16M70 54V40M67 40h9M33 60v12M27 66h12\"/><path d=\"M14 38V14M14 21l-7-5M14 28l7-5M14 35l-7-5\"/>"
+  },
+  "garden-centers": {
+    "name": "Садовым центрам",
+    "svg": "<path d=\"M29 57h38l-6 25H35ZM24 51h48v8H24Z\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"M48 51V26M48 36c-18 0-25-10-24-22 17-1 25 8 24 22ZM48 44c20 0 28-10 27-24-18 0-28 9-27 24Z\"/><path d=\"m32 23 16 13M67 28 49 43\"/>"
+  },
+  "cleaning-companies": {
+    "name": "Клининговым компаниям",
+    "svg": "<path d=\"M20 37h24l4 13v31H17V50l3-13Z\" fill=\"currentColor\" fill-opacity=\".06\"/><path d=\"M24 37V25h15v12M24 25V15h26v9H38M48 17l9 9M25 58h15M25 67h15\"/><path d=\"m69 37-9 41M61 40l19 5M57 76l20 5M65 30l18 5-3 10-19-5Z\"/><path d=\"M73 13v10M68 18h10\"/>"
+  },
+  "home-repair-services": {
+    "name": "Бытовым сервисам",
+    "svg": "<path d=\"m12 44 36-29 36 29M22 39v43h52V39\" fill=\"currentColor\" fill-opacity=\".04\"/><path d=\"M37 82V61h21v21M60 25V15h12v20\"/><path d=\"M37 42a11 11 0 0 0 14 13l10-10-7-1-3-7-8 9-6-4ZM43 54 31 67\"/>"
+  },
+  "dry-cleaners": {
+    "name": "Химчисткам",
+    "svg": "<path d=\"M40 27c0-12 17-12 17-2 0 5-9 7-9 13v6M48 44 13 65c-4 3-2 9 3 9h64c5 0 7-6 3-9L48 44Z\" fill=\"currentColor\" fill-opacity=\".05\"/><path d=\"M30 55l6 12h24l6-12M65 19l3 7 7 3-7 3-3 7-3-7-7-3 7-3\"/><circle cx=\"81\" cy=\"45\" r=\"5\"/>"
+  },
+  "security-companies": {
+    "name": "Охранным предприятиям",
+    "svg": "<path d=\"M48 12 77 23v24c0 20-16 31-29 38-13-7-29-18-29-38V23Z\" fill=\"currentColor\" fill-opacity=\".06\"/><path d=\"M31 38h25l12 9-7 11-27-9-3-11ZM40 52l-6 10h-9M39 62h11M55 30l11 4M67 34l6-7\"/>"
+  },
+  "charitable-foundations": {
+    "name": "Благотворительным фондам",
+    "svg": "<path d=\"M48 49 28 30C15 14 34 4 48 20 62 4 81 14 68 30L48 49Z\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"M12 56h12l14 11h19c9 0 10 12 0 12H35L12 67M38 67l-8-9c-5-6-13 1-9 6M84 55H72L61 65M84 66 66 80H52\"/>"
+  },
+  "sports-federations": {
+    "name": "Спортивным федерациям",
+    "svg": "<path d=\"M31 15h34v24c0 15-8 23-17 23S31 54 31 39V15Z\" fill=\"currentColor\" fill-opacity=\".08\"/><path d=\"M31 22H17v13c0 12 9 19 19 18M65 22h14v13c0 12-9 19-19 18M48 62v15M35 77h26v7H35Z\"/><path d=\"m48 26 3 7 8 1-6 5 2 8-7-4-7 4 2-8-6-5 8-1Z\"/>"
+  },
+  "utility-providers": {
+    "name": "Ресурсоснабжающим компаниям",
+    "svg": "<path d=\"M15 44h25v36H15ZM25 44V25h29v10H36v9M19 20h22M29 14v12\" fill=\"currentColor\" fill-opacity=\".05\"/><path d=\"M65 44c-10 14-18 23-18 30a18 18 0 0 0 36 0c0-7-8-16-18-30Z\" fill=\"currentColor\" fill-opacity=\".06\"/><path d=\"m72 13-15 17h11l-7 13 20-20H69l3-10ZM57 74c0 4 3 7 7 7\"/>"
+  }
+}

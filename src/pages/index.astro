@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import { HOME_ORIGINAL_FAQS } from "../lib/home-faqs";
 import Header from "../components/shared/Header.astro";
 import Hero from "../components/Hero.astro";
+import AudienceDirections from "../components/segments/AudienceDirections.astro";
 import Segments from "../components/Segments.astro";
 import About from "../components/About.astro";
 import MediaResources from "../components/media/MediaResources.astro";
@@ -46,6 +47,7 @@ const homeFaqSchema = {
 		title="ИИ-агенты для бизнеса, которые работают в ваших системах"
 		description="Разрабатываем и внедряем агентов для поддержки, продаж и работы с документами. Обучаем модель на ваших данных, подключаем CRM, 1С и мессенджеры и проверяем результат на реальных примерах."
 	>
+		<AudienceDirections slot="after-hero" />
 		<ExpertiseVideos slot="after-hero" formId={offerFormId} />
 	</Hero>
 	<Segments />

@@ -36,3 +36,6 @@ SUMMARY.md
 .codex/config.toml
 .memory/*
 !.memory/annotations.json
+
+# Windows mark-of-the-web artifacts
+*:Zone.Identifier
