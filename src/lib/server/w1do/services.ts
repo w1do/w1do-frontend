@@ -1,7 +1,9 @@
 import { fetchServiceEntries } from "./services-api";
 import { canonicalServicePath } from "../../ai-agents-canonical";
 import { canonicalCmsHtml } from "../regional-html";
-const CACHE_TTL = 60_000;
+import { cached } from "../cache";
+const CACHE_KEY = "w1do:services";
+const CACHE_OPTIONS = { ttlMs: 300_000, staleMs: 86_400_000 };
 const GENERIC_SERVICE_IMAGE = "uhkgnmd2Bfd0VOWFyKCtbmD93bIEl0AaMOKnNvPW.jpg";
 const MEDIA_BASE_URL = "https://backend.w1do.ru/media/projects/01m15zc30ghk21dmk2a4ph5wkg/media";
 
@@ -71,9 +73,6 @@ export interface ServiceEntry {
   spokesTitle?: string;
   spokesDescription?: string;
 }
-
-let cache: { expiresAt: number; entries: ServiceEntry[] } | undefined;
-let pending: Promise<ServiceEntry[]> | undefined;
 
 const text = (value: unknown, fallback = ""): string =>
   typeof value === "string" ? value : fallback;
@@ -149,15 +148,10 @@ function mapEntry(entry: Awaited<ReturnType<typeof fetchServiceEntries>>[number]
 }
 
 export async function getServices(): Promise<ServiceEntry[]> {
-  if (cache && cache.expiresAt > Date.now()) return cache.entries;
-  if (!pending) {
-    pending = fetchServiceEntries().then((rawEntries) => {
-      const entries = rawEntries.map(mapEntry).filter((entry): entry is ServiceEntry => Boolean(entry));
-      cache = { entries, expiresAt: Date.now() + CACHE_TTL };
-      return entries;
-    }).finally(() => { pending = undefined; });
-  }
-  return pending;
+  return cached(CACHE_KEY, CACHE_OPTIONS, async () => {
+    const rawEntries = await fetchServiceEntries();
+    return rawEntries.map(mapEntry).filter((entry): entry is ServiceEntry => Boolean(entry));
+  });
 }
 
 export async function getServiceHubs(): Promise<ServiceEntry[]> {

@@ -19,15 +19,18 @@ import CookieNotice from "../components/shared/CookieNotice.astro";
 import RequestModal from "../components/contact/RequestModal.astro";
 import JsonLd from "../components/shared/JsonLd.astro";
 import ChatPopup from "../components/chat/ChatPopup";
+import regularFontUrl from "../fonts/OverusedGrotesk-Regular.woff2?url";
+import semiboldFontUrl from "../fonts/OverusedGrotesk-SemiBold.woff2?url";
 import "../styles/fonts.css";
 import "../styles/bootstrap.min.css";
-import "../styles/slicknav.min.css";
 import "../styles/swiper-bundle.min.css";
 import "../styles/all.min.css";
-import "../styles/animate.css";
-import "../styles/magnific-popup.css";
-import "../styles/mousecursor.css";
 import "../styles/custom.css";
+// Некритичные стили не блокируют первую отрисовку: подключаем их асинхронно.
+import slicknavCss from "../styles/slicknav.min.css?url";
+import magnificCss from "../styles/magnific-popup.css?url";
+import mousecursorCss from "../styles/mousecursor.css?url";
+import animateCss from "../styles/animate.css?url";
 
 const region = Astro.locals.region;
 const pagePath = region?.path || Astro.url.pathname.replace(/\/$/, "") || "/";
@@ -142,7 +145,13 @@ const quickTelegramUrl = import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1
     <!-- Canonical URL -->
     <link rel="canonical" href={canonical}>
     <link rel="preconnect" href="https://mc.yandex.ru" crossorigin>
+    <!-- Шрифты основного текста и заголовков грузим сразу: без preload браузер узнаёт о них только из CSS. -->
+    <link rel="preload" href={regularFontUrl} as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href={semiboldFontUrl} as="font" type="font/woff2" crossorigin="anonymous" />
     {pagePath === "/" && <link rel="preload" as="image" href="/images/hero-poster.webp" fetchpriority="high" />}
+    {[slicknavCss, magnificCss, mousecursorCss, animateCss].map((href) => (
+        <link rel="stylesheet" href={href} media="print" onload="this.media='all'" />
+    ))}
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content={type}>
@@ -273,11 +282,18 @@ const quickTelegramUrl = import.meta.env.PUBLIC_TELEGRAM_URL || "https://t.me/W1
     (function(m,e,t,r,i,k,a){
         m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
         m[i].l=1*new Date();
-        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        a=function(){
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            var s=e.createElement(t), f=e.getElementsByTagName(t)[0];
+            s.async=1; s.src=r; f.parentNode.insertBefore(s,f);
+        };
+        k=function(){
+            a();
+            m[i](109810952,'init',{ssr:true,webvisor:true,clickmap:true,ecommerce:"dataLayer",referrer:document.referrer,url:location.href,accurateTrackBounce:true,trackLinks:true});
+        };
+        // Счётчик не соревнуется с первым экраном: загружаем его после события load.
+        if (e.readyState==='complete') k(); else m.addEventListener('load', k, {once:true});
     })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109810952', 'ym');
-
-    ym(109810952, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/109810952" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->

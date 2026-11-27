@@ -1,17 +1,12 @@
 import { LEADS_API_BASE_URL, LEADS_API_KEY, W1DO_DEFAULT_CITY } from "astro:env/server";
 import type { City } from "../../regions";
+import { cached } from "../cache";
 
-let cache: { cities: City[]; expiresAt: number } | undefined;
-let pending: Promise<City[]> | undefined;
+const CACHE_KEY = "w1do:cities";
+const CACHE_OPTIONS = { ttlMs: 300_000, staleMs: 86_400_000 };
 
 export async function getCities(): Promise<City[]> {
-  if (cache && cache.expiresAt > Date.now()) return cache.cities;
-  if (pending) return pending;
-  pending = fetchCities().then(cities => {
-    cache = { cities, expiresAt: Date.now() + 60_000 };
-    return cities;
-  }).finally(() => { pending = undefined; });
-  return pending;
+  return cached(CACHE_KEY, CACHE_OPTIONS, fetchCities);
 }
 
 async function fetchCities(): Promise<City[]> {

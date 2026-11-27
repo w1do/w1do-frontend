@@ -1,4 +1,5 @@
 import { LEADS_API_BASE_URL, LEADS_API_KEY } from "astro:env/server";
+import { cached } from "../cache";
 
 export interface BlogCategory {
   id: number;
@@ -22,6 +23,10 @@ interface ApiCategory {
 }
 
 export async function getBlogCategories(): Promise<BlogCategory[]> {
+  return cached("w1do:categories", { ttlMs: 300_000, staleMs: 86_400_000 }, loadBlogCategories);
+}
+
+async function loadBlogCategories(): Promise<BlogCategory[]> {
   if (!LEADS_API_KEY) throw new Error("W1DO API key is not configured.");
   const url = new URL("/api/v1/content/categories", LEADS_API_BASE_URL || "https://backend.w1do.ru");
   const response = await fetch(url, {

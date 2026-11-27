@@ -1,6 +1,7 @@
 import localCovers from "./blog-covers.json";
 import { SITE_ORIGIN } from "../../regions";
 import { LEADS_API_BASE_URL, LEADS_API_KEY } from "astro:env/server";
+import { cached } from "../cache";
 
 interface ApiPost {
   slug: string;
@@ -77,6 +78,10 @@ async function request(path: string, cursor?: string, category?: number, localiz
 }
 
 export async function getBlogPosts(category?: number): Promise<BlogPost[]> {
+  return cached(`w1do:posts:${category ?? "all"}`, { ttlMs: 300_000, staleMs: 86_400_000 }, () => loadBlogPosts(category));
+}
+
+async function loadBlogPosts(category?: number): Promise<BlogPost[]> {
   const posts: ApiPost[] = [];
   const seen = new Set<string>();
   let cursor: string | undefined;

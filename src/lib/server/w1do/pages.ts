@@ -1,4 +1,5 @@
 import { LEADS_API_BASE_URL, LEADS_API_KEY } from "astro:env/server";
+import { cached } from "../cache";
 
 const DEFAULT_API_URL = "https://backend.w1do.ru";
 
@@ -69,6 +70,10 @@ function mapPage(page: PageApiEntry | null | undefined): W1doPage | undefined {
 
 export async function getPublishedPageBySlug(slug: string): Promise<W1doPage | undefined> {
     if (!validSlug(slug)) return undefined;
+    return cached(`w1do:page:${slug}`, { ttlMs: 300_000, staleMs: 86_400_000 }, () => loadPage(slug));
+}
+
+async function loadPage(slug: string): Promise<W1doPage | undefined> {
     if (!LEADS_API_KEY) throw new Error("W1DO API key is not configured.");
 
     const baseUrl = LEADS_API_BASE_URL || DEFAULT_API_URL;

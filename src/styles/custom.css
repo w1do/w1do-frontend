@@ -92,7 +92,7 @@ body{
 	font-weight: 400;
 	line-height: 1em;
 	color: var(--text-color);
-	background: url('/images/site-bg-image.png') var(--bg-color);
+	background: url('/images/site-bg-image-960.webp') var(--bg-color);
 	background-repeat: repeat-y;
 	background-position: top center;
 	background-size: 100% auto;
@@ -8260,7 +8260,7 @@ header.main-header .header-sticky.active{
 }
 
 .our-testimonials-prime{
-	background-image: url('/images/testimonials-bg-image-prime.png');
+	background-image: url('/images/testimonials-bg-image-prime.webp');
 	background-position: center center;
 	background-repeat: no-repeat;
 	background-size: cover;

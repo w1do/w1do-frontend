@@ -1,4 +1,5 @@
 import { LEADS_API_BASE_URL, LEADS_API_KEY } from "astro:env/server";
+import { cached } from "../cache";
 
 const DEFAULT_API_URL = "https://backend.w1do.ru";
 const COLLECTION_SLUG = "cases";
@@ -164,6 +165,10 @@ async function fetchPage(page: number): Promise<CaseApiResponse> {
 }
 
 export async function getCases(): Promise<CaseEntry[]> {
+  return cached("w1do:cases", { ttlMs: 300_000, staleMs: 86_400_000 }, loadCases);
+}
+
+async function loadCases(): Promise<CaseEntry[]> {
   const firstPage = await fetchPage(1);
   const entries = firstPage.data;
   if (!Array.isArray(entries)) throw new Error("W1DO cases API returned invalid data.");

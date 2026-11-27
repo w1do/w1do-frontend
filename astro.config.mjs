@@ -37,7 +37,8 @@ export default defineConfig({
   },
   output: 'server',
   adapter: node({
-    mode: 'standalone'
+    // Свой сервер (server.mjs) отдаёт статику с долгим кешем и Range, SSR — через handler.
+    mode: 'middleware'
   }),
   // Normalize slashes in middleware after resolving legacy aliases in one hop.
   trailingSlash: 'ignore',

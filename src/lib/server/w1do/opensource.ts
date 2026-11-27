@@ -1,4 +1,5 @@
 import { LEADS_API_BASE_URL, LEADS_API_KEY } from "astro:env/server";
+import { cached } from "../cache";
 
 const DEFAULT_API_URL = "https://backend.w1do.ru";
 const COLLECTION_SLUG = "opensource";
@@ -111,6 +112,10 @@ async function fetchPage(page: number): Promise<ApiResponse> {
 }
 
 export async function getOpenSourceProjects(): Promise<OpenSourceEntry[]> {
+  return cached("w1do:opensource", { ttlMs: 300_000, staleMs: 86_400_000 }, loadOpenSourceProjects);
+}
+
+async function loadOpenSourceProjects(): Promise<OpenSourceEntry[]> {
   const firstPage = await fetchPage(1);
   const entries = firstPage.data;
   if (!Array.isArray(entries)) throw new Error("W1DO opensource API returned invalid data.");

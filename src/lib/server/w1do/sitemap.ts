@@ -4,9 +4,10 @@ import { canonicalServicePath } from "../../ai-agents-canonical";
 import { parseSitemap } from "../sitemap-parser.js";
 import { getServices } from "./services";
 import type { SitemapPage } from "../regional-sitemap";
+import { cached } from "../cache";
 
-let cache: { pages: SitemapPage[]; expiresAt: number } | undefined;
-let pending: Promise<SitemapPage[]> | undefined;
+const CACHE_KEY = "w1do:sitemap";
+const CACHE_OPTIONS = { ttlMs: 600_000, staleMs: 86_400_000 };
 
 /** Old CMS URLs remain valid entry points, with one redirect to the frontend route. */
 export async function legacyContentPath(path: string): Promise<string> {
@@ -20,13 +21,7 @@ export async function legacyContentPath(path: string): Promise<string> {
 }
 
 export async function getCmsSitemapPages(): Promise<SitemapPage[]> {
-  if (cache && cache.expiresAt > Date.now()) return cache.pages;
-  if (pending) return pending;
-  pending = fetchPages().then(pages => {
-    cache = { pages, expiresAt: Date.now() + 60_000 };
-    return pages;
-  }).finally(() => { pending = undefined; });
-  return pending;
+  return cached(CACHE_KEY, CACHE_OPTIONS, fetchPages);
 }
 
 async function fetchPages(): Promise<SitemapPage[]> {
